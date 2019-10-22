@@ -1,8 +1,5 @@
-
 version: '3'
 services:
-
-  #PWA - Ionic
   ng-peygold:
     container_name: ng-peygold
     build:
