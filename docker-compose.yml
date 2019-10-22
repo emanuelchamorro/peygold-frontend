@@ -1,0 +1,25 @@
+
+version: '3'
+services:
+
+  #PWA - Ionic
+  ng-peygold:
+    container_name: ng-peygold
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    privileged: true
+    working_dir: /app
+    ports:
+      - '4201:4200'
+    volumes:
+    - ./:/app:rw
+    networks:
+    - peygold-network
+
+#Docker Networks
+networks:
+  peygold-network:
+    driver: bridge

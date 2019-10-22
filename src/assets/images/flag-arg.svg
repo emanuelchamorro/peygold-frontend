@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="18.097px" height="18.097px" viewBox="0 0 18.097 18.097" enable-background="new 0 0 18.097 18.097" xml:space="preserve">
+<g>
+	<defs>
+		<path id="SVGID_127_" d="M722.191,447.705H-92.322c-20.856,0-37.92-17.064-37.92-37.92V148.279
+			c0-11.614,9.502-21.116,21.116-21.116h848.122c11.614,0,21.116,9.502,21.116,21.116v261.505
+			C760.111,430.641,743.047,447.705,722.191,447.705z"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_127_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_2_)">
+		
+			<image overflow="visible" width="500" height="500" xlink:href="PeyGold/Michael-Udine-.png"  transform="matrix(1.7833 0 0 1.7833 -130.2424 -129.2368)">
+		</image>
+	</g>
+</g>
+<g>
+	<defs>
+		<circle id="SVGID_283_" cx="9.048" cy="9.048" r="9.048"/>
+	</defs>
+	<clipPath id="SVGID_4_">
+		<use xlink:href="#SVGID_283_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_4_)">
+		<circle fill="#64B8FF" cx="9.048" cy="9.048" r="9.048"/>
+		<path fill="#FFFFFF" d="M17.693,11.728H0.404c0,0-0.876-2.263-0.033-5.25h17.355C17.726,6.478,18.632,9.048,17.693,11.728z"/>
+		<circle fill="#E6B54A" cx="9.048" cy="9.103" r="1.333"/>
+	</g>
+</g>
+</svg>

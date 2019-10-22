@@ -1,0 +1,216 @@
+.wallet-conteiner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.wallet-item {
+  width: 375px;
+  height: 214px;
+  margin: 1rem 0;
+  padding: 0.3rem 1.2rem 0.9rem 1rem;
+  border-radius: 15px;
+  color: #fff;
+  -webkit-box-shadow: 0px 7px 5px -1px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 0px 7px 5px -1px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 7px 5px -1px rgba(0, 0, 0, 0.45);
+  transition: all 0.35s;
+  
+  &:hover {
+  width: 385px;
+  height: 224px;
+  -webkit-box-shadow: -5px 5px 5px -1px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: -5px 5px 5px -1px rgba(0, 0, 0, 0.45);
+  box-shadow: -5px 5px 5px -1px rgba(0, 0, 0, 0.45);
+  transition: all 0.35s;
+ }
+}
+#pg-wallet {
+  background-image: url("../../assets/images/tarjeta-peygold.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+ 
+}
+#pesos-wallet {
+  background-image: url("../../assets/images/tarjeta-pesos.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+margin-right: 5%;    
+}
+
+.wallet-first-line,
+.wallet-second-line,
+.wallet-third-line {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    text-align: right;
+    width: 100%;
+   margin-top: 5.3rem;
+}
+
+.wallet-third-line {
+  margin-top: -1rem;
+}
+
+.wallet-first-line span {
+    letter-spacing: .03rem;
+    position: relative;
+    bottom: 6px;
+    font-size: 18px;
+    color: #fff;
+}
+.wallet-first-line .small-letters {
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  font-size: 8px;
+  letter-spacing: 4px;
+  font-weight: 600;
+  top: 23px;
+  right: 6px;
+  font-style: normal !important;
+  text-transform: uppercase;
+}
+.wallet-second-line > img {
+  width: 40px;
+  height: 8px;
+}
+.wallet-second-line > div a span {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-top: 5px;
+  color: #fff;
+}
+.wallet-second-line > div a:hover span {
+  display: block;
+}
+.wallet-name {
+  font-weight: bold;
+}
+.wallet-imgs {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+.wallet-amount-cont {
+  font-family: "Play", sans-serif;
+  font-size: 21px;
+  align-self: flex-end;
+}
+.wallet-amount-cont span:nth-child(1) {
+  font-size: 13px;
+  font-family: "Montserrat", sans-serif;
+  position: relative;
+  font-weight: 400;
+  top: 5px;
+}
+.wallet-symbol-cont {
+  font-family: "Klavika";
+  letter-spacing: 3px;
+  font-size: 20px;
+  align-self: flex-end;
+}
+@media screen and (min-width: 1599px) {
+  .wallet-item {
+    width: 24%;
+  }
+  .wallet-item:hover {
+    width: 26%;
+  }
+  .wallet-item {
+    height: 170px;
+  }
+  .wallet-item:hover {
+    height: 180px;
+  }
+  .wallet-imgs {
+    width: 3rem;
+    height: 3rem;
+  }
+  .wallet-second-line > img {
+    width: 45px;
+    height: 6px;
+  }
+  #pg-wallet {
+    margin-right: 5%;
+  }
+  #pgc-wallet {
+    margin-left: 5%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+
+  .wallet-amount-cont {
+    font-size: 18px;
+  }
+  .wallet-symbol-cont {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 650.98px) {
+  .wallet-conteiner {
+    flex-direction: column;
+  }
+  .wallet-item {
+    width: 80%;
+    height: 214px;
+
+    &:hover {
+    width: 80%;
+    height: 214px;
+  }
+ }
+  .wallet-first-line span {
+    text-align: right!important;
+  }
+  #pesos-wallet {
+    margin-right: 0;
+  }
+  .wallet-imgs {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  }
+@media screen and (max-width: 430px) {
+ 
+  .wallet-item {
+    width: 80%;
+   height: 160px;
+
+    &:hover {
+    width: 80%;
+    height: 160px;
+  }
+ }
+  .wallet-item:hover {
+    width: 80%;
+    height: 140px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    transition: none;
+  }
+  .wallet-imgs {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+ 
+#pg-wallet {
+    margin-right: 0
+  }
+
+.wallet-first-line {
+    margin-top: 4rem
+}
+    
+  .wallet-first-line span {
+    font-size: 14px;
+    margin: 0!important;
+
+    }    
+}

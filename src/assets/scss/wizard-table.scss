@@ -1,0 +1,257 @@
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+
+/*Fun begins*/
+.tab_container { 
+    margin: 0 auto;
+    padding-top: 70px;
+    z-index: 2;
+    position: relative;
+    width: 100%;
+}
+
+input, section {
+  clear: both;
+  padding-top: 10px;
+  display: none;
+}
+
+.tab1, .tab2-right, .tab3-right {
+    font-weight: 700;
+  font-size: 18px;
+  height: 40px;
+  display: block;
+  float: left;
+  width: 240px;
+  position: relative;
+  margin-bottom: 0;
+  padding: 1.5em;
+  border-top-left-radius: 3rem;
+  z-index: 1;
+  border-top-right-radius: 3rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  background: #C8C8C8;
+  box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.32);  
+    
+    
+}
+
+.tab1, .tab2-right, .tab3-right {
+    span {
+    color:#fff;
+    font-weight: 600;
+    }
+}
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+                           {
+ display: block;
+    position: relative;
+    padding: 20px;
+    z-index: 111;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    color: #3575BA;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.tab2-right {
+
+right: 74px;
+}
+.tab3-right {
+z-index:0;
+right: 154px;
+}
+
+.tab_container .tab-content p,
+.tab_container .tab-content h3 {
+  -webkit-animation: fadeInScale 0.7s ease-in-out;
+  -moz-animation: fadeInScale 0.7s ease-in-out;
+  animation: fadeInScale 0.7s ease-in-out;
+}
+.tab_container .tab-content h3  {
+  text-align: center;
+}
+
+
+
+.tab_container {		
+  .active {		
+    z-index: 100;		
+    background: #3575ba;		
+  }
+ }   
+.tab_container [id^="tab"]:checked + label .fa {
+  color: #0CE;
+}
+
+label .fa {
+  font-size: 1.3em;
+  margin: 0 0.4em 0 0;
+}
+
+/*Media query*/
+@media only screen and (max-width: 930px) {
+  label span {
+    font-size: 14px;
+  }
+  label .fa {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  label span {
+    display: none;
+  }
+
+  label .fa {
+    font-size: 16px;
+  }
+
+  .tab_container {
+    width: 98%;
+  }
+}
+
+/*Content Animation*/
+@keyframes fadeInScale {
+  0% {
+  	transform: scale(0.9);
+  	opacity: 0;
+  }
+  
+  100% {
+  	transform: scale(1);
+  	opacity: 1;
+  }
+}
+ .DownFilters {
+  display: none;
+      border-bottom: 1px solid #a5a5a591;
+  padding-bottom: 5px;
+    padding-top: 5px; 
+  .form-inline {
+    .input-group {
+      margin: 10px;
+    }
+  }
+
+  .boxSelect {
+    width: 180px;
+    position: relative;
+    .downFecha {
+      display: none;
+      position: absolute;
+      background: white;
+      width: 100%;
+      box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .stateDown {
+      ul {
+        margin-bottom: 0px;
+        li {
+          &:last-child {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+    a.btn-dropDown {
+      width: 180px;
+      height: 25px;
+      border: 1px solid #828282;
+      border-radius: 6px;
+      background: transparent;
+      display: block;
+      text-align: left;
+      padding-left: 15px;
+      font-size: 13px;
+      line-height: 22px;
+      i {
+        position: absolute;
+        right: 12px;
+        top: 6px;
+        font-size: 12px;
+      }
+      .rotate {
+        -webkit-transform: rotate(90deg);
+      }
+    }
+    ul {
+      list-style: none;
+      text-align: left;
+      padding: 0;
+      li {
+        &:last-child {
+          margin-top: 30px;
+          a.btn {
+            background: #3575ba;
+            color: white;
+            width: 90px;
+            margin: auto;
+          }
+        }
+        a.optionDate {
+          display: block;
+          padding: 8px 10px;
+          font-size: 13px;
+          &:hover {
+            color: #3575ba;
+            font-weight: 900;
+            background: rgba(53, 117, 186, 0.15);
+          }
+        }
+        a.btn {
+          background: transparent;
+          border: 1px solid #bdbdbd;
+          text-align: center;
+          display: block;
+          margin: 10px;
+          font-size: 13px;
+          color: #bdbdbd;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+  .active {
+    background: white;
+    a.btn-dropDown {
+      border: 1px solid transparent;
+      box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32); 
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius:0;    
+    }
+  }
+  select {
+    width: 180px;
+    padding: 2px;
+    border: 1px solid #828282;
+    border-radius: 6px;
+    background: transparent;
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    line-height: 22px;
+    option {
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+  }
+}
+   
