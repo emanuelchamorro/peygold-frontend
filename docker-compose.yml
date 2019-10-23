@@ -11,6 +11,7 @@ services:
     working_dir: /app
     ports:
       - '4201:4200'
+      - '9876:9876'
     volumes:
     - ./:/app:rw
     networks:

@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ListOfValuesService } from './list-of-values-service.service';
+import { LocationService } from './location.service';
+import {HttpClientModule} from '@angular/common/http';
 
-describe('ListOfValuesServiceService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+
+describe('LocationService', () => {
+  beforeEach(() => TestBed.configureTestingModule({
+    imports: [
+      HttpClientModule
+    ],
+  }));
 
   it('should be created', () => {
-    const service: ListOfValuesService = TestBed.get(ListOfValuesService);
+    const service: LocationService = TestBed.get(LocationService);
     expect(service).toBeTruthy();
   });
 });
