@@ -1,8 +1,8 @@
 /* formato general */
 
 /*colores */
-@import "../../../assets/scss/colors";
-@import "../../../assets/scss/images";
+@import "../../../../assets/scss/colors";
+@import "../../../../assets/scss/images";
 /*colores */
 
 
@@ -171,7 +171,7 @@ a {
 }
 .recover-password-container {
   height: 100vh;
-  background: url("../../../" + $bg-login-image);
+  background: url("../../../../" + $bg-login-image);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -351,7 +351,7 @@ a {
 
 .bg-exito {
   min-height:100vh;
-  background: url("../../../" + $backgroundYPersonas-image);
+  background: url("../../../../" + $backgroundYPersonas-image);
   background-position: bottom;
   background-repeat: no-repeat;
   background-size:auto;

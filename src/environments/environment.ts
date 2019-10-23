@@ -11,7 +11,7 @@ export const environment = {
     instagram : '#',
   },
   api: {
-    url: 'https://api.peygold.com',
+    url: 'https://api.peygold.com/api',
   }
 };
 

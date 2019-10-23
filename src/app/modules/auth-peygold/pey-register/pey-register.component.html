@@ -1,0 +1,257 @@
+<div class="row" id="body-row">
+  <div class="col login-wrapper">
+    <!-- Login container -->
+    <main class="row">
+      <!-- Login container -->
+      <!-- container for elements -->
+      <div class="col-lg-4 social-media-ops-container background-gradient">
+        <div>
+          <div>
+            <p class="text-center text-white">
+              ¡Bienvenido a Peygold!<br> Ahora podes cobrar, enviar y gestionar todos los movimientos de tu dinero desde la comodidad de tu casa
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- container for elements -->
+      <div class="col-lg-8 login-input-container">
+
+        <nav id="top-navbar-register">
+
+          <!-- Barra de navegacion superior -->
+          <ul class="top-nav">
+            <div [ngSwitch]="type">
+              <li class="ml-4">
+                <a class="fw-700" *ngSwitchDefault href="#">Registrarse</a>
+              </li>
+              <li class="ml-4" *ngSwitchCase="'person'">
+                <a class="fw-700" href="#">Registrarse: Persona</a>
+              </li>
+              <li class="ml-4" *ngSwitchCase="'company'">
+                <a class="fw-700" href="#">Registrarse: Empresa</a>
+              </li>
+              <li class="ml-4" *ngSwitchCase="'institution'">
+                <a class="fw-700" href="#">Registrarse: Institución</a>
+              </li>
+            </div>
+            <div>
+              <li class="fs-12 ml-4">
+                <a routerLink="/login">¿Ya tienes una cuenta?</a>
+              </li>
+              <li class="fs-12 ml-4">
+                <a routerLink="/login" class="border-button">Iniciar sesión</a>
+              </li>
+            </div>
+          </ul>
+        </nav>
+
+        <div class="col-lg-11" *ngIf="!type">
+          <div class="d-flex flex-column align-items-center mt-5">
+            <h4 class="fs-16 mt-5">Indique el tipo de cuenta que desea crear con nosotros</h4>
+            <div class="container-login mt-4">
+              <a routerLink="/register/person" class="white-button-border w-100 mt-4 mb-4">Persona</a>
+              <a routerLink="/register/company" class="white-button-border w-100 mt-4 mb-4">Empresa</a>
+              <a routerLink="/register/institution" class="white-button-border w-100 mt-4 mb-4">Institución</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-11" *ngIf="type && step == 1">
+          <div class="d-flex flex-column align-items-start mt-5">
+            <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
+            <p>Completa los datos para continuar con tu registro</p>
+          </div>
+          <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
+
+            <div class="container-form-login mt-4">
+              <div *ngIf="type=='person'">
+                <label class="has-float-label mb-0 w-100">
+                  <input required type="text" placeholder="nombres" class="w-100 mb-4" id="name" name="name"
+                         [(ngModel)]="user.name" #name="ngModel" />
+                  <span>Nombres</span>
+                </label>
+                <label class="has-float-label mb-0 w-100">
+                  <input required type="text" placeholder="apellido" class="w-100 mb-4" id="lastName" name="lastName"
+                         [(ngModel)]="user.lastName" #name="ngModel" />
+                  <span>Apellido</span>
+                </label>
+              </div>
+              <div *ngIf="type!='person'">
+                <label class="has-float-label mb-0 w-100">
+                  <input required type="text" placeholder="Razón social" class="w-100 mb-4" id="name" name="name"
+                         [(ngModel)]="user.bussinesName" #name="ngModel" />
+                  <span>Razón social</span>
+                </label>
+              </div>
+
+              <label class="has-float-label mb-0 w-100" *ngIf="type=='person'">
+                <input required type="text" placeholder="Tu correo eléctronico" class="w-100 mb-4" id="email" name="email"
+                       [(ngModel)]="user.email" #name="ngModel" />
+                <span>Tu correo eléctronico</span>
+              </label>
+              <label class="has-float-label mb-0 w-100" *ngIf="type!='person'">
+                <input required type="text" placeholder="Correo eléctronico" class="w-100 mb-4" id="email" name="email"
+                       [(ngModel)]="user.email" #name="ngModel" />
+                <span>Correo eléctronico</span>
+              </label>
+
+
+              <label class="has-float-label mb-0 w-100">
+                <input required type="password" placeholder="Contraseña" class="w-100 mb-4" id="password" name="password"
+                       [(ngModel)]="user.password" #name="ngModel" />
+                <span>Contraseña</span>
+              </label>
+              <label class="has-float-label mb-0 w-100">
+                <input required type="password" placeholder="Confirmar contraseña" class="w-100 mb-4" id="repeatPassword" name="repeatPassword" />
+                <span>Confrimar contraseña</span>
+              </label>
+              <div class="d-flex justify-content-between w-100">
+                <a routerLink="/register" class="white-button-border mr-4">Volver</a>
+                <button (click)="nextStep()" class="solid-blue-button">Continuar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="col-lg-11" *ngIf="type && step == 2">
+          <div class="d-flex flex-column align-items-start mt-5">
+            <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
+            <p>Bienvenido/a, completa los datos para continuar continuar con tu registro</p>
+          </div>
+          <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
+            <div class="container-form-login mt-4">
+
+              <!-- Inicio de Formulario -->
+
+
+              <select  *ngIf="type == 'person'"class="custom-select dropdown select-height-normal mb-4 w-100"
+                       [(ngModel)]="user.occupation" #name="ngModel">
+                <option selected>Ocupación</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+
+              <label class="has-float-label mb-0 w-100">
+                <input type="text" placeholder="Teléfono" class="w-100 mb-4"
+                       [(ngModel)]="user.phone" #name="ngModel"/>
+                <span>Teléfono</span>
+              </label>
+
+              <label class="has-float-label mb-0  w-100" *ngIf="type != 'person'">
+                <input type="text" placeholder="CUIT" class="w-100 mb-4"
+                       [(ngModel)]="user.cuit" #name="ngModel"/>
+                <span>CUIT</span>
+              </label>
+
+              <select  *ngIf="type != 'person'" class="custom-select dropdown select-height-normal mb-4 w-100"
+                       [(ngModel)]="user.country" #name="ngModel">
+                <option selected>País</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+
+              <div class="input-group-column" *ngIf="type == 'person'">
+                <select class="custom-select dropdown select-height-normal mb-4"
+                        [(ngModel)]="user.dni" #name="ngModel">
+                  <option selected>DNI</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+
+                <label class="has-float-label mb-0">
+                  <input type="text" placeholder="Número" class="w-100 mb-4"
+                         [(ngModel)]="user.dniNumber" #name="ngModel" />
+                  <span>Número</span>
+                </label>
+              </div>
+
+              <select  *ngIf="type == 'person'" class="custom-select dropdown select-height-normal mb-4 w-100"
+                       [(ngModel)]="user.nationality" #name="ngModel">
+                <option selected>Nacionalidad</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+
+              <div class="input-group-column">
+                <select class="custom-select dropdown select-height-normal mb-4"
+                        [(ngModel)]="user.state" #name="ngModel">
+                  <option selected>Provincia</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+
+                <select class="custom-select dropdown select-height-normal mb-4"
+                        [(ngModel)]="user.city" #name="ngModel">
+                  <option selected>Ciudad/Barrio</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+
+              <div class="input-group-column">
+                <label class="has-float-label  mb-0">
+                  <input type="text" placeholder="Calle" class="w-100 mb-4"
+                         [(ngModel)]="user.street" #name="ngModel">
+                  <span>Calle</span>
+                </label>
+                <label class="has-float-label  mb-0">
+                  <input type="text" placeholder="N° de calle" class="w-100 mb-4"
+                         [(ngModel)]="user.streetNumber" #name="ngModel">
+                  <span>N° de calle</span>
+                </label>
+              </div>
+
+              <div class="input-group-column">
+                <label class="has-float-label mb-0">
+                  <input type="text" placeholder="Piso/Depto" class="w-100 mb-4"
+                         [(ngModel)]="user.buildingFloor" #name="ngModel">
+                  <span>Piso/Depto</span>
+                </label>
+                <label class="has-float-label mb-0">
+                  <input type="text" placeholder="Código postal" class="w-100 mb-4"
+                         [(ngModel)]="user.zipCode" #name="ngModel">
+                  <span>Código postal</span>
+                </label>
+              </div>
+
+
+              <select class="custom-select dropdown select-height-normal mb-4 w-100"
+                      *ngIf="type != 'institution'" [(ngModel)]="user.profitInstitution" #name="ngModel">
+                <option value="" selected>Institución a beneficiar</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+
+              <label class="has-float-label mb-0  w-100" *ngIf="type == 'institution'">
+                <input type="text" placeholder="Página Web" class="w-100 mb-4"
+                       [(ngModel)]="user.website" #name="ngModel">
+                <span>Página Web</span>
+              </label>
+
+
+              <div class="d-flex w-75 mb-4">
+                <input type="checkbox" class="checkbox-normal" name="condiciones" id="condiciones">
+                <label for="condiciones">Declaro que he leído y acepto los términos y condiciones</label>
+              </div>
+
+              <div class="d-flex justify-content-between w-100">
+                <button (click)="previoustStep()" class="white-button-border mr-4">Volver</button>
+                <a class="solid-blue-button">Crear cuenta</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+  </div>
+    </main>
+  </div>
+</div>

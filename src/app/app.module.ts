@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
-import {AuthPeyGoldModule} from './auth-peygold/auth-peygold.module';
+import { AuthPeyGoldModule } from './modules/auth-peygold/auth-peygold.module';
 
 @NgModule({
   declarations: [
