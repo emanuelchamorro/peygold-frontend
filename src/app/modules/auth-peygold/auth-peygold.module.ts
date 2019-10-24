@@ -5,7 +5,7 @@ import { AuthPeyGoldRouting } from './auth-peygold.routing';
 import { PeyRegisterComponent } from './pey-register/pey-register.component';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [PeyLoginComponent, PeyRegisterComponent],
@@ -14,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
     AuthPeyGoldRouting,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgSelectModule
   ]
 })
 export class AuthPeyGoldModule { }

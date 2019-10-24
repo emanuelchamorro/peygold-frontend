@@ -1,7 +1,9 @@
+import {Model} from './model';
+
 /**
  * SelectOption model
  */
-export class SelectOption {
+export class SelectOption extends Model {
 
   public value: string;
 
@@ -14,6 +16,7 @@ export class SelectOption {
     value?: string,
     public label?: string,
   ) {
+    super();
     this.value = value;
   }
 

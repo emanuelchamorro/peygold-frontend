@@ -124,15 +124,16 @@
             <div class="container-form-login mt-4">
 
               <!-- Inicio de Formulario -->
-
-
-              <select  *ngIf="type == 'person'"class="custom-select dropdown select-height-normal mb-4 w-100"
-                       [(ngModel)]="user.occupation" #name="ngModel">
-                <option selected>Ocupación</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <ng-select #name="ngModel"
+                         placeholder="Ocupación"
+                         class="custom-select dropdown select-height-normal mb-4 w-100"
+                         bindLabel="label"
+                         [searchable]="false"
+                         [items]="occupations"
+                         [addTag]="false"
+                         *ngIf="type == 'person'"
+                         [(ngModel)]="user.occupation">
+              </ng-select>
 
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="Teléfono" class="w-100 mb-4"
@@ -146,65 +147,68 @@
                 <span>CUIT</span>
               </label>
 
-              <select  *ngIf="type != 'person'" class="custom-select dropdown select-height-normal mb-4 w-100"
-                       [(ngModel)]="user.country" #name="ngModel">
-                <option selected>País</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
               <div class="input-group-column" *ngIf="type == 'person'">
-                <select class="custom-select dropdown select-height-normal mb-4"
-                        [(ngModel)]="user.dni" #name="ngModel">
-                  <option selected>DNI</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                <ng-select #name="ngModel"
+                           placeholder="Tipo de documento"
+                           class="custom-select dropdown select-height-normal mb-4"
+                           bindLabel="label"
+                           [searchable]="false"
+                           [items]="documentsType"
+                           [addTag]="false"
+                           [(ngModel)]="user.documentType">
+                </ng-select>
+
 
                 <label class="has-float-label mb-0">
                   <input type="text" placeholder="Número" class="w-100 mb-4"
-                         [(ngModel)]="user.dniNumber" #name="ngModel" />
+                         [(ngModel)]="user.documentNumber" #name="ngModel" />
                   <span>Número</span>
                 </label>
               </div>
 
-              <select  *ngIf="type == 'person'" class="custom-select dropdown select-height-normal mb-4 w-100"
-                       [(ngModel)]="user.nationality" #name="ngModel">
-                <option selected>Nacionalidad</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <ng-select name="countries"
+                         placeholder="País"
+                         class="custom-select dropdown select-height-normal mb-4 w-100"
+                         (change)="getStates()"
+                         bindLabel="label"
+                         [searchable]="false"
+                         [items]="countries"
+                         [addTag]="false"
+                         [(ngModel)]="user.address.country">
+              </ng-select>
 
               <div class="input-group-column">
-                <select class="custom-select dropdown select-height-normal mb-4"
-                        [(ngModel)]="user.state" #name="ngModel">
-                  <option selected>Provincia</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                <ng-select name="states"
+                           placeholder="Provincia"
+                           (change)="getCities()"
+                           class="custom-select dropdown select-height-normal mb-4"
+                           bindLabel="label"
+                           [searchable]="false"
+                           [items]="states"
+                           [addTag]="false"
+                           [(ngModel)]="user.address.state">
+                </ng-select>
 
-                <select class="custom-select dropdown select-height-normal mb-4"
-                        [(ngModel)]="user.city" #name="ngModel">
-                  <option selected>Ciudad/Barrio</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                <ng-select name="cities"
+                           placeholder="Ciudad/Barrio"
+                           class="custom-select dropdown select-height-normal mb-4"
+                           bindLabel="label"
+                           [searchable]="false"
+                           [items]="cities"
+                           [addTag]="false"
+                           [(ngModel)]="user.address.city">
+                </ng-select>
               </div>
 
               <div class="input-group-column">
                 <label class="has-float-label  mb-0">
                   <input type="text" placeholder="Calle" class="w-100 mb-4"
-                         [(ngModel)]="user.street" #name="ngModel">
+                         [(ngModel)]="user.address.street" #name="ngModel">
                   <span>Calle</span>
                 </label>
                 <label class="has-float-label  mb-0">
                   <input type="text" placeholder="N° de calle" class="w-100 mb-4"
-                         [(ngModel)]="user.streetNumber" #name="ngModel">
+                         [(ngModel)]="user.address.houseNumber" #name="ngModel">
                   <span>N° de calle</span>
                 </label>
               </div>
@@ -212,24 +216,26 @@
               <div class="input-group-column">
                 <label class="has-float-label mb-0">
                   <input type="text" placeholder="Piso/Depto" class="w-100 mb-4"
-                         [(ngModel)]="user.buildingFloor" #name="ngModel">
+                         [(ngModel)]="user.address.buildingFloor" #name="ngModel">
                   <span>Piso/Depto</span>
                 </label>
                 <label class="has-float-label mb-0">
                   <input type="text" placeholder="Código postal" class="w-100 mb-4"
-                         [(ngModel)]="user.zipCode" #name="ngModel">
+                         [(ngModel)]="user.address.zipCode" #name="ngModel">
                   <span>Código postal</span>
                 </label>
               </div>
 
-
-              <select class="custom-select dropdown select-height-normal mb-4 w-100"
-                      *ngIf="type != 'institution'" [(ngModel)]="user.profitInstitution" #name="ngModel">
-                <option value="" selected>Institución a beneficiar</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <ng-select #name="ngModel"
+                         placeholder="Institución a beneficiar"
+                         class="custom-select dropdown select-height-normal mb-4 w-100"
+                         bindLabel="label"
+                         [searchable]="false"
+                         [items]="institutions"
+                         [addTag]="false"
+                         *ngIf="type != 'institution'"
+                         [(ngModel)]="user.profitInstitution">
+              </ng-select>
 
               <label class="has-float-label mb-0  w-100" *ngIf="type == 'institution'">
                 <input type="text" placeholder="Página Web" class="w-100 mb-4"
@@ -245,7 +251,7 @@
 
               <div class="d-flex justify-content-between w-100">
                 <button (click)="previoustStep()" class="white-button-border mr-4">Volver</button>
-                <a class="solid-blue-button">Crear cuenta</a>
+                <button (click)="signUp()" class="solid-blue-button">Crear cuenta</button>
               </div>
             </div>
 
