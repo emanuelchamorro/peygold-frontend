@@ -4,6 +4,7 @@ import {City, Company, Country, DocumentType, Institution, Occupation, Person, P
 import {LocationService, InstitutionService, OccupationService, InMemoryService} from '../../../../services';
 import {AuthService} from '../../services/auth.service';
 import {environment} from '../../../../../environments/environment';
+import {NgModel} from '@angular/forms';
 
 @Component({
   selector: 'app-pey-register',
@@ -82,27 +83,6 @@ export class PeyRegisterComponent implements OnInit {
    * Checks if the register form is able to continue with the next step.
    * @return void;
    */
-  nextStep(validators: Array): void {
-    let valid = true;
-    validators.map((validator) => {
-      if (validator.invalid) {
-        valid = false;
-      }
-    });
-
-    if (valid) {
-      window.scroll(0,0);
-      this.step++;
-      return;
-    }
-
-    this.tryNextStep = true;
-  }
-
-  /**
-   * Checks if the register form is able to continue with the next step.
-   * @return void;
-   */
   previoustStep(): void {
     this.step--;
   }
@@ -110,10 +90,10 @@ export class PeyRegisterComponent implements OnInit {
   /**
    * Checks if the register form is able to continue with the next step.
    */
-  isValidFormGroup(validators: Array): boolean {
+  isValidFormModels(models: Array<NgModel>): boolean {
     let valid = true;
-    validators.map((validator) => {
-      if (validator.invalid) {
+    models.map((model) => {
+      if (model.invalid) {
         valid = false;
         return;
       }
@@ -126,8 +106,8 @@ export class PeyRegisterComponent implements OnInit {
    * Submit the form.
    * @return void;
    */
-  nextStep(validators: Array): void {
-    const valid = this.isValidFormGroup(validators);
+  nextStep(validators: Array<NgModel>): void {
+    const valid = this.isValidFormModels(validators);
 
     if (! valid) {
       this.tryNextStep = true;
@@ -188,8 +168,8 @@ export class PeyRegisterComponent implements OnInit {
    * Register the new user
    * @return void
    */
-  signUp(validators: Array): void {
-    const valid = this.isValidFormGroup(validators);
+  signUp(validators: Array<NgModel>): void {
+    const valid = this.isValidFormModels(validators);
 
     if (! valid) {
       this.trySubmit = true;

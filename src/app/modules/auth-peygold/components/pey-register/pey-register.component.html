@@ -103,7 +103,7 @@
                 <div class="mb-4">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Correo eléctronico" class="form-control w-100"
-                           name="email" [(ngModel)]="user.email" #email="ngModel" required/>
+                           name="email" [(ngModel)]="user.email" #email="ngModel" required email/>
                     <span *ngIf="type=='person'">Tu correo eléctronico</span>
                     <span *ngIf="type!='person'">Correo eléctronico</span>
                     <div *ngIf="!email.pristine && email.invalid || tryNextStep && email.errors" class="invalid-feedback">
@@ -150,7 +150,7 @@
                   <button
                     class="solid-blue-button"
                     *ngIf="type=='person'"
-                    [ngClass]="{'button-disable': ! isValidFormGroup([name, lastName, email, password, repeatPassword])}"
+                    [ngClass]="{'button-disable': ! isValidFormModels([name, lastName, email, password, repeatPassword])}"
                     (click)="nextStep([name,lastName,email,password,repeatPassword])">
                     Continuar
                   </button>
@@ -158,7 +158,7 @@
                   <button
                     class="solid-blue-button"
                     *ngIf="type!='person'"
-                    [ngClass]="{'button-disable': ! isValidFormGroup([bussinesName, email, password, repeatPassword])}"
+                    [ngClass]="{'button-disable': ! isValidFormModels([bussinesName, email, password, repeatPassword])}"
                     (click)="nextStep([bussinesName,email,password,repeatPassword])">
                     Continuar
                   </button>
@@ -402,21 +402,21 @@
                   <button (click)="previoustStep()" class="white-button-border mr-4">Volver</button>
                   <button
                     *ngIf="type=='person'"
-                    [ngClass]="{'button-disable': ! isValidFormGroup([occupation,phone,documentType,documentNumber,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])}"
+                    [ngClass]="{'button-disable': ! isValidFormModels([occupation,phone,documentType,documentNumber,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])}"
                     (click)="signUp([occupation,phone,documentType,documentNumber,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])"
                     class="solid-blue-button">
                     Crear cuenta
                   </button>
                   <button
                     *ngIf="type=='company'"
-                    [ngClass]="{'button-disable': ! isValidFormGroup([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])}"
+                    [ngClass]="{'button-disable': ! isValidFormModels([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])}"
                     (click)="signUp([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])"
                     class="solid-blue-button">
                     Crear cuenta
                   </button>
                   <button
                     *ngIf="type=='institution'"
-                    [ngClass]="{'button-disable': ! isValidFormGroup([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,website,terms])}"
+                    [ngClass]="{'button-disable': ! isValidFormModels([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,website,terms])}"
                     (click)="signUp([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,website,terms])"
                     class="solid-blue-button">
                     Crear cuenta
