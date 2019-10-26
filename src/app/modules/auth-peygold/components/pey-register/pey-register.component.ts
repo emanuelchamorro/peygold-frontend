@@ -1,20 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {User} from '../../../models/user';
-import {Person} from '../../../models/person';
-import {Company} from '../../../models/company';
-import {Institution} from '../../../models/institution';
-import {LocationService} from '../../../services/location.service';
-import {Country} from '../../../models/country';
-import {State} from '../../../models/state';
-import {City} from '../../../models/city';
-import {InstitutionService} from '../../../services/institution.service';
-import {ProfitInstitution} from '../../../models/profit-institution';
-import {AuthService} from '../services/auth.service';
-import {Occupation} from '../../../models/occupation';
-import {OccupationService} from '../../../services/occupation.service';
-import {InMemoryService} from '../../../services/in-memory.service';
-import {DocumentType} from '../../../models/document-type';
+import {City, Company, Country, DocumentType, Institution, Occupation, Person, ProfitInstitution, State, User} from '../../../../models';
+import {LocationService, InstitutionService, OccupationService, InMemoryService} from '../../../../services';
+import {AuthService} from '../../services/auth.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-pey-register',
@@ -43,14 +32,17 @@ export class PeyRegisterComponent implements OnInit {
   ) { }
 
   private type: string;
-  private user: User;
-  private step = 1;
+  private user: User = new User();
+  private step = 2;
   private countries: Array<Country>;
   private states: Array<State>;
   private cities: Array<City>;
   private institutions: Array<ProfitInstitution>;
   private occupations: Array<Occupation>;
-  private documentsType: Array<DocumentType>;
+  private documentTypes: Array<DocumentType>;
+  private environment = environment;
+  private tryNextStep = false;
+  private trySubmit = false;
 
   ngOnInit() {
     this.type = this.route.snapshot.data[`type`];
@@ -72,7 +64,7 @@ export class PeyRegisterComponent implements OnInit {
         this.occupationService.all().then((occupations: Array<Occupation>) => {
           this.occupations = occupations;
         });
-        this.documentsType = this.inMemoryService.documentsType;
+        this.documentTypes = this.inMemoryService.documentTypes;
 
         break;
       case User.TYPE_COMPANY:
@@ -90,9 +82,21 @@ export class PeyRegisterComponent implements OnInit {
    * Checks if the register form is able to continue with the next step.
    * @return void;
    */
-  nextStep(): void {
-    window.scroll(0,0);
-    this.step++;
+  nextStep(validators: Array): void {
+    let valid = true;
+    validators.map((validator) => {
+      if (validator.invalid) {
+        valid = false;
+      }
+    });
+
+    if (valid) {
+      window.scroll(0,0);
+      this.step++;
+      return;
+    }
+
+    this.tryNextStep = true;
   }
 
   /**
@@ -101,6 +105,38 @@ export class PeyRegisterComponent implements OnInit {
    */
   previoustStep(): void {
     this.step--;
+  }
+
+  /**
+   * Checks if the register form is able to continue with the next step.
+   */
+  isValidFormGroup(validators: Array): boolean {
+    let valid = true;
+    validators.map((validator) => {
+      if (validator.invalid) {
+        valid = false;
+        return;
+      }
+    });
+
+    return valid;
+  }
+
+  /**
+   * Submit the form.
+   * @return void;
+   */
+  nextStep(validators: Array): void {
+    const valid = this.isValidFormGroup(validators);
+
+    if (! valid) {
+      this.tryNextStep = true;
+      return;
+    }
+
+    window.scroll(0,0);
+    this.step++;
+    return;
   }
 
   /**
@@ -141,7 +177,7 @@ export class PeyRegisterComponent implements OnInit {
 
   /**
    * Remove the selected state
-   * @return void;
+   * @return void
    */
   cleanState(): void {
     this.user.address.state = null;
@@ -149,22 +185,17 @@ export class PeyRegisterComponent implements OnInit {
   }
 
   /**
-   * Checks if the register form is able to continue with the next step.
+   * Register the new user
+   * @return void
    */
-  isValidForm(): boolean {
-    let valid = false;
+  signUp(validators: Array): void {
+    const valid = this.isValidFormGroup(validators);
 
-    if (this.step === 1) {
-      valid = true;
+    if (! valid) {
+      this.trySubmit = true;
+      return;
     }
 
-    return valid;
-  }
-
-  /**
-   * Register the new user
-   */
-  signUp(): void {
     let signUpPromise: Promise<boolean>;
     switch (this.type) {
       case User.TYPE_COMPANY:

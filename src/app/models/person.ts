@@ -15,5 +15,5 @@ export class Person extends User {
   public documentType: DocumentType;
   public documentNumber: string;
   public nationality: Nationality;
-  public profitInstitution: ProfitInstitution = new ProfitInstitution();
+  public profitInstitution: ProfitInstitution;
 }

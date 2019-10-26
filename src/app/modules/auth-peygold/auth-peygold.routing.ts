@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PeyLoginComponent} from './pey-login/pey-login.component';
-import {PeyRegisterComponent} from './pey-register/pey-register.component';
+import {PeyLoginComponent} from './components/pey-login/pey-login.component';
+import {PeyRegisterComponent} from './components/pey-register/pey-register.component';
 
 export const routes: Routes = [
   {

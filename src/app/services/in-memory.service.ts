@@ -9,7 +9,7 @@ export class InMemoryService extends BaseService {
   /**
    * Get the list of document models
    */
-  get documentsType(): Array<DocumentType> {
+  get documentTypes(): Array<DocumentType> {
     return [
       new DocumentType('1', 'DNI'),
       new DocumentType('2', 'Libreta de identidad')

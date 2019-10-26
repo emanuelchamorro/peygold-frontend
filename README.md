@@ -41,3 +41,13 @@ For example:
 Run `docker-compose exec ng-peygold ng serve --host 0.0.0.0` for a dev server. 
 
 Navigate to `http://localhost:4201/`. The app will automatically reload if you change any of the source files.
+
+
+### Util development commands:
+
+The next command list is just for development information:
+
+```
+docker-compose exec ng-peygold ng generate component
+docker-compose exec ng-peygold ng generate service
+```

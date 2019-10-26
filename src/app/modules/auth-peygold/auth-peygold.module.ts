@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PeyLoginComponent } from './pey-login/pey-login.component';
+import { PeyLoginComponent } from './components/pey-login/pey-login.component';
 import { AuthPeyGoldRouting } from './auth-peygold.routing';
-import { PeyRegisterComponent } from './pey-register/pey-register.component';
+import { PeyRegisterComponent } from './components/pey-register/pey-register.component';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';

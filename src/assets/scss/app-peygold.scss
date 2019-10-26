@@ -1,0 +1,11 @@
+form {
+  width: 100%;
+}
+
+.form-control.ng-invalid, .form-control.ng-invalid:focus {
+  &.ng-dirty, &.ng-dirty:focus {
+    border: solid 2px rgba(158, 14, 0, 0.83) !important;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 0 .2rem rgba(220,53,69,.25);
+  }
+}

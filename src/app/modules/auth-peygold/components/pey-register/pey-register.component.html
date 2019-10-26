@@ -1,0 +1,433 @@
+<div class="row" id="body-row">
+  <div class="col login-wrapper">
+    <!-- Login container -->
+    <main class="row">
+      <!-- Login container -->
+      <!-- container for elements -->
+      <div class="col-lg-4 social-media-ops-container background-gradient">
+        <div>
+          <div>
+            <p class="text-center text-white">
+              ¡Bienvenido a Peygold!<br> Ahora podes cobrar, enviar y gestionar todos los movimientos de tu dinero desde
+              la comodidad de tu casa
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- container for elements -->
+      <div class="col-lg-8 login-input-container">
+        <nav id="top-navbar-register">
+          <!-- Barra de navegacion superior -->
+          <ul class="top-nav">
+            <div [ngSwitch]="type">
+              <li class="ml-4">
+                <a class="fw-700" *ngSwitchDefault href="#">Registrarse</a>
+              </li>
+              <li class="ml-4" *ngSwitchCase="'person'">
+                <a class="fw-700" href="#">Registrarse: Persona</a>
+              </li>
+              <li class="ml-4" *ngSwitchCase="'company'">
+                <a class="fw-700" href="#">Registrarse: Empresa</a>
+              </li>
+              <li class="ml-4" *ngSwitchCase="'institution'">
+                <a class="fw-700" href="#">Registrarse: Institución</a>
+              </li>
+            </div>
+            <div>
+              <li class="fs-12 ml-4">
+                <a routerLink="/login">¿Ya tienes una cuenta?</a>
+              </li>
+              <li class="fs-12 ml-4">
+                <a routerLink="/login" class="border-button">Iniciar sesión</a>
+              </li>
+            </div>
+          </ul>
+        </nav>
+
+        <div class="col-lg-11" *ngIf="!type">
+          <div class="d-flex flex-column align-items-center mt-5">
+            <h4 class="fs-16 mt-5">Indique el tipo de cuenta que desea crear con nosotros</h4>
+            <div class="container-login mt-4">
+              <a routerLink="/register/person" class="white-button-border w-100 mt-4 mb-4">Persona</a>
+              <a routerLink="/register/company" class="white-button-border w-100 mt-4 mb-4">Empresa</a>
+              <a routerLink="/register/institution" class="white-button-border w-100 mt-4 mb-4">Institución</a>
+            </div>
+          </div>
+        </div>
+        <form name="form" (ngSubmit)="registerForm.form.valid && onSubmit()" #registerForm="ngForm" novalidate>
+          <div class="col-lg-11" *ngIf="type && step == 1">
+            <div class="d-flex flex-column align-items-start mt-5">
+              <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
+              <p>Completa los datos para continuar con tu registro</p>
+            </div>
+            <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
+
+              <div class="container-form-login mt-4">
+                <div [hidden]="type!='person'">
+                  <div class="mb-4">
+                    <label class="has-float-label mb-4 w-100">
+                      <input type="text" placeholder="Nombres" class="form-control w-100"
+                             name="name" [(ngModel)]="user.name" #name="ngModel" required/>
+                      <span>Nombres</span>
+                      <div *ngIf="(!name.pristine && name.invalid) || tryNextStep && name.errors" class="invalid-feedback">
+                        <div *ngIf="name.errors.required">Campo es requerido</div>
+                      </div>
+                    </label>
+                  </div>
+
+                  <div class="mb-4">
+                    <label class="has-float-label mb-4 w-100">
+                      <input type="text" placeholder="Apellido" class="form-control w-100"
+                             name="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" required/>
+                      <span>Apellido</span>
+                      <div *ngIf="!lastName.pristine && lastName.invalid || tryNextStep && lastName.errors" class="invalid-feedback">
+                        <div *ngIf="lastName.errors.required">Campo es requerido</div>
+                      </div>
+                    </label>
+                  </div>
+
+                </div>
+                <div [hidden]="type=='person'">
+                  <div class="mb-4">
+                    <label class="has-float-label mb-4 w-100">
+                      <input type="text" placeholder="Razón social" class="form-control w-100"
+                             name="bussinesName" [(ngModel)]="user.bussinesName" #bussinesName="ngModel" required/>
+                      <span>Razón social</span>
+                      <div *ngIf="!bussinesName.pristine && bussinesName.invalid || tryNextStep && bussinesName.errors" class="invalid-feedback">
+                        <div *ngIf="bussinesName.errors.required">Campo es requerido</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="has-float-label mb-4 w-100">
+                    <input type="text" placeholder="Correo eléctronico" class="form-control w-100"
+                           name="email" [(ngModel)]="user.email" #email="ngModel" required/>
+                    <span *ngIf="type=='person'">Tu correo eléctronico</span>
+                    <span *ngIf="type!='person'">Correo eléctronico</span>
+                    <div *ngIf="!email.pristine && email.invalid || tryNextStep && email.errors" class="invalid-feedback">
+                      <div *ngIf="email.errors.required">Campo es requerido</div>
+                      <div *ngIf="email.errors.email">Por favor, ingrese un correo eléctronico válido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="mb-4">
+                  <label class="has-float-label mb-4 w-100">
+                    <input type="password" placeholder="Contraseña" class="form-control w-100"
+                           name="password" [(ngModel)]="user.password" #password="ngModel" required
+                           [pattern]="environment.form.password.validations.pattern"/>
+                    <span>Contraseña</span>
+                    <div *ngIf="!password.pristine && password.invalid || tryNextStep && password.errors" class="invalid-feedback">
+                      <div *ngIf="password.errors.required">Campo es requerido</div>
+                      <div *ngIf="password.errors.pattern">
+                        La contraseña debe tener al menos una letra en mayuscula, una minúscula, un número, un simbolo
+                        (@#$%^.+=) y al menos ocho carácteres
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="mb-4">
+                  <label class="has-float-label mb-4 w-100">
+                    <input type="password" placeholder="Confrimar contraseña" class="form-control w-100"
+                           name="repeatPassword" [(ngModel)]="user.repeatPassword" #repeatPassword="ngModel" required
+                           pattern="{{ password.value }}"/>
+                    <span>Confrimar contraseña</span>
+                    <div *ngIf="!repeatPassword.pristine && repeatPassword.invalid || tryNextStep && repeatPassword.errors" class="invalid-feedback">
+                      <div *ngIf="repeatPassword.errors.required">Campo es requerido</div>
+                      <div *ngIf="repeatPassword.errors.pattern">
+                        Las contraseñas no coinciden
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="d-flex justify-content-between w-100">
+                  <a routerLink="/register" class="white-button-border mr-4">Volver</a>
+
+                  <button
+                    class="solid-blue-button"
+                    *ngIf="type=='person'"
+                    [ngClass]="{'button-disable': ! isValidFormGroup([name, lastName, email, password, repeatPassword])}"
+                    (click)="nextStep([name,lastName,email,password,repeatPassword])">
+                    Continuar
+                  </button>
+
+                  <button
+                    class="solid-blue-button"
+                    *ngIf="type!='person'"
+                    [ngClass]="{'button-disable': ! isValidFormGroup([bussinesName, email, password, repeatPassword])}"
+                    (click)="nextStep([bussinesName,email,password,repeatPassword])">
+                    Continuar
+                  </button>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-lg-11" *ngIf="type && step==2">
+            <div class="d-flex flex-column align-items-start mt-5">
+              <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
+              <p>Bienvenido/a, completa los datos para continuar continuar con tu registro</p>
+            </div>
+            <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
+              <div class="container-form-login mt-4">
+                <div class="mb-4" [hidden]="type != 'person'">
+                  <label class="has-float-label mb-4 w-100">
+                    <ng-select placeholder="Ocupación"
+                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               bindLabel="label"
+                               [searchable]="false"
+                               [items]="occupations"
+                               [addTag]="false"
+                               name="occupation"
+                               [(ngModel)]="user.occupation"
+                               #occupation="ngModel"
+                               required>
+                    </ng-select>
+                    <div *ngIf="!occupation.pristine && occupation.invalid || trySubmit && occupation.errors" class="invalid-feedback">
+                      <div *ngIf="occupation.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="mb-4">
+                  <label class="has-float-label mb-4 w-100">
+                    <input type="text" placeholder="Teléfono" class="form-control w-100"
+                           name="phone" [(ngModel)]="user.phone" #phone="ngModel" required/>
+                    <span>Teléfono</span>
+
+                    <div *ngIf="!phone.pristine && phone.invalid || trySubmit && phone.errors" class="invalid-feedback">
+                      <div *ngIf="phone.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="mb-4" [hidden]="type == 'person'">
+                  <label class="has-float-label mb-4 w-100">
+                    <input type="text" placeholder="CUIT" class="form-control w-100"
+                           name="cuit" [(ngModel)]="user.cuit" #cuit="ngModel" required/>
+                    <span>CUIT</span>
+
+                    <div *ngIf="!cuit.pristine && cuit.invalid || trySubmit && cuit.errors" class="invalid-feedback">
+                      <div *ngIf="cuit.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="input-group-column" [hidden]="type != 'person'">
+
+                  <label class="has-float-label mb-4">
+                    <ng-select placeholder="Tipo de documento"
+                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               bindLabel="label"
+                               [searchable]="false"
+                               [items]="documentTypes"
+                               [addTag]="false"
+                               name="documentType"
+                               [(ngModel)]="user.documentType"
+                               #documentType="ngModel"
+                               required>
+                    </ng-select>
+                    <div *ngIf="!documentType.pristine && documentType.invalid || trySubmit && documentType.errors" class="invalid-feedback">
+                      <div *ngIf="documentType.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+
+                  <label class="has-float-label mb-4">
+                    <input type="text" placeholder="Número" class="form-control w-100"
+                           name="documentNumber" [(ngModel)]="user.documentNumber" #documentNumber="ngModel" required/>
+                    <span>Número</span>
+                    <div *ngIf="!documentNumber.pristine && documentNumber.invalid || trySubmit && documentNumber.errors" class="invalid-feedback">
+                      <div *ngIf="documentNumber.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="mb-4">
+                  <label class="has-float-label mb-0">
+                    <ng-select name="countries"
+                               placeholder="País"
+                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               (change)="getStates()"
+                               bindLabel="label"
+                               [searchable]="false"
+                               [items]="countries"
+                               [addTag]="false"
+                               name="country"
+                               [(ngModel)]="user.address.country"
+                               #country="ngModel"
+                               required>
+                    </ng-select>
+                    <div *ngIf="!country.pristine && country.invalid || trySubmit && country.errors" class="invalid-feedback">
+                      <div *ngIf="country.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="input-group-column">
+                  <label class="has-float-label mb-4">
+                    <ng-select name="states"
+                               placeholder="Provincia"
+                               (change)="getCities()"
+                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               bindLabel="label"
+                               [searchable]="false"
+                               [items]="states"
+                               [addTag]="false"
+                               name="state"
+                               [(ngModel)]="user.address.state"
+                               #state="ngModel"
+                               required>
+                    </ng-select>
+                    <div *ngIf="!state.pristine && state.invalid || trySubmit && state.errors" class="invalid-feedback">
+                      <div *ngIf="state.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+
+                  <label class="has-float-label mb-4">
+                    <ng-select name="cities"
+                               placeholder="Ciudad/Barrio"
+                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               bindLabel="label"
+                               [searchable]="false"
+                               [items]="cities"
+                               [addTag]="false"
+                               name="city"
+                               [(ngModel)]="user.address.city"
+                               #city="ngModel"
+                               required>
+                    </ng-select>
+                    <div *ngIf="!city.pristine && city.invalid || trySubmit && city.errors" class="invalid-feedback">
+                      <div *ngIf="city.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="input-group-column">
+
+                  <label class="has-float-label mb-4">
+                    <input type="text" placeholder="Calle" class="form-control w-100"
+                           name="street" [(ngModel)]="user.address.street" #street="ngModel" required/>
+                    <span>Calle</span>
+
+                    <div *ngIf="!street.pristine && street.invalid || trySubmit && street.errors" class="invalid-feedback">
+                      <div *ngIf="street.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+
+                  <label class="has-float-label mb-4">
+                    <input type="text" placeholder="N° de calle" class="form-control w-100"
+                           name="houseNumber" [(ngModel)]="user.address.houseNumber" #houseNumber="ngModel" required/>
+                    <span>N° de calle</span>
+
+                    <div *ngIf="!houseNumber.pristine && houseNumber.invalid || trySubmit && houseNumber.errors" class="invalid-feedback">
+                      <div *ngIf="houseNumber.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+
+                </div>
+
+                <div class="input-group-column">
+                  <label class="has-float-label mb-4">
+                    <input type="text" placeholder="Piso/Depto" class="form-control w-100"
+                           name="buildingFloor" [(ngModel)]="user.address.buildingFloor" #buildingFloor="ngModel"
+                           required/>
+                    <span>Piso/Depto</span>
+
+                    <div *ngIf="!buildingFloor.pristine && buildingFloor.invalid || trySubmit && buildingFloor.errors" class="invalid-feedback">
+                      <div *ngIf="buildingFloor.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                  <label class="has-float-label mb-4">
+                    <input type="text" placeholder="Código postal" class="form-control w-100"
+                           name="zipCode" [(ngModel)]="user.address.zipCode" #zipCode="ngModel" required/>
+                    <span>Código postal</span>
+
+                    <div *ngIf="!zipCode.pristine && zipCode.invalid || trySubmit && zipCode.errors" class="invalid-feedback">
+                      <div *ngIf="zipCode.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="mb-4" [hidden]="type == 'institution'">
+                  <label class="has-float-label mb-4 w-100">
+                    <ng-select
+                      placeholder="Institución a beneficiar"
+                      class="custom-select dropdown select-height-normal mb-0 w-100"
+                      bindLabel="label"
+                      [searchable]="false"
+                      [items]="institutions"
+                      [addTag]="false"
+                      name="profitInstitution"
+                      [(ngModel)]="user.profitInstitution"
+                      #profitInstitution="ngModel"
+                      required>
+                    </ng-select>
+                    <div *ngIf="!profitInstitution.pristine && profitInstitution.invalid || trySubmit && profitInstitution.errors" class="invalid-feedback">
+                      <div *ngIf="profitInstitution.errors.required">Campo es requerido</div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="mb-4" [hidden]="type != 'institution'">
+                  <label class="has-float-label mb-4 w-100" [ngClass]="{'mb-0': type != 'institution', 'mb-4': type == 'institution'}">
+                    <input type="text" placeholder="Página Web" class="form-control w-100"
+                           name="website" [(ngModel)]="user.website" #website="ngModel" required [pattern]="environment.form.url.validations.pattern"/>
+                    <span>Página Web</span>
+
+                    <div *ngIf="!website.pristine && website.invalid || trySubmit && website.errors" class="invalid-feedback">
+                      <div *ngIf="website.errors.required">Campo es requerido</div>
+                      <div *ngIf="website.errors.pattern">
+                        Por favor indique una URL válida.Ej. https://www.site.com
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div>
+                  <input type="checkbox" class="checkbox-normal" name="condiciones" id="condiciones"
+                         ngModel name="terms" required #terms="ngModel"/>
+                  <label class="m-0" for="condiciones">Declaro que he leído y acepto los términos y condiciones</label>
+                  <div *ngIf="!terms.pristine && terms.invalid || trySubmit && terms.errors" class="invalid-feedback m-0">
+                    <br/>
+                    <div *ngIf="terms.errors.required">Antes de continuar debe aceptar los términos y condiciones</div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between w-100">
+                  <button (click)="previoustStep()" class="white-button-border mr-4">Volver</button>
+                  <button
+                    *ngIf="type=='person'"
+                    [ngClass]="{'button-disable': ! isValidFormGroup([occupation,phone,documentType,documentNumber,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])}"
+                    (click)="signUp([occupation,phone,documentType,documentNumber,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])"
+                    class="solid-blue-button">
+                    Crear cuenta
+                  </button>
+                  <button
+                    *ngIf="type=='company'"
+                    [ngClass]="{'button-disable': ! isValidFormGroup([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])}"
+                    (click)="signUp([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])"
+                    class="solid-blue-button">
+                    Crear cuenta
+                  </button>
+                  <button
+                    *ngIf="type=='institution'"
+                    [ngClass]="{'button-disable': ! isValidFormGroup([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,website,terms])}"
+                    (click)="signUp([phone,cuit,country,state,city,street,houseNumber,buildingFloor,zipCode,website,terms])"
+                    class="solid-blue-button">
+                    Crear cuenta
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
