@@ -33,7 +33,7 @@ export class PeyRegisterComponent implements OnInit {
 
   private type: string;
   private user: User = new User();
-  private step = 2;
+  private step = 1;
   private countries: Array<Country>;
   private states: Array<State>;
   private cities: Array<City>;
