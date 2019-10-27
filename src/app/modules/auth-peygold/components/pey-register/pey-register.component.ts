@@ -1,17 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {City, Company, Country, DocumentType, Institution, Occupation, Person, ProfitInstitution, State, User} from '../../../../models';
 import {LocationService, InstitutionService, OccupationService, InMemoryService} from '../../../../services';
 import {AuthService} from '../../services/auth.service';
 import {environment} from '../../../../../environments/environment';
 import {NgModel} from '@angular/forms';
+import {BaseComponent} from '../../../commons-peygold/components/base-component.component';
+import {ErrorResponse} from '../../../commons-peygold/services/error-response';
+import {OK} from 'http-status-codes';
 
 @Component({
   selector: 'app-pey-register',
   templateUrl: './pey-register.component.html',
   styleUrls: ['./pey-register.component.scss']
 })
-export class PeyRegisterComponent implements OnInit {
+export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDestroy {
 
   /**
    * PeyRegisterComponent
@@ -29,12 +32,14 @@ export class PeyRegisterComponent implements OnInit {
     private institutionService: InstitutionService,
     private occupationService: OccupationService,
     private authService: AuthService,
-    private inMemoryService: InMemoryService,
-  ) { }
+    private inMemoryService: InMemoryService
+  ) {
+    super();
+  }
 
   private type: string;
   private user: User = new User();
-  private step = 1;
+  private step: number;
   private countries: Array<Country>;
   private states: Array<State>;
   private cities: Array<City>;
@@ -45,7 +50,11 @@ export class PeyRegisterComponent implements OnInit {
   private tryNextStep = false;
   private trySubmit = false;
 
+  /**
+   * On init implementation
+   */
   ngOnInit() {
+    this.step = 1;
     this.type = this.route.snapshot.data[`type`];
     // Get the countries.
     this.locationService.getCountries().then((countries: Array<Country>) => {
@@ -190,12 +199,34 @@ export class PeyRegisterComponent implements OnInit {
         break;
     }
 
-    signUpPromise.then((success) => {
-      if (success) {
-        this.router.navigateByUrl('/login');
+    signUpPromise.then(this.signUpSuccessful).catch((e: ErrorResponse) => {
+      if (e.code === OK) {
+        // Hack for pass the not valid json response.
+        return this.signUpSuccessful();
       }
-    }).catch((e: any) => {
-      console.log(e);
+
+      this.catchError(e);
+      window.scroll(0,0);
     });
+  }
+
+  /**
+   * Go to success sign up page.
+   * @return void
+   */
+  signUpSuccessful(): void {
+    this.router.navigateByUrl('/register/success', {
+      state : {
+        successSignUp: true
+      }
+    });
+  }
+
+  /**
+   * On destroy implementation
+   */
+  ngOnDestroy() {
+    this.type = null;
+    this.user = new User();
   }
 }

@@ -67,6 +67,7 @@
                   <div class="mb-4">
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Nombres" class="form-control w-100"
+                             [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && name.errors}"
                              name="name" [(ngModel)]="user.name" #name="ngModel" required/>
                       <span>Nombres</span>
                       <div *ngIf="(!name.pristine && name.invalid) || tryNextStep && name.errors" class="invalid-feedback">
@@ -78,6 +79,7 @@
                   <div class="mb-4">
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Apellido" class="form-control w-100"
+                             [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && lastName.errors}"
                              name="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" required/>
                       <span>Apellido</span>
                       <div *ngIf="!lastName.pristine && lastName.invalid || tryNextStep && lastName.errors" class="invalid-feedback">
@@ -91,6 +93,7 @@
                   <div class="mb-4">
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Razón social" class="form-control w-100"
+                             [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && bussinesName.errors}"
                              name="bussinesName" [(ngModel)]="user.bussinesName" #bussinesName="ngModel" required/>
                       <span>Razón social</span>
                       <div *ngIf="!bussinesName.pristine && bussinesName.invalid || tryNextStep && bussinesName.errors" class="invalid-feedback">
@@ -103,6 +106,7 @@
                 <div class="mb-4">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Correo eléctronico" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && email.errors}"
                            name="email" [(ngModel)]="user.email" #email="ngModel" required email/>
                     <span *ngIf="type=='person'">Tu correo eléctronico</span>
                     <span *ngIf="type!='person'">Correo eléctronico</span>
@@ -116,6 +120,7 @@
                 <div class="mb-4">
                   <label class="has-float-label mb-4 w-100">
                     <input type="password" placeholder="Contraseña" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && password.errors}"
                            name="password" [(ngModel)]="user.password" #password="ngModel" required
                            [pattern]="environment.form.password.validations.pattern"/>
                     <span>Contraseña</span>
@@ -132,6 +137,7 @@
                 <div class="mb-4">
                   <label class="has-float-label mb-4 w-100">
                     <input type="password" placeholder="Confrimar contraseña" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && repeatPassword.errors}"
                            name="repeatPassword" [(ngModel)]="user.repeatPassword" #repeatPassword="ngModel" required
                            pattern="{{ password.value }}"/>
                     <span>Confrimar contraseña</span>
@@ -173,6 +179,9 @@
               <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
               <p>Bienvenido/a, completa los datos para continuar continuar con tu registro</p>
             </div>
+            <ngb-alert type="danger" *ngIf="error" (close)="cleanErrors()">
+              {{error}}
+            </ngb-alert>
             <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
               <div class="container-form-login mt-4">
                 <div class="mb-4" [hidden]="type != 'person'">
@@ -186,6 +195,7 @@
                                name="occupation"
                                [(ngModel)]="user.occupation"
                                #occupation="ngModel"
+                               [ngClass]="{'ng-dirty ng-invalid' : trySubmit && occupation.errors}"
                                required>
                     </ng-select>
                     <div *ngIf="!occupation.pristine && occupation.invalid || trySubmit && occupation.errors" class="invalid-feedback">
@@ -197,6 +207,7 @@
                 <div class="mb-4">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Teléfono" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phone.errors}"
                            name="phone" [(ngModel)]="user.phone" #phone="ngModel" required/>
                     <span>Teléfono</span>
 
@@ -209,6 +220,7 @@
                 <div class="mb-4" [hidden]="type == 'person'">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="CUIT" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && cuit.errors}"
                            name="cuit" [(ngModel)]="user.cuit" #cuit="ngModel" required/>
                     <span>CUIT</span>
 
@@ -229,6 +241,7 @@
                                [addTag]="false"
                                name="documentType"
                                [(ngModel)]="user.documentType"
+                               [ngClass]="{'ng-dirty ng-invalid' : trySubmit && documentType.errors}"
                                #documentType="ngModel"
                                required>
                     </ng-select>
@@ -239,6 +252,7 @@
 
                   <label class="has-float-label mb-4">
                     <input type="text" placeholder="Número" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && documentNumber.errors}"
                            name="documentNumber" [(ngModel)]="user.documentNumber" #documentNumber="ngModel" required/>
                     <span>Número</span>
                     <div *ngIf="!documentNumber.pristine && documentNumber.invalid || trySubmit && documentNumber.errors" class="invalid-feedback">
@@ -259,6 +273,7 @@
                                [addTag]="false"
                                name="country"
                                [(ngModel)]="user.address.country"
+                               [ngClass]="{'ng-dirty ng-invalid' : trySubmit && country.errors}"
                                #country="ngModel"
                                required>
                     </ng-select>
@@ -280,6 +295,7 @@
                                [addTag]="false"
                                name="state"
                                [(ngModel)]="user.address.state"
+                               [ngClass]="{'ng-dirty ng-invalid' : trySubmit && state.errors}"
                                #state="ngModel"
                                required>
                     </ng-select>
@@ -298,6 +314,7 @@
                                [addTag]="false"
                                name="city"
                                [(ngModel)]="user.address.city"
+                               [ngClass]="{'ng-dirty ng-invalid' : trySubmit && city.errors}"
                                #city="ngModel"
                                required>
                     </ng-select>
@@ -311,6 +328,7 @@
 
                   <label class="has-float-label mb-4">
                     <input type="text" placeholder="Calle" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && street.errors}"
                            name="street" [(ngModel)]="user.address.street" #street="ngModel" required/>
                     <span>Calle</span>
 
@@ -321,6 +339,7 @@
 
                   <label class="has-float-label mb-4">
                     <input type="text" placeholder="N° de calle" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && houseNumber.errors}"
                            name="houseNumber" [(ngModel)]="user.address.houseNumber" #houseNumber="ngModel" required/>
                     <span>N° de calle</span>
 
@@ -334,6 +353,7 @@
                 <div class="input-group-column">
                   <label class="has-float-label mb-4">
                     <input type="text" placeholder="Piso/Depto" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && buildingFloor.errors}"
                            name="buildingFloor" [(ngModel)]="user.address.buildingFloor" #buildingFloor="ngModel"
                            required/>
                     <span>Piso/Depto</span>
@@ -344,6 +364,7 @@
                   </label>
                   <label class="has-float-label mb-4">
                     <input type="text" placeholder="Código postal" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && zipCode.errors}"
                            name="zipCode" [(ngModel)]="user.address.zipCode" #zipCode="ngModel" required/>
                     <span>Código postal</span>
 
@@ -364,6 +385,7 @@
                       [addTag]="false"
                       name="profitInstitution"
                       [(ngModel)]="user.profitInstitution"
+                      [ngClass]="{'ng-dirty ng-invalid' : trySubmit && profitInstitution.errors}"
                       #profitInstitution="ngModel"
                       required>
                     </ng-select>
@@ -376,6 +398,7 @@
                 <div class="mb-4" [hidden]="type != 'institution'">
                   <label class="has-float-label mb-4 w-100" [ngClass]="{'mb-0': type != 'institution', 'mb-4': type == 'institution'}">
                     <input type="text" placeholder="Página Web" class="form-control w-100"
+                           [ngClass]="{'ng-dirty ng-invalid' : trySubmit && website.errors}"
                            name="website" [(ngModel)]="user.website" #website="ngModel" required [pattern]="environment.form.url.validations.pattern"/>
                     <span>Página Web</span>
 
@@ -390,12 +413,9 @@
 
                 <div>
                   <input type="checkbox" class="checkbox-normal" name="condiciones" id="condiciones"
+                         [ngClass]="{'ng-dirty ng-invalid' : trySubmit && terms.errors}"
                          ngModel name="terms" required #terms="ngModel"/>
-                  <label class="m-0" for="condiciones">Declaro que he leído y acepto los términos y condiciones</label>
-                  <div *ngIf="!terms.pristine && terms.invalid || trySubmit && terms.errors" class="invalid-feedback m-0">
-                    <br/>
-                    <div *ngIf="terms.errors.required">Antes de continuar debe aceptar los términos y condiciones</div>
-                  </div>
+                  <label class="m-0" for="condiciones" [ngClass]="{'ng-invalid' : trySubmit && terms.errors}">Declaro que he leído y acepto los términos y condiciones</label>
                 </div>
 
                 <div class="d-flex justify-content-between w-100">

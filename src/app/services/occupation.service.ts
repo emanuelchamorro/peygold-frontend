@@ -32,7 +32,6 @@ export class OccupationService extends HttpService {
 
       return this.occupations;
     }).catch(e => {
-      console.log(e);
       return this.occupations;
     });
   }

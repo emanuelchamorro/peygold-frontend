@@ -13,15 +13,21 @@ import {HttpService} from './http.service';
 })
 export class InstitutionService extends HttpService {
 
+  public institutions: Institution[];
+
   /**
    * Get the list of Institution models
    */
   all(): Promise<Array<Institution>> {
+    if (this.institutions) {
+      return this.resolveWith(this.institutions);
+    }
+
     return this.get('/Institutions').toPromise().then((response: ApiResponse) => {
-      const institutions = [];
+      this.institutions = [];
 
       if (!response.value) {
-        return institutions;
+        return this.institutions;
       }
 
       response.value.map((data: any) => {
@@ -56,13 +62,12 @@ export class InstitutionService extends HttpService {
         institution.address.buildingFloor = address.floor;
         institution.address.zipCode = address.postalCode;
 
-        institutions.push(institution);
+        this.institutions.push(institution);
       });
 
-      return institutions;
+      return this.institutions;
     }).catch(e => {
-      console.log(e);
-      return [];
+      return this.institutions;
     });
   }
 }

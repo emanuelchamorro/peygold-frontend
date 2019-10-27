@@ -6,16 +6,19 @@ import { PeyRegisterComponent } from './components/pey-register/pey-register.com
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import { PeySuccessComponent } from './components/pey-success/pey-success.component';
 
 @NgModule({
-  declarations: [PeyLoginComponent, PeyRegisterComponent],
+  declarations: [PeyLoginComponent, PeyRegisterComponent, PeySuccessComponent],
   imports: [
     CommonModule,
     AuthPeyGoldRouting,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgSelectModule
+    NgSelectModule,
+    NgbAlertModule
   ]
 })
 export class AuthPeyGoldModule { }

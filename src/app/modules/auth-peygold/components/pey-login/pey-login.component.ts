@@ -9,6 +9,9 @@ export class PeyLoginComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * On init implementation
+   */
   ngOnInit() {
   }
 

@@ -33,7 +33,6 @@ export class LocationService extends HttpService {
 
       return this.countries;
     }).catch(e => {
-      console.log(e);
       return this.countries;
     });
   }
@@ -59,7 +58,6 @@ export class LocationService extends HttpService {
 
       return states;
     }).catch(e => {
-      console.log(e);
       return [];
     });
   }
@@ -85,7 +83,6 @@ export class LocationService extends HttpService {
 
       return cities;
     }).catch(e => {
-      console.log(e);
       return [];
     });
   }

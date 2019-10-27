@@ -24,7 +24,7 @@ export class AuthService extends HttpService {
 
     console.log(userInfo);
 
-    return this.post('/clients', userInfo).toPromise();;
+    return this.post('/clients', userInfo).toPromise();
   }
 
   /**
@@ -56,7 +56,7 @@ export class AuthService extends HttpService {
 
     console.log(userInfo);
 
-    return this.post('/institutions', userInfo).toPromise();;
+    return this.post('/institutions', userInfo).toPromise();
   }
 
   /**
