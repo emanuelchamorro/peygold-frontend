@@ -5,11 +5,62 @@ import {Institution} from '../../../models/institution';
 import {User} from '../../../models/user';
 import {HttpService} from '../../../services/http.service';
 import {Address} from '../../../models/address';
+import {ApiResponse} from '../../../services/api-response';
+import {City} from '../../../models';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends HttpService {
+
+  /**
+   * App login.
+   * @param user User to be authenticated.
+   */
+  login(email: string, password: string, rememberMe = false): Promise<User> {
+    return this.post('/auth', {
+      email,
+      password,
+      rememberMe
+    }).toPromise().then((response: ApiResponse) =>{
+      const value: any = response.value
+      const user = new User();
+
+      user.id = value.idUser;
+      user.phone = value.phone;
+      user.phone = value.phone;
+      user.email = value.email;
+      user.token = value.token;
+      user.address = new Address();
+      user.address.country = new City(value.idCountry, value.countryName);
+      user.address.state = new City(value.idState, value.stateName);
+      user.address.city = new City(value.idCity, value.cityName);
+      user.address.street = value.street;
+      user.address.houseNumber = value.houseNumber;
+      user.avatar = environment.api.avatarUrl + value.avatarURL;
+
+      /*
+      "idAspNetUser": "ecb5ab29-c499-42d2-a6da-0309518e4ea0",
+      "socialReason": null,
+      "name": "Douglas",
+      "firstName": "Douglas",
+      "lastName": "Trejos",
+      "idUserType": 1,
+      "cuit": null,
+      "idCountry": 3,
+      "idInstitution": 225,
+      "canChargePeygold": false,
+      "employeeQuantity": 2,
+      "annualIncome": 50000,
+      "idPrimaryActivity": 1,
+      "primaryActivityName": "Actividad Principal 1",
+      "roles": ["Client"],
+      "systemUserTypeId": 1
+      */
+      return user;
+    });
+  }
 
   /**
    * Register a new person in the platform
@@ -57,14 +108,6 @@ export class AuthService extends HttpService {
     console.log(userInfo);
 
     return this.post('/institutions', userInfo).toPromise();
-  }
-
-  /**
-   * App login.
-   * @param user User to be authenticated.
-   */
-  login(user: User): Promise<User> {
-    return this.resolveWith(new User());
   }
 
   /**
@@ -158,5 +201,37 @@ export class AuthService extends HttpService {
         confirmPassword: user.password
       }
     };
+  }
+
+  /**
+   * Retrieve the token to start the password recovery.
+   * @param email The user email
+   */
+  retrieveResetPasswordTokenByEmail(email: string): Promise<User> {
+    return this.post('/users/SendTokenRecovery', {email}).toPromise();
+  }
+
+  /**
+   * Validate the token and user email match to able to change the password.
+   * @param email The user email
+   * @param token The token
+   */
+  validateResetPasswordToken(email: string, token: string): Promise<User> {
+    return this.post('/users/RecoveryPassword', {email, token}).toPromise();
+  }
+
+  /**
+   * Change the user password
+   * @param email The user email
+   * @param token The token
+   * @param password The new password
+   */
+  resetUserPassword(email: string, token: string, password: string): Promise<User> {
+    return this.post('/users/ChangePassword', {
+      email,
+      token,
+      Password: password,
+      ConfirmPassword: password
+    }).toPromise();
   }
 }

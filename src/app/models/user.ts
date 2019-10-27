@@ -21,5 +21,7 @@ export class User extends Model {
   public description: string;
   public newsLetter: boolean;
   public peygoldCommission: number;
+  public token: string;
+  public avatar: string;
 }
 

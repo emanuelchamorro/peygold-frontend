@@ -2,15 +2,24 @@ form {
   width: 100%;
 }
 
-.form-control.ng-invalid, .form-control.ng-invalid:focus, ng-select.ng-invalid{
+.form-control.ng-invalid,
+.form-control.ng-invalid:focus,
+.form-control-white.ng-invalid,
+.form-control-white.ng-invalid:focus,
+ng-select.ng-invalid
+{
   &.ng-dirty, &.ng-dirty:focus {
-    border: solid 2px rgba(158, 14, 0, 0.83);
-    border-radius: 0.4rem;
-    box-shadow: 0 0 0 .2rem rgba(220,53,69,.25);
+    border: solid 2px rgba(158, 14, 0, 0.83) !important;
+    border-radius: 0.4rem !important;
+    box-shadow: 0 0 0 .2rem rgba(220,53,69,.25) !important;
   }
 }
 
 label.ng-invalid {
   color: rgba(158, 14, 0, 0.83);
   font-weight: bold;
+}
+
+.color-white {
+  color: white !important;
 }

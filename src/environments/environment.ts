@@ -24,6 +24,7 @@ export const environment = {
   },
   api: {
     url: 'https://api.peygold.com/api',
+    avatarUrl: 'https://api.peygold.com',
   }
 };
 

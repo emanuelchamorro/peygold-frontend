@@ -24,6 +24,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    * @param institutionService Provider
    * @param occupationService Provider
    * @param authService Provider
+   * @param inMemoryService Provider
    */
   constructor(
     private route: ActivatedRoute,
@@ -94,21 +95,6 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    */
   previoustStep(): void {
     this.step--;
-  }
-
-  /**
-   * Checks if the register form is able to continue with the next step.
-   */
-  isValidFormModels(models: Array<NgModel>): boolean {
-    let valid = true;
-    models.map((model) => {
-      if (model.invalid) {
-        valid = false;
-        return;
-      }
-    });
-
-    return valid;
   }
 
   /**
@@ -215,9 +201,10 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    * @return void
    */
   signUpSuccessful(): void {
+    this.user = null;
     this.router.navigateByUrl('/register/success', {
       state : {
-        successSignUp: true
+        securedRedirection: true
       }
     });
   }

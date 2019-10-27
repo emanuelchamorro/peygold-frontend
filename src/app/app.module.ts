@@ -17,11 +17,9 @@ import {HttpErrorInterceptor} from './modules/commons-peygold/services/http-erro
     AuthPeyGoldModule,
     OAuthModule.forRoot()
   ],
-  providers: [   {
-    provide: HTTP_INTERCEPTORS,
-    useClass: HttpErrorInterceptor,
-    multi: true
-  }],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

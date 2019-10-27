@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {PeyLoginComponent} from './components/pey-login/pey-login.component';
 import {PeyRegisterComponent} from './components/pey-register/pey-register.component';
 import {PeySuccessComponent} from './components/pey-success/pey-success.component';
+import {PeyResetPasswordComponent} from './components/pey-reset-password/pey-reset-password.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,10 @@ export const routes: Routes = [
       message: '¡Bienvenidos a la comunidad Peygold!<br/>' +
         'Aprovechá al máximo nuestros servicios y obtené los mejores beneficios con nostros.',
     }
+  },
+  {
+    path: 'reset-password',
+    component: PeyResetPasswordComponent,
   },
   {
     path: 'reset-password/success',

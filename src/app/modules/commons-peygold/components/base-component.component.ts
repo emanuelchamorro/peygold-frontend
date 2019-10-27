@@ -1,4 +1,5 @@
 import {ErrorResponse} from '../services/error-response';
+import {NgModel} from '@angular/forms';
 
 export class BaseComponent {
 
@@ -10,7 +11,7 @@ export class BaseComponent {
    * Clean the list of error messages.
    * @param delay Milliseconds to clean the error list
    */
-  protected waitAndCleanErrors(delay = 10000): void {
+  public waitAndCleanErrors(delay = 10000): void {
     setTimeout(() => this.cleanErrors(), delay);
   }
 
@@ -18,8 +19,9 @@ export class BaseComponent {
    * Add a message to the error list.
    * @param message Message to add to error lisy
    */
-  protected addError(message: string): void {
+  protected addError(message: string): BaseComponent {
     this.messages.errors.push(message);
+    return this;
   }
 
   /**
@@ -27,6 +29,21 @@ export class BaseComponent {
    */
   protected cleanErrors(): void {
     this.messages.errors = [];
+  }
+
+  /**
+   * Checks if the register form is able to continue with the next step.
+   */
+  isValidFormModels(models: Array<NgModel>): boolean {
+    let valid = true;
+    models.map((model) => {
+      if (model.invalid) {
+        valid = false;
+        return;
+      }
+    });
+
+    return valid;
   }
 
   /**

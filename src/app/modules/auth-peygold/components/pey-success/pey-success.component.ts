@@ -13,7 +13,7 @@ export class PeySuccessComponent implements OnInit {
     private router: Router
   ) {
     const navigation = this.router.getCurrentNavigation();
-    if (!navigation || !navigation.extras.state || !navigation.extras.state.successSignUp) {
+    if (!navigation || !navigation.extras.state || !navigation.extras.state.securedRedirection) {
       this.router.navigateByUrl('/');
     }
   }

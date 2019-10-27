@@ -10,7 +10,8 @@
             <div class="container-redes">
               <h2>¡Seguinos en Redes Sociales!</h2>
               <p class="text-center">
-                No solo somos una multiplataforma, tambien nos encontramos cerca tuyo en cualquier momento que nos necesites.</p>
+                No solo somos una multiplataforma, tambien nos encontramos cerca tuyo en cualquier momento que nos
+                necesites.</p>
               <p class="text-center">¡Seguinos en Redes Sociales!
               </p>
             </div>
@@ -41,25 +42,42 @@
               <a routerLink="/register" class="mr-4">¿No tenes cuenta?</a>
               <a routerLink="/register" class="border-button border-white">Registrarse</a>
             </div>
-            <div class="container-login pt-5">
-              <div>
+            <form name="loginForm" class="container-login" (ngSubmit)="submited=true; loginForm.form.valid && login()" #loginForm="ngForm" novalidate>
+
+              <div class="mb-4">
                 <img src="assets/images/Isologotipo.svg" class="logo-login-img w-100 mb-4">
               </div>
-              <div class="w-100 mb-4 mt-4">
-                <input type="text" class="form-control-white w-100 shadow-none" placeholder="Tu correo electrónico">
-              </div>
-              <div class="w-100 mb-4">
-                <input type="text" class="form-control-white w-100 shadow-none" placeholder="Contraseña">
-              </div>
+
+              <label class="has-float-label mb-4 w-100">
+                <input type="text" placeholder="Correo eléctronico" class="form-control-white w-100 shadow-none"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && email.errors}"
+                       name="email" [(ngModel)]="user.email" #email="ngModel" required email/>
+                <span class="color-white">Correo eléctronico</span>
+              </label>
+
+              <label class="has-float-label mb-4 w-100">
+                <input type="password" placeholder="Contraseña" class="form-control-white w-100 shadow-none"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && password.errors}"
+                       name="password" [(ngModel)]="user.password" #password="ngModel" required />
+                <span class="color-white">Contraseña</span>
+                <div *ngIf="error" class="invalid-feedback text-left">
+                  <div [innerHtml]="error"></div>
+                </div>
+              </label>
+
               <div class="recordar-password mb-5">
                 <div class="checkbox-style-white">
                   <input type="checkbox" name="tall-1" class="checkbox-white" id="tall-1">
                   <label for="tall-1" class="fs-13 text-white">Recordarme</label>
                 </div>
-                <a href="insert-mail.html" class="fw-600">Olvidé mi contraseña</a>
+                <a routerLink="/reset-password" class="fw-600">Olvidé mi contraseña</a>
               </div>
-              <a href="" class="button-white">Iniciar sesión</a>
-            </div>
+              <button
+                type="submit"
+                class="button-white">
+                Iniciar sesión
+              </button>
+            </form>
           </div>
         </div>
       </main>
