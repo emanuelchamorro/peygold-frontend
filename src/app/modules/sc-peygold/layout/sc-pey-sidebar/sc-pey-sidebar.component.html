@@ -1,0 +1,9 @@
+<div class="ShowDetails" [ngClass]="{'d-block': !closed, 'd-none': closed}">
+  <div class="BoxDetails">
+    <div class="HeadDetail" *ngIf="title">
+      <h3 [innerHtml]="title"></h3>
+      <span *ngIf="closeable" class="closeDetail" (click)="close()">x</span>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>

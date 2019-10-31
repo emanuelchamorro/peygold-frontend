@@ -100,7 +100,7 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.authService.validateResetPasswordToken(this.user.email, this.user.token).then((response) => {
+    this.authService.resetUserPassword(this.user.email, this.user.token, this.user.password).then((response) => {
       this.user = null;
       this.router.navigateByUrl('/reset-password/success', {
         state : {

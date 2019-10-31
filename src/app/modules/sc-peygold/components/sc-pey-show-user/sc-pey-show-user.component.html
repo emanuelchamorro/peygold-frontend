@@ -1,0 +1,65 @@
+<div class="BodyDetail">
+  <div class="TopBody">
+    <div class="RoundedLetter">P</div>
+    <div class="DataName">
+      <h4 [innerHtml]="user.completeName"></h4>
+      <p [innerHtml]="user.email"></p>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div class="DataDetail">
+  <table class="responsive">
+    <tr>
+      <td class="col-6">Nombres</td>
+      <td class="col-6" [innerHtml]="user.name"></td>
+    </tr>
+    <tr>
+      <td class="col-6">Apellidos</td>
+      <td class="col-6" [innerHtml]="user.lastName"></td>
+    </tr>
+    <tr>
+      <td class="col-6">DNI</td>
+      <td class="col-6" [innerHtml]="user.documentNumber"></td>
+    </tr>
+    <tr>
+      <td class="col-6">Teléfono</td>
+      <td class="col-6" [innerHtml]="user.phone"></td>
+    </tr>
+    <tr>
+      <td class="col-6">Rol</td>
+      <td class="col-6" [innerHtml]="user.roles"></td>
+    </tr>
+  </table>
+</div>
+<div class="DataDetail">
+  <table class="responsive">
+    <tr>
+      <td class="col-6">País</td>
+      <td class="col-6" [innerHtml]="user.address.country.name"></td>
+    </tr>
+    <tr>
+      <td class="col-6">Provincia</td>
+      <td class="col-6" [innerHtml]="user.address.state.name"></td>
+    </tr>
+    <tr>
+      <td class="col-6">Ciudad/Barrio</td>
+      <td class="col-6" [innerHtml]="user.address.city.name"></td>
+    </tr>
+    <tr>
+      <td class="col-6">Calle y Nº</td>
+      <td class="col-6" [innerHtml]="user.address.street"></td>
+    </tr>
+    <tr>
+      <td class="col-6">Piso/depto</td>
+      <td class="col-6">
+        <span [innerHtml]="user.address.houseNumber"></span>&nbsp;&nbsp;
+        <span [innerHtml]="user.address.buildingFloor"></span>
+      </td>
+    </tr>
+    <tr>
+      <td class="col-6">Código postal</td>
+      <td class="col-6" [innerHtml]="user.address.zipCode"></td>
+    </tr>
+  </table>
+</div>

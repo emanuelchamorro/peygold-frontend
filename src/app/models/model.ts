@@ -15,4 +15,11 @@ export class Model {
     }
     return this;
   }
+
+  /**
+   * Serialize the object
+   */
+  public toString(): string{
+    return JSON.stringify(this);
+  }
 }

@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  sc: {
+    home: '/sc/users',
+  },
   social_networks: {
     twitter : '#',
     facebook : '#',
@@ -22,9 +25,20 @@ export const environment = {
       }
     }
   },
+  interceptors: {
+    jwt_interceptor: {
+      white_list: [
+        'api.peygold.com',
+      ]
+    }
+  },
   api: {
     url: 'https://api.peygold.com/api',
-    avatarUrl: 'https://api.peygold.com',
+    avatarUrl: 'https://api.peygold.com'
+  },
+  localStorage: {
+    user_var_name: 'pey_user',
+    access_token_var_name: 'pey_access_token',
   }
 };
 

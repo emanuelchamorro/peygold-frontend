@@ -11,5 +11,6 @@ export {ProfitInstitution} from './profit-institution';
 export {SelectOption} from './select-option';
 export {State} from './state';
 export {User} from './user';
+export {UserStatus} from './user-status';
 
 

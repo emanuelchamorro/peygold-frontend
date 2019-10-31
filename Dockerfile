@@ -13,4 +13,4 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 RUN npm install -g @angular/cli@8.3.9
-
+RUN npm install -g firebase-tools

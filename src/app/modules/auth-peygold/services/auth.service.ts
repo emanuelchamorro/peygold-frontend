@@ -8,11 +8,24 @@ import {Address} from '../../../models/address';
 import {ApiResponse} from '../../../services/api-response';
 import {City} from '../../../models';
 import {environment} from '../../../../environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends HttpService {
+
+  /**
+   * AuthService
+   * @param http http client
+   * @param JwtHelperService jwtService
+   */
+  constructor(
+    protected http: HttpClient,
+    public jwtHelperService: JwtHelperService) {
+    super(http);
+  }
 
   /**
    * App login.
@@ -23,8 +36,8 @@ export class AuthService extends HttpService {
       email,
       password,
       rememberMe
-    }).toPromise().then((response: ApiResponse) =>{
-      const value: any = response.value
+    }).toPromise().then((response: ApiResponse) => {
+      const value: any = response.value;
       const user = new User();
 
       user.id = value.idUser;
@@ -233,5 +246,31 @@ export class AuthService extends HttpService {
       Password: password,
       ConfirmPassword: password
     }).toPromise();
+  }
+
+  /**
+   * Check whether the token is expired and return true or false
+   * @return boolean token is expired.
+   */
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem(environment.localStorage.access_token_var_name);
+    try {
+      return !this.jwtHelperService.isTokenExpired(token);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Return the authenticated user from the local storage
+   */
+  user(): User {
+    const localUser = localStorage.getItem(environment.localStorage.user_var_name);
+
+    if (! localUser) {
+      return null;
+    }
+
+    return new (User)().fromJSON(localUser);
   }
 }

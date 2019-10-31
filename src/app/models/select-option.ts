@@ -20,7 +20,17 @@ export class SelectOption extends Model {
     this.value = value;
   }
 
+  /**
+   * Getter: value
+   */
   get id(): string{
     return this.value;
+  }
+
+  /**
+   * Getter: label
+   */
+  get name(): string{
+    return this.label;
   }
 }

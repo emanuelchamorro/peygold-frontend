@@ -51,3 +51,32 @@ The next command list is just for development information:
 docker-compose exec ng-peygold ng generate component
 docker-compose exec ng-peygold ng generate service
 ```
+
+## Firebase deploy:
+
+### Configure Firebase
+
+1 Authenticate with firebase cli:
+```
+docker-compose exec ng-peygold firebase login
+```
+
+2 Select and Configure the project: (Choose Hosting feature)
+```
+docker-compose exec ng-peygold firebase init
+```
+
+The previous step should be executed just one time. 
+After running the previous step, you can go to deploy the app directly.  
+
+### Deploy the app
+
+Build the production app.
+```
+docker-compose exec ng-peygold ng build --prod
+```
+
+Deploy the app 
+```
+docker-compose exec ng-peygold firebase deploy
+```

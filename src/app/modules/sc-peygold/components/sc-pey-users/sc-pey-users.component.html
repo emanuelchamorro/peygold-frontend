@@ -1,0 +1,98 @@
+<div class="top">
+  <div class="row TopTitle">
+    <div class="col">
+      <h2 class="titleSecurity"><span class="icon-Security"></span> Seguridad: Usuarios</h2>
+    </div>
+    <div class="col">
+      <form>
+        <input type="text" placeholder="Buscar" class="inputSearch"/>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-6 form-inline">
+      <div class="form-group">
+        <button class="btn FiltrarOrdenar Active  slide-toggle" data-el-target=".DownFiltrarOrdenar">Filtrar/Ordenar</button>
+      </div>
+      <div class="form-group">
+        <div class="Export">
+          <a class="ExportBtn slide-toggle"><span class="ExportIcon"></span>Exportar como<span class="ChevronDown"></span></a>
+          <div id="DownExport" class="DownExport slide-toggle-content">
+            <ul>
+              <li><a (click)="export('csv')">.CSV</a></li>
+              <li><a (click)="export('xlsx')">.XLSX</a></li>
+              <li><a (click)="export('pdf')">.PDF</a></li>
+              <li><a (click)="export('txt')">.TXT</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col col-6">
+      <a href="new-user.html" class="btn-blue-lg"><span class="plusIcon"></span> Nuevo usuario</a>
+    </div>
+  </div>
+</div>
+<div class="wallet-conteiner mb-2">
+  <div class="tablaDatos">
+    <div class="DownFiltrarOrdenar">
+      <div class="Export">
+        <a class="ExportBtn slide-toggle">Estado<span class="ChevronDown"></span></a>
+        <div id="DownStatus" class="DownExport slide-toggle-content">
+          <ul>
+            <li><a href="#">Activo</a></li>
+            <li><a href="#">Inactivo</a></li>
+            <li><a href="#">Bloqueado</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <table class="table responsive">
+      <thead>
+      <tr>
+        <th scope="col" class="text-center">Usuario</th>
+        <th scope="col" class="text-center">DNI</th>
+        <th scope="col" class="text-center">Email</th>
+        <th scope="col" class="text-center">Estado</th>
+        <th scope="col" class="text-center"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td><p class="text-center" [innerHtml]="user.completeName"></p></td>
+        <td><p class="text-center" [innerHtml]="user.documentNumber"></p></td>
+        <td><p class="text-center" [innerHtml]="user.email"></p></td>
+        <td class="text-center"><span class="status Aprobado"></span></td>
+        <td class="text-center">
+          <div class="DropOptions toggleOptions">
+            <span class="options slide-toggle"></span>
+            <div class="OptionsDrop text-left slide-toggle-content">
+              <a class="dropdown-item ViewDetails" (click)="showUser(user)">Ver detalles</a>
+              <a class="dropdown-item" href="edit-user.html">Editar Usuario</a>
+              <div class="row">
+                <div class="col col-6">
+                  <a class="dropdown-item" href="#"><span class="Seguridad-icon icon-Activar"></span>Activar</a>
+                </div>
+                <div class="col col-6">
+                  <a class="dropdown-item" href="#"><span class="Seguridad-icon icon-Desactivar"></span>Desactivar</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-6">
+                  <a class="dropdown-item" href="#"><span class="Seguridad-icon icon-Bloquear"></span>Bloquear</a>
+                </div>
+                <div class="col col-6">
+                  <a class="dropdown-item" href="#"><span class="Seguridad-icon icon-Desbloquear"></span>Desbloquear</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-sc-pey-sidebar *ngIf="detailedUser" (onClose)="detailedUser = null" [closed]="!detailedUser" title="Detalles de usuario">
+  <app-sc-pey-show-user [user]="detailedUser"></app-sc-pey-show-user>
+</app-sc-pey-sidebar>

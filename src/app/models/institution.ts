@@ -6,9 +6,6 @@ import {ProfitInstitution} from './profit-institution';
  * Institution model
  */
 export class Institution extends Company {
-  public website: string;
-  public volunteerQuantity: number;
-  public commission: number;
 
   /**
    * Change this object to a Profit Institution model.

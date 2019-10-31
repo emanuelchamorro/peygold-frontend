@@ -9,8 +9,9 @@ services:
     privileged: true
     working_dir: /app
     ports:
-      - '4201:4200'
-      - '9876:9876'
+      - '4201:4200' ### Angular development server
+      - '9876:9876' ### Angular hot-reload
+      - '9005:9005' ### Firebase cli
     volumes:
     - ./:/app:rw
     networks:

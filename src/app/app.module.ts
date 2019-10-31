@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 import { AuthPeyGoldModule } from './modules/auth-peygold/auth-peygold.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {HttpErrorInterceptor} from './modules/commons-peygold/services/http-error.interceptor';
+import {ScPeyGoldModule} from './modules/sc-peygold/sc-peygold.module';
+import {JwtInterceptor, JwtModule} from '@auth0/angular-jwt';
+import {environment} from '../environments/environment';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,10 +19,21 @@ import {HttpErrorInterceptor} from './modules/commons-peygold/services/http-erro
     BrowserModule,
     AppRoutingModule,
     AuthPeyGoldModule,
-    OAuthModule.forRoot()
+    ScPeyGoldModule,
+    OAuthModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem(environment.localStorage.access_token_var_name);
+        },
+        whitelistedDomains: environment.interceptors.jwt_interceptor.white_list
+      }
+    })
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
+    { provide: LocationStrategy,  useClass: HashLocationStrategy},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
