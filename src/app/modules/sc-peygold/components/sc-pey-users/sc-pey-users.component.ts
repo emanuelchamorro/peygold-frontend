@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User, UserStatus} from '../../../../models';
 import {UsersService} from '../../services/users.service';
-import {ErrorResponse} from '../../../commons-peygold/services/error-response';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sc-pey-users',
@@ -18,6 +18,7 @@ export class ScPeyUsersComponent implements OnInit {
    * ScPeyDashboardComponent
    */
   constructor(
+    private router: Router,
     private usersService: UsersService,
   ) {
     this.users = [];
@@ -42,11 +43,23 @@ export class ScPeyUsersComponent implements OnInit {
   }
 
   /**
-   * Go to new user view.
+   * Go to PeyStoreUserComponent.
    * @return void;
    */
   createUser(): void {
 
+  }
+
+  /**
+   * Go to PeyStoreUserComponent.
+   * @return void;
+   */
+  editUser(user): void {
+    this.router.navigateByUrl('sc/user', {
+      state : {
+        userId: user.id
+      }
+    });
   }
 
   /**
@@ -55,20 +68,7 @@ export class ScPeyUsersComponent implements OnInit {
    * @return void
    */
   showUser(user: User): void {
-    if (user.id) {
-      this.usersService.one(user.id).then((detailedUser: User) => {
-          this.detailedUser = detailedUser;
-      });
-    }
-  }
-
-  /**
-   * Redirect to edit route;
-   * @param user User to be edited.
-   * @return void
-   */
-  editUser(user: User): void {
-
+    this.detailedUser = user;
   }
 
   /**

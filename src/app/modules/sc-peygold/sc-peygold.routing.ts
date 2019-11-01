@@ -4,6 +4,7 @@ import {ScPeyDashboardComponent} from './components/sc-pey-dashboard/sc-pey-dash
 import {GuardAuthService} from './services/guard-auth.service';
 import {ScPeyLayoutComponent} from './layout/sc-pey-layout/sc-pey-layout.component';
 import {ScPeyUsersComponent} from './components/sc-pey-users/sc-pey-users.component';
+import {ScPeyStoreUserComponent} from './components/sc-pey-store-user/sc-pey-store-user.component';
 
 export const routes: Routes = [
   {
@@ -15,12 +16,26 @@ export const routes: Routes = [
         path: 'dashboard',
         component: ScPeyDashboardComponent,
         data: {
-          title: 'Login Page'
+          title: 'Dashboard'
         },
       },
       {
         path: 'users',
         component: ScPeyUsersComponent,
+        data: {
+          title: 'Seguridad: Usuarios'
+        },
+      },
+      {
+        path: 'user',
+        component: ScPeyStoreUserComponent,
+        data: {
+          title: 'Login Page'
+        },
+      },
+      {
+        path: 'user/:userId',
+        component: ScPeyStoreUserComponent,
         data: {
           title: 'Login Page'
         },

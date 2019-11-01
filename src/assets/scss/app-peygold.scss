@@ -1,3 +1,33 @@
+/*
+ * Layout
+ */
+
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+}
+
+#main-div {
+  height: 100%;
+}
+
+.color-white {
+  color: white !important;
+}
+
+.ShowDetails {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(51,51,51,0.7);
+  z-index: 60000000;
+  display: none;
+}
+
+/**
+ * Forms
+ */
 form {
   width: 100%;
 }
@@ -20,17 +50,21 @@ label.ng-invalid {
   font-weight: bold;
 }
 
-.color-white {
-  color: white !important;
+/**
+ * Forms
+ */
+.has-float-label input, .has-float-label select {
+  margin-bottom: 0px;
 }
 
-.ShowDetails {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: rgba(51,51,51,0.7);
-  z-index: 60000000;
-  display: none;
+/**
+ *Ng Select
+ */
+.ng-select-container {
+  height: 38px;
+
+  .ng-placeholder {
+    margin-top: 3px;
+  }
+
 }

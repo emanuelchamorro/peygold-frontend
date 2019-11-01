@@ -1,12 +1,20 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../../../services/http.service';
-import {Address, City, Country, Institution, Person, ProfitInstitution, State, User, UserStatus} from '../../../models';
-import {Contact} from '../../../models/contact';
+import {Address, City, Contact, Country, ProfitInstitution, State, User, UserStatus, DocumentType, Person} from '../../../models';
+import {HttpClient} from '@angular/common/http';
+import {InMemoryService} from '../../../services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService extends HttpService {
+
+  constructor(
+    protected http: HttpClient,
+    private inMemoryService: InMemoryService,
+  ) {
+    super(http);
+  }
 
   /**
    * Get all users.
@@ -58,8 +66,7 @@ export class UsersService extends HttpService {
       nUser.email = user.email;
       nUser.idUserType = user.idUserType;
       nUser.cuit = user.cuit;
-      nUser.documentType = user.cti;
-      nUser.documentNumber = user.dni;
+      nUser.documentType = this.inMemoryService.documentTypeByValue(user.cti);
       nUser.documentNumber = user.dni;
       nUser.bussinessName = user.socialReason;
       nUser.profitInstitution = new ProfitInstitution(user.idInstitution);
@@ -73,7 +80,13 @@ export class UsersService extends HttpService {
       nUser.linkedIn = user.linkedIn;
       nUser.twitter = user.twitter;
       nUser.facebook = user.facebook;
-      nUser.roles = user.roles;
+
+      if (user.roles) {
+        user.roles.map((role: any) => {
+          nUser.addRole(role);
+        });
+      }
+
       nUser.primaryActivityName = user.primaryActivityName;
       nUser.documents = user.documents;
       nUser.locals = user.locals;
@@ -106,4 +119,26 @@ export class UsersService extends HttpService {
       return nUser;
     });
   }
+
+  /**
+   * Create a new user.
+   * @param user The new user
+   */
+  store(user: User): Promise<boolean> {
+    console.log(user);
+
+    return this.post('/users', user).toPromise();
+  }
+
+  /**
+   * Edit the user.
+   * @param user The user to edit
+   */
+  update(user: User): Promise<boolean> {
+    console.log(user);
+
+    return this.put('/users', user).toPromise();
+  }
+
+
 }

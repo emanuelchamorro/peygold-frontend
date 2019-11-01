@@ -33,4 +33,12 @@ export class SelectOption extends Model {
   get name(): string{
     return this.label;
   }
+
+  /**
+   * Convert the object to an string
+   * @return string the serialized value
+   */
+  toString(): string {
+    return this.name;
+  }
 }

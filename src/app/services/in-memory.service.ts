@@ -15,4 +15,18 @@ export class InMemoryService extends BaseService {
       new DocumentType('2', 'Libreta de identidad')
     ];
   }
+
+  /**
+   * Get the list of document models
+   */
+  documentTypeByValue(value: string): DocumentType {
+    const documents = this.documentTypes.filter(
+      (documentType: DocumentType) => documentType.value === String(value));
+
+    if (! documents) {
+      return new DocumentType();
+    }
+
+    return documents[0];
+  }
 }

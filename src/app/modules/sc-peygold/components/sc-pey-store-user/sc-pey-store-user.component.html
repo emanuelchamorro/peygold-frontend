@@ -1,1 +1,260 @@
-<p>sc-pey-user-update works!</p>
+<div class="top NewUser" *ngIf="user">
+  <form name="form" (ngSubmit)="submited=true; storeUser.form.valid && onSubmit(user)" #storeUser="ngForm" novalidate>
+    <div class="row TopTitle">
+      <div class="col">
+        <h2 *ngIf="user.id" class="titleSecurity"><span class="icon-Security"></span> Seguridad: <span>Editar Usuario</span></h2>
+        <h2 *ngIf="!user.id" class="titleSecurity"><span class="icon-Security"></span> Seguridad: <span>Nuevo Usuario</span></h2>
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
+    <div class="wallet-conteiner mb-2">
+      <div class="row">
+        <div class="col">
+          <h4>Datos personales</h4>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0 w-100">
+                <input type="text" placeholder="Nombres" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && name.errors}"
+                       name="name" [(ngModel)]="user.name" #name="ngModel" required/>
+                <span>Nombres</span>
+                <div *ngIf="(!name.pristine && name.invalid) || submited && name.errors" class="invalid-feedback">
+                  <div *ngIf="name.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0 w-100">
+                <input type="text" placeholder="Apellido" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && lastName.errors}"
+                       name="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" required/>
+                <span>Apellido</span>
+                <div *ngIf="!lastName.pristine && lastName.invalid || submited && lastName.errors" class="invalid-feedback">
+                  <div *ngIf="lastName.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <ng-select placeholder="Tipo de documento"
+                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           bindLabel="label"
+                           [searchable]="false"
+                           [items]="documentTypes"
+                           [addTag]="false"
+                           name="documentType"
+                           [(ngModel)]="user.documentType"
+                           [ngClass]="{'ng-dirty ng-invalid' : submited && documentType.errors}"
+                           #documentType="ngModel"
+                           required>
+                </ng-select>
+                <div *ngIf="!documentType.pristine && documentType.invalid || submited && documentType.errors" class="invalid-feedback">
+                  <div *ngIf="documentType.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <input type="text" placeholder="Número" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && documentNumber.errors}"
+                       name="documentNumber" [(ngModel)]="user.documentNumber" #documentNumber="ngModel" required/>
+                <span>Número</span>
+                <div *ngIf="!documentNumber.pristine && documentNumber.invalid || submited && documentNumber.errors" class="invalid-feedback">
+                  <div *ngIf="documentNumber.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0 w-100">
+                <input type="text" placeholder="Teléfono" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && phone.errors}"
+                       name="phone" [(ngModel)]="user.phone" #phone="ngModel" required/>
+                <span>Teléfono</span>
+
+                <div *ngIf="!phone.pristine && phone.invalid || submited && phone.errors" class="invalid-feedback">
+                  <div *ngIf="phone.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0 w-100">
+                <input type="text" placeholder="Correo eléctronico" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && email.errors}"
+                       name="email" [(ngModel)]="user.email" #email="ngModel" required email/>
+                <span *ngIf="type=='person'">Tu correo eléctronico</span>
+                <span *ngIf="type!='person'">Correo eléctronico</span>
+                <div *ngIf="!email.pristine && email.invalid || submited && email.errors" class="invalid-feedback">
+                  <div *ngIf="email.errors.required">Campo es requerido</div>
+                  <div *ngIf="email.errors.email">Por favor, ingrese un correo eléctronico válido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <ng-select name="roles"
+                           placeholder="Roles"
+                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           bindLabel="label"
+                           [multiple]="true"
+                           [searchable]="false"
+                           [items]="availableRoles"
+                           [addTag]="false"
+                           name="roles"
+                           [(ngModel)]="user.roles"
+                           [ngClass]="{'ng-dirty ng-invalid' : submited && roles.errors}"
+                           #roles="ngModel"
+                           required>
+                </ng-select>
+                <div *ngIf="!roles.pristine && roles.invalid || submited && roles.errors" class="invalid-feedback">
+                  <div *ngIf="roles.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h4>Domicilio</h4>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <ng-select name="countries"
+                           placeholder="País"
+                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           (change)="getStates()"
+                           bindLabel="label"
+                           [searchable]="false"
+                           [items]="countries"
+                           [addTag]="false"
+                           name="country"
+                           [(ngModel)]="user.address.country"
+                           [ngClass]="{'ng-dirty ng-invalid' : submited && country.errors}"
+                           #country="ngModel"
+                           required>
+                </ng-select>
+                <div *ngIf="!country.pristine && country.invalid || submited && country.errors" class="invalid-feedback">
+                  <div *ngIf="country.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <ng-select name="states"
+                           placeholder="Provincia"
+                           (change)="getCities()"
+                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           bindLabel="label"
+                           [searchable]="false"
+                           [items]="states"
+                           [addTag]="false"
+                           name="state"
+                           [(ngModel)]="user.address.state"
+                           [ngClass]="{'ng-dirty ng-invalid' : submited && state.errors}"
+                           #state="ngModel"
+                           required>
+                </ng-select>
+                <div *ngIf="!state.pristine && state.invalid || submited && state.errors" class="invalid-feedback">
+                  <div *ngIf="state.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <ng-select name="cities"
+                           placeholder="Ciudad/Barrio"
+                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           bindLabel="label"
+                           [searchable]="false"
+                           [items]="cities"
+                           [addTag]="false"
+                           name="city"
+                           [(ngModel)]="user.address.city"
+                           [ngClass]="{'ng-dirty ng-invalid' : submited && city.errors}"
+                           #city="ngModel"
+                           required>
+                </ng-select>
+                <div *ngIf="!city.pristine && city.invalid || submited && city.errors" class="invalid-feedback">
+                  <div *ngIf="city.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <input type="text" placeholder="Calle" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && street.errors}"
+                       name="street" [(ngModel)]="user.address.street" #street="ngModel" required/>
+                <span>Calle</span>
+
+                <div *ngIf="!street.pristine && street.invalid || submited && street.errors" class="invalid-feedback">
+                  <div *ngIf="street.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <input type="text" placeholder="N° de calle" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && houseNumber.errors}"
+                       name="houseNumber" [(ngModel)]="user.address.houseNumber" #houseNumber="ngModel" required/>
+                <span>N° de calle</span>
+
+                <div *ngIf="!houseNumber.pristine && houseNumber.invalid || submited && houseNumber.errors" class="invalid-feedback">
+                  <div *ngIf="houseNumber.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <input type="text" placeholder="Piso/Depto" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && buildingFloor.errors}"
+                       name="buildingFloor" [(ngModel)]="user.address.buildingFloor" #buildingFloor="ngModel"
+                       required/>
+                <span>Piso/Depto</span>
+
+                <div *ngIf="!buildingFloor.pristine && buildingFloor.invalid || submited && buildingFloor.errors" class="invalid-feedback">
+                  <div *ngIf="buildingFloor.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <label class="has-float-label mb-0">
+                <input type="text" placeholder="Código postal" class="form-control w-100"
+                       [ngClass]="{'ng-dirty ng-invalid' : submited && zipCode.errors}"
+                       name="zipCode" [(ngModel)]="user.address.zipCode" #zipCode="ngModel" required/>
+                <span>Código postal</span>
+
+                <div *ngIf="!zipCode.pristine && zipCode.invalid || submited && zipCode.errors" class="invalid-feedback">
+                  <div *ngIf="zipCode.errors.required">Campo es requerido</div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actionForm align-items-end">
+      <button routerLink="/sc/users" class="btn-transparent-NewUser">Volver</button>
+      <button type="submit" class="btn-NewUser" [innerHtml]="user.id ? 'Actualizar' : 'Crear'"></button>
+    </div>
+  </form>
+</div>

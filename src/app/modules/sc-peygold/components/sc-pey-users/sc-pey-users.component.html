@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="col col-6">
-      <a href="new-user.html" class="btn-blue-lg"><span class="plusIcon"></span> Nuevo usuario</a>
+      <a routerLink="/sc/user" class="btn-blue-lg"><span class="plusIcon"></span> Nuevo usuario</a>
     </div>
   </div>
 </div>
@@ -68,7 +68,7 @@
             <span class="options slide-toggle"></span>
             <div class="OptionsDrop text-left slide-toggle-content">
               <a class="dropdown-item ViewDetails" (click)="showUser(user)">Ver detalles</a>
-              <a class="dropdown-item" href="edit-user.html">Editar Usuario</a>
+              <a class="dropdown-item" [routerLink]="['/sc/user', user.id]">Editar Usuario</a>
               <div class="row">
                 <div class="col col-6">
                   <a class="dropdown-item" href="#"><span class="Seguridad-icon icon-Activar"></span>Activar</a>
@@ -94,5 +94,5 @@
   </div>
 </div>
 <app-sc-pey-sidebar *ngIf="detailedUser" (onClose)="detailedUser = null" [closed]="!detailedUser" title="Detalles de usuario">
-  <app-sc-pey-show-user [user]="detailedUser"></app-sc-pey-show-user>
+  <app-sc-pey-show-user [id]="detailedUser.id"></app-sc-pey-show-user>
 </app-sc-pey-sidebar>

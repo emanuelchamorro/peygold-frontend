@@ -5,6 +5,7 @@ import {Occupation} from './occupation';
 import {Nationality} from './nationality';
 import {ProfitInstitution} from './profit-institution';
 import {Contact} from './contact';
+import {Role} from './role';
 
 /**
  * User model
@@ -46,7 +47,7 @@ export class User extends Model {
   public linkedIn: string;
   public twitter: string;
   public facebook: string;
-  public roles: Array<string>;
+  public roles: Array<Role>;
   public primaryActivityName: string;
   public documents: Array<any>;
   public locals: Array<any>;
@@ -58,10 +59,40 @@ export class User extends Model {
   public billingAddress: Address;
 
   /**
-   * Get the user fullName
+   * Get the user complete Name
+   * @return string the complete name
    */
   get completeName(): string {
     return this.fullName || this.name + ' ' + this.lastName;
+  }
+
+  /**
+   * Get the user initials name
+   * @return string the initials name
+   */
+  get initials(): string {
+    const completeName = this.completeName;
+
+    if (!completeName) {
+      return '';
+    }
+
+    let initials = '';
+
+    completeName.split(' ').map((name) => initials += name.charAt(0));
+
+    return initials;
+  }
+
+  /**
+   * Add new role.
+   * @param name role name.
+   */
+  addRole(name: string) {
+    if (! this.roles) {
+      this.roles = new Array<Role>();
+    }
+    this.roles.push(new Role(name, name));
   }
 }
 

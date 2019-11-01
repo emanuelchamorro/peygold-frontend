@@ -8,6 +8,8 @@ import { ScPeyUsersComponent } from './components/sc-pey-users/sc-pey-users.comp
 import { ScPeyShowUserComponent } from './components/sc-pey-show-user/sc-pey-show-user.component';
 import { ScPeyStoreUserComponent } from './components/sc-pey-store-user/sc-pey-store-user.component';
 import { ScPeySidebarComponent } from './layout/sc-pey-sidebar/sc-pey-sidebar.component';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,9 @@ import { ScPeySidebarComponent } from './layout/sc-pey-sidebar/sc-pey-sidebar.co
     ScPeyStoreUserComponent,
     ScPeySidebarComponent],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
     CommonModule,
     BrowserAnimationsModule,
     ScPeyGoldRouting,
