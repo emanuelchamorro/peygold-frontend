@@ -43,6 +43,15 @@
     $( document ).on( 'click', function() {
       $('.slide-toggle-content:visible').slideToggle();
     });
+
+    $( document ).on( 'click', '#sidebar-switch', function() {
+      $("#sidebar-container").toggleClass("sidebar-collapse");
+      $("#sidebar-wrapper").toggleClass("sidebar-collapse");
+      $("#top-navbar").toggleClass("top-navbar-extended");
+      $("#secondary-nav").toggleClass("top-navbar-extended");
+      $("#footer").toggleClass("top-navbar-extended");
+    });
+
   </script>
 </body>
 </html>

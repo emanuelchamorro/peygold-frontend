@@ -4,9 +4,6 @@
 
 export const environment = {
   production: false,
-  sc: {
-    home: '/sc/users',
-  },
   social_networks: {
     twitter : '#',
     facebook : '#',

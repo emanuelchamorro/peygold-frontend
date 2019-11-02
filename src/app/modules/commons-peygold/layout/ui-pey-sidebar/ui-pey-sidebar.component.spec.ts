@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScPeySidebarComponent } from './sc-pey-sidebar.component';
+import { UIPeySidebarComponent } from './ui-pey-sidebar.component';
 
-describe('ScPeySidebarComponent', () => {
-  let component: ScPeySidebarComponent;
-  let fixture: ComponentFixture<ScPeySidebarComponent>;
+describe('UIPeySidebarComponent', () => {
+  let component: UIPeySidebarComponent;
+  let fixture: ComponentFixture<UIPeySidebarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScPeySidebarComponent ]
+      declarations: [ UIPeySidebarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScPeySidebarComponent);
+    fixture = TestBed.createComponent(UIPeySidebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

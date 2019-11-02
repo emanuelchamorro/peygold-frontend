@@ -1,0 +1,282 @@
+<div class="sidebar-extended" id="sidebar-wrapper">
+  <div class="sidebar-extended" id="sidebar-container">
+    <ul class="list-group">
+      <!-- IMPORTANTE: Añadir clase active al anchor tag en el side-bar -->
+
+      <!-- Titulo peygold -->
+      <li>
+        <div class="center-sidebar-title">
+          <img src="assets/images/logo-peygold-2.svg" class="title-extended title" alt="" />
+          <img src="assets/images/isotipo.svg" class="title title-collapse d-none" alt="">
+          <span><i class="fas fa-bars" id="quit-sm-btn"></i></span>
+        </div>
+      </li>
+      <!-- Titulo peygold -->
+
+      <div class="border-top-white"></div>
+
+      <!-- Usuario logeado -->
+      <li>
+        <div id="center-sidebar-user">
+          <img src="assets/images/user3.png" id="user-img-sidebar" alt="User image" />
+          <p id="user-text">
+            <span class="sidebar-welcome-text">ADMINISTRADOR</span><br />
+            <span class="sidebar-user-text">John Doe</span>
+          </p>
+        </div>
+      </li>
+      <!-- Usuario logeado -->
+
+
+      <!-- Menu sidebar -->
+      <!-- Item -->
+      <li class="nav-item">
+        <a class="nav-link sidebar-link" href="#">
+          <div class="d-flex">
+            <span class="icon-Iconos-01"></span> <span>Inicio</span>
+          </div>
+        </a>
+      </li>
+      <!-- Item -->
+
+      <!-- Item Desplegable -->
+
+      <li class="nav-item slide-toggle" data-el-target="#usuarios" id="pay-li-sidebar">
+        <a class="nav-link sidebar-link justify-content-between active">
+          <div class="d-flex">
+            <span class="icon-seguridad"></span>
+            <span>Seguridad</span>
+          </div>
+          <svg version="1.1" id="pay-chevron-sidebar" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003"
+                    style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="sidebar-icon chevron-right">
+                    <g>
+                      <g>
+                        <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                              l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                              c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                      </g>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                  </svg>
+
+        </a>
+      </li>
+
+      <!-- Subelementos -->
+
+      <div class="mnu-hide-panel-sidebar" id="usuarios">
+        <ul class="sidebar-sublist sublist-pay">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span class="sidebar-sub-link fs-12">Usuarios</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Roles de usuarios</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Mi Usuario</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Item Desplegable -->
+
+      <!-- Item Desplegable -->
+
+      <li class="nav-item" id="catalogos-li-sidebar">
+        <a class="nav-link sidebar-link justify-content-between">
+          <div class="d-flex">
+            <span class="icon-catalogo"></span>
+            <span>Catálogos</span>
+          </div>
+          <svg version="1.1" id="pay-chevron-sidebar" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003"
+                    style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="sidebar-icon chevron-right">
+                    <g>
+                      <g>
+                        <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                              l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                              c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                      </g>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                  </svg>
+
+        </a>
+      </li>
+
+      <!-- Subelementos -->
+
+      <div class="mnu-hide-panel-sidebar" id="catalogos-panel-sidebar">
+        <ul class="sidebar-sublist sublist-pay">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Aseguradoras</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Item Desplegable -->
+
+      <!-- Item Desplegable -->
+
+      <li class="nav-item" id="gestion-li-sidebar">
+        <a class="nav-link sidebar-link justify-content-between">
+          <div class="d-flex">
+            <span class="icon-creditos-26"></span>
+            <span>Gestión de créditos</span>
+          </div>
+          <svg version="1.1" id="pay-chevron-sidebar" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003"
+                    style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="sidebar-icon chevron-right">
+                    <g>
+                      <g>
+                        <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                              l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                              c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                      </g>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                  </svg>
+
+        </a>
+      </li>
+
+      <!-- Subelementos -->
+
+      <div class="mnu-hide-panel-sidebar" id="gestion-panel-sidebar">
+        <ul class="sidebar-sublist sublist-pay">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Solicitudes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Liquidaciones</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Control de pagos</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Item Desplegable -->
+
+      <!-- Item Desplegable -->
+
+      <li class="nav-item" id="reportes-li-sidebar">
+        <a class="nav-link sidebar-link justify-content-between">
+          <div class="d-flex">
+            <span class="icon-reportes-27"></span>
+            <span>Reportes</span>
+          </div>
+          <svg version="1.1" id="pay-chevron-sidebar" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003"
+                    style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="sidebar-icon chevron-right">
+                    <g>
+                      <g>
+                        <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                              l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                              c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                      </g>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                  </svg>
+
+        </a>
+      </li>
+
+      <!-- Subelementos -->
+
+      <div class="mnu-hide-panel-sidebar" id="reportes-panel-sidebar">
+        <ul class="sidebar-sublist sublist-pay">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Estado de cuenta</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="sidebar-sub-link fs-12">Retenciones</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Item Desplegable -->
+
+      <!-- Item -->
+      <li class="nav-item">
+        <a class="nav-link sidebar-link" href="#">
+          <div class="d-flex">
+            <span class="icon-configuracion-40"></span> <span>Ajsutes de sistema</span>
+          </div>
+        </a>
+      </li>
+      <!-- Item -->
+    </ul>
+  </div>
+</div>  <!-- Sidebar end -->

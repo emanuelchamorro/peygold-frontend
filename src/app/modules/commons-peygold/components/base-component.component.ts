@@ -1,4 +1,4 @@
-import {ErrorResponse} from '../services/error-response';
+import {ErrorResponse} from '../entities/error-response';
 import {NgModel} from '@angular/forms';
 
 export class BaseComponent {
@@ -59,5 +59,13 @@ export class BaseComponent {
   protected catchError(e: ErrorResponse): void {
     this.addError(e.message);
     this.waitAndCleanErrors();
+  }
+
+  /**
+   * Add slash to the url
+   * @param path The url.
+   */
+  protected url(path): string{
+    return '/' + path;
   }
 }

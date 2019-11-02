@@ -4,14 +4,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UsersService} from '../../services/users.service';
 import {InMemoryService, LocationService} from '../../../../services';
 import {RolesService} from '../../services/roles.service';
-import {ErrorResponse} from '../../../commons-peygold/services/error-response';
+import {ErrorResponse} from '../../../commons-peygold/entities/error-response';
+import {BaseComponent} from '../base.component';
 
 @Component({
   selector: 'app-sc-pey-store-user',
   templateUrl: './sc-pey-store-user.component.html',
   styleUrls: ['./sc-pey-store-user.component.scss']
 })
-export class ScPeyStoreUserComponent implements OnInit {
+export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
 
   @Input() private user: User;
 
@@ -29,6 +30,7 @@ export class ScPeyStoreUserComponent implements OnInit {
     private rolesService: RolesService,
     private inMemoryService: InMemoryService
   ) {
+    super();
     const userId = Number(this.route.snapshot.paramMap.get('userId'));
 
     if (userId && ! isNaN(userId)) {

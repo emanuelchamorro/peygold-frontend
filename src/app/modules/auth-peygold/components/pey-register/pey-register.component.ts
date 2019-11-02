@@ -5,8 +5,8 @@ import {LocationService, InstitutionService, OccupationService, InMemoryService}
 import {AuthService} from '../../services/auth.service';
 import {environment} from '../../../../../environments/environment';
 import {NgModel} from '@angular/forms';
-import {BaseComponent} from '../../../commons-peygold/components/base-component.component';
-import {ErrorResponse} from '../../../commons-peygold/services/error-response';
+import {BaseComponent} from '../../components/base.component';;
+import {ErrorResponse} from '../../../commons-peygold/entities/error-response';
 import {OK} from 'http-status-codes';
 
 @Component({
@@ -202,7 +202,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    */
   signUpSuccessful(): void {
     this.user = null;
-    this.router.navigateByUrl('/register/success', {
+    this.router.navigateByUrl(this.url(this.routes.register.success), {
       state : {
         securedRedirection: true
       }

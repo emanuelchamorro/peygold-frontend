@@ -1,0 +1,39 @@
+.d-flex {
+  > span {
+    display: block ruby;
+  }
+}
+
+.sidebar-sub-link {
+  display: block ruby;
+}
+
+.sidebar-collapse .sidebar-sub-link, .sidebar-collapse ul.sidebar-sublist, .sidebar-collapse .nav-subtitles *, .sidebar-collapse .nav-link * {
+  margin-left: 10.5px;
+}
+
+.sidebar-collapse {
+  width: 0.0rem;
+}
+
+#center-sidebar-user {
+  display: inline-flex;
+  padding-left: 1.5rem;
+}
+
+.center-sidebar-title {
+  display: inline-table;
+}
+
+.title-extended {
+  margin: -2rem 0 -2.5rem 3.5rem;
+}
+
+.sidebar-extended .hide-panel-sidebar {
+  max-height: unset;
+  display: none;
+}
+
+.mnu-hide-panel-sidebar {
+  display: none;
+}

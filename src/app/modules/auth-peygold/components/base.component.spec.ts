@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScPeyLayoutComponent } from './sc-pey-layout.component';
+import { BaseComponent } from './base.component';
 
-describe('ScPeyLayoutComponent', () => {
-  let component: ScPeyLayoutComponent;
-  let fixture: ComponentFixture<ScPeyLayoutComponent>;
+describe('BaseComponent', () => {
+  let component: BaseComponent;
+  let fixture: ComponentFixture<BaseComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScPeyLayoutComponent ]
+      declarations: [ BaseComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScPeyLayoutComponent);
+    fixture = TestBed.createComponent(BaseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

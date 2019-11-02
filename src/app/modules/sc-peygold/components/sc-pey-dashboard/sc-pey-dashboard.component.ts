@@ -1,13 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User, UserStatus} from '../../../../models';
 import {UsersService} from '../../services/users.service';
+import {BaseComponent} from '../base.component';
 
 @Component({
   selector: 'app-sc-pey-dashboard',
   templateUrl: './sc-pey-dashboard.component.html',
   styleUrls: ['./sc-pey-dashboard.component.scss']
 })
-export class ScPeyDashboardComponent implements OnInit {
+export class ScPeyDashboardComponent extends BaseComponent implements OnInit {
 
   private users: Array<User>;
 
@@ -17,6 +18,7 @@ export class ScPeyDashboardComponent implements OnInit {
   constructor(
     private usersService: UsersService,
   ) {
+    super();
     this.users = [];
   }
 

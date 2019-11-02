@@ -5,21 +5,25 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
 import { AuthPeyGoldModule } from './modules/auth-peygold/auth-peygold.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {HttpErrorInterceptor} from './modules/commons-peygold/services/http-error.interceptor';
+import {HttpErrorInterceptor} from './modules/commons-peygold/interceptors/http-error.interceptor';
 import {ScPeyGoldModule} from './modules/sc-peygold/sc-peygold.module';
 import {JwtInterceptor, JwtModule} from '@auth0/angular-jwt';
 import {environment} from '../environments/environment';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {EuPeyGoldModule} from './modules/eu-peygold/eu-peygold.module';
+import {CommonsPeyGoldModule} from './modules/commons-peygold/commons-peygold.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AuthPeyGoldModule,
+    CommonsPeyGoldModule,
     ScPeyGoldModule,
+    EuPeyGoldModule,
     OAuthModule.forRoot(),
     JwtModule.forRoot({
       config: {

@@ -6,7 +6,7 @@ import {User} from '../../../models/user';
 import {HttpService} from '../../../services/http.service';
 import {Address} from '../../../models/address';
 import {ApiResponse} from '../../../services/api-response';
-import {City, Country, State} from '../../../models';
+import {City, Country, ProfitInstitution, State} from '../../../models';
 import {environment} from '../../../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {HttpClient} from '@angular/common/http';
@@ -42,7 +42,6 @@ export class AuthService extends HttpService {
 
       user.id = value.idUser;
       user.phone = value.phone;
-      user.phone = value.phone;
       user.email = value.email;
       user.token = value.token;
       user.address = new Address();
@@ -52,25 +51,27 @@ export class AuthService extends HttpService {
       user.address.street = value.street;
       user.address.houseNumber = value.houseNumber;
       user.avatar = environment.api.avatarUrl + value.avatarURL;
+      user.idAspNetUser = value.idAspNetUser;
+      user.annualIncome = value.annualIncome;
+      user.primaryActivityName = value.primaryActivityName;
+      if (value.roles) {
+        value.roles.map((role: any) => {
+          user.addRole(role);
+        });
+      }
+      user.annualIncome = value.annualIncome;
+      user.bussinessName = value.socialReason;
+      user.name = value.firstName;
+      user.lastName = value.lastName;
+      user.idUserType = value.idUserType;
+      user.cuit = value.cuit;
+      user.profitInstitution = new ProfitInstitution(value.idInstitution);
+      user.employeeQuantity = value.employeeQuantity;
+      user.idPrimaryActivity = value.idPrimaryActivity;
+      user.systemUserTypeId = value.systemUserTypeId;
+      user.canChargePeygold = value.canChargePeygold;
+      user.rememberMe = rememberMe;
 
-      /*
-      "idAspNetUser": "ecb5ab29-c499-42d2-a6da-0309518e4ea0",
-      "socialReason": null,
-      "name": "Douglas",
-      "firstName": "Douglas",
-      "lastName": "Trejos",
-      "idUserType": 1,
-      "cuit": null,
-      "idCountry": 3,
-      "idInstitution": 225,
-      "canChargePeygold": false,
-      "employeeQuantity": 2,
-      "annualIncome": 50000,
-      "idPrimaryActivity": 1,
-      "primaryActivityName": "Actividad Principal 1",
-      "roles": ["Client"],
-      "systemUserTypeId": 1
-      */
       return user;
     });
   }

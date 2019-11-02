@@ -1,53 +1,60 @@
 import {NgModule} from '@angular/core';
+import {routes} from './routes';
 import {RouterModule, Routes} from '@angular/router';
 import {PeyLoginComponent} from './components/pey-login/pey-login.component';
 import {PeyRegisterComponent} from './components/pey-register/pey-register.component';
 import {PeySuccessComponent} from './components/pey-success/pey-success.component';
 import {PeyResetPasswordComponent} from './components/pey-reset-password/pey-reset-password.component';
+import {LogoutService} from './services/logout.service';
 
-export const routes: Routes = [
+export const config: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: routes.login,
     pathMatch: 'full',
   },
   {
-    path: 'login',
+    path: routes.login,
     component: PeyLoginComponent,
     data: {
       title: 'Login Page'
     },
   },
   {
-    path: 'register',
+    path: routes.logout,
+    canActivate: [LogoutService],
+    component: PeyLoginComponent,
+  },
+  {
+    path: routes.register.index,
     component: PeyRegisterComponent,
     data: {
       title: 'Register Person',
     }
   },
   {
-    path: 'register/company',
+    path: routes.register.company,
     component: PeyRegisterComponent,
     data: {
       type: 'company'
     }
   },
   {
-    path: 'register/institution',
+    path: routes.register.institution,
     component: PeyRegisterComponent,
     data: {
       type: 'institution'
     }
   },
   {
-    path: 'register/person',
+    path: routes.register.person,
     component: PeyRegisterComponent,
     data: {
       type: 'person'
     }
   },
   {
-    path: 'register/success',
+    path: routes.register.success,
     component: PeySuccessComponent,
     data: {
       title: '¡Te registraste exitosamente!',
@@ -56,11 +63,11 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'reset-password',
+    path: routes.reset_password.index,
     component: PeyResetPasswordComponent,
   },
   {
-    path: 'reset-password/success',
+    path: routes.reset_password.success,
     component: PeySuccessComponent,
     data: {
       title: '¡Contraseña restablecida!',
@@ -72,7 +79,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, {
+  imports: [ RouterModule.forRoot(config, {
     scrollPositionRestoration: 'enabled'
   }) ],
   exports: [ RouterModule ]

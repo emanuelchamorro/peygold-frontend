@@ -17,6 +17,14 @@ export class Model {
   }
 
   /**
+   * Create from a json serialized structure
+   * @param json json data
+   */
+  public fromString(json: string) {
+    return this.fromJSON(JSON.parse(json));
+  }
+
+  /**
    * Serialize the object
    */
   public toString(): string{

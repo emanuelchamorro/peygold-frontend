@@ -7,8 +7,9 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import {ErrorResponse} from './error-response';
+
 import {OK} from 'http-status-codes';
+import {ErrorResponse} from '../entities/error-response';
 
 export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

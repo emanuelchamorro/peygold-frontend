@@ -14,6 +14,7 @@ export class User extends Model {
   static TYPE_PERSON      = 'person';
   static TYPE_COMPANY     = 'company';
   static TYPE_INSTITUTION = 'institution';
+  static ADMIN_IDENTIFIER = 1;
 
   public id: number;
   public avatarURL: string;
@@ -57,6 +58,10 @@ export class User extends Model {
   public nationality: Nationality;
   public address: Address = new Address();
   public billingAddress: Address;
+  public idPrimaryActivity: number;
+  public systemUserTypeId: number;
+  public canChargePeygold: boolean;
+  public rememberMe: boolean;
 
   /**
    * Get the user complete Name
@@ -93,6 +98,17 @@ export class User extends Model {
       this.roles = new Array<Role>();
     }
     this.roles.push(new Role(name, name));
+  }
+
+  /**
+   * Get
+   */
+  get isAdmin(): boolean {
+    if (! this.systemUserTypeId) {
+      return false;
+    }
+
+    return this.systemUserTypeId === User.ADMIN_IDENTIFIER;
   }
 }
 

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../../models';
-import {BaseComponent} from '../../../commons-peygold/components/base-component.component';
+import {BaseComponent} from '../../components/base.component';
 import {AuthService} from '../../services/auth.service';
-import {ErrorResponse} from '../../../commons-peygold/services/error-response';
+import {ErrorResponse} from '../../../commons-peygold/entities/error-response';
 import {Router} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
+import {routes as scRoutes} from '../../../sc-peygold/routes';
+import {routes as euRoutes} from '../../../eu-peygold/routes';
 
 @Component({
   selector: 'app-pey-login',
@@ -12,7 +14,6 @@ import {environment} from '../../../../../environments/environment';
   styleUrls: ['./pey-login.component.scss']
 })
 export class PeyLoginComponent extends BaseComponent implements OnInit {
-
   /**
    * PeyLoginComponent
    * @param authService Provider
@@ -31,24 +32,42 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    * On init implementation
    */
   ngOnInit() {
-
+    const serializedUser = localStorage.getItem(environment.localStorage.user_var_name);
+    if (serializedUser) {
+      const user: User = new User().fromString(serializedUser);
+      if (user.rememberMe) {
+        this.goToDashboard(user);
+      }
+    }
   }
 
   /**
    * Do login
+   * @return void
    */
   login(): void {
-    this.authService.login(this.user.email, this.user.password).then((user: User) => {
+    this.authService.login(this.user.email, this.user.password, this.user.rememberMe).then((user: User) => {
       localStorage.setItem(environment.localStorage.user_var_name, user.toString());
       localStorage.setItem(environment.localStorage.access_token_var_name, user.token);
-      this.router.navigateByUrl(environment.sc.home, {
-        state : {
-          securedRedirection: true
-        }
-      });
+      this.goToDashboard(user);
     }).catch((e: ErrorResponse) => {
       this.addError(e.message).waitAndCleanErrors();
     });
   }
 
+  /**
+   * Redirect the authenticated user to the dashboard
+   * @param user the authenticated user
+   * @return void
+   */
+  private goToDashboard(user: User): void {
+    console.log(user);
+    // const dashboardUrl = user.isAdmin ?  scRoutes.home : euRoutes.home;
+    const dashboardUrl = euRoutes.home;
+    this.router.navigateByUrl(this.url(dashboardUrl), {
+      state : {
+        securedRedirection: true
+      }
+    });
+  }
 }

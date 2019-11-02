@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {User, UserStatus} from '../../../../models';
 import {UsersService} from '../../services/users.service';
 import {Router} from '@angular/router';
+import {BaseComponent} from '../base.component';
 
 @Component({
   selector: 'app-sc-pey-users',
   templateUrl: './sc-pey-users.component.html',
   styleUrls: ['./sc-pey-users.component.scss']
 })
-export class ScPeyUsersComponent implements OnInit {
+export class ScPeyUsersComponent extends BaseComponent implements OnInit {
 
   private users: Array<User>;
 
@@ -21,6 +22,7 @@ export class ScPeyUsersComponent implements OnInit {
     private router: Router,
     private usersService: UsersService,
   ) {
+    super();
     this.users = [];
   }
 

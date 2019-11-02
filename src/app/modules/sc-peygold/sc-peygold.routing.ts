@@ -2,39 +2,40 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ScPeyDashboardComponent} from './components/sc-pey-dashboard/sc-pey-dashboard.component';
 import {GuardAuthService} from './services/guard-auth.service';
-import {ScPeyLayoutComponent} from './layout/sc-pey-layout/sc-pey-layout.component';
+import {UIPeyLayoutComponent} from '../commons-peygold/layout/ui-pey-layout/ui-pey-layout.component';
 import {ScPeyUsersComponent} from './components/sc-pey-users/sc-pey-users.component';
 import {ScPeyStoreUserComponent} from './components/sc-pey-store-user/sc-pey-store-user.component';
+import {routes} from './routes';
 
-export const routes: Routes = [
+export const config: Routes = [
   {
-    path: 'sc',
-    component: ScPeyLayoutComponent,
+    path: routes.home,
+    component: UIPeyLayoutComponent,
     canActivate: [GuardAuthService],
     children: [
       {
-        path: 'dashboard',
+        path: routes.dashboard.index,
         component: ScPeyDashboardComponent,
         data: {
           title: 'Dashboard'
         },
       },
       {
-        path: 'users',
+        path: routes.users.index,
         component: ScPeyUsersComponent,
         data: {
           title: 'Seguridad: Usuarios'
         },
       },
       {
-        path: 'user',
+        path: routes.users.post,
         component: ScPeyStoreUserComponent,
         data: {
           title: 'Login Page'
         },
       },
       {
-        path: 'user/:userId',
+        path: routes.users.put,
         component: ScPeyStoreUserComponent,
         data: {
           title: 'Login Page'
@@ -45,7 +46,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, {
+  imports: [ RouterModule.forRoot(config, {
     scrollPositionRestoration: 'enabled'
   }) ],
   exports: [ RouterModule ]

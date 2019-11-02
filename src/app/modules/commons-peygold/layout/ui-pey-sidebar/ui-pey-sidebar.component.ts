@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-sc-pey-sidebar',
-  templateUrl: './sc-pey-sidebar.component.html',
-  styleUrls: ['./sc-pey-sidebar.component.scss']
+  selector: 'app-ui-pey-sidebar',
+  templateUrl: './ui-pey-sidebar.component.html',
+  styleUrls: ['./ui-pey-sidebar.component.scss']
 })
-export class ScPeySidebarComponent implements OnInit {
+export class UIPeySidebarComponent implements OnInit {
 
   @Input()  title: string;
   @Input()  closed = true;

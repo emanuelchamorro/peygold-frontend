@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../../models';
 import {environment} from '../../../../../environments/environment';
-import {BaseComponent} from '../../../commons-peygold/components/base-component.component';
+import {BaseComponent} from '../../components/base.component';
 import {NgModel} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
@@ -102,7 +102,7 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
 
     this.authService.resetUserPassword(this.user.email, this.user.token, this.user.password).then((response) => {
       this.user = null;
-      this.router.navigateByUrl('/reset-password/success', {
+      this.router.navigateByUrl(this.url(this.routes.reset_password.success), {
         state : {
           securedRedirection: true
         }
