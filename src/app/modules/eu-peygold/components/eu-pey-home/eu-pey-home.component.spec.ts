@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EuPeyDashboardComponent } from './eu-pey-dashboard.component';
+import { EuPeyHomeComponent } from './eu-pey-home.component';
 
-describe('EuPeyDashboardComponent', () => {
-  let component: EuPeyDashboardComponent;
-  let fixture: ComponentFixture<EuPeyDashboardComponent>;
+describe('EuPeyHomeComponent', () => {
+  let component: EuPeyHomeComponent;
+  let fixture: ComponentFixture<EuPeyHomeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EuPeyDashboardComponent ]
+      declarations: [ EuPeyHomeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EuPeyDashboardComponent);
+    fixture = TestBed.createComponent(EuPeyHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

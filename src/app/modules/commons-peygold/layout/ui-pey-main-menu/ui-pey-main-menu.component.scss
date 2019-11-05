@@ -1,3 +1,5 @@
+@import "../../../../../assets/scss/colors";
+
 .d-flex {
   > span {
     display: block ruby;
@@ -32,6 +34,12 @@
 .sidebar-extended .hide-panel-sidebar {
   max-height: unset;
   display: none;
+}
+
+.sidebar-sublist {
+  span {
+    color: $p-dark-grey !important;
+  }
 }
 
 .mnu-hide-panel-sidebar {

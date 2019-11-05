@@ -1,11 +1,16 @@
+const homeRoute = '/sc';
 export const routes = {
-  home : 'sc',
+  home: {route: 'eu', href: homeRoute},
+  help: {route: 'help', href: homeRoute + '/help'},
+  me : {
+    index: {route: 'me', href: homeRoute + '/me'},
+  },
   dashboard : {
-    index: 'dashboard',
+    index: {route: 'dashboard', href: homeRoute + '/dashboard'},
   },
   users : {
-    index: 'users',
-    post: 'user',
-    put: 'user/:userId'
+    index: {route: 'users', href: homeRoute + '/users'},
+    post: {route: 'user', href: homeRoute + '/user'},
+    put: {route: 'user/:userId', href: homeRoute + '/user'},
   },
 };

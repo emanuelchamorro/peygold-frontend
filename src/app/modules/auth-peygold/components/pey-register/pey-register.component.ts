@@ -202,7 +202,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    */
   signUpSuccessful(): void {
     this.user = null;
-    this.router.navigateByUrl(this.url(this.routes.register.success), {
+    this.router.navigateByUrl(this.routes.register.success.href, {
       state : {
         securedRedirection: true
       }

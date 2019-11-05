@@ -253,7 +253,7 @@
       </div>
     </div>
     <div class="actionForm align-items-end">
-      <button [routerLink]="url(routes.users.index)" class="btn-transparent-NewUser">Volver</button>
+      <button [routerLink]="routes.users.index.href" class="btn-transparent-NewUser">Volver</button>
       <button type="submit" class="btn-NewUser" [innerHtml]="user.id ? 'Actualizar' : 'Crear'"></button>
     </div>
   </form>

@@ -45,26 +45,6 @@ export class ScPeyUsersComponent extends BaseComponent implements OnInit {
   }
 
   /**
-   * Go to PeyStoreUserComponent.
-   * @return void;
-   */
-  createUser(): void {
-
-  }
-
-  /**
-   * Go to PeyStoreUserComponent.
-   * @return void;
-   */
-  editUser(user): void {
-    this.router.navigateByUrl('sc/user', {
-      state : {
-        userId: user.id
-      }
-    });
-  }
-
-  /**
    * Show the user detail
    * @param user The user to show
    * @return void

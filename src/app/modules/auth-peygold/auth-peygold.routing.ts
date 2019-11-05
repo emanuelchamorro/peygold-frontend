@@ -10,51 +10,51 @@ import {LogoutService} from './services/logout.service';
 export const config: Routes = [
   {
     path: '',
-    redirectTo: routes.login,
+    redirectTo: routes.login.route,
     pathMatch: 'full',
   },
   {
-    path: routes.login,
+    path: routes.login.route,
     component: PeyLoginComponent,
     data: {
       title: 'Login Page'
     },
   },
   {
-    path: routes.logout,
+    path: routes.logout.route,
     canActivate: [LogoutService],
     component: PeyLoginComponent,
   },
   {
-    path: routes.register.index,
+    path: routes.register.index.route,
     component: PeyRegisterComponent,
     data: {
       title: 'Register Person',
     }
   },
   {
-    path: routes.register.company,
+    path: routes.register.company.route,
     component: PeyRegisterComponent,
     data: {
       type: 'company'
     }
   },
   {
-    path: routes.register.institution,
+    path: routes.register.institution.route,
     component: PeyRegisterComponent,
     data: {
       type: 'institution'
     }
   },
   {
-    path: routes.register.person,
+    path: routes.register.person.route,
     component: PeyRegisterComponent,
     data: {
       type: 'person'
     }
   },
   {
-    path: routes.register.success,
+    path: routes.register.success.route,
     component: PeySuccessComponent,
     data: {
       title: '¡Te registraste exitosamente!',
@@ -63,11 +63,11 @@ export const config: Routes = [
     }
   },
   {
-    path: routes.reset_password.index,
+    path: routes.reset_password.index.route,
     component: PeyResetPasswordComponent,
   },
   {
-    path: routes.reset_password.success,
+    path: routes.reset_password.success.route,
     component: PeySuccessComponent,
     data: {
       title: '¡Contraseña restablecida!',

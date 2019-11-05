@@ -1,8 +1,10 @@
 export {Address} from './address';
+export {Balance} from './balance';
 export {City} from './city';
 export {Company} from './company';
 export {Contact} from './contact';
 export {Country} from './country';
+export {Currency} from './currency';
 export {DocumentType} from './document-type';
 export {Institution} from './institution';
 export {Nationality} from './nationality';
@@ -12,5 +14,6 @@ export {ProfitInstitution} from './profit-institution';
 export {Role} from './role';
 export {SelectOption} from './select-option';
 export {State} from './state';
+export {Transaction} from './transaction';
 export {User} from './user';
 export {UserStatus} from './user-status';

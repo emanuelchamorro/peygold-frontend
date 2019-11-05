@@ -14,6 +14,9 @@ export class UIPeySidebarComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * On init implementation
+   */
   ngOnInit() {
   }
 

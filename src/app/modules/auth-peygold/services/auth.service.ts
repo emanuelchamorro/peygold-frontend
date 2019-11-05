@@ -272,6 +272,6 @@ export class AuthService extends HttpService {
       return null;
     }
 
-    return new (User)().fromJSON(localUser);
+    return new (User)().fromString(localUser);
   }
 }

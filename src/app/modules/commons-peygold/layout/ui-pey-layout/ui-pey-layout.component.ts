@@ -9,6 +9,9 @@ export class UIPeyLayoutComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * On init implementation
+   */
   ngOnInit() {
   }
 

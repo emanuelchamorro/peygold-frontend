@@ -24,12 +24,12 @@
     transition: all 0.35s; }
 
 #pg-wallet {
-  background-image: url("../../global/assets/tarjeta-peygold.svg");
+  background-image: url("../images/tarjeta-peygold.svg");
   background-size: cover;
   background-repeat: no-repeat; }
 
 #pesos-wallet {
-  background-image: url("../../global/assets/tarjeta-pesos.svg");
+  background-image: url("../images/tarjeta-pesos.svg");
   background-size: cover;
   background-repeat: no-repeat;
   margin-right: 5%; }

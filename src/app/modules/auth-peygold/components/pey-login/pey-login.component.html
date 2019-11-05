@@ -39,8 +39,8 @@
         <div class="col-lg-8 login-input-container">
           <div class="col-lg-11 d-flex flex-column align-items-center ">
             <div class="top-register pt-4 pb-4">
-              <a [routerLink]="url(routes.register.index)" class="mr-4">¿No tenes cuenta?</a>
-              <a [routerLink]="url(routes.register.index)" class="border-button border-white">Registrarse</a>
+              <a [routerLink]="routes.register.index.href" class="mr-4">¿No tenes cuenta?</a>
+              <a [routerLink]="routes.register.index.href" class="border-button border-white">Registrarse</a>
             </div>
             <form name="loginForm" class="container-login" (ngSubmit)="submited=true; loginForm.form.valid && login()" #loginForm="ngForm" novalidate>
 
@@ -71,7 +71,7 @@
                          name="rememberMe" [(ngModel)]="user.rememberMe" #rememberMe="ngModel" />
                   <label for="rememberMe" class="fs-13 text-white">Recordarme</label>
                 </div>
-                <a [routerLink]="url(routes.reset_password.index)" class="fw-600">Olvidé mi contraseña</a>
+                <a [routerLink]="routes.reset_password.index.href" class="fw-600">Olvidé mi contraseña</a>
               </div>
               <button
                 type="submit"

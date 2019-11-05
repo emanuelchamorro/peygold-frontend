@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/white-container.css">
+  <link rel="stylesheet" href="assets/css/wallet.css">
 </head>
 <body>
   <app-root></app-root>
@@ -50,6 +51,13 @@
       $("#top-navbar").toggleClass("top-navbar-extended");
       $("#secondary-nav").toggleClass("top-navbar-extended");
       $("#footer").toggleClass("top-navbar-extended");
+    });
+
+    $(document).on('click', '.sub_menu_item', function() {
+      let svg = $(this).find('svg');
+      if (svg){
+        svg.toggleClass('chevron-show-accordion');
+      }
     });
 
   </script>

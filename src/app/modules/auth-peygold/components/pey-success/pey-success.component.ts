@@ -16,7 +16,7 @@ export class PeySuccessComponent extends BaseComponent implements OnInit {
     super();
     const navigation = this.router.getCurrentNavigation();
     if (!navigation || !navigation.extras.state || !navigation.extras.state.securedRedirection) {
-      this.router.navigateByUrl(this.url(this.routes.home));
+      this.router.navigateByUrl(this.routes.home.href);
     }
   }
 

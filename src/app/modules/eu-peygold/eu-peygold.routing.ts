@@ -2,18 +2,18 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {GuardAuthService} from './services/guard-auth.service';
 import {UIPeyLayoutComponent} from '../commons-peygold/layout/ui-pey-layout/ui-pey-layout.component';
-import {EuPeyDashboardComponent} from './components/eu-pey-dashboard/eu-pey-dashboard.component';
+import {EuPeyHomeComponent} from './components/eu-pey-home/eu-pey-home.component';
 import {routes} from './routes';
 
 export const config: Routes = [
   {
-    path: routes.home,
+    path: routes.index.route,
     component: UIPeyLayoutComponent,
     canActivate: [GuardAuthService],
     children: [
       {
-        path: routes.dashboard.index,
-        component: EuPeyDashboardComponent,
+        path: routes.home.route,
+        component: EuPeyHomeComponent,
         data: {
           title: 'Dashboard'
         },

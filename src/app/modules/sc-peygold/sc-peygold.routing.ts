@@ -9,33 +9,33 @@ import {routes} from './routes';
 
 export const config: Routes = [
   {
-    path: routes.home,
+    path: routes.home.route,
     component: UIPeyLayoutComponent,
     canActivate: [GuardAuthService],
     children: [
       {
-        path: routes.dashboard.index,
+        path: routes.dashboard.index.route,
         component: ScPeyDashboardComponent,
         data: {
           title: 'Dashboard'
         },
       },
       {
-        path: routes.users.index,
+        path: routes.users.index.route,
         component: ScPeyUsersComponent,
         data: {
           title: 'Seguridad: Usuarios'
         },
       },
       {
-        path: routes.users.post,
+        path: routes.users.post.route,
         component: ScPeyStoreUserComponent,
         data: {
           title: 'Login Page'
         },
       },
       {
-        path: routes.users.put,
+        path: routes.users.put.route,
         component: ScPeyStoreUserComponent,
         data: {
           title: 'Login Page'

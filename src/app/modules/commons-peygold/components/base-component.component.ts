@@ -60,12 +60,4 @@ export class BaseComponent {
     this.addError(e.message);
     this.waitAndCleanErrors();
   }
-
-  /**
-   * Add slash to the url
-   * @param path The url.
-   */
-  protected url(path): string{
-    return '/' + path;
-  }
 }

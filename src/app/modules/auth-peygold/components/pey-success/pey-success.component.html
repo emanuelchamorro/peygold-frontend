@@ -8,10 +8,10 @@
     </li>
     <div>
       <li class="fs-12 ml-4">
-        <a [routerLink]="url(routes.login)">¿Ya tienes una cuenta?</a>
+        <a [routerLink]="routes.login.href">¿Ya tienes una cuenta?</a>
       </li>
       <li class="fs-12 ml-4">
-        <a [routerLink]="url(routes.login)" class="btn-white">Iniciar sesión</a>
+        <a [routerLink]="routes.login.href" class="btn-white">Iniciar sesión</a>
       </li>
     </div>
   </ul>
@@ -25,7 +25,7 @@
             <img src="assets/images/check.png" width="146" height="146">
             <span class="fs-22 fw-700 mb-3" *ngIf="title" [innerHtml]="title"></span>
             <p class="w-75" *ngIf="message" [innerHtml]="message"></p>
-            <a [routerLink]="url(routes.login)" class="white-button-border">Iniciar sesión</a>
+            <a [routerLink]="routes.login.href" class="white-button-border">Iniciar sesión</a>
           </div>
         </div>
       </div>

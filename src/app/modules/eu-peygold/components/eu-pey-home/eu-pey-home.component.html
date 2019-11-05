@@ -1,0 +1,42 @@
+<div>
+  <h2><span class="icon-Iconos-01 fs-22"></span>Inicio</h2>
+  <p class="opening-text">El resumen de tu billetera siempre disponible para que puedas tener control fácil y rápido de
+    tu dinero.</p>
+  <div class="wallet-conteiner mb-2">
+
+    <!-- Wallets -->
+
+    <div class="wallet-item" id="pesos-wallet">
+      <div class="wallet-first-line">
+        <span class="fw-600">Saldo disponible</span>
+        <span class="fw-700 mb-3" [innerHtml]="fiatBalance.amount | currency:fiatBalance.currencyType"></span>
+        <span class="fs-14">Envios pendientes</span>
+        <span class="fs-14" [innerHtml]="fiatBalance.pendingAmount | currency:fiatBalance.currencyType"></span>
+      </div>
+    </div>
+
+    <div class="wallet-item" id="pg-wallet">
+      <div class="wallet-first-line">
+        <span class="fw-600">Saldo disponible</span>
+        <span class="fw-700 mb-3" [innerHtml]="creditBalance.amount | currency:creditBalance.currencyType + ' '"></span>
+        <span class="fs-14">Peygold créditos</span>
+        <span class="fs-14" [innerHtml]="creditBalance.pendingAmount | currency:creditBalance.currencyType + ' '"></span>
+      </div>
+    </div>
+
+    <!-- Fin de Wallets -->
+  </div>
+
+  <h2 class="mb-4">Últimos movimientos</h2>
+  <div class="grey-box w-100">
+    <div *ngFor="let transaction of transactions;"
+         class="d-flex p-3 b-bottom-grey b-bottom-line align-items-center justify-content-between">
+      <span [innerHtml]="transaction.actionLabel"></span>
+      <div class="d-flex flex-column align-items-end">
+        <span class="fs-16" [innerHtml]="transaction.amount | currency"></span>
+        <span class="fs-11" [innerHtml]="transaction.dateTime"></span>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -21,7 +21,7 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    */
   constructor(
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {
     super();
   }
@@ -61,10 +61,9 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    * @return void
    */
   private goToDashboard(user: User): void {
-    console.log(user);
-    // const dashboardUrl = user.isAdmin ?  scRoutes.home : euRoutes.home;
-    const dashboardUrl = euRoutes.home;
-    this.router.navigateByUrl(this.url(dashboardUrl), {
+    // const dashboardUrl = user.isAdmin ?  scRoutes.home.href : euRoutes.home.href;
+    const dashboardUrl = euRoutes.home.href;
+    this.router.navigateByUrl(dashboardUrl, {
       state : {
         securedRedirection: true
       }
