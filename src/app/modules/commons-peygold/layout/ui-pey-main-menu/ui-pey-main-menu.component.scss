@@ -3,6 +3,7 @@
 .d-flex {
   > span {
     display: block ruby;
+    white-space: nowrap;
   }
 }
 
