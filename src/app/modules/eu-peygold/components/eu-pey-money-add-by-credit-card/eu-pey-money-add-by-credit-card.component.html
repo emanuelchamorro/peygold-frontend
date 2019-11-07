@@ -1,0 +1,141 @@
+<app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form>
+<div *ngIf="transaction">
+  <!-- CC INFO !-->
+  <div *ngIf="step==1">
+    <div class="top">
+      <div class="row TopTitle">
+        <div class="col-6">
+          <h2 class="titleSecurity"><span class="icon-Iconos-03"></span> Ingresar Dinero</h2>
+        </div>
+      </div>
+      <div class="row TopTitle">
+        <div class="col-6">
+          <p>Ingresá los datos tal como figuran en tu tarjeta</p>
+        </div>
+      </div>
+    </div>
+    <div class="wallet-conteiner mb-2">
+      <div class="ingresarDinero w-100">
+        <div class="row">
+          <div class="col-6">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="has-float-label mb-0 w-100">
+                    <input type="text" placeholder="Número de tarjeta" class="form-control">
+                    <span>Número de tarjeta</span>
+                  </label>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="has-float-label mb-0 w-100">
+                    <input type="text" placeholder="Nombre y Apellido" class="form-control">
+                    <span>Nombre y Apellido</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="has-float-label mb-0 w-100">
+                    <input type="text" placeholder="Fecha de Vencimiento" class="form-control">
+                    <span>Fecha de Vencimiento</span>
+                  </label>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="has-float-label mb-0 w-100">
+                    <input type="text" placeholder="CCVV" class="form-control SecNumb">
+                    <span>CCVV</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <select class="mb-0 w-100">
+                    <option>DNI</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="has-float-label mb-0 w-100">
+                    <input type="text" placeholder="Número" class="form-control">
+                    <span>Número</span>
+                  </label>
+                </div>
+              </div>
+          </div>
+          <div class="col-6">
+            <div class="containerTarjeta">
+              <div class="BoxTarjeta">
+                <div class="DataTarjeta">
+                  <div class="logoTarjeta text-right">
+                    <span class="LogoCard"></span>
+                  </div>
+                  <div class="NumeroTarjeta">
+                    <p class="text-center"><span>0000</span><span>0000</span><span>0000</span><span>0000</span></p>
+                  </div>
+                  <div class="NombreTarjeta">
+                    <p class="text-left">Nombre y Apellido</p>
+                  </div>
+                  <div class="venceTarjeta">
+                    <p class="text-right">00/00</p>
+                  </div>
+                </div>
+                <div class="secureTarjeta">
+                  <div class="securityCode">
+                    <div class="row">
+                      <div class="col-8">
+                        <input type="text" class="secNumber" />
+                      </div>
+                      <div class="col-4">
+                        <span class="secNumberEx">000</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actionForm w-100 align-items-end">
+      <button (click)="continue()" class="btn-blue">Continuar</button>
+    </div>
+  </div>
+
+  <!-- END CC INFO !-->
+
+  <!-- Confirm CC INFO !-->
+
+  <div *ngIf="step==2">
+    <div class="top">
+      <div class="row TopTitle">
+        <div class="col-6">
+          <h2 class="titleSecurity"><span class="icon-Iconos-03"></span> Ingresar Dinero</h2>
+        </div>
+      </div>
+      <div class="row TopTitle">
+        <div class="col-6">
+          <p>Confirma que los datos sean correctos</p>
+        </div>
+      </div>
+    </div>
+    <div class="wallet-conteiner mb-2">
+      <div class="ingresarDinero">
+        <div class="row">
+          <div class="col-12 paddingBox border-bottom">
+            <p class="text-center">Estás ingresando</p>
+            <p class="text-center"><strong>$0</strong></p>
+          </div>
+          <div class="col-12 paddingBox">
+            <p class="text-center">Forma de Pago</p>
+            <p class="text-center"><span class="IconIngresar Tarjeta"></span><b>Tarjeta de<br>Débito VISA</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actionForm ConfirmDebito align-items-end">
+      <button (click)="back()" class="btn-blue-border">Volver</button>
+      <button (click)="send()" class="btn-blue">Confirmar</button>
+    </div>
+  </div>
+  <!-- END Confirm CC INFO !-->
+</div>
+

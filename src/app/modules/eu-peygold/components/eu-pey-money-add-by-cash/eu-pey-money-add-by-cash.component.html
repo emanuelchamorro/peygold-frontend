@@ -1,0 +1,25 @@
+<app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form>
+<div *ngIf="transaction">
+  <div class="top">
+    <div class="row TopTitle">
+      <div class="col-6">
+        <h2 class="titleSecurity"><span class="icon-Iconos-03"></span> Ingresar Dinero</h2>
+      </div>
+    </div>
+    <div class="row TopTitle">
+      <div class="col-6">
+        <p>Te generamos un código de pago.<br/>Muéstralo en una sucursal de Pago Fácil o Rapipago y dile cuánto dinero quieres ingresar.</p>
+      </div>
+    </div>
+  </div>
+  <div class="wallet-conteiner mb-2">
+    <div class="ingresarDinero ingresarDineroEfectivo">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-center">Código de Pago</p>
+          <p class="text-center"><strong class="ingresarDineroEfectivo">01234 56789</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

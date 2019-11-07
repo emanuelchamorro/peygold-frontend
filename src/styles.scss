@@ -1,2 +1,15 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
-@import "assets/scss/app-peygold.scss";
+@import "assets/scss/nav-bar";
+@import "assets/scss/grey-box";
+@import "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+@import "assets/scss/global";
+@import "assets/scss/white-container";
+@import "assets/scss/wallet";
+
+/**
+ * Components global styles
+ */
+@import "assets/scss/app-peygold";
+@import "assets/scss/app-peygold-auth";
+@import "assets/scss/app-peygold-eu-add-money";
+

@@ -1,0 +1,32 @@
+<app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form>
+<div *ngIf="transaction">
+  <div class="top">
+    <div class="row TopTitle">
+      <div class="col-6">
+        <h2 class="titleSecurity"><span class="icon-Iconos-03"></span> Ingresar Dinero</h2>
+      </div>
+    </div>
+    <div class="row TopTitle">
+      <div class="col-6">
+        <p>Acercate a un cajero de tu banco y sigue los siguientes pasos:</p>
+      </div>
+    </div>
+  </div>
+  <div class="wallet-conteiner mb-2">
+    <div class="ingresarDinero">
+      <div class="row">
+        <div class="col-12">
+          <ol>
+            <li>Ingresa a <strong>Pagos</strong></li>
+            <li>Pago de <strong>Impuestos y Servicios</strong></li>
+            <li>Rubro <strong>Cobranzas</strong></li>
+            <li>Código de Link de pagos: <strong>000000000</strong></li>
+            <li>Empresa <strong>PeyGold</strong></li>
+            <li>Concepto: <strong>PG: INGRESO</strong></li>
+            <li>Referencia para abonar: <strong>000000000</strong></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
