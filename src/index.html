@@ -6,6 +6,7 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 </head>
 <body>
   <app-root></app-root>
@@ -44,13 +45,6 @@
       $("#top-navbar").toggleClass("top-navbar-extended");
       $("#secondary-nav").toggleClass("top-navbar-extended");
       $("#footer").toggleClass("top-navbar-extended");
-    });
-
-    $(document).on('click', '.sub_menu_item', function() {
-      let svg = $(this).find('svg');
-      if (svg){
-        svg.toggleClass('chevron-show-accordion');
-      }
     });
 
   </script>

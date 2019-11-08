@@ -36,6 +36,9 @@ export const environment = {
   localStorage: {
     user_var_name: 'pey_user',
     access_token_var_name: 'pey_access_token',
+  },
+  mercado_pago: {
+    publishable_key: 'TEST-7c566789-4be1-4301-b721-9b4d21f1fd85'
   }
 };
 

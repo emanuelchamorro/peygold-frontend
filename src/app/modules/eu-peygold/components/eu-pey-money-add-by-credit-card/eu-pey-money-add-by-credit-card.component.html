@@ -1,5 +1,5 @@
-<app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form>
-<div *ngIf="transaction">
+<!-- app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form-->
+<div>
   <!-- CC INFO !-->
   <div *ngIf="step==1">
     <div class="top">
@@ -21,7 +21,7 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label class="has-float-label mb-0 w-100">
-                    <input type="text" placeholder="Número de tarjeta" class="form-control">
+                    <input type="text" [OnlyNumber]="true" placeholder="Número de tarjeta" class="form-control" [(ngModel)]="query" (ngModelChange)="onCardNumberChange($event)" />
                     <span>Número de tarjeta</span>
                   </label>
                 </div>
@@ -41,20 +41,29 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label class="has-float-label mb-0 w-100">
-                    <input type="text" placeholder="CCVV" class="form-control SecNumb">
+                    <input [OnlyNumber]="true" maxlength="4" type="text" placeholder="CCVV" class="form-control SecNumb">
                     <span>CCVV</span>
                   </label>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <select class="mb-0 w-100">
-                    <option>DNI</option>
-                  </select>
+                  <ng-select placeholder="Tipo de documento"
+                             class="custom-select dropdown select-height-normal mb-0 w-100"
+                             bindLabel="name"
+                             [searchable]="false"
+                             [items]="identificationTypes"
+                             [addTag]="false"
+                             name="documentType"
+                             [(ngModel)]="transaction.creditCard.identificationType"
+                             [ngClass]="{'ng-dirty ng-invalid' : trySubmit && documentType.errors}"
+                             #documentType="ngModel"
+                             required>
+                  </ng-select>
                 </div>
                 <div class="form-group col-md-6">
                   <label class="has-float-label mb-0 w-100">
-                    <input type="text" placeholder="Número" class="form-control">
+                    <input type="text" [OnlyNumber]="true" placeholder="Número" class="form-control">
                     <span>Número</span>
                   </label>
                 </div>

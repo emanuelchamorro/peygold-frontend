@@ -72,3 +72,9 @@ label.ng-invalid {
 .invalid-feedback {
   display: block;
 }
+
+
+.image-disabled {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}

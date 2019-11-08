@@ -5,12 +5,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { UIPeyMainMenuComponent } from './layout/ui-pey-main-menu/ui-pey-main-menu.component';
 import {UIPeyLayoutComponent} from './layout/ui-pey-layout/ui-pey-layout.component';
 import {UIPeySidebarComponent} from './layout/ui-pey-sidebar/ui-pey-sidebar.component';
+import {OnlyNumbersDirective} from './directives/only-numbers.directive';
 
 @NgModule({
   declarations: [
     UIPeyMainMenuComponent,
     UIPeyLayoutComponent,
     UIPeySidebarComponent,
+    OnlyNumbersDirective,
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import {UIPeySidebarComponent} from './layout/ui-pey-sidebar/ui-pey-sidebar.comp
     RouterModule,
   ],
   exports: [
-    UIPeySidebarComponent
+    UIPeySidebarComponent,
+    OnlyNumbersDirective
   ]
 })
 export class CommonsPeyGoldModule { }
