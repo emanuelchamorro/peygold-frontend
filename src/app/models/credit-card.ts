@@ -14,4 +14,5 @@ export class CreditCard extends Model {
   public identificationType: string;
   public identificationNumber: string;
   public extraInfo: any;
+  public token: string;
 }

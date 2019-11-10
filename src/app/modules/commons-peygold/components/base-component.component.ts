@@ -3,6 +3,8 @@ import {NgModel} from '@angular/forms';
 
 export class BaseComponent {
 
+  protected isBusy = false;
+
   private messages = {
     errors: [],
   };
@@ -57,7 +59,35 @@ export class BaseComponent {
    * Manage the error api response and save it in the error message list.
    */
   protected catchError(e: ErrorResponse): void {
-    this.addError(e.message);
-    this.waitAndCleanErrors();
+    this.unbusy();
+    if (e.status === 0) {
+      this.addDefaultError().waitAndCleanErrors();
+    }
+
+    this.addError(e.message).waitAndCleanErrors();
+  }
+
+  /**
+   * Add a default message to the error list.
+   * @param message Message to add to error lisy
+   */
+  protected addDefaultError(): BaseComponent {
+    return this.addError('Ha ocurrido un error. Intente mas tarde.');
+  }
+
+  /**
+   * Set false to the busy attribute
+   * @return void
+   */
+  protected unbusy(): void{
+    this.isBusy = false;
+  }
+
+  /**
+   * Set true the busy attribute
+   * @return void
+   */
+  protected busy(): void{
+    this.isBusy = true;
   }
 }

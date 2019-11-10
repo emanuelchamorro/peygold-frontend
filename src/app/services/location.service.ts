@@ -33,7 +33,7 @@ export class LocationService extends HttpService {
 
       return this.countries;
     }).catch(e => {
-      return this.countries;
+      return this.countries || [];
     });
   }
 

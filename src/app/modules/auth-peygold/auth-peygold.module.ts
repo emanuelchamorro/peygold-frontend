@@ -4,11 +4,13 @@ import { PeyLoginComponent } from './components/pey-login/pey-login.component';
 import { AuthPeyGoldRouting } from './auth-peygold.routing';
 import { PeyRegisterComponent } from './components/pey-register/pey-register.component';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { PeySuccessComponent } from './components/pey-success/pey-success.component';
 import { PeyResetPasswordComponent } from './components/pey-reset-password/pey-reset-password.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,16 @@ import { PeyResetPasswordComponent } from './components/pey-reset-password/pey-r
     ReactiveFormsModule,
     HttpClientModule,
     NgSelectModule,
-    NgbAlertModule
+    NgbAlertModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      }
+    })
   ]
 })
 export class AuthPeyGoldModule { }

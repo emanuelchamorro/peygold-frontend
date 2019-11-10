@@ -67,7 +67,7 @@ export class InstitutionService extends HttpService {
 
       return this.institutions;
     }).catch(e => {
-      return this.institutions;
+      return this.institutions || [];
     });
   }
 }

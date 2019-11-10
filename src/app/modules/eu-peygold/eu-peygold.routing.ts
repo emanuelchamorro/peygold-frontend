@@ -8,7 +8,9 @@ import {EuPeyMoneyAddComponent} from './components/eu-pey-money-add/eu-pey-money
 import {
   EuPeyMoneyAddByBankTransferComponent
 } from './components/eu-pey-money-add-by-bank-transfer/eu-pey-money-add-by-bank-transfer.component';
-import {EuPeyMoneyAddByBankDepositComponent} from './components/eu-pey-money-add-by-bank-deposit/eu-pey-money-add-by-bank-deposit.component';
+import {
+  EuPeyMoneyAddByBankDepositComponent
+} from './components/eu-pey-money-add-by-bank-deposit/eu-pey-money-add-by-bank-deposit.component';
 import {EuPeyMoneyAddByCreditCardComponent} from './components/eu-pey-money-add-by-credit-card/eu-pey-money-add-by-credit-card.component';
 import {EuPeyMoneyAddByCashComponent} from './components/eu-pey-money-add-by-cash/eu-pey-money-add-by-cash.component';
 

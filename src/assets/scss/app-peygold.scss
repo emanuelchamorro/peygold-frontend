@@ -57,23 +57,53 @@ label.ng-invalid {
   margin-bottom: 0px;
 }
 
-/**
- *Ng Select
- */
-.ng-select-container {
-  height: 38px;
-
-  .ng-placeholder {
-    margin-top: 3px;
-  }
-
-}
-
 .invalid-feedback {
   display: block;
 }
 
+/**
+ *Ng Select
+ */
 
+ng-select {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  padding: 0px !important;
+
+  .ng-select-container {
+    border: 0px !important;
+    padding: 0px !important;
+    height: 100% !important;
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
+
+    .ng-placeholder {
+      margin-top: 3px;
+    }
+
+    :hover {
+      box-shadow: 0 0px 0 !important;
+    }
+
+  }
+
+  .ng-select .ng-select-container:hover {
+    box-shadow: 0 0px 0 rgba(0,0,0,0.0) !important;
+  }
+
+  .ng-arrow-wrapper {
+    display: none;
+  }
+
+  .ng-clear-wrapper {
+    margin-right: 20px !important;
+    margin-top: 2px !important;
+  }
+}
+
+
+/**
+ * Images
+ */
 .image-disabled {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);

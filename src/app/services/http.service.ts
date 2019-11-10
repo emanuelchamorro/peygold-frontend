@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import {BaseService} from './base.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class HttpService extends BaseService {
    * @param url Url context.
    * @param options Request options.
    */
-  get(url: string, options?: any): any {
+  get(url: string, options?: any): Observable<any> {
     url = environment.api.url + url;
     return this.http.get(url, options);
   }
@@ -28,7 +29,7 @@ export class HttpService extends BaseService {
    * @param data payload.
    * @param options Request options.
    */
-  post(url: string, data?: any, options?: any): any {
+  post(url: string, data?: any, options?: any): Observable<any> {
     url = environment.api.url + url;
     return this.http.post(url, data, options);
   }
@@ -39,7 +40,7 @@ export class HttpService extends BaseService {
    * @param data payload.
    * @param options Request options.
    */
-  put(url: string, data?: any, options?: any): any {
+  put(url: string, data?: any, options?: any): Observable<any> {
     url = environment.api.url + url;
     return this.http.put(url, data, options);
   }

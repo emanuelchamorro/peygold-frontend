@@ -27,6 +27,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           if (error.error instanceof ErrorEvent) {
             return throwError(new ErrorResponse(error.error.message, error.status, error.ok));
           }
+          if (error.status === 0 && error.statusText) {
+            return throwError(new ErrorResponse(error.statusText, error.status, error.ok));
+          }
           return throwError(new ErrorResponse(error.error.toString(), error.status, error.ok));
         })
       );

@@ -23,14 +23,14 @@ export class SelectOption extends Model {
   /**
    * Getter: value
    */
-  get id(): string{
+  get id(): string {
     return this.value;
   }
 
   /**
    * Getter: label
    */
-  get name(): string{
+  get name(): string {
     return this.label;
   }
 

@@ -13,13 +13,13 @@ export class UserService extends HttpService {
   balances(): Promise<Array<Balance>> {
     return this.get('/balance')
       .toPromise().then((balances: Array<any>) => balances.map((balance: any) => {
-          const mBalance = new Balance();
-          mBalance.amount = balance.amount || balance.ammount;
-          mBalance.currencyName = balance.currencyName;
-          mBalance.pendingAmount = balance.pendingAmount || balance.pendingAmmount;
+        const mBalance = new Balance();
+        mBalance.amount = balance.amount || balance.ammount;
+        mBalance.currencyName = balance.currencyName;
+        mBalance.pendingAmount = balance.pendingAmount || balance.pendingAmmount;
 
-          return mBalance;
-        })
-      );
+        return mBalance;
+      })
+    );
   }
 }

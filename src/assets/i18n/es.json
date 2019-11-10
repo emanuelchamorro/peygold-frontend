@@ -1,0 +1,11 @@
+{
+  "transaction.status.pending.label": "Pendiente",
+  "transaction.status.approved.label": "Aprobada",
+  "transaction.status.rejected.label": "Rechazada",
+  "transaction.type.fiat.coin": "$",
+  "transaction.type.fiat.coin.label": "Pesos",
+  "transaction.type.points.coin": "P$G",
+  "transaction.type.points.coin.label": "Puntos",
+  "transaction.type.credit_points.coin": "PC$G",
+  "transaction.type.credit_points.coin.label": "Credit Points"
+}

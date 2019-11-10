@@ -32,7 +32,7 @@ export class OccupationService extends HttpService {
 
       return this.occupations;
     }).catch(e => {
-      return this.occupations;
+      return this.occupations || [];
     });
   }
 }
