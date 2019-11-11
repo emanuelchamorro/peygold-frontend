@@ -16,6 +16,9 @@ import {EuPeyMoneyAddAmountFormComponent} from './components/eu-pey-money-add-am
 import {MercadoPagoModule} from '../mercado-pago/mercado-pago.module';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
+import { NgxMaskModule } from 'ngx-mask';
+import {NgMaskConfig} from '../../config';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
     NgSelectModule,
     CommonsPeyGoldModule,
     EuPeyGoldRouting,
-    MercadoPagoModule
+    MercadoPagoModule,
+    NgxMaskModule.forRoot(NgMaskConfig)
   ]
 })
 export class EuPeyGoldModule { }

@@ -87,16 +87,16 @@
     background-size: 50px;
   }
   .Transferencia {
-    background-image: url("assets/images/Transferencia.svg");
+    background-image: url("~src/assets/images/Transferencia.svg");
   }
   .Efectivo {
-    background-image: url("assets/images/Efectivo.svg");
+    background-image: url("~src/assets/images/Efectivo.svg");
   }
   .Tarjeta {
-    background-image: url("assets/images/Tarjeta.svg");
+    background-image: url("~src/assets/images/Tarjeta.svg");
   }
   .Deposito {
-    background-image: url("assets/images/Deposito-01.svg");
+    background-image: url("~src/assets/images/Deposito-01.svg");
   }
   .InputAmount {
     width: 70%;
@@ -254,21 +254,21 @@
     .Visa {
       background: #13247f;
       .LogoCard {
-        background-image: url("assets/images/tarjetas/american-white.svg");
+        background-image: url("~src/assets/images/tarjetas/visa-white.svg");
         background-color: transparent !important;
       }
     }
     .MasterCard {
       background: #6c9acd;
       .LogoCard {
-        background-image: url("assets/images/tarjetas/mastercard.svg");
+        background-image: url("~src/assets/images/tarjetas/mastercard.svg");
         background-color: transparent !important;
       }
     }
     .AmericanExpress {
       background: #0e73cf;
       .LogoCard {
-        background-image: url("assets/images/tarjetas/american-white.svg");
+        background-image: url("~src/assets/images/tarjetas/american-white.svg");
         background-color: transparent !important;
       }
     }

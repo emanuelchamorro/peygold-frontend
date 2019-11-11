@@ -30,7 +30,11 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/toggle.js",
+              "src/assets/js/layout-menu.js",
+              "src/assets/js/add-money.js"
+            ]
           },
           "configurations": {
             "production": {

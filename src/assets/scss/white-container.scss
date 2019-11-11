@@ -100,7 +100,7 @@
         display: block;		
         width: 3px;		
         height: 20px;		
-        background-image: url(assets/images/options-points.png);		
+        background-image: url(~src/assets/images/options-points.png);		
         background-repeat: no-repeat;		
         background-size: 3px;		
         background-position: center center;		
@@ -178,7 +178,7 @@
 }
 
 .white-container-wrapper span.clipLink {
-  //background-image: url("assets/images/Iconos/clip.png");
+  //background-image: url("~src/assets/images/Iconos/clip.png");
   background-repeat: no-repeat;
   background-size: 27px 27px;
   background-position: right center;
@@ -281,7 +281,7 @@
 /*seguridad */
 
 .icon-Security{
-  background-image:url("assets/images/security.png");
+  background-image:url("~src/assets/images/security.png");
   width: 25px;
   height: 25px;
   background-size: contain;
@@ -354,16 +354,16 @@
   margin-right:5px;
 }
 .Seguridad-icon.icon-Activar{
-  background-image:url("assets/images/activar.svg");
+  background-image:url("~src/assets/images/activar.svg");
 }
 .Seguridad-icon.icon-Desactivar{
-  background-image:url("assets/images/desactivar.svg");
+  background-image:url("~src/assets/images/desactivar.svg");
 }
 .Seguridad-icon.icon-Bloquear{
-  background-image:url("assets/images/bloquear.svg");
+  background-image:url("~src/assets/images/bloquear.svg");
 }
 .Seguridad-icon.icon-Desbloquear{
-  background-image:url("assets/images/desbloquear.svg");
+  background-image:url("~src/assets/images/desbloquear.svg");
 }
 /*END checkbox*/
 .status{
@@ -373,19 +373,19 @@
   display:block;
 }
 .Aprobado{
-  background:url("assets/images/confirmacion-verde.svg");
+  background:url("~src/assets/images/confirmacion-verde.svg");
   background-size:30px;
 }
 .Bloqueado{
-  background:url("assets/images/wrong.png");
+  background:url("~src/assets/images/wrong.png");
   background-size:30px;
 }
 .Rechazado{
-  background:url("assets/images/bloquear-rojo.svg");
+  background:url("~src/assets/images/bloquear-rojo.svg");
   background-size:30px;
 }
 .options{
-  background:url("assets/images/options-points.png");
+  background:url("~src/assets/images/options-points.png");
   width:40px;
   height:20px;
   display:block;
@@ -538,7 +538,7 @@
     .ExportIcon{
       width:12px;
       height:12px;
-      background:url("assets/images/ExportIcon.png");
+      background:url("~src/assets/images/ExportIcon.png");
       background-size:12px;
       display:inline-block;
       margin-right:5px;
@@ -548,7 +548,7 @@
       width: 15px;
       height: 15px;
       display: inline-block;
-      background: url(assets/images/chevron-down.svg);
+      background: url(~src/assets/images/chevron-down.svg);
       background-size: 13px;
       background-repeat: no-repeat;
       position: absolute;
@@ -629,7 +629,7 @@
   .plusIcon{
     width:20px;
     height:20px;
-    background-image:url("assets/images/plus-icon-white.png");
+    background-image:url("~src/assets/images/plus-icon-white.png");
     background-repeat: no-repeat;
     vertical-align: middle;
     background-position:-1px -1px;
@@ -655,7 +655,7 @@
   font-size:13px;
   line-height:16px;
 
-  background-image:url("assets/images/lupa-21.png");
+  background-image:url("~src/assets/images/lupa-21.png");
   background-size:13px;
   background-repeat: no-repeat;
   background-position:5px center;

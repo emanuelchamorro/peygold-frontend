@@ -18,7 +18,7 @@ export const config: Routes = [
   {
     path: routes.index.route,
     component: UIPeyLayoutComponent,
-    canActivate: [GuardAuthService],
+    //canActivate: [GuardAuthService],
     children: [
       // HOME ROUTES
       {

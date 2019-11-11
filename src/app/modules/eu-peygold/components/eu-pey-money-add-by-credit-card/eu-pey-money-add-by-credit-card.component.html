@@ -21,13 +21,13 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label class="has-float-label mb-0 w-100">
-                    <input type="text" [OnlyNumber]="true" placeholder="Número de tarjeta" class="form-control" [(ngModel)]="query" (ngModelChange)="onCardNumberChange($event)" />
+                    <input type="text" mask="0000 0000 0000 0000" placeholder="Número de tarjeta" class="form-control" [(ngModel)]="transaction.creditCard.number" (ngModelChange)="onCardNumberChange($event)" />
                     <span>Número de tarjeta</span>
                   </label>
                 </div>
                 <div class="form-group col-md-12">
                   <label class="has-float-label mb-0 w-100">
-                    <input type="text" placeholder="Nombre y Apellido" class="form-control">
+                    <input type="text" placeholder="Nombre y Apellido" [(ngModel)]="transaction.creditCard.holderName" class="form-control" />
                     <span>Nombre y Apellido</span>
                   </label>
                 </div>
@@ -35,13 +35,15 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label class="has-float-label mb-0 w-100">
-                    <input type="text" placeholder="Fecha de Vencimiento" class="form-control">
+                    <input
+                      type="text" placeholder="Fecha de Vencimiento" class="form-control"
+                      [specialCharacters]="['/']" mask="00/0000"  [(ngModel)]="transaction.creditCard.expirationDate" />
                     <span>Fecha de Vencimiento</span>
                   </label>
                 </div>
                 <div class="form-group col-md-6">
                   <label class="has-float-label mb-0 w-100">
-                    <input [OnlyNumber]="true" maxlength="4" type="text" placeholder="CCVV" class="form-control SecNumb">
+                    <input [OnlyNumber]="true" maxlength="3" type="password" [(ngModel)]="transaction.creditCard.securityCode" placeholder="CCVV" class="form-control SecNumb">
                     <span>CCVV</span>
                   </label>
                 </div>
@@ -77,13 +79,21 @@
                     <span class="LogoCard"></span>
                   </div>
                   <div class="NumeroTarjeta">
-                    <p class="text-center"><span>0000</span><span>0000</span><span>0000</span><span>0000</span></p>
+                    <p class="text-center" *ngIf="!transaction.creditCard.number"><span>0000000000000000</span></p>
+                    <p class="text-center" *ngIf="transaction.creditCard.number"><span mask="0000 0000 0000 0000" [innerHtml]="transaction.creditCard.number"></span></p>
                   </div>
                   <div class="NombreTarjeta">
-                    <p class="text-left">Nombre y Apellido</p>
+                    <p class="text-left" *ngIf="!transaction.creditCard.holderName">Nombre y Apellido</p>
+                    <p class="text-left" *ngIf="transaction.creditCard.holderName" [innerHtml]="transaction.creditCard.holderName"></p>
                   </div>
                   <div class="venceTarjeta">
-                    <p class="text-right">00/00</p>
+                    <p class="text-right">
+                      <span *ngIf="!transaction.creditCard.expirationMonth">00</span>
+                      <span *ngIf="transaction.creditCard.expirationMonth" [innerHtml]="transaction.creditCard.expirationMonth"></span>
+                      /
+                      <span *ngIf="!transaction.creditCard.expirationYear">00</span>
+                      <span *ngIf="transaction.creditCard.expirationYear" [innerHtml]="transaction.creditCard.expirationYear"></span>
+                    </p>
                   </div>
                 </div>
                 <div class="secureTarjeta">
@@ -93,7 +103,10 @@
                         <input type="text" class="secNumber" />
                       </div>
                       <div class="col-4">
-                        <span class="secNumberEx">000</span>
+                        <p class="secNumberEx">
+                          <span *ngIf="!transaction.creditCard.securityCode">000</span>
+                          <span *ngIf="transaction.creditCard.securityCode" [innerHtml]="transaction.creditCard.securityCode"></span>
+                        </p>
                       </div>
                     </div>
                   </div>

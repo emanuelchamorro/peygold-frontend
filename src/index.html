@@ -11,42 +11,5 @@
 <body>
   <app-root></app-root>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-  <script>
-    // TODO change this to be loaded from the angular.js
-    $( document ).on( 'click', '.slide-toggle', function() {
-      let _this = $(this);
-      let target = _this.data('el-target');
-
-      if(target) {
-        target = $(target);
-        $(target).slideToggle();
-        return;
-      }else{
-        target = $('.slide-toggle-content', _this.parent());
-      }
-
-      if(target) {
-        if(! target.is(':visible')){
-          $('.slide-toggle-content').hide();
-          setTimeout(function() {
-            $(target).slideToggle();
-          }, 100)
-        }
-      }
-    });
-
-    $( document ).on( 'click', function() {
-      $('.slide-toggle-content:visible').slideToggle();
-    });
-
-    $( document ).on( 'click', '.main-menu-toggle', function() {
-      $("#sidebar-container").toggleClass("sidebar-collapse");
-      $("#sidebar-wrapper").toggleClass("sidebar-collapse");
-      $("#top-navbar").toggleClass("top-navbar-extended");
-      $("#secondary-nav").toggleClass("top-navbar-extended");
-      $("#footer").toggleClass("top-navbar-extended");
-    });
-
-  </script>
 </body>
 </html>
