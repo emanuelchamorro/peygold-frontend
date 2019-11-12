@@ -37,6 +37,9 @@
         <span class="fs-11" [innerHtml]="transaction.dateTime"></span>
       </div>
     </div>
+    <div *ngIf="!transactions && !isBusy">
+      Sin movimientos
+    </div>
   </div>
 </div>
 
