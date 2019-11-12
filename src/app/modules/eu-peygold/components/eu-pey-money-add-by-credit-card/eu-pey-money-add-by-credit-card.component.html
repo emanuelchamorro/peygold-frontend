@@ -1,5 +1,5 @@
-<!-- app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form-->
-<div>
+<app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form>
+<div *ngIf="transaction">
   <!-- CC INFO !-->
   <div *ngIf="step==1">
     <div class="top">
@@ -14,112 +14,143 @@
         </div>
       </div>
     </div>
-    <div class="wallet-conteiner mb-2">
-      <div class="ingresarDinero w-100">
-        <div class="row">
-          <div class="col-6">
-              <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label class="has-float-label mb-0 w-100">
-                    <input type="text" mask="0000 0000 0000 0000" placeholder="Número de tarjeta" class="form-control" [(ngModel)]="transaction.creditCard.number" (ngModelChange)="onCardNumberChange($event)" />
-                    <span>Número de tarjeta</span>
-                  </label>
-                </div>
-                <div class="form-group col-md-12">
-                  <label class="has-float-label mb-0 w-100">
-                    <input type="text" placeholder="Nombre y Apellido" [(ngModel)]="transaction.creditCard.holderName" class="form-control" />
-                    <span>Nombre y Apellido</span>
-                  </label>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label class="has-float-label mb-0 w-100">
-                    <input
-                      type="text" placeholder="Fecha de Vencimiento" class="form-control"
-                      [specialCharacters]="['/']" mask="00/0000"  [(ngModel)]="transaction.creditCard.expirationDate" />
-                    <span>Fecha de Vencimiento</span>
-                  </label>
-                </div>
-                <div class="form-group col-md-6">
-                  <label class="has-float-label mb-0 w-100">
-                    <input [OnlyNumber]="true" maxlength="3" type="password" [(ngModel)]="transaction.creditCard.securityCode" placeholder="CCVV" class="form-control SecNumb">
-                    <span>CCVV</span>
-                  </label>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <ng-select placeholder="Tipo de documento"
-                             class="custom-select dropdown select-height-normal mb-0 w-100"
-                             bindLabel="name"
-                             [searchable]="false"
-                             [items]="identificationTypes"
-                             [addTag]="false"
-                             name="documentType"
-                             [(ngModel)]="transaction.creditCard.identificationType"
-                             [ngClass]="{'ng-dirty ng-invalid' : trySubmit && documentType.errors}"
-                             #documentType="ngModel"
-                             required>
-                  </ng-select>
-                </div>
-                <div class="form-group col-md-6">
-                  <label class="has-float-label mb-0 w-100">
-                    <input type="text" [OnlyNumber]="true" placeholder="Número" class="form-control">
-                    <span>Número</span>
-                  </label>
-                </div>
-              </div>
-          </div>
-          <div class="col-6">
-            <div class="containerTarjeta">
-              <div class="BoxTarjeta">
-                <div class="DataTarjeta">
-                  <div class="logoTarjeta text-right">
-                    <span class="LogoCard"></span>
-                  </div>
-                  <div class="NumeroTarjeta">
-                    <p class="text-center" *ngIf="!transaction.creditCard.number"><span>0000000000000000</span></p>
-                    <p class="text-center" *ngIf="transaction.creditCard.number"><span mask="0000 0000 0000 0000" [innerHtml]="transaction.creditCard.number"></span></p>
-                  </div>
-                  <div class="NombreTarjeta">
-                    <p class="text-left" *ngIf="!transaction.creditCard.holderName">Nombre y Apellido</p>
-                    <p class="text-left" *ngIf="transaction.creditCard.holderName" [innerHtml]="transaction.creditCard.holderName"></p>
-                  </div>
-                  <div class="venceTarjeta">
-                    <p class="text-right">
-                      <span *ngIf="!transaction.creditCard.expirationMonth">00</span>
-                      <span *ngIf="transaction.creditCard.expirationMonth" [innerHtml]="transaction.creditCard.expirationMonth"></span>
-                      /
-                      <span *ngIf="!transaction.creditCard.expirationYear">00</span>
-                      <span *ngIf="transaction.creditCard.expirationYear" [innerHtml]="transaction.creditCard.expirationYear"></span>
-                    </p>
-                  </div>
-                </div>
-                <div class="secureTarjeta">
-                  <div class="securityCode">
-                    <div class="row">
-                      <div class="col-8">
-                        <input type="text" class="secNumber" />
+    <form name="formCreditCard" (ngSubmit)="formCreditCard.valid && prepareTransaction()" #formCreditCard="ngForm" novalidate>
+      <div class="wallet-conteiner mb-2">
+        <div class="ingresarDinero w-100">
+          <div class="row">
+            <div class="col-6">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label class="has-float-label mb-0 w-100">
+                      <input required type="text" mask="0000 0000 0000 0000" placeholder="Número de tarjeta" class="form-control"
+                             name="creditCardNumber" [(ngModel)]="transaction.creditCard.number" #creditCardNumber="ngModel" (ngModelChange)="onCardNumberChange($event)" />
+                      <span>Número de tarjeta</span>
+                      <div *ngIf="!creditCardNumber.pristine && creditCardNumber.invalid || formCreditCard.submitted && creditCardNumber.errors || transaction.creditCard.isInvaild" class="invalid-feedback text-left">
+                        <div *ngIf="creditCardNumber.errors.required">Campo es requerido</div>
+                        <div *ngIf="transaction.creditCard.isInvaild">Tarjeta invalida</div>
                       </div>
-                      <div class="col-4">
-                        <p class="secNumberEx">
-                          <span *ngIf="!transaction.creditCard.securityCode">000</span>
-                          <span *ngIf="transaction.creditCard.securityCode" [innerHtml]="transaction.creditCard.securityCode"></span>
-                        </p>
+
+                    </label>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label class="has-float-label mb-0 w-100">
+                      <input required type="text" placeholder="Nombre y Apellido" class="form-control" name="creditCardHolderName"
+                             [(ngModel)]="transaction.creditCard.holderName"  #creditCardHolderName="ngModel" />
+                      <span>Nombre y Apellido</span>
+                      <div *ngIf="!creditCardHolderName.pristine && creditCardHolderName.invalid || formCreditCard.submitted && creditCardHolderName.errors" class="invalid-feedback text-left">
+                        <div *ngIf="creditCardHolderName.errors.required">Campo es requerido</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label class="has-float-label mb-0 w-100">
+                      <input
+                        required type="text" placeholder="Fecha de Vencimiento" class="form-control" name="creditCardExpirationDate"
+                        [specialCharacters]="['/']" mask="00/0000"  [(ngModel)]="transaction.creditCard.expirationDate" #creditCardExpirationDate="ngModel" />
+                      <span>Fecha de Vencimiento</span>
+                      <div *ngIf="!creditCardExpirationDate.pristine && creditCardExpirationDate.invalid || formCreditCard.submitted && creditCardExpirationDate.errors" class="invalid-feedback text-left">
+                        <div *ngIf="creditCardExpirationDate.errors.required">Campo es requerido</div>
+                        <div *ngIf="creditCardExpirationDate.errors['Mask error']">Fecha invalida. Mes/Año Ej: 01/2025</div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="has-float-label mb-0 w-100">
+                      <input required maxlength="3" type="password" name="creditCardSecurityCode" placeholder="CCVV" class="form-control SecNumb"
+                             [OnlyNumber]="true" [(ngModel)]="transaction.creditCard.securityCode"  #creditCardSecurityCode="ngModel" />
+                      <span>CCVV</span>
+                      <div *ngIf="!creditCardSecurityCode.pristine && creditCardSecurityCode.invalid || formCreditCard.submitted && creditCardSecurityCode.errors" class="invalid-feedback text-left">
+                        <div *ngIf="creditCardSecurityCode.errors.required">Campo es requerido</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <ng-select placeholder="Tipo de documento"
+                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               bindLabel="name"
+                               [searchable]="false"
+                               [items]="identificationTypes"
+                               [addTag]="false"
+                               name="creditCardIdentificationType"
+                               [(ngModel)]="transaction.creditCard.identificationType"
+                               [ngClass]="{'ng-dirty ng-invalid' : trySubmit && documentType.errors}"
+                               #creditCardIdentificationType="ngModel"
+                               required>
+                    </ng-select>
+                    <div *ngIf="!creditCardIdentificationType.pristine && creditCardIdentificationType.invalid || formCreditCard.submitted && creditCardIdentificationType.errors" class="invalid-feedback text-left">
+                      <div *ngIf="creditCardIdentificationType.errors.required">Campo es requerido</div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="has-float-label mb-0 w-100">
+                      <input required type="text" placeholder="Número" class="form-control" name="creditCardIdentificationNumber"
+                             [OnlyNumber]="true" [(ngModel)]="transaction.creditCard.identificationNumber" #creditCardIdentificationNumber="ngModel" />
+                      <span>Número</span>
+                      <div *ngIf="!creditCardIdentificationNumber.pristine && creditCardIdentificationNumber.invalid || formCreditCard.submitted && creditCardIdentificationNumber.errors" class="invalid-feedback text-left">
+                        <div *ngIf="creditCardIdentificationNumber.errors.required">Campo es requerido</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+            </div>
+            <div class="col-6">
+              <div class="containerTarjeta">
+                <div class="BoxTarjeta" [ngClass]="transaction.creditCard.type | titlecase">
+                  <div class="DataTarjeta">
+                    <div class="logoTarjeta text-right">
+                      <span class="LogoCard"></span>
+                    </div>
+                    <div class="NumeroTarjeta">
+                      <p class="text-center" *ngIf="!transaction.creditCard.number"><span>0000000000000000</span></p>
+                      <p class="text-center" *ngIf="transaction.creditCard.number"><span mask="0000 0000 0000 0000" [innerHtml]="transaction.creditCard.number"></span></p>
+                    </div>
+                    <div class="NombreTarjeta">
+                      <p class="text-left" *ngIf="!transaction.creditCard.holderName">Nombre y Apellido</p>
+                      <p class="text-left" *ngIf="transaction.creditCard.holderName" [innerHtml]="transaction.creditCard.holderName"></p>
+                    </div>
+                    <div class="venceTarjeta">
+                      <p class="text-right">
+                        <span *ngIf="!transaction.creditCard.expirationMonth">00</span>
+                        <span *ngIf="transaction.creditCard.expirationMonth" [innerHtml]="transaction.creditCard.expirationMonth"></span>
+                        /
+                        <span *ngIf="!transaction.creditCard.expirationYear">00</span>
+                        <span *ngIf="transaction.creditCard.expirationYear" [innerHtml]="transaction.creditCard.expirationYear"></span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="secureTarjeta">
+                    <div class="securityCode">
+                      <div class="row">
+                        <div class="col-8">
+                          <input type="text" class="secNumber" />
+                        </div>
+                        <div class="col-4">
+                          <p class="secNumberEx">
+                            <span *ngIf="!transaction.creditCard.securityCode">000</span>
+                            <span *ngIf="transaction.creditCard.securityCode" [innerHtml]="transaction.creditCard.securityCode"></span>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div *ngIf="hasCardError" class="col-12 invalid-feedback text-left">
+              No podemos procesar el pago con los datos de su tarjeta, por favor verifique la información suministrada.
+            </div>
           </div>
+
         </div>
       </div>
-    </div>
-    <div class="actionForm w-100 align-items-end">
-      <button (click)="continue()" class="btn-blue">Continuar</button>
-    </div>
+      <div class="actionForm w-100 align-items-end">
+        <button type="submit" class="btn-blue">Continuar</button>
+      </div>
+    </form>
   </div>
 
   <!-- END CC INFO !-->
@@ -144,11 +175,14 @@
         <div class="row">
           <div class="col-12 paddingBox border-bottom">
             <p class="text-center">Estás ingresando</p>
-            <p class="text-center"><strong>$0</strong></p>
+            <p class="text-center">
+              <strong [innerHtml]="transaction.type.coin | translate"></strong>
+              <strong>{{transaction.amount | mask:'0*,00'}}</strong>
+            </p>
           </div>
           <div class="col-12 paddingBox">
             <p class="text-center">Forma de Pago</p>
-            <p class="text-center"><span class="IconIngresar Tarjeta"></span><b>Tarjeta de<br>Débito VISA</b></p>
+            <p class="text-center"><span class="IconIngresar Tarjeta"></span><b>Tarjeta <span [innerHtml]="transaction.creditCard.type | uppercase"></span></b></p>
           </div>
         </div>
       </div>

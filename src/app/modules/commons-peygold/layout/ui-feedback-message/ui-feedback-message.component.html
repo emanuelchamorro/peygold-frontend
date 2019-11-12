@@ -1,0 +1,19 @@
+<div class="wallet-conteiner mb-2">
+  <div class="DineroIngresado">
+    <div class="row">
+      <div class="col-12 paddingBox">
+        <img *ngIf="message.isSuccess" src="assets/images/confirmacion-blanco.svg" class="SuccessWhite" width="70" height="70"/>
+        <img *ngIf="message.isError" src="assets/images/error-blanco.svg" class="ErrorWhite" width="70" height="70"/>
+
+        <h2 *ngIf="message.title" [innerHtml]="message.title">Proceso exitoso</h2>
+        <p *ngIf="message.value" [innerHtml]="message.value" class="text-center"></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="actionForm align-items-end">
+
+  <a *ngIf="!message.action" [routerLink]="home" class="btn-blue-border">Aceptar</a>
+  <a *ngIf="message.action" [routerLink]="message.action" class="btn-blue-border">Aceptar</a>
+
+</div>

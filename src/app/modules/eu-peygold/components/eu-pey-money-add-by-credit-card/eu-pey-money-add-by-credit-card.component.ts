@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {EuPeyMoneyAddComponent} from '../eu-pey-money-add/eu-pey-money-add.component';
 import {MercadoPago} from '../../../mercado-pago/services/mercado-pago.service';
+import {MercadoPagoService} from '../../services/mercado-pago.service';
 import {IdentificationType} from '../../../mercado-pago/models/identification-type';
 import {environment} from '../../../../../environments/environment';
 import {CreditCardTransaction} from '../../../../models/credit-card-transaction';
+import {Transaction, User} from '../../../../models';
+import {AuthService} from '../../../auth-peygold/services/auth.service';
+import {Message} from '../../../commons-peygold/entities/message';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-eu-pey-money-add-by-credit-card',
@@ -18,8 +23,13 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
 
   protected transaction: CreditCardTransaction;
 
+  protected hasCardError = false;
+
   constructor(
-    private mercadoPago: MercadoPago
+    private mercadoPago: MercadoPago,
+    private mercadoPagoService: MercadoPagoService,
+    private authService: AuthService,
+    protected router: Router,
   ) {
     super();
     this.mercadoPago.setPublishableKey(environment.mercado_pago.publishable_key);
@@ -28,9 +38,20 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
     });
   }
 
-  ngOnInit() {
-    this.transaction = new CreditCardTransaction();
+  setTransaction(transaction: Transaction) {
+    const creditCadrdTransaction = new CreditCardTransaction();
+    creditCadrdTransaction.type = transaction.type;
+    creditCadrdTransaction.amount = transaction.amount;
+    creditCadrdTransaction.sender = new User();
+    creditCadrdTransaction.sender.email = this.authService.user().email;
+
+    super.setTransaction(creditCadrdTransaction);
   }
+
+  /**
+   * OnInit implementation
+   */
+  ngOnInit() {}
 
   /**
    * Continue with the next step
@@ -47,11 +68,37 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
   }
 
   /**
-   * Send the transaction.
+   * Get the trasacion token
+   */
+  prepareTransaction() {
+    this.mercadoPago.createToken(this.transaction.mercadoPagoTransaction).then((token: string) => {
+      this.transaction.creditCard.token = token;
+      this.continue();
+    }).catch(() => {
+      this.hasCardError = true;
+    });
+  }
+
+  /**
+   * Send the transaction or fail.
    * @return void
    */
-  sendTransaction() {
-    console.log(this.transaction);
+  send(): void {
+    this.mercadoPagoService.createPayment(this.transaction.addMoneyTransaction).then((success) => {
+      if (!success) {
+        this.showErrorFeedback(new Message(
+          'Ha ocurrido un error al procesar su pago',
+          'Por favor intente más tarde.'
+        ));
+        return;
+      }
+
+      this.showSuccessFeedback(new Message(
+        '¡Ingresaste dinero exitosamente!',
+        'Has ingresado dinero a tu cuenta de forma exitosa, ' +
+        'y ya podes comenzar a realizar transacciones de manera fácil, cómoda y desde tu celular'
+      ));
+    });
   }
 
   /**
@@ -63,7 +110,6 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
       this.mercadoPago.getPaymentMethod({bin}).then((extraInfo) => {
           this.transaction.creditCard.extraInfo = extraInfo;
           this.transaction.creditCard.type = extraInfo.id;
-          console.log(this.transaction);
       }).catch(() => {
         this.transaction.creditCard.extraInfo = null;
         this.transaction.creditCard.type = null;

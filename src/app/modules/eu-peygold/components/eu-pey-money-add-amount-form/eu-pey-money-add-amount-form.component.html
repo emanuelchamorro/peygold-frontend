@@ -10,25 +10,43 @@
     </div>
   </div>
 </div>
-<div class="wallet-conteiner mb-2">
-  <div class="ingresarDinero">
-    <div class="row">
-      <div class="col-12">
+<form name="formAddAmount" (ngSubmit)="formAddAmount.valid && onContinue()" #formAddAmount="ngForm" novalidate>
+  <div class="wallet-conteiner mb-2">
+    <div class="ingresarDinero">
+      <div class="row">
+        <div class="col-12">
 
-        <div class="Export">
-          <a class="ExportBtn">Importe en <span class="color-blue">Pesos</span> <span class="ChevronDown"></span></a>
-          <div class="DownExport">
-            <ul>
-              <li><a href="#">Pesos</a></li>
-              <li><a href="#">PeyGold débito</a></li>
-            </ul>
+          <div class="Export">
+            <a class="ExportBtn slide-toggle">Importe en:
+              <span *ngIf="transaction.type" class="color-blue" [innerHtml]="transaction.type.label | translate"></span>
+              <span class="ChevronDown"></span>
+            </a>
+            <div class="DownExport slide-toggle-content">
+              <ul>
+                <li *ngFor="let type of transactionTypes">
+                  <a (click)="setTransactionType(type)" [innerHtml]="type.label | translate"></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <input required type="text" placeholder="$0" class="form-control InputAmount"
+                 [prefix]="transaction.type.coin | translate" mask="0*,00"
+                 [min]="transaction.type.minAmount"
+                 name="amount" [(ngModel)]="transaction.amount" #amount="ngModel" />
+          <div *ngIf="!amount.pristine && amount.invalid && formAddAmount.submitted" class="invalid-feedback text-left">
+            <div *ngIf="amount.errors.required">Campo es requerido</div>
+          </div>
+          <div *ngIf="transaction.amount < transaction.type.minAmount && formAddAmount.submitted" class="invalid-feedback text-left">
+            <div >El valor mínimo para la transaccion es {{ transaction.type.minAmount }}</div>
           </div>
         </div>
-        <input type="text" class="InputAmount" placeholder="$0" />
       </div>
     </div>
   </div>
-</div>
-<div class="actionForm align-items-end">
-  <button type="submit" class="btn-blue" (click)="onContinue()">Continuar</button>
-</div>
+
+  <div class="actionForm align-items-end">
+    <button type="submit" class="btn-blue">Continuar</button>
+  </div>
+</form>
+
+

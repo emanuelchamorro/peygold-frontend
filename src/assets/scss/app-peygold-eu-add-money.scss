@@ -258,14 +258,14 @@
         background-color: transparent !important;
       }
     }
-    .MasterCard {
+    .Master, .MasterCard {
       background: #6c9acd;
       .LogoCard {
         background-image: url("~src/assets/images/tarjetas/mastercard.svg");
         background-color: transparent !important;
       }
     }
-    .AmericanExpress {
+    .Amex, .AmericanExpress {
       background: #0e73cf;
       .LogoCard {
         background-image: url("~src/assets/images/tarjetas/american-white.svg");

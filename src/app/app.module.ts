@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
 import { AuthPeyGoldModule } from './modules/auth-peygold/auth-peygold.module';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import {HttpErrorInterceptor} from './modules/commons-peygold/interceptors/http-error.interceptor';
 import {ScPeyGoldModule} from './modules/sc-peygold/sc-peygold.module';
 import {JwtInterceptor, JwtModule} from '@auth0/angular-jwt';
@@ -12,6 +12,8 @@ import {environment} from '../environments/environment';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {EuPeyGoldModule} from './modules/eu-peygold/eu-peygold.module';
 import {CommonsPeyGoldModule} from './modules/commons-peygold/commons-peygold.module';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,15 @@ import {CommonsPeyGoldModule} from './modules/commons-peygold/commons-peygold.mo
         },
         whitelistedDomains: environment.interceptors.jwt_interceptor.white_list
       }
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      },
     })
   ],
   providers: [

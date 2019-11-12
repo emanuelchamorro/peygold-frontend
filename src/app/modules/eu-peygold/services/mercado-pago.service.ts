@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from '../../../services/http.service';
-import {AddMoneyTransaction, Balance} from '../../../models';
+import {AddMoneyTransaction} from '../../../models';
 
 @Injectable({
   providedIn: 'root'

@@ -50,7 +50,8 @@ export class UIPeyMainMenuComponent extends BaseComponent implements OnInit, OnD
    * On destroy implementation
    */
   ngOnDestroy() {
-
-    this.$items.unsubscribe();
+    if (this.$items) {
+      this.$items.unsubscribe();
+    }
   }
 }

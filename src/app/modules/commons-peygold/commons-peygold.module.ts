@@ -6,6 +6,7 @@ import { UIPeyMainMenuComponent } from './layout/ui-pey-main-menu/ui-pey-main-me
 import {UIPeyLayoutComponent} from './layout/ui-pey-layout/ui-pey-layout.component';
 import {UIPeySidebarComponent} from './layout/ui-pey-sidebar/ui-pey-sidebar.component';
 import {OnlyNumbersDirective} from './directives/only-numbers.directive';
+import { UIFeedbackMessageComponent } from './layout/ui-feedback-message/ui-feedback-message.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import {OnlyNumbersDirective} from './directives/only-numbers.directive';
     UIPeyLayoutComponent,
     UIPeySidebarComponent,
     OnlyNumbersDirective,
+    UIFeedbackMessageComponent,
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import {OnlyNumbersDirective} from './directives/only-numbers.directive';
   ],
   exports: [
     UIPeySidebarComponent,
-    OnlyNumbersDirective
+    OnlyNumbersDirective,
+    UIFeedbackMessageComponent,
   ]
 })
 export class CommonsPeyGoldModule { }

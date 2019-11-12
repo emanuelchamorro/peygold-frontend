@@ -27,8 +27,6 @@ export class PeySuccessComponent extends BaseComponent implements OnInit {
    * On init implementation
    */
   ngOnInit() {
-
-
     this.title = this.route.snapshot.data[`title`];
     this.message = this.route.snapshot.data[`message`];
   }

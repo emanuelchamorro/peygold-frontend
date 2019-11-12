@@ -18,6 +18,9 @@ import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import { NgxMaskModule } from 'ngx-mask';
 import {NgMaskConfig} from '../../config';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 
 @NgModule({
@@ -38,7 +41,16 @@ import {NgMaskConfig} from '../../config';
     CommonsPeyGoldModule,
     EuPeyGoldRouting,
     MercadoPagoModule,
-    NgxMaskModule.forRoot(NgMaskConfig)
+    NgxMaskModule.forRoot(NgMaskConfig),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      },
+    })
   ]
 })
 export class EuPeyGoldModule { }

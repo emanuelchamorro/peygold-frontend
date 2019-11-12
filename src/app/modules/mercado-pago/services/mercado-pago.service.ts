@@ -70,9 +70,12 @@ export class MercadoPago {
    * Create the token in mercadopago with the creditcard info.
    * @param params The request params. See the mercadopago docs. See the mercadopago docs.
    */
-  createToken(params: object): Promise<any> {
+  createToken(params: object): Promise<string> {
+    console.log(params);
     return new Promise((resolve, reject) => {
       this.instance.createToken(params, (status, results) => {
+        console.log(status);
+        console.log(results);
         if (status === 200 || status === 201) {
           resolve(results.id);
         } else {

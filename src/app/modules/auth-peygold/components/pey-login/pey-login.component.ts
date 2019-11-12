@@ -50,7 +50,7 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
     this.authService.login(this.user.email, this.user.password, this.user.rememberMe).then((user: User) => {
       localStorage.setItem(environment.localStorage.user_var_name, user.toString());
       localStorage.setItem(environment.localStorage.access_token_var_name, user.token);
-      this.unbusy()
+      this.unbusy();
       this.goToDashboard(user);
     }).catch((e: ErrorResponse) => {
       this.catchError(e);
@@ -65,6 +65,8 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
   private goToDashboard(user: User): void {
     // const dashboardUrl = user.isAdmin ?  scRoutes.home.href : euRoutes.home.href;
     const dashboardUrl = euRoutes.home.href;
+    this.home = dashboardUrl;
+    this.context = euRoutes.context;
     this.router.navigateByUrl(dashboardUrl, {
       state : {
         securedRedirection: true

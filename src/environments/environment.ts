@@ -39,6 +39,10 @@ export const environment = {
   },
   mercado_pago: {
     publishable_key: 'TEST-7c566789-4be1-4301-b721-9b4d21f1fd85'
+  },
+  i18n: {
+    language: 'es',
+    country: 'es_AR',
   }
 };
 

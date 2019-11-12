@@ -27,4 +27,21 @@ export class CreditCardTransaction extends Transaction {
       Number(this.type.id)
     );
   }
+
+  /**
+   * Get the MercadPago transaction object to get the transaction token from MercadoPago platform.
+   */
+  get mercadoPagoTransaction(): object {
+    return {
+      paymentMethodId: this.creditCard.type,
+      docType: this.creditCard.identificationType.id,
+      docNumber: this.creditCard.identificationNumber,
+      cardholderName: this.creditCard.holderName,
+      cardExpirationMonth: this.creditCard.expirationMonth,
+      cardExpirationYear: this.creditCard.expirationYear,
+      securityCode: this.creditCard.securityCode,
+      cardNumber: this.creditCard.number,
+      email: this.sender.email
+    };
+  }
 }

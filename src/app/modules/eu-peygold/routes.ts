@@ -1,5 +1,6 @@
 const indexRoute = '/eu';
 export const routes = {
+  context: indexRoute,
   index: {route: 'eu', href: indexRoute},
   home: {route: 'home', href: indexRoute + '/home'},
   help: {route: 'help', href: indexRoute + '/help'},

@@ -1,17 +1,19 @@
 /**
- * Transaction model
+ * CreditCard model
  */
 import {Model} from './model';
-import {isNumber} from 'util';
+import {IdentificationType} from '../modules/mercado-pago/models/identification-type';
 
 export class CreditCard extends Model {
+  private static NUMBER_LENGTH = 16;
+  private static MIN_NUMBER_LENGTH = 6;
 
   public number: number;
   public securityCode: number;
   public expirationDate: string;
   public holderName: string;
   public type: string;
-  public identificationType: string;
+  public identificationType: IdentificationType;
   public identificationNumber: string;
   public extraInfo: any;
   public token: string;
@@ -33,5 +35,14 @@ export class CreditCard extends Model {
     if (this.expirationDate) {
       return Number(this.expirationDate.substring(2));
     }
+  }
+
+  /**
+   * Return true if the card is invalid
+   */
+  get isInvaild(): boolean {
+    return this.number
+      && this.number.toString().length > CreditCard.MIN_NUMBER_LENGTH
+      && this.type === null;
   }
 }

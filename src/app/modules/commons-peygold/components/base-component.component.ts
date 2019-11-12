@@ -1,9 +1,18 @@
 import {ErrorResponse} from '../entities/error-response';
 import {NgModel} from '@angular/forms';
+import {Message} from '../entities/message';
+import {routes as CommonsRoutes} from '../routes';
+import {Router} from '@angular/router';
+import {MessageTypeEnum} from '../../../enums';
 
 export class BaseComponent {
 
   protected isBusy = false;
+
+  /**
+   * Should be injected by the child components.
+   */
+  protected router: Router;
 
   private messages = {
     errors: [],
@@ -79,7 +88,7 @@ export class BaseComponent {
    * Set false to the busy attribute
    * @return void
    */
-  protected unbusy(): void{
+  protected unbusy(): void {
     this.isBusy = false;
   }
 
@@ -87,7 +96,78 @@ export class BaseComponent {
    * Set true the busy attribute
    * @return void
    */
-  protected busy(): void{
+  protected busy(): void {
     this.isBusy = true;
+  }
+
+  /**
+   * Return the home URL.
+   * This url is configured on user login.
+   */
+  protected get home(): string {
+    return '/eu/home';
+    // return localStorage.getItem('app_home');
+  }
+
+  /**
+   * Set the home URL.
+   * This url is configured on user login.
+   */
+  protected set home(url: string) {
+    return localStorage.setItem('app_home', url);
+  }
+
+  /**
+   * Return the context URL.
+   * This value is configured on user login.
+   */
+  protected get context(): string {
+    return '/eu';
+    // return localStorage.getItem('app_context');
+  }
+
+  /**
+   * Set the context URL.
+   * This value is configured on user login.
+   */
+  protected set context(url: string){
+    return localStorage.setItem('app_context', url);
+  }
+
+
+  /**
+   * Redirect to feedback component and show the success message
+   * @param message The message to be shown
+   * @return void
+   */
+  protected showSuccessFeedback(message: Message): void {
+    message.type = MessageTypeEnum.Success;
+    this.showFeedback(message);
+  }
+
+  /**
+   * Redirect to feedback component and show the error message
+   * @param message The message to be shown
+   * @return void
+   */
+  protected showErrorFeedback(message: Message): void {
+    message.type = MessageTypeEnum.Error;
+    this.showFeedback(message);
+  }
+
+  /**
+   * Redirect to feedback component and show the message
+   * @param message The message to be shown
+   * @return void
+   */
+  protected showFeedback(message: Message): void {
+    // const url = this.context + '/' + CommonsRoutes.feedback.href;
+    const url = '/eu' + CommonsRoutes.feedback.href;
+    this.router.navigateByUrl(url, {
+      state : {
+        securedRedirection: true,
+        message
+      }
+    });
   }
 }

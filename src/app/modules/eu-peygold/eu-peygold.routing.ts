@@ -13,13 +13,16 @@ import {
 } from './components/eu-pey-money-add-by-bank-deposit/eu-pey-money-add-by-bank-deposit.component';
 import {EuPeyMoneyAddByCreditCardComponent} from './components/eu-pey-money-add-by-credit-card/eu-pey-money-add-by-credit-card.component';
 import {EuPeyMoneyAddByCashComponent} from './components/eu-pey-money-add-by-cash/eu-pey-money-add-by-cash.component';
+import {config as CommonsRoutes } from '../commons-peygold/commons-peygold.routing';
 
 export const config: Routes = [
   {
     path: routes.index.route,
     component: UIPeyLayoutComponent,
-    //canActivate: [GuardAuthService],
+    // canActivate: [GuardAuthService],
     children: [
+      // Commons Routes
+      ... CommonsRoutes,
       // HOME ROUTES
       {
         path: routes.home.route,
