@@ -28,12 +28,12 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    */
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private locationService: LocationService,
     private institutionService: InstitutionService,
     private occupationService: OccupationService,
     private authService: AuthService,
-    private inMemoryService: InMemoryService
+    private inMemoryService: InMemoryService,
+    protected router: Router,
   ) {
     super();
   }

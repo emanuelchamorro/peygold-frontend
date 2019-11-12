@@ -21,7 +21,7 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    */
   constructor(
     private authService: AuthService,
-    private router: Router
+    protected router: Router
   ) {
     super();
   }

@@ -11,7 +11,7 @@ export class PeySuccessComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    protected router: Router
   ) {
     super();
     const navigation = this.router.getCurrentNavigation();

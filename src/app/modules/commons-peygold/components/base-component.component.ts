@@ -114,7 +114,7 @@ export class BaseComponent {
    * This url is configured on user login.
    */
   protected set home(url: string) {
-    return localStorage.setItem('app_home', url);
+    localStorage.setItem('app_home', url);
   }
 
   /**
@@ -131,7 +131,7 @@ export class BaseComponent {
    * This value is configured on user login.
    */
   protected set context(url: string){
-    return localStorage.setItem('app_context', url);
+    localStorage.setItem('app_context', url);
   }
 
 

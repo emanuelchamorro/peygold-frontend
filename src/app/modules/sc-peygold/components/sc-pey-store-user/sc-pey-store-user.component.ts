@@ -24,11 +24,11 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private usersService: UsersService,
     private locationService: LocationService,
     private rolesService: RolesService,
-    private inMemoryService: InMemoryService
+    private inMemoryService: InMemoryService,
+    protected router: Router,
   ) {
     super();
     const userId = Number(this.route.snapshot.paramMap.get('userId'));

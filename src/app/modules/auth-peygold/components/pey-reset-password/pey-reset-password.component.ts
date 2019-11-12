@@ -20,7 +20,7 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
+    protected router: Router,
   ) {
     super();
   }

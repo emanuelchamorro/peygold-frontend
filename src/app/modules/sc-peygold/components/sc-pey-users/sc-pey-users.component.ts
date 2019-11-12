@@ -19,8 +19,8 @@ export class ScPeyUsersComponent extends BaseComponent implements OnInit {
    * ScPeyDashboardComponent
    */
   constructor(
-    private router: Router,
     private usersService: UsersService,
+    protected router: Router,
   ) {
     super();
     this.users = [];
