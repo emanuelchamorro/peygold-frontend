@@ -21,6 +21,8 @@ import {NgMaskConfig} from '../../config';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { EuPeyMoneyRequestComponent } from './components/eu-pey-money-request/eu-pey-money-request.component';
+import { EuPeyMoneyRequestsComponent } from './components/eu-pey-money-requests/eu-pey-money-requests.component';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     EuPeyMoneyAddByCreditCardComponent,
     EuPeyMoneyAddByCashComponent,
     EuPeyMoneyAddAmountFormComponent,
+    EuPeyMoneyRequestComponent,
+    EuPeyMoneyRequestsComponent,
   ],
   imports: [
     CommonModule,

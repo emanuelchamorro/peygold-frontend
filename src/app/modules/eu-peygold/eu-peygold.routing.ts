@@ -14,6 +14,8 @@ import {
 import {EuPeyMoneyAddByCreditCardComponent} from './components/eu-pey-money-add-by-credit-card/eu-pey-money-add-by-credit-card.component';
 import {EuPeyMoneyAddByCashComponent} from './components/eu-pey-money-add-by-cash/eu-pey-money-add-by-cash.component';
 import {config as CommonsRoutes } from '../commons-peygold/commons-peygold.routing';
+import {EuPeyMoneyRequestComponent} from './components/eu-pey-money-request/eu-pey-money-request.component';
+import {EuPeyMoneyRequestsComponent} from './components/eu-pey-money-requests/eu-pey-money-requests.component';
 
 export const config: Routes = [
   {
@@ -49,8 +51,18 @@ export const config: Routes = [
       {
         path: routes.money.add.cash.route,
         component: EuPeyMoneyAddByCashComponent,
-      }
+      },
       // END ADD MONEY
+      // REQUEST MONEY
+      {
+        path: routes.money.request.route,
+        component: EuPeyMoneyRequestComponent,
+      },
+      {
+        path: routes.money.requests.route,
+        component: EuPeyMoneyRequestsComponent,
+      },
+      // END REQUEST MONEY
     ]
   }
 ];

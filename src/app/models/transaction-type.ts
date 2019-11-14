@@ -17,18 +17,18 @@ export class TransactionType extends SelectOption {
 
     switch (this.value) {
       case TransactionTypeEnum.Fiat:
-        this.coin  = 'transaction.type.fiat.coin';
-        this.label = 'transaction.type.fiat.coin.label';
+        this.coin  = '$';
+        this.label = 'Pesos';
         this.minAmount = 1000;
         break;
       case TransactionTypeEnum.Points:
-        this.coin  = 'transaction.type.points.coin';
-        this.label = 'transaction.type.points.coin.label';
+        this.coin  = 'P$G';
+        this.label = 'Puntos';
         this.minAmount = 1000;
         break;
       case TransactionTypeEnum.CreditPoints:
-        this.coin  = 'transaction.type.credit_points.coin';
-        this.label = 'transaction.type.credit_points.coin.label';
+        this.coin  = 'PC$G';
+        this.label = 'Credit Points';
         this.minAmount = 1000;
         break;
     }

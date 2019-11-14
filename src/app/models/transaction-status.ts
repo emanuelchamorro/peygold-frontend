@@ -15,13 +15,13 @@ export class TransactionStatus extends SelectOption {
 
     switch (this.value) {
       case TransactionStatusEnum.Approved:
-        this.label = 'transaction.status.approved.label';
+        this.label = 'Aprobada';
         break;
       case TransactionStatusEnum.Pending:
-        this.label = 'transaction.status.pending.label';
+        this.label = 'Pendiente';
         break;
       case TransactionStatusEnum.Rejected:
-        this.label = 'transaction.status.rejected.label';
+        this.label = 'Rechazada';
         break;
     }
   }

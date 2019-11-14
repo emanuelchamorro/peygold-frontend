@@ -4,11 +4,11 @@ import {BaseComponent} from '../../components/base-component.component';
 import {Message} from '../../entities/message';
 
 @Component({
-  selector: 'app-ui-feedback-message',
-  templateUrl: './ui-feedback-message.component.html',
-  styleUrls: ['./ui-feedback-message.component.scss']
+  selector: 'app-ui-pey-feedback-message',
+  templateUrl: './ui-pey-feedback-message.component.html',
+  styleUrls: ['./ui-pey-feedback-message.component.scss']
 })
-export class UIFeedbackMessageComponent extends BaseComponent implements OnInit {
+export class UIPeyFeedbackMessageComponent extends BaseComponent implements OnInit {
 
   private message: Message;
 

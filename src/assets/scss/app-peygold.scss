@@ -51,15 +51,37 @@ label.ng-invalid {
   font-weight: bold;
 }
 
-/**
- * Forms
- */
 .has-float-label input, .has-float-label select {
   margin-bottom: 0px;
 }
 
 .invalid-feedback {
   display: block;
+}
+
+.input-line {
+  outline: 0 !important;
+  border-width: 0 0 1px !important;
+  border-color: #868686!important;
+  background: none !important;
+  position: relative !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  font-style: italic !important;
+  text-align: center !important;
+  border-bottom: solid 1px grey !important;
+  line-height: 2 !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  box-shadow: none !important;
+  background: none !important;
+  background: transparent!important;
+}
+
+.input-line:focus {
+  border-bottom-width: 2px !important;
+  border-color: $p-blue !important;
+  color: $p-blue !important;
 }
 
 /**

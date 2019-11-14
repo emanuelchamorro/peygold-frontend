@@ -6,10 +6,10 @@ export const menu: Array<MenuItem> = [
   new MenuItem().fromJSON({label: 'Inicio', href: routes.home.href, icon: 'icon-Iconos-01'}),
 //  new MenuItem().fromJSON({label: 'Movimientos', href: routes.transactions.index.href, icon: 'icon-Iconos-02'}),
   new MenuItem().fromJSON({label: 'Ingresar Dinero', href: routes.money.add.href, icon: 'icon-Iconos-03'}),
-//  new MenuItem().fromJSON({label: 'Cobrar', icon: 'icon-Iconos-04', childs: [
-//    new MenuItem().fromJSON({label: 'Solicitar dinero', href: routes.money.request.href}),
-//    new MenuItem().fromJSON({label: 'Solicitudes enviadas', href: routes.money.requests.href}),
-//  ]}),
+  new MenuItem().fromJSON({label: 'Cobrar', icon: 'icon-Iconos-04', childs: [
+    new MenuItem().fromJSON({label: 'Solicitar dinero', href: routes.money.request.href}),
+    new MenuItem().fromJSON({label: 'Solicitudes enviadas', href: routes.money.requests.href}),
+  ]}),
   new MenuItem().fromJSON({label: 'Pagar/Enviar Dinero', icon: 'icon-Iconos-05', childs: [
       new MenuItem().fromJSON({label: 'Enviar dinero', href: routes.money.send.href}),
       new MenuItem().fromJSON({label: 'Solicitudes de pago', href: routes.money.sent.href}),
