@@ -1,0 +1,15 @@
+ng-autocomplete {
+  .autocomplete-container .input-container input {
+    padding-top: 1em;
+    border: 0;
+    font-size: 13px;
+    color: #333333;
+    top: .25rem;
+  }
+
+  .autocomplete-container .input-container .x i {
+    color: #dc3545 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+  }
+}

@@ -1,0 +1,14 @@
+.item {
+
+  img {
+    position: absolute;
+    width: 40px;
+    height: 100%;
+    padding: 2px;
+    border-radius: 50%;
+  }
+
+  span, small {
+    margin-left: 40px;
+  }
+}

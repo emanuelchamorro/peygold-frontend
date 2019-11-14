@@ -1,0 +1,23 @@
+<label class="has-float-label text-left mb-3 w-100">
+  <ng-autocomplete
+    name="user"
+    [(ngModel)]="user"
+    placeholder="Nombre o correo electrónico"
+    [data]="users"
+    searchKeyword="fullName"
+    (inputChanged)='searchUsers($event)'
+    (inputCleared)="clearUser()"
+    (selected)='emitUser($event)'
+    [itemTemplate]="itemTemplateStatic"
+    [notFoundTemplate]="notFoundTemplate"
+  >
+  </ng-autocomplete>
+  <ng-template #itemTemplateStatic let-item>
+    <div class="item">
+      <img [src]="item.avatarURL" (error)="this.src = 'assets/images/Isologotipo.svg'" height="25">
+      <span [innerHTML]="item.fullName"></span><br>
+      <small>Email: {{item.email}}</small>
+    </div>
+  </ng-template>
+  <span>Nombre o correo electrónico</span>
+</label>
