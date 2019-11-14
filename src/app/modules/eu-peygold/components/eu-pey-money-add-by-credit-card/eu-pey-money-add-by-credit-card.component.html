@@ -22,7 +22,7 @@
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label class="has-float-label mb-0 w-100">
-                      <input required type="text" mask="0000 0000 0000 0000" placeholder="Número de tarjeta" class="form-control"
+                      <input required type="text" mask="0000 0000 0000 0009" placeholder="Número de tarjeta" class="form-control"
                              name="creditCardNumber" [(ngModel)]="transaction.creditCard.number" #creditCardNumber="ngModel" (ngModelChange)="onCardNumberChange($event)" />
                       <span>Número de tarjeta</span>
                       <div *ngIf="!creditCardNumber.pristine && creditCardNumber.invalid || formCreditCard.submitted && creditCardNumber.errors || transaction.creditCard.isInvaild" class="invalid-feedback text-left">

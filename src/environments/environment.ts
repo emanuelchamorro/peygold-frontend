@@ -38,7 +38,7 @@ export const environment = {
     access_token_var_name: 'pey_access_token',
   },
   mercado_pago: {
-    publishable_key: 'TEST-7c566789-4be1-4301-b721-9b4d21f1fd85'
+    publishable_key: 'TEST-283b2fb8-75f1-49ef-bab7-7918c9ae5d09'
   },
   i18n: {
     language: 'es',
