@@ -12,6 +12,7 @@ export class RequestTransactionsService extends HttpService {
   /**
    * Get the all request transactions
    * @param transaction The payment transaction.
+   * @return Promise<Array<Transaction>>
    */
   all(status?: string): Promise<Array<Transaction>> {
     const resource =  status ? `/requesttransactions/${status}` : '/requesttransactions';
@@ -28,6 +29,7 @@ export class RequestTransactionsService extends HttpService {
   /**
    * Get the pending transactions
    * @param transaction The payment transaction.
+   * @return Promise<Array<Transaction>>
    */
   pending(): Promise<Array<Transaction>> {
     return this.all('pending');
@@ -36,6 +38,7 @@ export class RequestTransactionsService extends HttpService {
   /**
    * Map any object to a Transaction model
    * @param transaction the object
+   * @return Transaction
    */
   private castTransaction(transaction: any): Transaction {
     const mTransaction = new Transaction();
@@ -57,5 +60,31 @@ export class RequestTransactionsService extends HttpService {
     mTransaction.type = new TransactionType(transaction.idTransactionType);
 
     return mTransaction;
+  }
+
+  /**
+   * Start a Request money transaction
+   * @return Promise
+   */
+  create(transaction: Transaction) {
+    return this.post('/requesttransactions', {
+      Ammount: transaction.amount,
+      IdUserSender: transaction.sender.id,
+      IdTransactionType : transaction.type.value,
+      RequestComments: transaction.reason
+    }).toPromise();
+  }
+
+
+  /**
+   * Update a Request money transaction
+   * @return Promise
+   */
+  update(transaction: Transaction) {
+    return this.put('/requesttransactions', {
+      RequestTransactionId: transaction.id,
+      ProcessedStatus: transaction.status.value,
+      ProcessedComments: transaction.processedComments
+    }).toPromise();
   }
 }

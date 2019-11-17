@@ -1,0 +1,44 @@
+<div [hidden]="step != 1">
+  <h2><span class="icon-Iconos-04 fs-22"></span>Pagar: <span>Enviar dinero</span></h2>
+  <p class="opening-text mb-3">Indica quien recibirá el dinero y cual será el importe.</p>
+
+  <div class="content-center">
+    <div class="d-flex w-75 flex-column align-items-center">
+      <app-ui-pey-money-transaction-form type="send" [startedByUser]="user" [transaction]="transaction" buttonLabel="Continuar" (continue)="confirm($event)"></app-ui-pey-money-transaction-form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="step == 2">
+  <h2><span class="icon-Iconos-04 fs-22"></span>Pagar: <span>Enviar dinero</span></h2>
+  <p class="opening-text">Confirma que los datos sean correctos.</p>
+  <div class="content-center">
+    <div class="confirmar-pagar grey-box d-flex flex-column mb-4 w-75">
+      <div class="d-flex flex-column justify-content-center align-items-center p-4 b-bottom-line">
+        <app-ui-pey-user-image [user]="transaction.receiver"></app-ui-pey-user-image>
+        <span [innerHtml]="transaction.receiver.fullName" class="fw-700"></span>
+        <span [innerHtml]="transaction.receiver.email"></span>
+      </div>
+      <div class="d-flex flex-row justify-content-between b-bottom-line p-4">
+        <span>Recibirá</span>
+        <span>{{transaction.type.coin}}{{transaction.amount | mask:'0*,00'}}</span>
+      </div>
+      <div class="d-flex align-items-center justify-content-center b-bottom-line flex-column p-4">
+        <span class="mb-3">Forma de pago</span>
+        <div class="icon-{{transaction.type.label | lowercase }} mb-3"></div>
+        <span class="mb-3">Billetera<br>PEYGOLD {{transaction.type.label | uppercase }}</span>
+      </div>
+      <div class="d-flex align-items-center justify-content-center p-4">
+        <input readonly [value]="transaction.reason" type="text" class="w-75 mt-5 mb-3" id="input-line">
+      </div>
+      <div *ngIf="error" class="invalid-feedback text-center d-flex align-items-center justify-content-center p-4">
+        <div [innerHtml]="error"></div>
+      </div>
+    </div>
+    <div class="row-buttons w-75 justify-content-end">
+      <button (click)="step = 1" role="button" class="white-button-border mr-2">Volver</button>
+      <button [disabled]="submitted" (click)="send()" role="button" class="solid-blue-button ml-2">Enviar</button>
+    </div>
+  </div>
+</div>
+

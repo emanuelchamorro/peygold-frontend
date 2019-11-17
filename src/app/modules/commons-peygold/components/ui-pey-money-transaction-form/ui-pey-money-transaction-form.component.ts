@@ -3,6 +3,7 @@ import {Transaction, TransactionType, User} from '../../../../models';
 import {TransactionTypeEnum} from '../../../../enums';
 import {BaseComponent} from '../base-component.component';
 import {InMemoryService} from '../../../../services';
+import {AuthService} from '../../../auth-peygold/services/auth.service';
 
 @Component({
   selector: 'app-ui-pey-money-transaction-form',
@@ -15,7 +16,10 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
   public continue: EventEmitter<Transaction> = new EventEmitter<Transaction>();
 
   @Input()
-  public transaction: Transaction = new Transaction();
+  public transaction: Transaction;
+
+  @Input()
+  public startedByUser: User;
 
   @Input()
   public buttonLabel = 'Continue';
@@ -23,13 +27,17 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
   @Input()
   public type = 'request';
 
+  @Input()
+  public disabled = false;
+
   private transactionTypes: Array<TransactionType>;
 
   /**
    * UIPeyMoneyTransactionFormComponent
    */
   constructor(
-    private inMemoryService: InMemoryService
+    private inMemoryService: InMemoryService,
+    private authService: AuthService,
   ) {
     super();
   }
@@ -38,6 +46,10 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
    * On Oinit implementation
    */
   ngOnInit() {
+    if (!this.transaction) {
+      this.transaction = new Transaction();
+    }
+
     if (! this.transaction.type) {
       this.transaction.type = new TransactionType(TransactionTypeEnum.Fiat);
     }
@@ -49,30 +61,24 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
    * Emit the transaction to parent component
    */
   public emitTransaction() {
-    if (this.isValidTransaction) {
+    if ((this.type === 'request' && this.transaction.isValidToRequestMoney) || this.transaction.isValidToSendMoney) {
       this.continue.emit(this.transaction);
     }
   }
 
   /**
-   * Return true if the transaction has a valid type, amount and selected a user.
-   */
-  get isValidTransaction(): boolean {
-    return this.transaction.type
-      && this.transaction.amount >= this.transaction.type.minAmount
-      && this.transaction.reason
-      && (this.transaction.receiver !== null || this.transaction.sender !== null);
-  }
-
-  /**
    * Set the user in the transaction.
    * @param user The user transaction.
+   * @return void;
    */
   setUser(user: User) {
     if (this.type === 'request') {
       this.transaction.sender = user;
+      this.transaction.receiver = this.startedByUser;
+      return;
     }
 
     this.transaction.receiver = user;
+    this.transaction.sender = this.startedByUser;
   }
 }

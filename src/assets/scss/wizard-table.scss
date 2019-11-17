@@ -1,30 +1,27 @@
+
+/*colores */
+@import "colors";
+/*colores */
+
+
 *,
 *:after,
 *:before {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
-
-
 
 /*Fun begins*/
-.tab_container { 
-    margin: 0 auto;
-    padding-top: 70px;
-    z-index: 2;
-    position: relative;
-    width: 100%;
-}
-
-input, section {
-  clear: both;
-  padding-top: 10px;
-  display: none;
+.tab_container {
+  margin: 0 auto;
+  padding-top: 70px;
+  z-index: 1;
+  position: relative;
+  width: 100%;
 }
 
 .tab1, .tab2-right, .tab3-right {
-    font-weight: 700;
+  font-weight: 700;
   font-size: 18px;
   height: 40px;
   display: block;
@@ -41,58 +38,54 @@ input, section {
   text-decoration: none;
   text-align: center;
   background: #C8C8C8;
-  box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.32);  
-    
-    
+  -webkit-box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.32);
+  box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.32);
 }
 
-.tab1, .tab2-right, .tab3-right {
-    span {
-    color:#fff;
-    font-weight: 600;
-    }
+.tab1 span, .tab2-right span, .tab3-right span {
+  color: #fff;
+  font-weight: 600;
 }
+
 #tab1:checked ~ #content1,
 #tab2:checked ~ #content2,
-#tab3:checked ~ #content3,
-                           {
- display: block;
-    position: relative;
-    padding: 20px;
-    z-index: 111;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    color: #3575BA;
-    border-bottom: 2px solid #f0f0f0;
+#tab3:checked ~ #content3 {
+  display: block;
+  position: relative;
+  padding: 20px;
+  z-index: 111;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  color: #3575BA;
+  border-bottom: 2px solid #f0f0f0;
 }
+
+
 
 .tab2-right {
-
-right: 74px;
+  right: 74px;
 }
+
 .tab3-right {
-z-index:0;
-right: 154px;
+  z-index: 0;
+  right: 154px;
 }
 
 .tab_container .tab-content p,
 .tab_container .tab-content h3 {
   -webkit-animation: fadeInScale 0.7s ease-in-out;
-  -moz-animation: fadeInScale 0.7s ease-in-out;
   animation: fadeInScale 0.7s ease-in-out;
 }
-.tab_container .tab-content h3  {
+
+.tab_container .tab-content h3 {
   text-align: center;
 }
 
+.tab_container .active {
+  z-index: 100;
+  background: #3575ba;
+}
 
-
-.tab_container {		
-  .active {		
-    z-index: 100;		
-    background: #3575ba;		
-  }
- }   
 .tab_container [id^="tab"]:checked + label .fa {
   color: #0CE;
 }
@@ -102,156 +95,290 @@ label .fa {
   margin: 0 0.4em 0 0;
 }
 
+
+
+/*Content Animation*/
+@-webkit-keyframes fadeInScale {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes fadeInScale {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.DownFilters {
+  display: none;
+  border-bottom: 1px solid #a5a5a591;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.DownFilters .form-inline .input-group {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.DownFilters .boxSelect {
+  width: 180px;
+  position: relative;
+}
+
+.DownFilters .boxSelect .downFecha {
+  display: none;
+  z-index: 1;
+  position: absolute;
+  background: white;
+  width: 100%;
+  -webkit-box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
+  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.DownFilters .boxSelect .stateDown ul {
+  margin-bottom: 0px;
+}
+
+.DownFilters .boxSelect .stateDown ul li:last-child {
+  margin-top: 0;
+}
+
+.DownFilters .boxSelect a.btn-dropDown {
+  padding: 7px;
+  width: 180px;
+  height: 26px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
+  border-radius: 0.4rem;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+  position: relative;
+  font-size: 13px;
+  color: #333333;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: left;
+  outline: none !important;
+  outline-width: 0;
+}
+
+.DownFilters .boxSelect a.btn-dropDown i {
+  position: absolute;
+  right: 12px;
+  top: 6px;
+  font-size: 12px;
+}
+
+.DownFilters .boxSelect a.btn-dropDown .rotate {
+  -webkit-transform: rotate(90deg);
+}
+
+.DownFilters .boxSelect ul {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+}
+
+.DownFilters .boxSelect ul li:last-child {
+  margin-top: 30px;
+}
+
+.DownFilters .boxSelect ul li:last-child a.btn {
+  background: #3575ba;
+  color: white;
+  width: 90px;
+  margin: auto;
+}
+
+.DownFilters .boxSelect ul li a.optionDate {
+  display: block;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: $p-dark-grey
+}
+
+.DownFilters .boxSelect ul li a.optionDate:hover {
+  color: #3575ba;
+  font-weight: 900;
+  background: rgba(53, 117, 186, 0.15);
+}
+
+.DownFilters .boxSelect ul li a.btn {
+  background: transparent;
+  border: 1px solid #bdbdbd;
+  text-align: center;
+  display: block;
+  margin: 10px;
+  font-size: 13px;
+  color: #bdbdbd;
+  border-radius: 20px;
+}
+
+.DownFilters .active {
+  background: white;
+}
+
+.DownFilters .active a.btn-dropDown {
+  border: 1px solid transparent;
+  -webkit-box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
+  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  color: #808080d1;
+}
+
+.DownFilters select {
+  width: 180px;
+  padding: 2px;
+  border: 1px solid #828282;
+  border-radius: 6px;
+  background: transparent;
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.DownFilters select option {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+#main-div .filtros {
+  margin-top: 20px;
+
+}
+#main-div .filtros .right .input-buscar {
+  display: block;
+  float: right;
+  border-radius: 5px;
+  height: 26px;
+  padding-top: 0px;
+  padding: 2px;
+  width: 136px;
+  padding: .15rem .5rem;
+  font-size: 13px;
+  background-image: url('~src/assets/images/lupa-21.png');
+  background-size: 13px;
+  background-repeat: no-repeat;
+  padding-left: 24px;
+  background-position: 6px 5px;
+}
+#main-div .filtros .left .filtrarOrdenar {
+  display: block;
+  float: left;
+  border-radius: 20px;
+  background: transparent;
+  border: 2px solid #3575ba;
+  padding-top: 0px;
+  width: 136px;
+  padding: .15rem .5rem;
+  font-size: 13px;
+  color: #3575ba;
+}
+#main-div .filtros .left .activefilter {
+  display: block;
+  float: left;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background: #3575ba;
+  padding-top: 0px;
+  width: 136px;
+  padding: .15rem .5rem;
+  font-size: 13px;
+  color: white;
+}
+.detalleMotivo {
+  .btnMotivo {
+    color: #3575ba;
+    i {
+      margin-right: 10px;
+    }
+  }
+}
+
+
+.tab-content .input-field {
+
+  margin-bottom: 25px;
+}
+
+
 /*Media query*/
 @media only screen and (max-width: 930px) {
   label span {
     font-size: 14px;
   }
+  .tab_container label{width:30%;padding:10px;}
+  .tab_container label span{display:inline-block;}
+
   label .fa {
     font-size: 14px;
   }
 }
 
+
 @media only screen and (max-width: 768px) {
-  label span {
-    display: none;
+
+  .tab_container label {
+    width: 100%;
+    left:0;
+    right:0;
+    border-radius:0;
+    padding: 10px;
+
   }
 
+  .tab_container label:first-of-type {
+    border-top-left-radius: .9rem;
+    border-top-right-radius: .9rem;
+  }
+
+  .tab_container label span {
+    display: inline-block;
+  }
   label .fa {
     font-size: 16px;
   }
-
   .tab_container {
     width: 98%;
   }
-}
-
-/*Content Animation*/
-@keyframes fadeInScale {
-  0% {
-  	transform: scale(0.9);
-  	opacity: 0;
-  }
-  
-  100% {
-  	transform: scale(1);
-  	opacity: 1;
-  }
-}
- .DownFilters {
-  display: none;
-      border-bottom: 1px solid #a5a5a591;
-  padding-bottom: 5px;
-    padding-top: 5px; 
-  .form-inline {
-    .input-group {
-      margin: 10px;
-    }
-  }
-
-  .boxSelect {
-    width: 180px;
-    position: relative;
-    .downFecha {
-      display: none;
-      position: absolute;
-      background: white;
-      width: 100%;
-      box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
-    .stateDown {
-      ul {
-        margin-bottom: 0px;
-        li {
-          &:last-child {
-            margin-top: 0;
-          }
-        }
-      }
-    }
-    a.btn-dropDown {
-      width: 180px;
-      height: 25px;
-      border: 1px solid #828282;
-      border-radius: 6px;
-      background: transparent;
-      display: block;
-      text-align: left;
-      padding-left: 15px;
-      font-size: 13px;
-      line-height: 22px;
-      i {
-        position: absolute;
-        right: 12px;
-        top: 6px;
-        font-size: 12px;
-      }
-      .rotate {
-        -webkit-transform: rotate(90deg);
-      }
-    }
-    ul {
-      list-style: none;
-      text-align: left;
-      padding: 0;
-      li {
-        &:last-child {
-          margin-top: 30px;
-          a.btn {
-            background: #3575ba;
-            color: white;
-            width: 90px;
-            margin: auto;
-          }
-        }
-        a.optionDate {
-          display: block;
-          padding: 8px 10px;
-          font-size: 13px;
-          &:hover {
-            color: #3575ba;
-            font-weight: 900;
-            background: rgba(53, 117, 186, 0.15);
-          }
-        }
-        a.btn {
-          background: transparent;
-          border: 1px solid #bdbdbd;
-          text-align: center;
-          display: block;
-          margin: 10px;
-          font-size: 13px;
-          color: #bdbdbd;
-          border-radius: 20px;
-        }
-      }
-    }
-  }
-  .active {
-    background: white;
-    a.btn-dropDown {
-      border: 1px solid transparent;
-      box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32); 
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius:0;    
-    }
-  }
-  select {
-    width: 180px;
-    padding: 2px;
-    border: 1px solid #828282;
-    border-radius: 6px;
-    background: transparent;
-    display: block;
+  .tab-content > div:first-of-type {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
     text-align: left;
-    font-size: 13px;
-    line-height: 22px;
-    option {
-      padding: 8px 10px;
-      font-size: 13px;
-    }
+    -webkit-box-align: start !important;
+    -ms-flex-align: start !important;
+    align-items: flex-start !important;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
   }
+
+
+
 }
-   

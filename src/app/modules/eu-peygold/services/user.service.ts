@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../../../services/http.service';
 import {Balance} from '../../../models';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +13,16 @@ export class UserService extends HttpService {
    */
   balances(): Promise<Array<Balance>> {
     return this.get('/balance')
-      .toPromise().then((balances: Array<any>) => balances.map((balance: any) => {
-        const mBalance = new Balance();
-        mBalance.amount = balance.amount || balance.ammount;
-        mBalance.currencyName = balance.currencyName;
-        mBalance.pendingAmount = balance.pendingAmount || balance.pendingAmmount;
+      .pipe(
+        map((balances: Array<any>) => balances.map((item: any) => {
+            const balance = new Balance();
+            balance.amount = item.amount || item.ammount;
+            balance.currencyName = item.currencyName;
+            balance.pendingAmount = item.pendingAmount || item.pendingAmmount;
 
-        return mBalance;
-      })
-    );
+            return balance;
+          })
+        )
+      ).toPromise();
   }
 }

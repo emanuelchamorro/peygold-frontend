@@ -31,4 +31,23 @@ export class Transaction extends Model {
   get actionLabel(): string {
     return 'Cobraste a ' + this.receiver.completeName;
   }
+
+  /**
+   * returns if the transaction  data is valid to send a request money transaction
+   */
+  get isValidToRequestMoney(): boolean {
+    return this.isValidToStart;
+  }
+
+  get isValidToSendMoney(): boolean {
+    return this.isValidToStart;
+  }
+
+  get isValidToStart(): boolean {
+    return this.type
+      && this.amount
+      && this.reason
+      && this.receiver !== null
+      && this.sender !== null;
+  }
 }

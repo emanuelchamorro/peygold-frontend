@@ -3,6 +3,6 @@
 
 <div class="content-center">
   <div class="d-flex w-75 flex-column align-items-center">
-    <app-ui-pey-money-transaction-form buttonLabel="Enviar solicitud"></app-ui-pey-money-transaction-form>
+    <app-ui-pey-money-transaction-form [startedByUser]="user" [disabled]="submitted" buttonLabel="Enviar solicitud" (continue)="send($event)"></app-ui-pey-money-transaction-form>
   </div>
 </div>

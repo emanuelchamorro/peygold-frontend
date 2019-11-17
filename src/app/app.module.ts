@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
@@ -9,11 +9,14 @@ import {HttpErrorInterceptor} from './modules/commons-peygold/interceptors/http-
 import {ScPeyGoldModule} from './modules/sc-peygold/sc-peygold.module';
 import {JwtInterceptor, JwtModule} from '@auth0/angular-jwt';
 import {environment} from '../environments/environment';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
 import {EuPeyGoldModule} from './modules/eu-peygold/eu-peygold.module';
 import {CommonsPeyGoldModule} from './modules/commons-peygold/commons-peygold.module';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import localeEsAR from '@angular/common/locales/es-AR';
+
+registerLocaleData(localeEsAR, 'es-AR');
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
   providers: [
     { provide: LocationStrategy,  useClass: HashLocationStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+    { provide: LOCALE_ID, useValue: 'es-AR' }
   ],
   bootstrap: [AppComponent]
 })

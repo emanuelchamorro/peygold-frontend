@@ -1,0 +1,40 @@
+.circle-user {
+  height: 90px;
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 14px;
+  border-radius: 4em;
+  background: linear-gradient(130deg,
+    #4853a0 26%, #3575ba 51%,
+    #4398d4 100%);
+
+  span {
+    color: #fff;
+    font-size: 26px;
+    vertical-align: middle;
+  }
+
+  &.sm {
+    height: 45px;
+    width: 45px;
+    span {
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+}
+
+.user-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 14px;
+  &.sm {
+    height: 45px;
+    width: 45px;
+  }
+}
+

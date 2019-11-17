@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../../../services/http.service';
-import {Transaction, TransactionType, User} from '../../../models';
+import {Transaction, TransactionStatus, TransactionType, User} from '../../../models';
 import {ApiResponse} from '../../../services/api-response';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
@@ -11,44 +12,62 @@ export class TransactionsService extends HttpService {
 
   /**
    * Search transactions.
+   * @return Promise<Array<Transaction>> the list of transaction
    */
   search(): Promise<Array<Transaction>> {
     return this.get('/transactions/search/@/0/1/10')
-      .toPromise().then((response: ApiResponse) => response.value.map((transaction: any) => {
-        const mTransaction = new Transaction();
+      .pipe(
+        map((response) => {
+          return response.value.map((item: any) => {
+            const transaction = new Transaction();
 
-        mTransaction.id = transaction.idTransactionHistory;
-        mTransaction.createdAt = transaction.dateAndTime;
-        mTransaction.amount = transaction.amount || transaction.ammount;
-        mTransaction.sender = new User();
+            transaction.id = item.idTransactionHistory;
+            transaction.createdAt = item.dateAndTime;
+            transaction.amount = item.amount || item.ammount;
+            transaction.sender = new User();
 
-        mTransaction.sender.email = transaction.emailSender;
-        mTransaction.sender.fullName = transaction.fullNameSender;
-        mTransaction.sender.fullName = transaction.fullNameSender;
+            transaction.sender.email = item.emailSender;
+            transaction.sender.fullName = item.fullNameSender;
+            transaction.sender.fullName = item.fullNameSender;
 
-        if (transaction.receiver) {
-          mTransaction.receiver = new User();
-          mTransaction.receiver.id = transaction.receiver.idUser;
-          mTransaction.receiver.idAspNetUser = transaction.receiver.idAspNetUser;
-          mTransaction.receiver.name = transaction.receiver.firstName;
-          mTransaction.receiver.lastName = transaction.receiver.lastName;
-          mTransaction.receiver.email = transaction.receiver.email;
-          mTransaction.receiver.phone = transaction.receiver.phone;
-          mTransaction.receiver.avatarURL = transaction.receiver.avatarURL;
-          mTransaction.receiver.fullName = transaction.receiver.fullName;
-          mTransaction.receiver.idUserType = transaction.receiver.idUserType;
-        }
+            if (item.receiver) {
+              transaction.receiver = new User();
+              transaction.receiver.id = item.receiver.idUser;
+              transaction.receiver.idAspNetUser = item.receiver.idAspNetUser;
+              transaction.receiver.name = item.receiver.firstName;
+              transaction.receiver.lastName = item.receiver.lastName;
+              transaction.receiver.email = item.receiver.email;
+              transaction.receiver.phone = item.receiver.phone;
+              transaction.receiver.avatarURL = item.receiver.avatarURL;
+              transaction.receiver.fullName = item.receiver.fullName;
+              transaction.receiver.idUserType = item.receiver.idUserType;
+            }
 
-        mTransaction.messages = transaction.message;
-        mTransaction.reason = transaction.reason;
-        mTransaction.type = new TransactionType(transaction.idTransactionType);
-        mTransaction.commissionPercentaje = transaction.commissionPercentaje;
-        mTransaction.commissionAmmount = transaction.commissionAmmount;
-        mTransaction.idOriginRecharge = transaction.idOriginRecharge;
-        mTransaction.originRechargeName = transaction.originRechargeName;
+            transaction.messages = item.message;
+            transaction.reason = item.reason;
+            transaction.type = new TransactionType(item.idTransactionType);
+            transaction.commissionPercentaje = item.commissionPercentaje;
+            transaction.commissionAmmount = item.commissionAmmount;
+            transaction.idOriginRecharge = item.idOriginRecharge;
+            transaction.originRechargeName = item.originRechargeName;
 
-        return mTransaction;
-      })
-    );
+            return transaction;
+          });
+      }
+      )).toPromise();
+  }
+
+  /**
+   * Start a Send money transaction
+   * @return Promise
+   */
+  create(transaction: Transaction) {
+    return this.post('/transactions', {
+      ammount: transaction.amount,
+      sender: transaction.sender.email,
+      receiver: transaction.receiver.email,
+      message: transaction.reason,
+      idtransactiontype: transaction.type.value
+    }).toPromise();
   }
 }

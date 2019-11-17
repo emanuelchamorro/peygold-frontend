@@ -1,3 +1,4 @@
+@import "assets/scss/wizard-table";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "assets/scss/nav-bar";
 @import "assets/scss/grey-box";
@@ -7,6 +8,7 @@
 @import "assets/scss/white-container";
 @import "assets/scss/wallet";
 
+
 /**
  * Components global styles
  */
@@ -15,3 +17,4 @@
 @import "assets/scss/app-peygold-auth";
 @import "assets/scss/app-peygold-eu-add-money";
 @import "assets/scss/app-peygold-eu-request-money";
+@import "assets/scss/app-peygold-eu-send-money";

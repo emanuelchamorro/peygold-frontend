@@ -2,8 +2,8 @@
   <div class="grey-box d-flex flex-column align-items-center">
     <div class="w-100 d-flex justify-content-center b-bottom-line  p-3">
       <div class="col-sm-6 pt-4">
-        <app-ui-pey-user-autocomplete (selectUser)="setUser($event)" ></app-ui-pey-user-autocomplete>
-        <div *ngIf="!transaction.receiver && !transaction.receiver && formTransaction.submitted" class="invalid-feedback">
+        <app-ui-pey-user-autocomplete [filterUsers]="[authService.user().id]" (selectUser)="setUser($event)" ></app-ui-pey-user-autocomplete>
+        <div *ngIf="(!transaction.receiver || !transaction.sender) && formTransaction.submitted" class="invalid-feedback">
           Por favor seleccione un usuario.
         </div>
       </div>
@@ -49,6 +49,6 @@
     </div>
   </div>
   <div class="row-buttons justify-content-end">
-    <button (click)="emitTransaction" type="submit" class="solid-blue-button" [innerHtml]="buttonLabel"></button>
+    <button [disabled]="disabled" (click)="emitTransaction" type="submit" class="solid-blue-button" [innerHtml]="buttonLabel"></button>
   </div>
 </form>

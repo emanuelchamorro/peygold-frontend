@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../../../models';
 import {BaseComponent} from '../base-component.component';
 import {UserService} from '../../../../services/user.service';
@@ -14,6 +14,12 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
 
   private users: Array<User>;
 
+  @Input()
+  private user: User;
+
+  @Input()
+  private filterUsers: Array<number>;
+
   /**
    * UIPeyUserAutocompleteComponent
    */
@@ -27,6 +33,7 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    * On Init implementation
    */
   ngOnInit() {
+
   }
 
   /**
@@ -34,8 +41,15 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    * @param keyword email or name keyword
    */
   searchUsers(keyword: string) {
-    if(keyword && keyword.length > 3) {
-      this.userService.search(keyword).then((users: Array<User>) => this.users = users);
+    if (keyword && keyword.length > 3) {
+      setTimeout(() => {
+        this.userService.search(keyword).then((users: Array<User>) => {
+          if (this.filterUsers) {
+            users = users.filter((user) => !this.filterUsers.includes(user.id));
+          }
+          this.users = users;
+        });
+      }, 300);
     }
   }
 

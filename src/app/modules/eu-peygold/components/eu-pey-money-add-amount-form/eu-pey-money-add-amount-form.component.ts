@@ -26,9 +26,7 @@ export class EuPeyMoneyAddAmountFormComponent extends BaseComponent implements O
   ngOnInit() {
     this.transaction = new Transaction();
     this.transaction.type = new TransactionType(TransactionTypeEnum.Fiat);
-    this.transactionTypes = this.inMemoryService.transactionTypes().filter(
-      (transaction: TransactionType) => transaction.value !== TransactionTypeEnum.CreditPoints
-    );
+    this.transactionTypes = this.inMemoryService.transactionTypes();
   }
 
   /**

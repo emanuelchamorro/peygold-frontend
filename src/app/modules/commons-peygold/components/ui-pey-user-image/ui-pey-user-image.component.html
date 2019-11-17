@@ -1,0 +1,4 @@
+<div class="circle-user" [ngClass]="size" *ngIf="!user.avatarURL">
+  <span [innerHtml]="user.initials"></span>
+</div>
+<img *ngIf="user.avatarURL" class="user-img" (error)="user.avatarURL=null" [ngClass]="size" [src]="user.avatarURL" alt="User image" />

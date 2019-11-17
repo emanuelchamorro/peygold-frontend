@@ -9,6 +9,8 @@ export class BaseComponent {
 
   protected isBusy = false;
 
+  protected submitted = false;
+
   /**
    * Should be injected by the child components.
    */
@@ -30,8 +32,24 @@ export class BaseComponent {
    * Add a message to the error list.
    * @param message Message to add to error lisy
    */
-  protected addError(message: string): BaseComponent {
+  protected addError(message: string, clean = true): BaseComponent {
     this.messages.errors.push(message);
+    if (clean) {
+      this.waitAndCleanErrors();
+    }
+    return this;
+  }
+
+  /**
+   * Clean the error message and add just one error message
+   * @param message Message to add to error lisy
+   */
+  protected setError(message: string, clean = true): BaseComponent {
+    this.cleanErrors();
+    this.addError(message);
+    if (clean) {
+      this.waitAndCleanErrors();
+    }
     return this;
   }
 
@@ -130,7 +148,7 @@ export class BaseComponent {
    * Set the context URL.
    * This value is configured on user login.
    */
-  protected set context(url: string){
+  protected set context(url: string) {
     localStorage.setItem('app_context', url);
   }
 
@@ -163,6 +181,12 @@ export class BaseComponent {
   protected showFeedback(message: Message): void {
     // const url = this.context + '/' + CommonsRoutes.feedback.href;
     const url = '/eu' + CommonsRoutes.feedback.href;
+
+    if (! this.router) {
+      console.error('No router defined in the component. Please add the Router Provider in the component');
+      return;
+    }
+
     this.router.navigateByUrl(url, {
       state : {
         securedRedirection: true,

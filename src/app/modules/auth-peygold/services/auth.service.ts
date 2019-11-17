@@ -50,7 +50,7 @@ export class AuthService extends HttpService {
       user.address.city = new City(value.idCity, value.cityName);
       user.address.street = value.street;
       user.address.houseNumber = value.houseNumber;
-      user.avatar = environment.api.avatarUrl + value.avatarURL;
+      user.avatarURL = environment.api.avatarUrl + value.avatarURL;
       user.idAspNetUser = value.idAspNetUser;
       user.annualIncome = value.annualIncome;
       user.primaryActivityName = value.primaryActivityName;

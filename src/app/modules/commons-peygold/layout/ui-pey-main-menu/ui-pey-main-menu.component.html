@@ -18,10 +18,10 @@
       <!-- Usuario logeado -->
       <li>
         <div id="center-sidebar-user">
-          <img src="assets/images/user3.png" id="user-img-sidebar" alt="User image" />
+          <app-ui-pey-user-image size="sm" [user]="user"></app-ui-pey-user-image>
           <p id="user-text">
-            <span class="sidebar-welcome-text">ADMINISTRADOR</span><br />
-            <span class="sidebar-user-text">John Doe</span>
+            <span class="sidebar-welcome-text">BIENVENIDO</span><br />
+            <span class="sidebar-user-text" [innerHtml]="user.completeName"></span>
           </p>
         </div>
       </li>

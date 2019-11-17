@@ -7,6 +7,11 @@ body {
   background: linear-gradient(130deg, #4853a0 26%, #3575ba 51%, #4398d4 100%);
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
 #main-div {
   height: 100%;
 }

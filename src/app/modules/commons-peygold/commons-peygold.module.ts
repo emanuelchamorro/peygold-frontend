@@ -17,6 +17,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {NgSelectModule} from '@ng-select/ng-select';
+import { UIPeyUserImageComponent } from './components/ui-pey-user-image/ui-pey-user-image.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
     UIPeyFeedbackMessageComponent,
     UIPeyUserAutocompleteComponent,
     UIPeyMoneyTransactionFormComponent,
+    UIPeyUserImageComponent,
   ],
   imports: [
     CommonModule,
@@ -52,7 +54,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
     UIPeySidebarComponent,
     OnlyNumbersDirective,
     UIPeyFeedbackMessageComponent,
-    UIPeyMoneyTransactionFormComponent
+    UIPeyMoneyTransactionFormComponent,
+    UIPeyUserImageComponent
   ]
 })
 export class CommonsPeyGoldModule { }

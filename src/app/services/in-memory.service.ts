@@ -39,7 +39,6 @@ export class InMemoryService extends BaseService {
     return new Array<TransactionType>(
       new TransactionType(TransactionTypeEnum.Fiat, 'Pesos'),
       new TransactionType(TransactionTypeEnum.Points, 'Peygold debito'),
-      new TransactionType(TransactionTypeEnum.CreditPoints, 'Peygold credito'),
     );
   }
 }

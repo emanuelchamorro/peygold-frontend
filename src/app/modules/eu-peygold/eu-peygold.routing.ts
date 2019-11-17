@@ -16,6 +16,8 @@ import {EuPeyMoneyAddByCashComponent} from './components/eu-pey-money-add-by-cas
 import {config as CommonsRoutes } from '../commons-peygold/commons-peygold.routing';
 import {EuPeyMoneyRequestComponent} from './components/eu-pey-money-request/eu-pey-money-request.component';
 import {EuPeyMoneyRequestsComponent} from './components/eu-pey-money-requests/eu-pey-money-requests.component';
+import {EuPeyMoneySendComponent} from './components/eu-pey-money-send/eu-pey-money-send.component';
+import {EuPeyMoneySentComponent} from './components/eu-pey-money-sent/eu-pey-money-sent.component';
 
 export const config: Routes = [
   {
@@ -58,9 +60,15 @@ export const config: Routes = [
         path: routes.money.request.route,
         component: EuPeyMoneyRequestComponent,
       },
+      // END REQUEST MONEY
+      // REQUEST MONEY
       {
-        path: routes.money.requests.route,
-        component: EuPeyMoneyRequestsComponent,
+        path: routes.money.send.route,
+        component: EuPeyMoneySendComponent,
+      },
+      {
+        path: routes.money.sent.route,
+        component: EuPeyMoneySentComponent,
       },
       // END REQUEST MONEY
     ]

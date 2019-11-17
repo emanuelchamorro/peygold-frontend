@@ -20,6 +20,7 @@ export class UIPeyMainMenuComponent extends BaseComponent implements OnInit, OnD
 
   private items = new Array<MenuItem>();
   private $items: Subscription;
+  private user: User;
 
   /**
    * UIPeyMainMenuComponent
@@ -30,7 +31,7 @@ export class UIPeyMainMenuComponent extends BaseComponent implements OnInit, OnD
     private mainMenuService: MainMenuService
   ) {
     super();
-    const user: User = this.authService.user();
+    this.user = this.authService.user();
     // const items: Array<MenuItem> = user.isAdmin ?  scMenu : euMenu;
     const items = euMenu;
     this.mainMenuService.setItems(items);
