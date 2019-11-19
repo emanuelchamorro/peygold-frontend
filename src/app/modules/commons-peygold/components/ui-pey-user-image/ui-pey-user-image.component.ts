@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../../../../models';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Transaction, User} from '../../../../models';
 
 @Component({
   selector: 'app-ui-pey-user-image',
@@ -12,6 +12,12 @@ export class UIPeyUserImageComponent implements OnInit {
   public user: User;
 
   @Input()
+  public editable = false;
+
+  @Output()
+  public update: EventEmitter<File> = new EventEmitter<File>();
+
+  @Input()
   public size = 'md';
 
   constructor() { }
@@ -19,4 +25,19 @@ export class UIPeyUserImageComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Emit the user image change event
+   * @param file the new file.
+   */
+  public emitUpdate(file: File): void {
+    this.update.emit(file);
+  }
+
+  /**
+   * On file input change
+   * @param $event the change event.
+   */
+  public onChangeImage($event: Event): void {
+    this.emitUpdate($event.target[`files`][0]);
+  }
 }

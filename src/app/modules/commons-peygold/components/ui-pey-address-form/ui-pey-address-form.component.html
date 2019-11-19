@@ -1,0 +1,124 @@
+<form name="form" #addressForm="ngForm" novalidate>
+  <div class="usuario-form mb-4">
+    <div class="input-field">
+      <label class="has-float-label mb-0">
+        <ng-select placeholder="País"
+                   class="custom-select dropdown select-height-normal mb-0 w-100"
+                   (change)="getStates($event)"
+                   bindLabel="label"
+                   [searchable]="false"
+                   [items]="countries"
+                   [addTag]="false"
+                   name="country"
+                   [(ngModel)]="editAddress.country"
+                   [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && country.errors}"
+                   #country="ngModel"
+                   required>
+        </ng-select>
+        <div *ngIf="!country.pristine && country.invalid || addressForm.submitted && country.errors" class="invalid-feedback">
+          <div *ngIf="country.errors.required">Campo es requerido</div>
+        </div>
+      </label>
+
+    </div>
+
+    <div class="row">
+      <div class="col-6 input-field">
+        <ng-select placeholder="Provincia"
+                   (change)="getCities($event)"
+                   class="custom-select dropdown select-height-normal mb-0 w-100"
+                   bindLabel="label"
+                   [searchable]="false"
+                   [items]="states"
+                   [addTag]="false"
+                   name="state"
+                   [(ngModel)]="editAddress.state"
+                   [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && state.errors}"
+                   #state="ngModel"
+                   required>
+        </ng-select>
+        <div *ngIf="!state.pristine && state.invalid || addressForm.submitted && state.errors" class="invalid-feedback">
+          <div *ngIf="state.errors.required">Campo es requerido</div>
+        </div>
+      </div>
+      <div class="col-6 input-field">
+        <ng-select placeholder="Ciudad/Barrio"
+                   class="custom-select dropdown select-height-normal mb-0 w-100"
+                   bindLabel="label"
+                   (change)="emitAddress()"
+                   [searchable]="false"
+                   [items]="cities"
+                   [addTag]="false"
+                   name="city"
+                   [(ngModel)]="editAddress.city"
+                   [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && city.errors}"
+                   #city="ngModel"
+                   required>
+        </ng-select>
+        <div *ngIf="!city.pristine && city.invalid || addressForm.submitted && city.errors" class="invalid-feedback">
+          <div *ngIf="city.errors.required">Campo es requerido</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-6 input-field ">
+        <label class="has-float-label mb-0">
+          <input type="text" placeholder="Calle" class="form-control w-100"
+                 (change)="emitAddress($event)"
+                 [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && street.errors}"
+                 name="street" [(ngModel)]="editAddress.street" #street="ngModel" required/>
+          <span>Calle</span>
+
+          <div *ngIf="!street.pristine && street.invalid || addressForm.submitted && street.errors" class="invalid-feedback">
+            <div *ngIf="street.errors.required">Campo es requerido</div>
+          </div>
+        </label>
+      </div>
+      <div class="col-6 input-field">
+        <label class="has-float-label mb-0">
+          <input type="text" placeholder="N° de calle" class="form-control w-100"
+                 (change)="emitAddress($event)"
+                 [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && houseNumber.errors}"
+                 name="houseNumber" [(ngModel)]="editAddress.houseNumber" #houseNumber="ngModel" required/>
+          <span>N° de calle</span>
+
+          <div *ngIf="!houseNumber.pristine && houseNumber.invalid || addressForm.submitted && houseNumber.errors" class="invalid-feedback">
+            <div *ngIf="houseNumber.errors.required">Campo es requerido</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 input-field">
+        <label class="has-float-label mb-0">
+          <input type="text" placeholder="Piso/Depto" class="form-control w-100"
+                 (change)="emitAddress($event)"
+                 [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && buildingFloor.errors}"
+                 name="buildingFloor" [(ngModel)]="editAddress.buildingFloor" #buildingFloor="ngModel"
+                 required/>
+          <span>Piso/Depto</span>
+
+          <div *ngIf="!buildingFloor.pristine && buildingFloor.invalid || addressForm.submitted && buildingFloor.errors" class="invalid-feedback">
+            <div *ngIf="buildingFloor.errors.required">Campo es requerido</div>
+          </div>
+        </label>
+      </div>
+      <div class="col-6 input-field">
+        <label class="has-float-label mb-0">
+          <input type="text" placeholder="Código postal" class="form-control w-100"
+                 (change)="emitAddress($event)"
+                 [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && zipCode.errors}"
+                 name="zipCode" [(ngModel)]="editAddress.zipCode" #zipCode="ngModel" required/>
+          <span>Código postal</span>
+
+          <div *ngIf="!zipCode.pristine && zipCode.invalid || addressForm.submitted && zipCode.errors" class="invalid-feedback">
+            <div *ngIf="zipCode.errors.required">Campo es requerido</div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+</form>

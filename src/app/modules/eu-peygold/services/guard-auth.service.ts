@@ -7,7 +7,7 @@ import {CanActivate} from '@angular/router';
 })
 export class GuardAuthService implements CanActivate {
 
-  constructor(public auth: AuthService) {}
+  constructor(private auth: AuthService) {}
 
   /**
    * Can activate an SC user.

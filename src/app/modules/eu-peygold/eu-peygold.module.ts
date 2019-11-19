@@ -23,6 +23,9 @@ import {HttpClient} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { EuPeyMoneyRequestComponent } from './components/eu-pey-money-request/eu-pey-money-request.component';
 import { EuPeyMoneyRequestsComponent } from './components/eu-pey-money-requests/eu-pey-money-requests.component';
+import { EuPeyMoneySendComponent } from './components/eu-pey-money-send/eu-pey-money-send.component';
+import { EuPeyMoneySentComponent } from './components/eu-pey-money-sent/eu-pey-money-sent.component';
+import { EuPeyUserComponent } from './components/eu-pey-user/eu-pey-user.component';
 
 
 @NgModule({
@@ -36,6 +39,9 @@ import { EuPeyMoneyRequestsComponent } from './components/eu-pey-money-requests/
     EuPeyMoneyAddAmountFormComponent,
     EuPeyMoneyRequestComponent,
     EuPeyMoneyRequestsComponent,
+    EuPeyMoneySendComponent,
+    EuPeyMoneySentComponent,
+    EuPeyUserComponent,
   ],
   imports: [
     CommonModule,

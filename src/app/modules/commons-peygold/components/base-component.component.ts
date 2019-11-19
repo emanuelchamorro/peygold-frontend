@@ -18,6 +18,7 @@ export class BaseComponent {
 
   private messages = {
     errors: [],
+    success: [],
   };
 
   /**
@@ -29,8 +30,16 @@ export class BaseComponent {
   }
 
   /**
+   * Clean the list of success messages.
+   * @param delay Milliseconds to clean the success list
+   */
+  public waitAndCleanSuccess(delay = 10000): void {
+    setTimeout(() => this.cleanSuccess(), delay);
+  }
+
+  /**
    * Add a message to the error list.
-   * @param message Message to add to error lisy
+   * @param message Message to add to error list
    */
   protected addError(message: string, clean = true): BaseComponent {
     this.messages.errors.push(message);
@@ -41,8 +50,20 @@ export class BaseComponent {
   }
 
   /**
+   * Add a message to the success list.
+   * @param message Message to add to success list
+   */
+  protected addSuccess(message: string, clean = true): BaseComponent {
+    this.messages.success.push(message);
+    if (clean) {
+      this.waitAndCleanSuccess();
+    }
+    return this;
+  }
+
+  /**
    * Clean the error message and add just one error message
-   * @param message Message to add to error lisy
+   * @param message Message to add to error list
    */
   protected setError(message: string, clean = true): BaseComponent {
     this.cleanErrors();
@@ -54,10 +75,44 @@ export class BaseComponent {
   }
 
   /**
-   * Clen the error messages
+   * Clean the success message and add just one success message
+   * @param message Message to add to success list
+   */
+  protected setSuccess(message: string, clean = true): BaseComponent {
+    this.cleanErrors();
+    this.addSuccess(message);
+    if (clean) {
+      this.waitAndCleanSuccess();
+    }
+    return this;
+  }
+
+  /**
+   * Clean the error messages
    */
   protected cleanErrors(): void {
     this.messages.errors = [];
+  }
+
+  /**
+   * Clean the success messages
+   */
+  protected cleanSuccess(): void {
+    this.messages.success = [];
+  }
+
+  /**
+   * Return the current error to be displayed.
+   */
+  get error(): string {
+    return this.messages.errors[0] || '';
+  }
+
+  /**
+   * Return the current error to be displayed.
+   */
+  get success(): string {
+    return this.messages.success[0] || '';
   }
 
   /**
@@ -76,19 +131,12 @@ export class BaseComponent {
   }
 
   /**
-   * Return the current error to be displayed.
-   */
-  get error(): string {
-    return this.messages.errors[0] || '';
-  }
-
-  /**
    * Manage the error api response and save it in the error message list.
    */
   protected catchError(e: ErrorResponse): void {
     this.unbusy();
     if (e.status === 0) {
-      this.addDefaultError().waitAndCleanErrors();
+      this.setDefaultError().waitAndCleanErrors();
     }
 
     this.addError(e.message).waitAndCleanErrors();
@@ -98,8 +146,16 @@ export class BaseComponent {
    * Add a default message to the error list.
    * @param message Message to add to error lisy
    */
-  protected addDefaultError(): BaseComponent {
+  protected setDefaultError(): BaseComponent {
     return this.addError('Ha ocurrido un error. Intente mas tarde.');
+  }
+
+  /**
+   * Add a default message to the error list.
+   * @param message Message to add to error lisy
+   */
+  protected setDefaultSuccess(): BaseComponent {
+    return this.addSuccess('Los cambios se han realizado satisfactoriamente.');
   }
 
   /**
@@ -193,5 +249,12 @@ export class BaseComponent {
         message
       }
     });
+  }
+
+  /**
+   * Move the scroll to the top of the screen.
+   */
+  protected scrollToTop() {
+    window.scroll(0,0);
   }
 }

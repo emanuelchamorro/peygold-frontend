@@ -17,7 +17,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           // Hack for pass the not valid json response.
-          console.log(error);
           if (error.status === OK) {
             return throwError(new ErrorResponse('' , error.status, error.ok));
           }

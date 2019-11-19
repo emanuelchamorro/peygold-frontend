@@ -18,12 +18,13 @@ import {EuPeyMoneyRequestComponent} from './components/eu-pey-money-request/eu-p
 import {EuPeyMoneyRequestsComponent} from './components/eu-pey-money-requests/eu-pey-money-requests.component';
 import {EuPeyMoneySendComponent} from './components/eu-pey-money-send/eu-pey-money-send.component';
 import {EuPeyMoneySentComponent} from './components/eu-pey-money-sent/eu-pey-money-sent.component';
+import {EuPeyUserComponent} from './components/eu-pey-user/eu-pey-user.component';
 
 export const config: Routes = [
   {
     path: routes.index.route,
     component: UIPeyLayoutComponent,
-    // canActivate: [GuardAuthService],
+    canActivate: [GuardAuthService],
     children: [
       // Commons Routes
       ... CommonsRoutes,
@@ -71,6 +72,12 @@ export const config: Routes = [
         component: EuPeyMoneySentComponent,
       },
       // END REQUEST MONEY
+      // USER
+      {
+        path: routes.me.index.route,
+        component: EuPeyUserComponent,
+      },
+      // END USER
     ]
   }
 ];

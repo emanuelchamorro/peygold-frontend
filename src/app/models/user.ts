@@ -109,5 +109,59 @@ export class User extends Model {
 
     return this.systemUserTypeId === User.ADMIN_IDENTIFIER;
   }
+
+  /**
+   * Returns the object to send the payload to update the user.
+   */
+  get dataForUpdate(): object {
+    const data: any = {};
+
+    data.dni = this.documentNumber;
+    data.firstName = this.name;
+    data.lastName = this.lastName;
+    data.phone = this.phone;
+
+    if (this.profitInstitution) {
+      data.idInstitution = this.profitInstitution.value;
+    }
+
+    data.facebook = this.facebook;
+    data.instagram = this.instagram;
+    data.linkedin = this.linkedIn;
+    data.phone = this.phone;
+    data.twitter = this.twitter;
+    data.youtube = this.youtube;
+
+    data.address = {
+      idCountry: this.address.country.value,
+      idState: this.address.state.value,
+      idCity: this.address.city.value,
+      floor: this.address.buildingFloor,
+      houseNumber: this.address.houseNumber,
+      postalCode: this.address.zipCode,
+      street: this.address.street,
+    }
+
+    data.billingAddress = {
+      idBillingCountry: this.billingAddress.country.value,
+      idBillingState: this.billingAddress.state.value,
+      idBillingCity: this.billingAddress.city.value,
+      billingFloor: this.billingAddress.buildingFloor,
+      billingHouseNumber: this.billingAddress.houseNumber,
+      billingPostalCode: this.billingAddress.zipCode,
+      billingStreet: this.billingAddress.street,
+    }
+
+    if (this.password) {
+      data.userSignIn	= {
+        password: this.password,
+        confirmPassword: this.password,
+      };
+    }
+
+    data.idUser = this.id;
+
+    return data;
+  }
 }
 

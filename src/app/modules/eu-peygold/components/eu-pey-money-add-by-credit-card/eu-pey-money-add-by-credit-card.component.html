@@ -131,7 +131,7 @@
                         <div class="col-4">
                           <p class="secNumberEx">
                             <span *ngIf="!transaction.creditCard.securityCode">000</span>
-                            <span *ngIf="transaction.creditCard.securityCode" [innerHtml]="transaction.creditCard.securityCode"></span>
+                            <span *ngIf="transaction.creditCard.securityCode">***</span>
                           </p>
                         </div>
                       </div>

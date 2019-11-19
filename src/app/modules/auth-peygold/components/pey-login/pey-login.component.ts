@@ -48,8 +48,6 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
   login(): void {
     this.busy();
     this.authService.login(this.user.email, this.user.password, this.user.rememberMe).then((user: User) => {
-      localStorage.setItem(environment.localStorage.user_var_name, user.toString());
-      localStorage.setItem(environment.localStorage.access_token_var_name, user.token);
       this.unbusy();
       this.goToDashboard(user);
     }).catch((e: ErrorResponse) => {

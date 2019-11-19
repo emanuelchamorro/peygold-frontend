@@ -1,0 +1,124 @@
+/*colores */
+@import "~src/assets/scss/colors";
+/*colores */
+
+:host {
+  width:100%;
+}
+
+.user-box {
+  display: flex;
+  flex-direction: row;
+
+}
+.user-column {
+  border-right: solid 1px #0000001c;
+
+}
+
+.fa-camera {
+
+  color: $p-dark-grey
+}
+.mi-usuario {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  & > div:first-of-type {
+
+    display: block;
+    height: 100px;
+  }
+
+  & > span:first-of-type {
+
+    font-size: 18px;
+    font-weight: 700;
+    color:$p-blue;
+
+  }
+
+  & > div > a {
+
+    position: relative;
+    font-size: 35px;
+    left: 22px;
+    bottom: 46px;
+    cursor: pointer;
+  }
+
+}
+
+.user-sidebar {
+
+  text-align: left;
+  margin-top: 50px;
+  font-size: 14px;
+
+  & > ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  & > ul > li {
+
+    margin-bottom: 20px;
+
+  }
+
+  & > ul > li > a {
+
+    color: $p-grey-text;
+    margin-bottom: 15px;
+    cursor: pointer;
+
+  }
+
+  & > ul > li > a > span {
+
+    color: $p-grey-text;
+
+
+  }
+
+  & > ul > li > .active span {
+
+    color: $p-dark-grey;
+    font-weight: 700;
+
+  }
+
+}
+
+.usuario-form {
+  width: 390px;
+
+}
+
+
+
+@media screen and (max-width: 640px) {
+
+  .usuario-form {
+    width: 100%!important;
+  }
+
+  .user-box{
+    flex-direction: column!important;
+
+  }
+
+  .user-column {
+
+    border:none;
+
+  }
+
+  .user-sidebar {
+
+    text-align: center;
+  }
+}

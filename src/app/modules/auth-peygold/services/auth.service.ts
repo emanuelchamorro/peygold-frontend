@@ -10,11 +10,16 @@ import {City, Country, ProfitInstitution, State} from '../../../models';
 import {environment} from '../../../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {HttpClient} from '@angular/common/http';
+import {UserService} from '../../../services/user.service';
+import {ReplaySubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends HttpService {
+
+  private userSource = new ReplaySubject<User>();
+  public user$ = this.userSource.asObservable();
 
   /**
    * AuthService
@@ -22,9 +27,15 @@ export class AuthService extends HttpService {
    * @param JwtHelperService jwtService
    */
   constructor(
+    public jwtHelperService: JwtHelperService,
     protected http: HttpClient,
-    public jwtHelperService: JwtHelperService) {
+    private userService: UserService
+  ) {
     super(http);
+    const user = this.user();
+    if (user) {
+      this.userSource.next(user);
+    }
   }
 
   /**
@@ -38,41 +49,12 @@ export class AuthService extends HttpService {
       rememberMe
     }).toPromise().then((response: ApiResponse) => {
       const value: any = response.value;
-      const user = new User();
+      this.setToken(value.token);
 
-      user.id = value.idUser;
-      user.phone = value.phone;
-      user.email = value.email;
-      user.token = value.token;
-      user.address = new Address();
-      user.address.country = new Country(value.idCountry, value.countryName);
-      user.address.state = new State(value.idState, value.stateName);
-      user.address.city = new City(value.idCity, value.cityName);
-      user.address.street = value.street;
-      user.address.houseNumber = value.houseNumber;
-      user.avatarURL = environment.api.avatarUrl + value.avatarURL;
-      user.idAspNetUser = value.idAspNetUser;
-      user.annualIncome = value.annualIncome;
-      user.primaryActivityName = value.primaryActivityName;
-      if (value.roles) {
-        value.roles.map((role: any) => {
-          user.addRole(role);
-        });
-      }
-      user.annualIncome = value.annualIncome;
-      user.bussinessName = value.socialReason;
-      user.name = value.firstName;
-      user.lastName = value.lastName;
-      user.idUserType = value.idUserType;
-      user.cuit = value.cuit;
-      user.profitInstitution = new ProfitInstitution(value.idInstitution);
-      user.employeeQuantity = value.employeeQuantity;
-      user.idPrimaryActivity = value.idPrimaryActivity;
-      user.systemUserTypeId = value.systemUserTypeId;
-      user.canChargePeygold = value.canChargePeygold;
-      user.rememberMe = rememberMe;
-
-      return user;
+      return this.userService.one(value.idUser).then((user: User) => {
+        this.setUser(user);
+        return user;
+      });
     });
   }
 
@@ -273,5 +255,32 @@ export class AuthService extends HttpService {
     }
 
     return new (User)().fromString(localUser);
+  }
+
+  /**
+   * Reload the data of the authenticated user
+   */
+  reloadUser(): Promise<User> {
+    return this.userService.one(this.user().id).then((user: User) => {
+      this.setUser(user);
+      return user;
+    });
+  }
+
+  /**
+   * Set the user info in the local storage
+   * @param user the user info
+   */
+  private  setUser(user: User) {
+    this.userSource.next( user );
+    localStorage.setItem(environment.localStorage.user_var_name, user.toString());
+  }
+
+  /**
+   * Set the token value in the local storage
+   * @param token The token value
+   */
+  private setToken(token: string) {
+    localStorage.setItem(environment.localStorage.access_token_var_name, token);
   }
 }

@@ -43,7 +43,7 @@ export class LocationService extends HttpService {
   getStates(country: Country): Promise<Array<State>> {
     return this.get('/Location/GetStatesByCountry', {
       params : {
-        idCountry : country.id
+        idCountry : country.value
       }
     }).toPromise().then((response: ApiResponse) => {
       const states = [];
@@ -68,7 +68,7 @@ export class LocationService extends HttpService {
   getCities(state: State): Promise<Array<City>> {
     return this.get('/Location/GetCitiesByState', {
       params : {
-        IdState : state.id
+        IdState : state.value
       }
     }).toPromise().then((response: ApiResponse) => {
       const cities = [];

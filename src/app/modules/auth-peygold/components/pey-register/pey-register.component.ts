@@ -55,7 +55,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    * On init implementation
    */
   ngOnInit() {
-    this.step = 2;
+    this.step = 1;
     this.type = this.route.snapshot.data[`type`];
     // Get the countries.
     this.locationService.getCountries().then((countries: Array<Country>) => {
