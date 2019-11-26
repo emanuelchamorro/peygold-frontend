@@ -43,6 +43,9 @@ export const environment = {
   i18n: {
     language: 'es',
     country: 'es_AR',
+  },
+  paginator: {
+    per_page: 10,
   }
 };
 

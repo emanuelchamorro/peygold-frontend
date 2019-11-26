@@ -33,4 +33,11 @@ export class TransactionType extends SelectOption {
         break;
     }
   }
+
+  /**
+   * Return is MultiPey
+   */
+  get isMultiPey(): boolean {
+    return this.value === TransactionTypeEnum.MultyPey;
+  }
 }

@@ -24,16 +24,16 @@ export const routes = {
     sent: {route: 'money/sent', href: indexRoute + '/money/sent'},
   },
   qr : {
-    scan: {route: 'qr/scan', href: indexRoute + '/qr/scan'},
-    generate: {route: 'qr/generate', href: indexRoute + '/qr/generate'},
+    scanner: {route: 'qr/scanner', href: indexRoute + '/qr/scanner'},
+    generator: {route: 'qr/generator', href: indexRoute + '/qr/generator'},
   },
   reports : {
     account_status: {route: 'reports/account_status', href: indexRoute + '/reports/account_status'},
     withholdings: {route: 'reports/withholdings', href: indexRoute + '/reports/withholdings'},
   },
-  credits : {
-    index: {route: 'credits', href: indexRoute + '/credits'},
-    request: {route: 'credits/request', href: indexRoute + '/credits/request'},
+  loans : {
+    index: {route: 'loans', href: indexRoute + '/loans'},
+    request: {route: 'loans/request', href: indexRoute + '/loans/request'},
   },
   ecommerces : {
     index: {route: 'ecommerces', href: indexRoute + '/ecommerces'},

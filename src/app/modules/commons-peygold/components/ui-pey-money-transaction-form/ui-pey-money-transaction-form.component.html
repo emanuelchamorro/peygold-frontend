@@ -29,7 +29,7 @@
 
         <div class="input-blue-text w-100 mt-3 mb-3">
           <input required type="text" placeholder="$0" class="form-control InputAmount w-100 text-center"
-                 [prefix]="transaction.type.coin | translate" mask="0*,00"
+                 [prefix]="transaction.type.coin | translate" mask="separator.2" thousandSeparator="."
                  [min]="transaction.type.minAmount"
                  name="amount" [(ngModel)]="transaction.amount" #amount="ngModel" />
           <div *ngIf="!amount.pristine && amount.invalid && formTransaction.submitted || !transaction.amount && formTransaction.submitted" class="invalid-feedback text-left">

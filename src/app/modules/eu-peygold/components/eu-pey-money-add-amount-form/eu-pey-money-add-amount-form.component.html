@@ -1,12 +1,12 @@
 <div class="top">
   <div class="row TopTitle">
     <div class="col-6">
-      <h2 class="titleSecurity"><span class="icon-Iconos-03"></span> Ingresar Dinero</h2>
+      <h2 class="titleSecurity"><span [class]="icon"></span><span [innerHtml]="title"></span></h2>
     </div>
   </div>
   <div class="row TopTitle">
     <div class="col-6">
-      <p>Elegí el monto que deseas ingresar</p>
+      <p [innerHtml]="description"></p>
     </div>
   </div>
 </div>
@@ -29,15 +29,39 @@
               </ul>
             </div>
           </div>
-          <input required type="text" placeholder="$0" class="form-control InputAmount"
-                 [prefix]="transaction.type.coin | translate" mask="0*,00"
-                 [min]="transaction.type.minAmount"
-                 name="amount" [(ngModel)]="transaction.amount" #amount="ngModel" />
-          <div *ngIf="!amount.pristine && amount.invalid && formAddAmount.submitted" class="invalid-feedback text-left">
-            <div *ngIf="amount.errors.required">Campo es requerido</div>
+          <div *ngIf="!transaction.type.isMultiPey">
+            <input [required]="!transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+                   [prefix]="transaction.type.coin | translate" mask="separator.2" thousandSeparator="."
+                   [min]="transaction.type.minAmount"
+                   name="amount" [(ngModel)]="transaction.amount" #amount="ngModel" />
+            <div *ngIf="!amount.pristine && amount.invalid && formAddAmount.submitted" class="invalid-feedback text-left">
+              <div *ngIf="amount.errors.required">Campo es requerido</div>
+            </div>
+            <div *ngIf="transaction.amount < transaction.type.minAmount && formAddAmount.submitted" class="invalid-feedback text-left">
+              <div >El valor mínimo para la transaccion es {{ transaction.type.minAmount }}</div>
+            </div>
           </div>
-          <div *ngIf="transaction.amount < transaction.type.minAmount && formAddAmount.submitted" class="invalid-feedback text-left">
-            <div >El valor mínimo para la transaccion es {{ transaction.type.minAmount }}</div>
+          <div *ngIf="transaction.type.isMultiPey">
+            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+                   [prefix]="transaction.multiPey[0].type.coin | translate" mask="separator.2" thousandSeparator="."
+                   [min]="transaction.multiPey[0].minAmount"
+                   name="fiatAmount" [(ngModel)]="transaction.multiPey[0].amount" #fiatAmount="ngModel" />
+            <div *ngIf="!fiatAmount.pristine && fiatAmount.invalid && formAddAmount.submitted" class="invalid-feedback text-left">
+              <div *ngIf="fiatAmount.errors.required">Campo es requerido</div>
+            </div>
+            <div *ngIf="transaction.multiPey[0].amount < transaction.multiPey[0].type.minAmount && formAddAmount.submitted" class="invalid-feedback text-left">
+              <div >El valor mínimo para la transaccion es {{ transaction.multiPey[1].type.minAmount }}</div>
+            </div>
+            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+                   [prefix]="transaction.multiPey[1].type.coin | translate" mask="separator.2" thousandSeparator="."
+                   [min]="transaction.multiPey[1].type.minAmount"
+                   name="peygoldAmount" [(ngModel)]="transaction.multiPey[1].amount" #peygoldAmount="ngModel" />
+            <div *ngIf="!peygoldAmount.pristine && peygoldAmount.invalid && formAddAmount.submitted" class="invalid-feedback text-left">
+              <div *ngIf="peygoldAmount.errors.required">Campo es requerido</div>
+            </div>
+            <div *ngIf="transaction.multiPey[1].amount < transaction.multiPey[1].type.minAmount && formAddAmount.submitted" class="invalid-feedback text-left">
+              <div >El valor mínimo para la transaccion es {{ transaction.multiPey[1].type.minAmount }}</div>
+            </div>
           </div>
         </div>
       </div>

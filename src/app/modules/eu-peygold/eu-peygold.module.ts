@@ -26,7 +26,17 @@ import { EuPeyMoneyRequestsComponent } from './components/eu-pey-money-requests/
 import { EuPeyMoneySendComponent } from './components/eu-pey-money-send/eu-pey-money-send.component';
 import { EuPeyMoneySentComponent } from './components/eu-pey-money-sent/eu-pey-money-sent.component';
 import { EuPeyUserComponent } from './components/eu-pey-user/eu-pey-user.component';
-
+import { EuPeyLoanRequestsComponent } from './components/eu-pey-loan-requests/eu-pey-loan-requests.component';
+import { EuPeyLoanRequestComponent } from './components/eu-pey-loan-request/eu-pey-loan-request.component';
+import { EuPeyLoanComponent } from './components/eu-pey-loan/eu-pey-loan.component';
+import {
+  EuPeyLoanRequestChecksFormComponent
+} from './components/eu-pey-loan-request-checks-form/eu-pey-loan-request-checks-form.component';
+import { EuPeyQrGeneratorComponent } from './components/eu-pey-qr-generator/eu-pey-qr-generator.component';
+import { EuPeyQrScannerComponent } from './components/eu-pey-qr-scanner/eu-pey-qr-scanner.component';
+import { QRCodeModule } from 'angular2-qrcode';
+import { NgQrScannerModule } from 'angular2-qrscanner';
+import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 @NgModule({
   declarations: [
@@ -42,6 +52,12 @@ import { EuPeyUserComponent } from './components/eu-pey-user/eu-pey-user.compone
     EuPeyMoneySendComponent,
     EuPeyMoneySentComponent,
     EuPeyUserComponent,
+    EuPeyLoanRequestsComponent,
+    EuPeyLoanRequestComponent,
+    EuPeyLoanComponent,
+    EuPeyLoanRequestChecksFormComponent,
+    EuPeyQrGeneratorComponent,
+    EuPeyQrScannerComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +67,9 @@ import { EuPeyUserComponent } from './components/eu-pey-user/eu-pey-user.compone
     CommonsPeyGoldModule,
     EuPeyGoldRouting,
     MercadoPagoModule,
+    QRCodeModule,
+    NgQrScannerModule,
+    NgQRCodeReaderModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {

@@ -19,6 +19,10 @@ import {EuPeyMoneyRequestsComponent} from './components/eu-pey-money-requests/eu
 import {EuPeyMoneySendComponent} from './components/eu-pey-money-send/eu-pey-money-send.component';
 import {EuPeyMoneySentComponent} from './components/eu-pey-money-sent/eu-pey-money-sent.component';
 import {EuPeyUserComponent} from './components/eu-pey-user/eu-pey-user.component';
+import {EuPeyLoanRequestsComponent} from './components/eu-pey-loan-requests/eu-pey-loan-requests.component';
+import {EuPeyLoanRequestComponent} from './components/eu-pey-loan-request/eu-pey-loan-request.component';
+import {EuPeyQrGeneratorComponent} from './components/eu-pey-qr-generator/eu-pey-qr-generator.component';
+import {EuPeyQrScannerComponent} from './components/eu-pey-qr-scanner/eu-pey-qr-scanner.component';
 
 export const config: Routes = [
   {
@@ -72,6 +76,26 @@ export const config: Routes = [
         component: EuPeyMoneySentComponent,
       },
       // END REQUEST MONEY
+      // QR
+      {
+        path: routes.qr.generator.route,
+        component: EuPeyQrGeneratorComponent,
+      },
+      {
+        path: routes.qr.scanner.route,
+        component: EuPeyQrScannerComponent,
+      },
+      // END QR
+      // LOANS
+      {
+        path: routes.loans.index.route,
+        component: EuPeyLoanRequestsComponent,
+      },
+      {
+        path: routes.loans.request.route,
+        component: EuPeyLoanRequestComponent,
+      },
+      // END LOANS
       // USER
       {
         path: routes.me.index.route,

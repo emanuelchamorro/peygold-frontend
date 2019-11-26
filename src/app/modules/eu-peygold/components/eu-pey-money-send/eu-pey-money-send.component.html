@@ -21,7 +21,7 @@
       </div>
       <div class="d-flex flex-row justify-content-between b-bottom-line p-4">
         <span>Recibirá</span>
-        <span>{{transaction.type.coin}}{{transaction.amount | mask:'0*,00'}}</span>
+        <span>{{transaction.type.coin}}{{transaction.amount | number:'1.2'}}</span>
       </div>
       <div class="d-flex align-items-center justify-content-center b-bottom-line flex-column p-4">
         <span class="mb-3">Forma de pago</span>

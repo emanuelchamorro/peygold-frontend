@@ -15,8 +15,8 @@ export const menu: Array<MenuItem> = [
       new MenuItem().fromJSON({label: 'Solicitudes de pago', href: routes.money.sent.href}),
   ]}),
   new MenuItem().fromJSON({label: 'QR', icon: 'icon-Iconos-06', childs: [
-    new MenuItem().fromJSON({label: 'Cobrar / Generar QR', href: routes.qr.generate.href}),
-    new MenuItem().fromJSON({label: 'Pagar / Escanear QR', href: routes.qr.scan.href}),
+    new MenuItem().fromJSON({label: 'Cobrar / Generar QR', href: routes.qr.generator.href}),
+    new MenuItem().fromJSON({label: 'Pagar / Escanear QR', href: routes.qr.scanner.href}),
   ]}),
 //  new MenuItem().fromJSON({label: 'Remates', icon: 'icon-Iconos-13', childs: [
 //      new MenuItem().fromJSON({label: 'Rematar mis puntos', href: routes.home.href}),
@@ -28,8 +28,8 @@ export const menu: Array<MenuItem> = [
 //      new MenuItem().fromJSON({label: 'Retenciones', href: routes.reports.withholdings.href}),
 //  ]}),
   new MenuItem().fromJSON({label: 'Creditos', icon: 'icon-creditos-26', childs: [
-      new MenuItem().fromJSON({label: 'Solicitar creditos', href: routes.credits.request.href}),
-      new MenuItem().fromJSON({label: 'Mis solicitudes remates', href: routes.credits.index.href}),
+      new MenuItem().fromJSON({label: 'Solicitar creditos', href: routes.loans.request.href}),
+      new MenuItem().fromJSON({label: 'Mis solicitudes', href: routes.loans.index.href}),
   ]}),
 //  new MenuItem().fromJSON({label: 'Comercios Adheridos', icon: 'icon-Iconos-08', href: routes.ecommerces.index.href}),
   new MenuSeparator(),

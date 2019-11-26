@@ -35,9 +35,7 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
     const serializedUser = localStorage.getItem(environment.localStorage.user_var_name);
     if (serializedUser) {
       const user: User = new User().fromString(serializedUser);
-      if (user.rememberMe) {
-        this.goToDashboard(user);
-      }
+      this.goToDashboard(user);
     }
   }
 

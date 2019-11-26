@@ -17,7 +17,7 @@ export class SelectOption extends Model {
     public label?: string,
   ) {
     super();
-    this.value = value;
+    this.value = String(value);
   }
 
   /**
