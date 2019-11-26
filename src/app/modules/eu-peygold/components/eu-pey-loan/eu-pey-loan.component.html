@@ -1,0 +1,46 @@
+<div *ngIf="loan">
+  <div class="modal-content p-4">
+    <ul>
+      <li>
+        <span [innerHtml]="'Solictud: ' + loan.id"></span>
+        <span [innerHtml]="loan.applicationDate | date"></span>
+      </li>
+    </ul>
+
+    <ul>
+      <li><span>Motivo de la solicitud</span>
+        <span class="fw-600" [innerHtml]="loan.creditDestination.label"></span>
+      </li>
+      <li><span>Crédito solicitado</span>
+        <span class="fw-600">{{ loan.transactionType.coin }}&nbsp;{{loan.amount | number:'1.2'}}</span>
+      </li>
+      <li><span>Forma de pago</span>
+        <span class="fw-600" [innerHtml]="loan.paymentMethod.label"></span>
+      </li>
+      <li><span>Cantidad de cuotas</span>
+        <span class="fw-600">Undefined</span>
+      </li>
+      <li><span>Valor de cada cuota</span>
+        <span class="fw-600">Undefined</span>
+      </li>
+      <li><span>Rescate comercial</span>
+        <span class="fw-600" [innerHtml]="loan.checkRescue.label"></span>
+      </li>
+    </ul>
+
+    <ul>
+      <li><span class="fw-700">Estado administrativo</span>
+        <span [innerHtml]="loan.status.label"></span>
+      </li>
+      <li><span class="fw-700" >Estado de analisis de aseguradora</span>
+        <span [innerHtml]="loan.insuranceStatus.label"></span>
+      </li>
+      <li><span class="fw-700">Estado de crédito</span>
+        <span [innerHtml]="loan.insuranceStatus.label"></span>
+      </li>
+      <div class="d-flex justify-content-center">
+        <input placeholder="Agregar una nota" type="text" class="d-flex w-75 mt-5 mb-3" id="input-line"/>
+      </div>
+    </ul>
+  </div>
+</div>

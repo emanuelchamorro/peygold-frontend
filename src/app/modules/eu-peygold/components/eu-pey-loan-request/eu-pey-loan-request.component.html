@@ -1,0 +1,77 @@
+<div *ngIf="step==1">
+  <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
+  <p class="opening-text">Esta solicitud está sujeta a un análisis crediticio. La solicitud es orientativa.
+    Indique el motivo de su solicitud e ingrese el monto total que desea solicitar</p>
+  <form name="form" (ngSubmit)="continue()" #loansForm="ngForm" novalidate>
+    <div class="content-center">
+      <div class="grey-box d-flex flex-column w-75 align-items-center p-3">
+        <div class="col-sm-6 flex-column align-items-center pt-4 pb-4">
+          <span class="">Destino de crédito</span>
+
+          <div class="w-100 mt-2 mb-4">
+            <label class="has-float-label mb-0">
+              <ng-select placeholder="Destino de crédito"
+                         class="custom-select dropdown select-height-normal mb-0 w-100"
+                         bindLabel="label"
+                         [searchable]="false"
+                         [items]="creditDestinations"
+                         [addTag]="false"
+                         name="creditDestinations"
+                         [(ngModel)]="loanRequest.creditDestination"
+                         [ngClass]="{'ng-dirty ng-invalid' : loansForm.submitted && creditDestination.errors}"
+                         #creditDestination="ngModel"
+                         required>
+              </ng-select>
+              <div *ngIf="!creditDestination.pristine && creditDestinations.invalid || loansForm.submitted && creditDestination.errors" class="invalid-feedback">
+                <div *ngIf="creditDestination.errors.required">Campo es requerido</div>
+              </div>
+            </label>
+          </div>
+          <span class="mt-5">Monto a solicitar</span>
+          <div class="input-blue-text w-100 mt-2">
+            <input required type="text" [placeholder]="loanRequest.transactionType.coin | translate" class="form-control InputAmount w-100 text-center"
+                   mask="separator.2" thousandSeparator="."
+                   name="amount" [(ngModel)]="loanRequest.amount" #amount="ngModel" />
+            <div *ngIf="!amount.pristine && amount.invalid && loansForm.submitted || !loanRequest.amount && loansForm.submitted" class="invalid-feedback text-left">
+              <div *ngIf="amount.errors.required">Campo es requerido</div>
+            </div>
+          </div>
+          <input placeholder="Agregar una nota" type="text" class="w-100 mt-5 mb-3 input-line"
+                 required name="notes" #notes="ngModel" [(ngModel)]="loanRequest.notes" />
+          <div *ngIf="!notes.pristine && notes.invalid && loansForm.submitted || !loanRequest.notes && loansForm.submitted" class="invalid-feedback text-left">
+            <div *ngIf="notes.errors.required">Campo es requerido</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-buttons w-75 justify-content-end">
+        <button type="submit" role="button" class="solid-blue-button">Continuar</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="step==2">
+  <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
+  <p class="opening-text">Seleccione la opción de financiación y vencimiento que más se adecúe a sus necesidades.
+    Recuerde que la forma de pago es únicamente a través de cheques.</p>
+
+  <div class="d-flex mt-5 mb-5">
+    <div class="grey-box d-flex flex-column w-100 p-4 align-items-center">
+      <div class="d-flex flex-column">
+        <span class="fs-14 fw-700 mb-2">Motivo de la solicitud: <span [innerHtml]="loanRequest.creditDestination.label"></span></span>
+        <span class="fs-14 fw-700">Monto a recibir:
+          <span [innerHtml]="loanRequest.transactionType.coin"></span>&nbsp;<span [innerHtml]="loanRequest.amount | number:'1.2'"></span>
+        </span>
+        <a href="#" class="fs-14 text-color mt-3">Modificar</a>
+      </div>
+    </div>
+  </div>
+
+  <app-eu-pey-loan-request-checks-form></app-eu-pey-loan-request-checks-form>
+</div>
+<div *ngIf="step==3">
+  <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
+  <p class="opening-text">Revisa que todos los datos esten bien y haz click en enviar solicitud.</p>
+
+</div>

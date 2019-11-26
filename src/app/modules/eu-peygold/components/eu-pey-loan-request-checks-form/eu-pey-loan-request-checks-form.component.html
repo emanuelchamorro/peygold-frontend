@@ -1,0 +1,169 @@
+<div *ngIf="!loanOption">
+  <div class="flex-grid-thirds">
+    <div class="col" *ngFor="let option of loanOptions">
+      <div class="grey-box credit-option">
+        <div class="heading-grey-box">
+          <span [innerHtml]="option.name"></span>
+        </div>
+        <div class="d-flex flex-column p-2">
+          <div class="d-flex flex-column mt-3 mb-4">
+            <span>Cantidad de cuotas</span>
+            <span class="fw-700 mt-3" [innerHtml]="option.dues"></span>
+          </div>
+          <div class="d-flex flex-column mt-3 mb-4">
+            <span>Valor de cuota</span>
+            <span class="fw-700 mt-3" [innerHtml]="'$' + option.duesAmount"></span>
+          </div>
+          <div class="d-flex flex-column mt-3 mb-5">
+            <span>Fecha de vencimiento</span>
+            <span class="fw-700 mt-3" [innerHtml]="check.expirationDate" *ngFor="let check of option.checks"></span>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column align-items-center mt-3 mb-3">
+        <button (click)="selectOption(option)" role="button" class="solid-blue-button">Seleccionar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loanOption">
+  <form name="form" (ngSubmit)="continue()" #checksForm="ngForm" novalidate>
+    <div class="tab_container">
+      <label *ngFor="let currentCheck of loanOption.checks; let i = index"
+             (click)="setCheck(currentCheck)"
+             class="tab1 d-flex flex-column justify-content-center check-{{i + 1}}" [ngClass]="{'active' : currentCheck === check}"><span>Cheque cuota {{i + 1}}</span></label>
+
+      <section id="content1" class="tab-content grey-box" *ngFor="let currentCheck of loanOption.checks; let y = index" [hidden]="currentCheck !== check">
+        <div class="d-flex w-100 align-items-center mb-4">
+          <div class="col-4">
+            <div class="dropdown chequeSelect">
+              <div class="select">
+                <span>Cheque de tercero {{y}}</span>
+                <i class="fa fa-chevron-right"></i>
+              </div>
+              <input type="hidden" name="gender">
+              <ul class="dropdown-menu">
+                <li id="male">Pago a proveedores</li>
+                <li id="female">Mejoras edilicias</li>
+                <li id="female">Empleados</li>
+                <li id="female">Otro</li>
+              </ul>
+            </div>
+          </div>
+          <a href="" class="button-white-check">Copiar datos del cheque anterior</a>
+        </div>
+        <div class="flex-grid-thirds"><!-- columnas -->
+          <div class="col text-left">
+            <span class="fs-14 fw-700 " >Datos del cheque</span>
+            <div class="input-field mt-2">
+              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta">
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="N° de cheque">
+            </div>
+            <div class="input-field">
+              <div class="dropdown select-height-normal w-100">
+                <div class="select">
+                  <span>Fecha de Emisión</span>
+                  <i class="fa fa-chevron-left"></i>
+                </div>
+                <input type="hidden" name="gender">
+                <ul class="dropdown-menu">
+                  <li id="male">Otro</li>
+                </ul>
+              </div>
+            </div>
+            <div class="input-field">
+              <div class="dropdown select-height-normal w-100">
+                <div class="select">
+                  <span>Fecha de Vencimiento</span>
+                  <i class="fa fa-chevron-left"></i>
+                </div>
+                <input type="hidden" name="gender">
+                <ul class="dropdown-menu">
+                  <li id="male">Otro</li>
+                </ul>
+              </div>
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="Monto">
+            </div>
+          </div>
+
+          <div class="col text-left">
+            <span class="fs-14 fw-700" >Datos del banco</span>
+            <div class="input-field mt-2">
+              <input type="text" class="d-block w-100" placeholder="Banco">
+            </div>
+            <div class="input-field">
+              <div class="dropdown select-height-normal w-100">
+                <div class="select">
+                  <span>Provincia</span>
+                  <i class="fa fa-chevron-left"></i>
+                </div>
+                <input type="hidden" name="gender">
+                <ul class="dropdown-menu">
+                  <li id="male">Otro</li>
+                </ul>
+              </div>
+            </div>
+            <div class="input-field">
+              <div class="dropdown select-height-normal w-100">
+                <div class="select">
+                  <span>Ciudad/Barrio</span>
+                  <i class="fa fa-chevron-left"></i>
+                </div>
+                <input type="hidden" name="gender">
+                <ul class="dropdown-menu">
+                  <li id="male">Otro</li>
+                </ul>
+              </div>
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="Dirección">
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="Teléfono">
+            </div>
+          </div>
+          <div class="col text-left">
+            <span class="fs-14 fw-700" >Datos del firmante</span>
+            <div class="input-field mt-2">
+              <input type="text" class="d-block w-100" placeholder="Razón Social">
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="Cuit">
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="Nombre y Apellido">
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="DNI">
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="Teléfono">
+            </div>
+          </div>
+        </div><!-- columnas -->
+        <div class="row-buttons p-3 align-items-center justify-content-between mb-4">
+          <a href="#" class="adjuntar-img">
+            <img src="../global/assets/adjuntar.svg" class="icono-adjuntar">Imagen del frente</a>
+          <a href="#" class="adjuntar-img">
+            <img src="../global/assets/adjuntar.svg" class="icono-adjuntar">Imagen del dorso</a>
+
+          <a href="#" class="white-button-border w-auto">Guardar y continuar</a>
+        </div>
+        <div class="row-buttons p-3 align-items-center justify-content-between mb-4 invalid-feedback text-left">
+          <div>Error</div>
+        </div>
+      </section>
+
+      <div class="row-buttons justify-content-end mt-3">
+        <a href="5-solicitar-credito-opciones.html" role="button" class="solid-blue-button">Continuar</a>
+      </div>
+
+    </div>
+  </form>
+
+</div>

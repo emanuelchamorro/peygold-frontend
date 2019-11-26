@@ -1,0 +1,21 @@
+<h2><span class="icon-Iconos-06 fs-22"></span>QR: <span>Pagar con QR</span></h2>
+<p class="opening-text mb-3">Autoriza el uso de la cámara para escanear un código QR</p>
+
+<button *ngIf="!camera" class="btn-blue" type="button" (click)="activateCamera()">Iniciar Camara</button>
+<button *ngIf="camera" class="btn-blue" type="button" (click)="deactivateCamera()">Detener Camara</button>
+
+<input class="btn-blue" type="file" #file name="file" id="file" (change)="preview(file.files)">
+<div align="center">
+  <ng2-qrcode-reader (result)="readQR($event)" [qrr-show]="validQR" [qrr-value]="value" [qrr-type]="'url'">
+  </ng2-qrcode-reader>
+</div>
+
+<div [hidden]="!camera">
+  <qr-scanner
+    [debug]="false"
+    [canvasWidth]="800"
+    [canvasHeight]="600"
+    [stopAfterScan]="true"
+    [updateTime]="100">
+  </qr-scanner>
+</div>

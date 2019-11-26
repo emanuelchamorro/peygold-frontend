@@ -1,0 +1,53 @@
+<app-eu-pey-money-add-amount-form
+  icon="icon-Iconos-06"
+  title="QR: Cobrar con QR"
+  description="Elegí el monto que deseas recibir."
+  [multipey]="true"
+  *ngIf="!transaction" (continue)="setTransaction($event)">
+
+</app-eu-pey-money-add-amount-form>
+
+<div *ngIf="transaction">
+  <div class="top">
+    <div class="row TopTitle">
+      <div class="col-6">
+        <h2 class="titleSecurity"><span class="icon-Iconos-06"></span><span>QR: Cobrar con QR</span></h2>
+      </div>
+    </div>
+    <div class="row TopTitle">
+      <div class="col-6"></div>
+    </div>
+  </div>
+
+  <div class="wallet-conteiner mb-2">
+    <div class="cardMessage">
+      <div class="headCardMessage">
+        <span class="qrIconMessage"></span>
+      </div>
+      <div class="bodyCardMessage">
+        <div class="p-3">
+          <h2 *ngIf="!transaction.type.isMultiPey" class="text-center">
+            Recibirás {{transaction.type.coin}} {{transaction.amount | number:'1.2' }}
+          </h2>
+          <h2 *ngIf="transaction.type.isMultiPey" class="text-center">
+            Recibirás: <br/>
+            {{transaction.multiPey[0].type.coin}} {{transaction.multiPey[0].amount | number:'1.2' }}
+            y
+            {{transaction.multiPey[1].type.coin}} {{transaction.multiPey[1].amount | number:'1.2' }}
+          </h2>
+
+          <div align="center">
+            <qr-code [value]="transaction.toQR" [size]="250"></qr-code>
+          </div>
+          <p class="text-center">Tu cliente debe escanear el código con la app de PeyGold</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ActionBtns text-center">
+    <a routerLink="/" class="btn-blue-border">Cancelar</a>
+  </div>
+
+</div>
+
+

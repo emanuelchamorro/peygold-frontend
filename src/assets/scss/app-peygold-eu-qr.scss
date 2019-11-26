@@ -1,0 +1,189 @@
+@import "global";
+@import "colors";
+#main-div {
+  .TopTitle {
+    height: auto;
+    span {
+      font-size: 20px;
+      vertical-align: middle;
+    }
+    .btn-blue {
+      display: block;
+      margin: 10px auto;
+    }
+  }
+}
+.ActionBtns {
+  width: 45vw;
+  margin: 20px auto 20px auto;
+  text-align: center;
+  a {
+    display: inline-block;
+  }
+}
+
+.cardMessage {
+  width: 45vw;
+  margin: 20px auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  .headCardMessage {
+    background-color: $p-blue;
+    padding: 10px;
+    .qrIconMessage {
+      display: block;
+      margin: 5px auto;
+      width: 70px;
+      height: 70px;
+      background-color: white;
+      border-radius: 50px;
+      background-image: url("~src/assets/images/qr-boton.svg");
+      background-size: 40px;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+  .bodyCardMessage {
+    padding: 30px 10px;
+    h2 {
+      color: $p-dark-grey;
+      font-size: 21px;
+      line-height: 26px;
+    }
+    p {
+      color: $p-grey-text;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+}
+.CamaraScan {
+  margin: 10px auto;
+  width: 50vw;
+  height: 50vh;
+  background: gray;
+}
+.verificarDatos {
+  width: 45vw;
+  padding: 20px;
+  margin: 10px auto;
+  background: #f1f1f1;
+  border-radius: 10px;
+  .row {
+    margin-left: 5px;
+    margin-right: 5px;
+    .col-12 {
+      border-bottom: 1px solid #bdbdbd;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  .FormaPagoIcon {
+    width: 82px;
+    height: 82px;
+    margin: 10px auto;
+    background-color: white;
+    border-radius: 100%;
+  }
+  .FormaPago-Pesos {
+    background-image: url("~src/assets/images/Pesos.svg");
+    background-repeat: no-repeat;
+    background-size: 55px;
+    background-position: 16px 22px;
+  }
+  .FormaPago-PeyGold {
+    background-image: url("~src/assets/images/puntos-icon.svg");
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-position: 15px 15px;
+  }
+  .FormaPago-MultiPey {
+    background-image: url("~src/assets/images/puntos-icon.svg");
+    background-repeat: no-repeat;
+    background-size: 70px;
+    background-position: 10px 15px;
+  }
+  .fontRounded {
+    background: rgba(68, 78, 173, 1);
+    background: -moz-linear-gradient(
+        left,
+        rgba(68, 78, 173, 1) 0%,
+        rgba(53, 108, 236, 1) 48%,
+        rgba(53, 117, 186, 1) 100%
+    );
+    background: -webkit-gradient(
+        left top,
+        right top,
+        color-stop(0%, rgba(68, 78, 173, 1)),
+        color-stop(48%, rgba(53, 108, 236, 1)),
+        color-stop(100%, rgba(53, 117, 186, 1))
+    );
+    background: -webkit-linear-gradient(
+        left,
+        rgba(68, 78, 173, 1) 0%,
+        rgba(53, 108, 236, 1) 48%,
+        rgba(53, 117, 186, 1) 100%
+    );
+    background: -o-linear-gradient(
+        left,
+        rgba(68, 78, 173, 1) 0%,
+        rgba(53, 108, 236, 1) 48%,
+        rgba(53, 117, 186, 1) 100%
+    );
+    background: -ms-linear-gradient(
+        left,
+        rgba(68, 78, 173, 1) 0%,
+        rgba(53, 108, 236, 1) 48%,
+        rgba(53, 117, 186, 1) 100%
+    );
+    background: linear-gradient(
+        to right,
+        rgba(68, 78, 173, 1) 0%,
+        rgba(53, 108, 236, 1) 48%,
+        rgba(53, 117, 186, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444ead', endColorstr='#3575ba', GradientType=1 );
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    margin: 5px auto;
+    border-radius: 100%;
+    span {
+      color: white;
+      font-size: 0;
+      line-height: 64px;
+      text-align: center;
+      display: block;
+      &::first-letter {
+        font-size: 34px;
+      }
+    }
+  }
+  h4 {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+  p {
+    font-size: 13px;
+    line-height: 20px;
+    margin-bottom: 0px;
+    strong {
+      font-size: 17px;
+    }
+  }
+  .uppercase {
+    text-transform: uppercase;
+  }
+  .border-bottom-note {
+    border-bottom: 1px solid #828282;
+    width: 45%;
+    margin: 10px auto;
+    padding-bottom: 10px;
+  }
+  .p-10 {
+    padding: 10px;
+  }
+}
