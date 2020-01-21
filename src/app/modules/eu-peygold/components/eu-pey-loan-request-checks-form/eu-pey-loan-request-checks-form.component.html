@@ -39,15 +39,15 @@
           <div class="col-4">
             <div class="dropdown chequeSelect">
               <div class="select">
-                <span>Cheque de tercero {{y}}</span>
+                <span>Cheque de tercero</span>
                 <i class="fa fa-chevron-right"></i>
               </div>
               <input type="hidden" name="gender">
               <ul class="dropdown-menu">
-                <li id="male">Pago a proveedores</li>
-                <li id="female">Mejoras edilicias</li>
-                <li id="female">Empleados</li>
-                <li id="female">Otro</li>
+                <li>Pago a proveedores</li>
+                <li>Mejoras edilicias</li>
+                <li>Empleados</li>
+                <li>Otro</li>
               </ul>
             </div>
           </div>
@@ -70,7 +70,7 @@
                 </div>
                 <input type="hidden" name="gender">
                 <ul class="dropdown-menu">
-                  <li id="male">Otro</li>
+                  <li>Otro</li>
                 </ul>
               </div>
             </div>
@@ -82,7 +82,7 @@
                 </div>
                 <input type="hidden" name="gender">
                 <ul class="dropdown-menu">
-                  <li id="male">Otro</li>
+                  <li>Otro</li>
                 </ul>
               </div>
             </div>
@@ -94,30 +94,56 @@
           <div class="col text-left">
             <span class="fs-14 fw-700" >Datos del banco</span>
             <div class="input-field mt-2">
-              <input type="text" class="d-block w-100" placeholder="Banco">
-            </div>
-            <div class="input-field">
-              <div class="dropdown select-height-normal w-100">
-                <div class="select">
-                  <span>Provincia</span>
-                  <i class="fa fa-chevron-left"></i>
-                </div>
-                <input type="hidden" name="gender">
-                <ul class="dropdown-menu">
-                  <li id="male">Otro</li>
-                </ul>
+              <ng-select placeholder="Banco"
+                         class="custom-select dropdown select-height-normal mb-0 w-100"
+                         (change)="currentCheck.bank"
+                         bindLabel="label"
+                         [searchable]="false"
+                         [items]="banks"
+                         [addTag]="false"
+                         name="bank"
+                         [(ngModel)]="currentCheck.bank"
+                         [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && bank.errors}"
+                         #bank="ngModel"
+                         required>
+              </ng-select>
+              <div *ngIf="!bank.pristine && bank.invalid || checksForm.submitted && bank.errors" class="invalid-feedback">
+                <div *ngIf="bank.errors.required">Campo es requerido</div>
               </div>
             </div>
             <div class="input-field">
-              <div class="dropdown select-height-normal w-100">
-                <div class="select">
-                  <span>Ciudad/Barrio</span>
-                  <i class="fa fa-chevron-left"></i>
-                </div>
-                <input type="hidden" name="gender">
-                <ul class="dropdown-menu">
-                  <li id="male">Otro</li>
-                </ul>
+              <ng-select placeholder="Provincia"
+                         (change)="getCities($event)"
+                         class="custom-select dropdown select-height-normal mb-0 w-100"
+                         bindLabel="label"
+                         [searchable]="false"
+                         [items]="states"
+                         [addTag]="false"
+                         name="state"
+                         [(ngModel)]="currentCheck.address.state"
+                         [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && state.errors}"
+                         #state="ngModel"
+                         required>
+              </ng-select>
+              <div *ngIf="!state.pristine && state.invalid || checksForm.submitted && state.errors" class="invalid-feedback">
+                <div *ngIf="state.errors.required">Campo es requerido</div>
+              </div>
+            </div>
+            <div class="input-field">
+              <ng-select placeholder="Ciudad/Barrio"
+                         class="custom-select dropdown select-height-normal mb-0 w-100"
+                         bindLabel="label"
+                         [searchable]="false"
+                         [items]="cities"
+                         [addTag]="false"
+                         name="city"
+                         [(ngModel)]="currentCheck.address.city"
+                         [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && city.errors}"
+                         #city="ngModel"
+                         required>
+              </ng-select>
+              <div *ngIf="!city.pristine && city.invalid || checksForm.submitted && city.errors" class="invalid-feedback">
+                <div *ngIf="city.errors.required">Campo es requerido</div>
               </div>
             </div>
             <div class="input-field">

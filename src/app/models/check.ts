@@ -6,6 +6,7 @@ import {CheckRescue} from './check-rescue';
 import {PaymentMethod} from './payment-method';
 import {CreditDestination} from './credit-destination';
 import {Bank} from './bank';
+import {Address} from './address';
 
 /**
  * Loan model
@@ -18,6 +19,7 @@ export class Check extends Model {
   public amount: number;
   public onwer: User;
   public bank: Bank;
+  public address: Address;
   public frontImage: string;
   public backImage: string;
 }
