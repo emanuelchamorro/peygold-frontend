@@ -25,13 +25,13 @@ export const environment = {
   interceptors: {
     jwt_interceptor: {
       white_list: [
-        'api.peygold.com',
+        'gmartin-001-site1.ftempurl.com',
       ]
     }
   },
   api: {
-    url: 'https://api.peygold.com/api',
-    avatarUrl: 'https://api.peygold.com'
+    url: 'http://gmartin-001-site1.ftempurl.com/api',
+    avatarUrl: 'http://gmartin-001-site1.ftempurl.com'
   },
   localStorage: {
     user_var_name: 'pey_user',
@@ -46,6 +46,12 @@ export const environment = {
   },
   paginator: {
     per_page: 10,
+  },
+  locations: {
+    default: {
+      id: '4',
+      label:	'Argentina',
+    }
   }
 };
 

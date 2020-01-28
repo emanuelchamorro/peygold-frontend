@@ -13,12 +13,10 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
 
   private loanRequest: LoanRequest;
   private creditDestinations: Array<CreditDestination>;
-  private banks: Array<Bank>;
   private step = 1;
 
   constructor(
-    private creditDestinationsService: CreditDestinationsService,
-    private bankService: BanksService,
+    private creditDestinationsService: CreditDestinationsService
   ) {
     super();
   }
@@ -27,9 +25,6 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
     this.loanRequest = new LoanRequest();
     this.creditDestinationsService.all().then(
       (creditDestinations) => this.creditDestinations = creditDestinations
-    );
-    this.bankService.all().then(
-      (banks) => this.banks = banks
     );
   }
 

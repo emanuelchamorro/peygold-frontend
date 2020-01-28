@@ -9,10 +9,10 @@ import {HttpService} from '../../../services/http.service';
 export class BanksService extends HttpService {
 
   /**
-   * Get all credit destination
+   * Get all banks
    */
   all(): Promise<Array<Bank>> {
-    return this.get('/creditdestinations')
+    return this.get('/bank')
       .pipe(
         map((banks: Array<any>) => banks.map((item: any) => {
             return new Bank(item.value, item.label);

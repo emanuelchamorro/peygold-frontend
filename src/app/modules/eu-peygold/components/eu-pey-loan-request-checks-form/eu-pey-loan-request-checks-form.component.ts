@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {InMemoryService} from '../../../../services';
-import {LoanOption, Check} from '../../../../models';
+import {InMemoryService, LocationService} from '../../../../services';
+import {LoanOption, Check, Bank, State, City, Country} from '../../../../models';
+import {BanksService} from '../../services/banks.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-eu-pey-loan-request-checks-form',
@@ -12,9 +14,14 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
   private loanOptions: Array<LoanOption>;
   private loanOption: LoanOption;
   private check: Check;
+  private banks: Array<Bank>;
+  private states: Array<State>;
+  private cities: Array<City>;
 
   constructor(
-    private inMemoryService: InMemoryService
+    private inMemoryService: InMemoryService,
+    private bankService: BanksService,
+    private locationService: LocationService,
   ) { }
 
   /**
@@ -22,6 +29,9 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
    */
   ngOnInit() {
     this.loanOptions = this.inMemoryService.loanOptions;
+    this.bankService.all().then((banks) => this.banks = banks);
+    const country = new Country(environment.locations.default.id, environment.locations.default.label);
+    this.locationService.getStates(country).then((states) => this.states = states);
   }
 
   /**
@@ -39,5 +49,27 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
    */
   setCheck(check: Check): void {
     this.check = check;
+  }
+
+  /**
+   * Get the cities by the selected  state
+   * @return void
+   */
+  protected getCities(state: State): void {
+    if (!state) {
+      return;
+    }
+    this.requestCities(state).then();
+  }
+
+  /**
+   * Request the states by the selected country
+   * @param country The selected country
+   */
+  protected requestCities(state: State): Promise<Array<City>> {
+    return this.locationService.getCities(state).then((cities: Array<City>) => {
+      this.cities = cities;
+      return cities;
+    });
   }
 }
