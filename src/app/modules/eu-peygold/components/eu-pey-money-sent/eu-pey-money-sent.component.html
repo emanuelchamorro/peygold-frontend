@@ -85,7 +85,7 @@
         </div>
         <div class="col text-right">
           <div class="d-flex flex-column">
-            <span>{{transaction.type.coin}}{{transaction.amount | number:'1.2'}}</span>
+            <span>{{transaction.symbol}}{{transaction.amount | currency:' ':'symbol':'1.0'}}</span>
             <span [innerHtml]="transaction.createdAt | date:'medium' "></span></div>
           <div>
             <input name="transaction" [(ngModel)]="selectedTransaction" [value]="transaction" type="radio" class="d-flex">

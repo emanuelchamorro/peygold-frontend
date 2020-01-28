@@ -11,13 +11,16 @@ import { PeySuccessComponent } from './components/pey-success/pey-success.compon
 import { PeyResetPasswordComponent } from './components/pey-reset-password/pey-reset-password.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MustMatchDirective } from './directive/must-match.directive';
+
 
 @NgModule({
   declarations: [
     PeyLoginComponent,
     PeyRegisterComponent,
     PeySuccessComponent,
-    PeyResetPasswordComponent],
+    PeyResetPasswordComponent,
+    MustMatchDirective],
   imports: [
     CommonModule,
     AuthPeyGoldRouting,

@@ -3,6 +3,7 @@ import {HttpService} from '../../../services/http.service';
 import {Transaction, TransactionType, User} from '../../../models';
 import {map} from 'rxjs/operators';
 import {TransactionStatus} from '../../../models/transaction-status';
+import { Constants } from '../../utils/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +59,7 @@ export class RequestTransactionsService extends HttpService {
     mTransaction.processedAt = transaction.transactionDate;
     mTransaction.processedComments = transaction.processedComments;
     mTransaction.type = new TransactionType(transaction.idTransactionType);
-
+    mTransaction.symbol = Constants.symbolsArray[transaction.idTransactionType-1];
     return mTransaction;
   }
 
@@ -81,9 +82,9 @@ export class RequestTransactionsService extends HttpService {
    * @return Promise
    */
   update(transaction: Transaction) {
-    return this.put('/requesttransactions', {
+    return this.put(`/requesttransactions/${transaction.id}`, {
       RequestTransactionId: transaction.id,
-      ProcessedStatus: transaction.status.value,
+      ProcessedStatus: parseInt(transaction.status.value),
       ProcessedComments: transaction.processedComments
     }).toPromise();
   }

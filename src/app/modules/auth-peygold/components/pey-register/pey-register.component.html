@@ -54,7 +54,7 @@
             </div>
           </div>
         </div>
-        <form name="form" (ngSubmit)="registerForm.form.valid && onSubmit()" #registerForm="ngForm" novalidate>
+        <form name="form" (ngSubmit)="registerForm.form.valid && onSubmit()" #registerForm="ngForm" [mustMatch]="['password', 'repeatPassword']" novalidate>
           <div class="col-lg-11" *ngIf="type && step == 1">
             <div class="d-flex flex-column align-items-start mt-5">
               <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
@@ -94,10 +94,10 @@
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Razón social" class="form-control w-100"
                              [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && bussinesName.errors}"
-                             name="bussinesName" [(ngModel)]="user.bussinesName" #bussinesName="ngModel" required/>
+                             name="bussinessName" [(ngModel)]="user.bussinessName" #bussinessName="ngModel" required/>
                       <span>Razón social</span>
-                      <div *ngIf="!bussinesName.pristine && bussinesName.invalid || tryNextStep && bussinesName.errors" class="invalid-feedback">
-                        <div *ngIf="bussinesName.errors.required">Campo es requerido</div>
+                      <div *ngIf="!bussinessName.pristine && bussinessName.invalid || tryNextStep && bussinessName.errors" class="invalid-feedback">
+                        <div *ngIf="bussinessName.errors.required">Campo es requerido</div>
                       </div>
                     </label>
                   </div>
@@ -105,14 +105,14 @@
 
                 <div class="mb-4">
                   <label class="has-float-label mb-4 w-100">
-                    <input type="text" placeholder="Correo eléctronico" class="form-control w-100"
+                    <input type="text" placeholder="Correo electrónico" class="form-control w-100"
                            [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && email.errors}"
-                           name="email" [(ngModel)]="user.email" #email="ngModel" required email/>
-                    <span *ngIf="type=='person'">Tu correo eléctronico</span>
-                    <span *ngIf="type!='person'">Correo eléctronico</span>
+                           name="email" [(ngModel)]="user.email" #email="ngModel" required email autocomplete="off"/>
+                    <span *ngIf="type=='person'">Tu correo electrónico</span>
+                    <span *ngIf="type!='person'">Correo electrónico</span>
                     <div *ngIf="!email.pristine && email.invalid || tryNextStep && email.errors" class="invalid-feedback">
                       <div *ngIf="email.errors.required">Campo es requerido</div>
-                      <div *ngIf="email.errors.email">Por favor, ingrese un correo eléctronico válido</div>
+                      <div *ngIf="email.errors.email">Por favor, ingrese un correo electrónico válido</div>
                     </div>
                   </label>
                 </div>
@@ -122,7 +122,7 @@
                     <input type="password" placeholder="Contraseña" class="form-control w-100"
                            [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && password.errors}"
                            name="password" [(ngModel)]="user.password" #password="ngModel" required
-                           [pattern]="environment.form.password.validations.pattern"/>
+                           [pattern]="environment.form.password.validations.pattern" autocomplete="new-password"/>
                     <span>Contraseña</span>
                     <div *ngIf="!password.pristine && password.invalid || tryNextStep && password.errors" class="invalid-feedback">
                       <div *ngIf="password.errors.required">Campo es requerido</div>
@@ -136,14 +136,14 @@
 
                 <div class="mb-4">
                   <label class="has-float-label mb-4 w-100">
-                    <input type="password" placeholder="Confrimar contraseña" class="form-control w-100"
+                    <input type="password" placeholder="Confirmar contraseña" class="form-control w-100"
                            [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && repeatPassword.errors}"
                            name="repeatPassword" [(ngModel)]="user.repeatPassword" #repeatPassword="ngModel" required
-                           pattern="{{ password.value }}"/>
-                    <span>Confrimar contraseña</span>
+                           autocomplete="new-password" />
+                    <span>Confirmar contraseña</span>
                     <div *ngIf="!repeatPassword.pristine && repeatPassword.invalid || tryNextStep && repeatPassword.errors" class="invalid-feedback">
                       <div *ngIf="repeatPassword.errors.required">Campo es requerido</div>
-                      <div *ngIf="repeatPassword.errors.pattern">
+                      <div *ngIf="repeatPassword.errors.mustMatch">
                         Las contraseñas no coinciden
                       </div>
                     </div>
@@ -164,8 +164,8 @@
                   <button
                     class="solid-blue-button"
                     *ngIf="type!='person'"
-                    [ngClass]="{'button-disable': ! isValidFormModels([bussinesName, email, password, repeatPassword])}"
-                    (click)="nextStep([bussinesName,email,password,repeatPassword])">
+                    [ngClass]="{'button-disable': ! isValidFormModels([bussinessName, email, password, repeatPassword])}"
+                    (click)="nextStep([bussinessName,email,password,repeatPassword])">
                     Continuar
                   </button>
 
@@ -336,7 +336,7 @@
                   </label>
 
                   <label class="has-float-label mb-4">
-                    <input type="text" placeholder="N° de calle" class="form-control w-100"
+                    <input type="number" placeholder="N° de calle" class="form-control w-100"
                            [ngClass]="{'ng-dirty ng-invalid' : trySubmit && houseNumber.errors}"
                            name="houseNumber" [(ngModel)]="user.address.houseNumber" #houseNumber="ngModel" required/>
                     <span>N° de calle</span>

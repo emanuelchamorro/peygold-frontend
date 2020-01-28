@@ -49,7 +49,9 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
       this.unbusy();
       this.goToDashboard(user);
     }).catch((e: ErrorResponse) => {
+      console.log(e)
       this.catchError(e);
+
     });
   }
 
@@ -59,7 +61,7 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    * @return void
    */
   private goToDashboard(user: User): void {
-    // const dashboardUrl = user.isAdmin ?  scRoutes.home.href : euRoutes.home.href;
+     //const dashboardUrl = true ?  scRoutes.dashboard.index.href : euRoutes.home.href;
     const dashboardUrl = euRoutes.home.href;
     this.home = dashboardUrl;
     this.context = euRoutes.context;

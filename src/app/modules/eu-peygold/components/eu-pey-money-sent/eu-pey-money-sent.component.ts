@@ -52,7 +52,8 @@ export class EuPeyMoneySentComponent extends BaseComponent implements OnInit {
     this.cleanErrors();
     if (this.selectedTransaction) {
        const status = new TransactionStatus(statusId);
-       this.selectedTransaction.status = status;
+       this.selectedTransaction.status = status; 
+       this.selectedTransaction.processedComments = status.id=='2'?"Se aprueba solicitu de pago":"Se rechaza solicitud de pago"      
        this.confirmStatus = true;
     }
   }
@@ -76,11 +77,17 @@ export class EuPeyMoneySentComponent extends BaseComponent implements OnInit {
     this.submitted = true;
     this.selectedTransaction.reason = '';
     this.requestTransactionsService.update(this.selectedTransaction).then(() => {
-      this.showSuccessFeedback(new Message(
+
+      let message = this.selectedTransaction.status.value == '2'?new Message(
         '¡El pago fue enviado!',
-        `Has pagado exitosamente a Aiunk y <b>${this.selectedTransaction.receiver.completeName}</b>. ` +
+        `Has pagado exitosamente a <b>${this.selectedTransaction.receiver.completeName}</b>. ` +
         'El importe fue descontado de tus billeteras Peygold, veras las operaciones reflejadas en "Movimientos"'
-      ));
+      ): new Message(
+        '¡El pago fue enviado!',
+        `Rechazaste la solicitud de pago de <b>${this.selectedTransaction.receiver.completeName} y </b>. ` +
+        'ya no aparecerá como pendiente.'
+      );
+      this.showSuccessFeedback(message);
     }).catch((e: ErrorResponse) => {
       this.submitted = false;
       const message = e.message || 'No es posible realizar la transacción';

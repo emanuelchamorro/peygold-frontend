@@ -24,5 +24,6 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
   setTransaction(transaction: Transaction) {
     transaction.receiver = this.authService.user();
     this.transaction = transaction;
+    console.log(transaction.toQR)
   }
 }

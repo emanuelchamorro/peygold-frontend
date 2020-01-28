@@ -33,12 +33,12 @@ registerLocaleData(localeEsAR, 'es-AR');
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
-          return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkb3VnbGFzdHJlam9zQGhvdG1haWwuY29tIiw' +
+         /* return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkb3VnbGFzdHJlam9zQGhvdG1haWwuY29tIiw' +
             'ianRpIjoiY2JhZjVmMzgtZDQ4ZC00MjMwLTgyNTItNmQwNWE4NDhjMjY1IiwiUm9sZSI6IkNvbW1lcmNlIiwi' +
             'QXNwTmV0VXNlcklkIjoiMjgwNGNjMDEtMzhkYi00Y2M2LWExY2MtOGRjMWRiMjJmODdlIiwiVXNlcklkIjo' +
             'iMjY2IiwibmJmIjoxNTcwNTMxNzc4LCJleHAiOjE1NzU3MTU3NzgsImlzcyI6ImtpcGEudHJvc2tpIiwiYXVkIj' +
-            'oicm9tZSJ9.sAWuQs4fEnowrs9WYIzvjmkyCyyAdG2L9vWUWWp-L0w';
-          // return localStorage.getItem(environment.localStorage.access_token_var_name);
+            'oicm9tZSJ9.sAWuQs4fEnowrs9WYIzvjmkyCyyAdG2L9vWUWWp-L0w';*/
+           return localStorage.getItem(environment.localStorage.access_token_var_name);
         },
         whitelistedDomains: environment.interceptors.jwt_interceptor.white_list
       }

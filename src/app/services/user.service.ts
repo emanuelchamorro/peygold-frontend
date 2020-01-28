@@ -24,8 +24,9 @@ export class UserService extends HttpService {
    */
   one(id: number): Promise<User> {
     const resourceUrl = '/users/' + id;
-
+    console.log(resourceUrl);
     return this.get(resourceUrl).toPromise().then((response: any)  => {
+      console.log(response);
       const user = new User();
       user.id = response.idUser;
       user.idAspNetUser = response.idAspNetUser;

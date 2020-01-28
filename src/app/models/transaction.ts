@@ -27,6 +27,7 @@ export class Transaction extends Model {
   public processedAt: string;
   public processedComments: string;
   public multiPey: Array<Transaction>;
+  public symbol:string
 
   /**
    * Get the action label to show to the user about the transaction.
@@ -65,11 +66,11 @@ export class Transaction extends Model {
    */
   get toQR(): string {
     return '{' +
-      'payments: ' + this.paymentsToQR +
+      '"payments": ' + this.paymentsToQR +
       ',' +
-      `fullName: "${this.receiver.completeName}",` +
-      `email: "${this.receiver.email}",` +
-      `avatarURL: "${this.receiver.avatarURL}"` +
+      `"fullName": "${this.receiver.completeName}",` +
+      `"email": "${this.receiver.email}",` +
+      `"avatarURL": "${this.receiver.avatarURL}"` +
     '}';
   }
 
@@ -77,12 +78,15 @@ export class Transaction extends Model {
     let payments = '[';
 
     if (! this.multiPey) {
-      payments += `{idTransactionType: ${this.type.value}, ammount:  ${this.amount}, amount:  ${this.amount}}`;
+      payments += `{"idTransactionType":${this.type.value}, "ammount":${this.amount}}`;
     }
 
     if (this.multiPey) {
-      this.multiPey.map( (transaction: Transaction) => {
-        payments += `{idTransactionType: ${transaction.type.value}, ammount:  ${transaction.amount}, , amount:  ${this.amount}}`;
+      this.multiPey.map( (transaction: Transaction, index:number) => {
+        payments += `{"idTransactionType":${transaction.type.value}, "ammount":  ${transaction.amount}}`;
+        if(index < 1){
+          payments += ',';
+        }
       });
     }
 

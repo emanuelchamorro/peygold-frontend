@@ -27,6 +27,7 @@ export class ScPeyDashboardComponent extends BaseComponent implements OnInit {
    */
   ngOnInit() {
     this.usersService.all().then((users: Array<User>) => {
+ 
       console.log(users);
     });
   }

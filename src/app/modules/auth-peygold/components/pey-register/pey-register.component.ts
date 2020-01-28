@@ -185,12 +185,23 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
         break;
     }
 
-    signUpPromise.then(this.signUpSuccessful).catch((e: ErrorResponse) => {
+    signUpPromise.then(
+      (resp)=>{
+        this.user = new User();
+        this.router.navigateByUrl(this.routes.register.success.href, {
+          state : {
+            securedRedirection: true
+          }
+        });
+      }
+      
+    ).catch((e: ErrorResponse) => {
+      
       if (e.code === OK) {
         // Hack for pass the not valid json response.
         return this.signUpSuccessful();
       }
-
+      console.log(e)
       this.catchError(e);
       window.scroll(0,0);
     });
@@ -201,7 +212,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
    * @return void
    */
   signUpSuccessful(): void {
-    this.user = null;
+    this.user = new User();
     this.router.navigateByUrl(this.routes.register.success.href, {
       state : {
         securedRedirection: true

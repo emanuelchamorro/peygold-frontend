@@ -31,10 +31,14 @@
   <div class="grey-box w-100">
     <div *ngFor="let transaction of transactions;"
          class="d-flex p-3 b-bottom-grey b-bottom-line align-items-center justify-content-between">
-      <span [innerHtml]="transaction.actionLabel"></span>
+         
+      <span>
+        {{transaction.originRechargeName}} {{transaction.idOriginRecharge===3?'':'a'}} {{transaction.idOriginRecharge===3?'':transaction.amount >= 0 ? transaction.sender.fullName: transaction.receiver.fullName}}
+
+      </span>
       <div class="d-flex flex-column align-items-end">
-        <span class="fs-16" [innerHtml]="transaction.amount | currency"></span>
-        <span class="fs-11" [innerHtml]="transaction.dateTime"></span>
+        <span class="fs-16">{{transaction.symbol}} {{transaction.amount | currency:' ':'symbol':'1.0'}}</span>
+        <span class="fs-11" [innerHtml]="transaction.createdAt | date: medium"></span>
       </div>
     </div>
     <div *ngIf="!transactions && !isBusy">

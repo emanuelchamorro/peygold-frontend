@@ -50,7 +50,7 @@ export class AuthService extends HttpService {
     }).toPromise().then((response: ApiResponse) => {
       const value: any = response.value;
       this.setToken(value.token);
-
+      console.log(response);
       return this.userService.one(value.idUser).then((user: User) => {
         this.setUser(user);
         return user;
@@ -66,12 +66,25 @@ export class AuthService extends HttpService {
     const userInfo = {
       ... this.buildPersonInfo(person),
       ... this.buildAddresses(person.address),
-      ... this.buildUserSignIn(person)
+      ... this.buildUserSignIn(person),
+      ... this.buildBankAccount(person),
+      ... this.buildProfilePhoto(person),
+      ... this.buildDocuments(person),
     };
 
     console.log(userInfo);
 
-    return this.post('/clients', userInfo).toPromise();
+    return new Promise((resolve, reject) => {
+
+      this.post('/clients', userInfo).subscribe(
+        (resp)=>{
+          resolve(true);
+        },
+        (error)=>{
+          reject(false);
+        }
+      )
+    });
   }
 
   /**
@@ -82,10 +95,23 @@ export class AuthService extends HttpService {
     const userInfo = {
       ... this.buildCompanyInfo(company),
       ... this.buildAddresses(company.address),
-      ... this.buildUserSignIn(company)
+      ... this.buildUserSignIn(company),
+      ... this.buildProfilePhoto(company)
     };
 
     console.log(userInfo);
+
+    return new Promise((resolve, reject) => {
+
+      this.post('/commerces', userInfo).subscribe(
+        (resp)=>{
+          resolve(true);
+        },
+        (error)=>{
+          reject(false);
+        }
+      )
+    });
 
     return this.post('/commerces', userInfo).toPromise();
   }
@@ -98,7 +124,8 @@ export class AuthService extends HttpService {
     const userInfo = {
       ... this.buildInstitutionInfo(institution),
       ... this.buildAddresses(institution.address),
-      ... this.buildUserSignIn(institution)
+      ... this.buildUserSignIn(institution),
+      ... this.buildProfilePhoto(institution),
     };
 
     console.log(userInfo);
@@ -118,12 +145,12 @@ export class AuthService extends HttpService {
         email: person.email,
         confirmEmail: person.email,
         phone: person.phone,
-        tac: true,
-        newsLetter: true,
-        dni: person.documentType.id,
-        CardId: person.documentNumber,
-        idOccupation: person.occupation.id,
-        idInstitution: person.profitInstitution.id
+        tac: false,
+        newsLetter: false,
+        dni: person.documentNumber,
+        CardId: person.documentType.id,
+        idOccupation: parseInt(person.occupation.id),
+        idInstitution: parseInt(person.profitInstitution.id)
       }
     };
   }
@@ -139,7 +166,7 @@ export class AuthService extends HttpService {
         email: company.email,
         confirmEmail: company.email,
         phone: company.phone,
-        idInstitution: company.profitInstitution.id,
+        idInstitution: parseInt(company.profitInstitution.id),
         TAC: true
       }
     };
@@ -171,18 +198,18 @@ export class AuthService extends HttpService {
         BillingHouseNumber: address.houseNumber,
         BillingFloor: address.buildingFloor,
         BillingPostalCode: address.zipCode,
-        idBillingCountry: address.country.id,
-        idBillingState: address.state.id,
-        idBillingCity: address.city.id
+        idBillingCountry: parseInt(address.country.id),
+        idBillingState: parseInt(address.state.id),
+        idBillingCity: parseInt(address.city.id)
       },
       address: {
         street: address.street,
         houseNumber: address.houseNumber,
         floor: address.buildingFloor,
         postalCode: address.zipCode,
-        idCountry: address.country.id,
-        idState: address.state.id,
-        idCity: address.city.id
+        idCountry: parseInt(address.country.id),
+        idState: parseInt(address.state.id),
+        idCity: parseInt(address.city.id)
       }
     };
   }
@@ -282,5 +309,23 @@ export class AuthService extends HttpService {
    */
   private setToken(token: string) {
     localStorage.setItem(environment.localStorage.access_token_var_name, token);
+  }
+
+  buildBankAccount(person: Person): any {
+    return {
+      bankAccount: null
+    };
+  }
+
+  buildProfilePhoto(entity: any): any {
+    return {
+      profilePhoto: null
+    };
+  }
+
+  buildDocuments(person: Person): any {
+    return {
+      documents: null
+    };
   }
 }
