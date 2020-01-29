@@ -269,9 +269,9 @@ i.fas.fa-star.active {
   margin-right: 0;
 }
 
-#main-div {
+/*#main-div {
   height:100vh;
-}
+}*/
 
 td, th {
   vertical-align: middle!important;
@@ -754,7 +754,7 @@ input[type="hidden"]:focus {
   border: solid 2px  #3575BA;
   &:hover {
     background: #3575BA;
-    border: solid 1px #3575BA;
+    border: solid 2px #3575BA;
     color:#fff;
   }
 

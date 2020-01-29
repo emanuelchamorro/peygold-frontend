@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,sBAAsB,CAAC;EACrB,gBAAgB,EAAE,KAAK;EACvB,cAAc,EAAE,IAClB;CAAC",
+    "sources": [
+        "pey-register.component.scss"
+    ],
+    "names": [],
+    "file": "pey-register.component.css"
+}

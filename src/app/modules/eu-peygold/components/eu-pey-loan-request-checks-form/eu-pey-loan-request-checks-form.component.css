@@ -1,0 +1,45 @@
+.check-1 {
+  right: 0px;
+  z-index: 90;
+  top: -57px;
+}
+
+.check-2 {
+  right: 54px;
+  z-index: 80;
+  top: -57px;
+}
+
+.check-3 {
+  right: 108px;
+  z-index: 70;
+  top: -57px;
+}
+
+.check-4 {
+  right: 162px;
+  z-index: 60;
+  top: -57px;
+}
+
+.check-5 {
+  right: 216px;
+  z-index: 50;
+  top: -57px;
+}
+
+.tab_container label {
+  border: 1px dotted rgba(0, 0, 0, 0.32);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  width: 200px;
+}
+
+.tab_container .active {
+  z-index: 1000;
+}
+
+.tab_container section {
+  border-radius: 0px !important;
+}
+/*# sourceMappingURL=eu-pey-loan-request-checks-form.component.css.map */

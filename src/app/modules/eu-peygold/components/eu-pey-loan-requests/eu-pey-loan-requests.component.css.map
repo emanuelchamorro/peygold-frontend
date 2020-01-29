@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACR,UAAU,EAAE,IAAI;CACjB;;AAED,AAAA,YAAY,CAAC;EACX,KAAK,EAAE,eAAe;CACvB",
+    "sources": [
+        "eu-pey-loan-requests.component.scss"
+    ],
+    "names": [],
+    "file": "eu-pey-loan-requests.component.css"
+}

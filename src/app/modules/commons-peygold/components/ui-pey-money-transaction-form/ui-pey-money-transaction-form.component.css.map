@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,KAAK,EAAE,IAAI;CACZ",
+    "sources": [
+        "ui-pey-money-transaction-form.component.scss"
+    ],
+    "names": [],
+    "file": "ui-pey-money-transaction-form.component.css"
+}

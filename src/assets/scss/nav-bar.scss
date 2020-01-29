@@ -122,12 +122,9 @@
 
    
   &:hover {
-  width: 8.6rem;
+    background-color: #3a84d4;
   } 
-  &:hover span {
-  display: initial;
-  }
- 
+
  svg {
   width: 0.9rem;
   height: 0.9rem;
@@ -413,9 +410,9 @@ ul.sublist-pay {
   margin-bottom: 15px;
 }
  .sidebar-sublist .nav-item:hover .sidebar-sub-link {
-  padding: 0.5rem;
-  border-radius: 1rem;
-  background-color: #E1EAF5;
+
+  color:#3575BA!important;
+  
 }
  .sidebar-sublist .nav-item .active {
  color:#3575BA!important;

@@ -1,3 +1,8 @@
+.wallets {
+height: 300px;
+
+}
+
 .wallet-conteiner {
   display: flex;
   justify-content: center;
@@ -152,6 +157,11 @@ margin-right: 5%;
   }
 }
 @media screen and (max-width: 650.98px) {
+  .wallets {
+
+    height: 500px;
+  }
+  
   .wallet-conteiner {
     flex-direction: column;
   }

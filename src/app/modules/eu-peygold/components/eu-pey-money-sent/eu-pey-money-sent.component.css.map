@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACR,UAAU,EAAE,IAAI;CACjB;;AAED,AAAA,eAAe,CAAC;EACd,MAAM,EAAE,OAAO;CAChB",
+    "sources": [
+        "eu-pey-money-sent.component.scss"
+    ],
+    "names": [],
+    "file": "eu-pey-money-sent.component.css"
+}
