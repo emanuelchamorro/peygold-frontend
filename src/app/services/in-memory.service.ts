@@ -5,11 +5,13 @@ import {TransactionType} from '../models';
 import {TransactionTypeEnum} from '../enums';
 import {LoanOption} from '../models/loan-option';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class InMemoryService extends BaseService {
-  /**
+
+   /**
    * Get the list of document models
    */
   get documentTypes(): Array<DocumentType> {
@@ -52,11 +54,12 @@ export class InMemoryService extends BaseService {
   /**
    * Returns the loan options to make a loan request.
    */
-  get loanOptions(): Array<LoanOption> {
+  loanOptions(amount:number): Array<LoanOption> {
     return [
-      new LoanOption('Opción 1', 1, 5000),
-      new LoanOption('Opción 2', 3, 5000),
-      new LoanOption('Opción 3', 4, 5000),
+      new LoanOption('Opción 1', 1, amount/1),
+      new LoanOption('Opción 2', 3, amount/3),
+      new LoanOption('Opción 3', 4, amount/4),
     ];
   }
+
 }

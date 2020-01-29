@@ -14,6 +14,7 @@ import {Address} from './address';
 export class Check extends Model {
   public id: number;
   public number: string;
+  public accountNumber: number;
   public issuanceDate: string;
   public expirationDate: string;
   public amount: number;
@@ -22,5 +23,6 @@ export class Check extends Model {
   public address: Address;
   public frontImage: string;
   public backImage: string;
+
 }
 

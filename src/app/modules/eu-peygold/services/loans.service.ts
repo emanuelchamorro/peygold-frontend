@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../../../services/http.service';
-import {Address, CheckRescue, Loan, LoanStatus, PaymentMethod, State, Transaction, TransactionType, User} from '../../../models';
+import {Address, CheckRescue, Loan, LoanStatus, PaymentMethod, State, Transaction, TransactionType, User, LoanRequest} from '../../../models';
 import {environment} from '../../../../environments/environment';
 import {PaginationResponse} from '../../commons-peygold/entities/pagination-response';
 
@@ -8,6 +8,8 @@ import {PaginationResponse} from '../../commons-peygold/entities/pagination-resp
   providedIn: 'root'
 })
 export class LoansService extends HttpService {
+
+
 
   /**
    * Search loans.
@@ -61,4 +63,5 @@ export class LoansService extends HttpService {
       return paginator;
     });
   }
+
 }
