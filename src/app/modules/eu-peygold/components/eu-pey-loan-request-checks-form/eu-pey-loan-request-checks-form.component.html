@@ -16,7 +16,7 @@
           </div>
           <div class="d-flex flex-column mt-3 mb-5">
             <span>Fecha de vencimiento</span>
-            <span class="fw-700 mt-3" [innerHtml]="check.expirationDate" *ngFor="let check of option.checks"></span>
+            <span class="fw-700 mt-3" [innerHtml]="check.expirationDate | date:medium" *ngFor="let check of option.checks"></span>
           </div>
         </div>
       </div>
@@ -57,10 +57,12 @@
           <div class="col text-left">
             <span class="fs-14 fw-700 " >Datos del cheque</span>
             <div class="input-field mt-2">
-              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta">
+              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta"
+              pattern="^[0-9]{1,5}$" name="accountNumber" [(ngModel)]="currentCheck.accountNumber" #accountNumber="ngModel" >
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="N° de cheque">
+              <input type="text" class="d-block w-100" placeholder="N° de cheque"
+              pattern="[0-9]*" name="number" [(ngModel)]="currentCheck.number" #number="ngModel" >
             </div>
             <div class="input-field">
               <div class="dropdown select-height-normal w-100">
@@ -87,7 +89,9 @@
               </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Monto">
+              <input type="text" class="d-block w-100" placeholder="Monto"
+             name="amount" [(ngModel)]="currentCheck.amount" #amount="ngModel">
+              
             </div>
           </div>
 
@@ -96,7 +100,6 @@
             <div class="input-field mt-2">
               <ng-select placeholder="Banco"
                          class="custom-select dropdown select-height-normal mb-0 w-100"
-                         (change)="currentCheck.bank"
                          bindLabel="label"
                          [searchable]="false"
                          [items]="banks"
@@ -147,10 +150,12 @@
               </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Dirección">
+              <input type="text" class="d-block w-100" placeholder="Dirección"
+              name="address" [(ngModel)]="currentCheck.address.addressFull" #address="ngModel">
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Teléfono">
+              <input type="text" class="d-block w-100" placeholder="Teléfono"
+              name="phone" [(ngModel)]="currentCheck.address.phone" #phone="ngModel">
             </div>
           </div>
           <div class="col text-left">

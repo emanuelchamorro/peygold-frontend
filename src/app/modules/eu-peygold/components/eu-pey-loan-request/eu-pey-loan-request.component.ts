@@ -3,6 +3,8 @@ import {BaseComponent} from '../base.component';
 import {CreditDestinationsService} from '../../services/credit-destinations.service';
 import {Bank, CreditDestination, LoanRequest} from '../../../../models';
 import {BanksService} from '../../services/banks.service';
+import { InMemoryService } from '../../../../services/in-memory.service';
+
 
 @Component({
   selector: 'app-eu-pey-loan-request',
@@ -16,7 +18,8 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
   private step = 1;
 
   constructor(
-    private creditDestinationsService: CreditDestinationsService
+    private creditDestinationsService: CreditDestinationsService,
+    private inMemoryService:InMemoryService
   ) {
     super();
   }
@@ -32,6 +35,7 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
    * Go to next step
    */
   continue() {
+    console.log('paso')
     this.step++;
   }
 
