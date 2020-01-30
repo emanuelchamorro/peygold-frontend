@@ -1,13 +1,14 @@
 @import "colors.scss";
 .white-container-wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1.75rem 5%;
-    position: relative;
-    padding-top: 70px;
-    min-height: 100vh;
-    overflow: hidden;
-    background-color: #fff;  
+  top: 51px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.75rem 5%;
+  position: relative;
+  min-height: calc(100vh - 51px)!important;
+  overflow: hidden;
+  background-color: #fff;
+
 
     h2 {
     margin-top: 20px;
