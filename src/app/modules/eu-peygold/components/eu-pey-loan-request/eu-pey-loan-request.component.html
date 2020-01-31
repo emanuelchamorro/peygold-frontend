@@ -1,5 +1,7 @@
 <div *ngIf="step==1">
-  <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
+  <div class="heading d-flex align-items-center">
+    <span class="icon-creditos-26 fs-22"></span> <h2>Créditos: Solicitar crédito</h2>
+</div>
   <p class="opening-text">Esta solicitud está sujeta a un análisis crediticio. La solicitud es orientativa.
     Indique el motivo de su solicitud e ingrese el monto total que desea solicitar</p>
   <form name="form" (ngSubmit)="continue()" #loansForm="ngForm" novalidate>

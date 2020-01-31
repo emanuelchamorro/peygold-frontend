@@ -834,9 +834,10 @@ text-align: center;
 h2, h3, p, span {
  text-align: center!important;
   width: auto!important;
+  
 }  
 
-.TopTitle {
+.TopTitle, .heading {
 
   display: flex;
   justify-content: center;
