@@ -37,33 +37,37 @@
         </div>
         <!-- container for elements -->
         <div class="col-lg-8 login-input-container">
-          <div class="col-lg-11 d-flex flex-column align-items-center ">
+          <div class="col-12 d-flex flex-column align-items-center ">
             <div class="top-register pt-4 pb-4">
               <a [routerLink]="routes.register.index.href" class="mr-4">¿No tenes cuenta?</a>
               <a [routerLink]="routes.register.index.href" class="border-button border-white">Registrarse</a>
             </div>
-            <form name="loginForm" class="container-login" (ngSubmit)="submited=true; loginForm.form.valid && login()" #loginForm="ngForm" novalidate>
+            <form name="loginForm" class="container-login w-50" (ngSubmit)="submited=true; loginForm.form.valid && login()" #loginForm="ngForm" novalidate>
 
               <div class="mb-4">
                 <img src="assets/images/Isologotipo.svg" class="logo-login-img w-100 mb-4">
               </div>
-
+              
+     
+              <label class="has-float-label mb-4 w-100"> 
+                <input type="email" placeholder="Correo eléctronico" required class="form-control w-100"
+                  [ngClass]="{'ng-dirty ng-invalid' : submited && email.errors}"
+                  name="email" [(ngModel)]="user.email" #email="ngModel" required email/>
+                 <span class="">Correo eléctronico</span>
+                </label>
+       
+     
               <label class="has-float-label mb-4 w-100">
-                <input type="text" placeholder="Correo eléctronico" class="form-control-white w-100 shadow-none"
-                       [ngClass]="{'ng-dirty ng-invalid' : submited && email.errors}"
-                       name="email" [(ngModel)]="user.email" #email="ngModel" required email/>
-                <span class="color-white">Correo eléctronico</span>
-              </label>
-
-              <label class="has-float-label mb-4 w-100">
-                <input type="password" placeholder="Contraseña" class="form-control-white w-100 shadow-none"
+                <input type="password" placeholder="Contraseña"required class="w-100"
                        [ngClass]="{'ng-dirty ng-invalid' : submited && password.errors}"
-                       name="password" [(ngModel)]="user.password" #password="ngModel" required />
-                <span class="color-white">Contraseña</span>
+                       name="password" [(ngModel)]="user.password" #password="ngModel" required password
+                        />
+                <span class="">Contraseña</span>
                 <div *ngIf="error" class="invalid-feedback text-left">
                   <div [innerHtml]="error"></div>
                 </div>
               </label>
+              
 
               <div class="recordar-password mb-5">
                 <div class="checkbox-style-white">

@@ -34,7 +34,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  min-width: 400px;
 }
 
 .container-redes p {
@@ -216,6 +216,7 @@ a {
   background:#fff ;
   padding: .6rem 3.7rem .6rem 3.7rem;
   border-radius: 2rem;
+  border:solid 2px #fff;
   text-align: center;
   &:hover {
     background: none;
@@ -225,8 +226,9 @@ a {
   }
 }
 
-
-.form-control-white {
+/*.login-form {
+   label {
+    input[type=text], input[type=email], input[type=password], input[type=number]{
   letter-spacing: .02rem;
   color:#fff!important;
   font-style: italic;
@@ -235,13 +237,14 @@ a {
   font-weight: 600;
   text-decoration: none;
   background: rgba(255,255,255,0.05)!important;
-  &::-webkit-input-placeholder { color:  #fff!important; font-weight: 400; }  /* WebKit, Blink, Edge */
-  &:-moz-placeholder { color:  #fff; font-weight: 400; }  /* Mozilla Firefox 4 to 18 */
-  &::-moz-placeholder { color:  #fff; font-weight: 400; }  /* Mozilla Firefox 19+ */
-  &:-ms-input-placeholder { color:  #fff; font-weight: 400; }  /* Internet Explorer 10-11 */
+  &::-webkit-input-placeholder { color:  #fff!important; font-weight: 400; } 
+  &:-moz-placeholder { color:  #fff; font-weight: 400; }  
+  &::-moz-placeholder { color:  #fff; font-weight: 400; }  
+  &:-ms-input-placeholder { color:  #fff; font-weight: 400; }  
   &::-ms-input-placeholder { color:  #fff; font-weight: 400;}
 }
-
+}
+}*/
 .top-register {
   align-items: center;
   display: flex;
@@ -349,10 +352,10 @@ a {
 
 .bg-exito {
   min-height:100vh;
-  background: url("~src/assets/images/backgroundYPersonas.svg");
+  /*background: url("~src/assets/images/backgroundYPersonas.svg");
   background-position: bottom;
   background-repeat: no-repeat;
-  background-size:auto;
+  background-size:auto;*/
 
 }
 

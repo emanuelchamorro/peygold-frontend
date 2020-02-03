@@ -44,7 +44,7 @@
           </ul>
         </nav>
 
-        <div class="col-lg-11" *ngIf="!type">
+        <div class="col-12" *ngIf="!type">
           <div class="d-flex flex-column align-items-center mt-5">
             <h4 class="fs-16 mt-5">Indique el tipo de cuenta que desea crear con nosotros</h4>
             <div class="container-login mt-4">
@@ -55,8 +55,8 @@
           </div>
         </div>
         <form name="form" (ngSubmit)="registerForm.form.valid && onSubmit()" #registerForm="ngForm" [mustMatch]="['password', 'repeatPassword']" novalidate>
-          <div class="col-lg-11" *ngIf="type && step == 1">
-            <div class="d-flex flex-column align-items-start mt-5">
+          <div class="col-12" *ngIf="type && step == 1">
+            <div class="d-flex flex-column mt-5">
               <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
               <p>Completa los datos para continuar con tu registro</p>
             </div>
@@ -174,8 +174,8 @@
 
             </div>
           </div>
-          <div class="col-lg-11" *ngIf="type && step==2">
-            <div class="d-flex flex-column align-items-start mt-5">
+          <div class="col-12" *ngIf="type && step==2">
+            <div class="d-flex flex-column mt-5">
               <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
               <p>Bienvenido/a, completa los datos para continuar continuar con tu registro</p>
             </div>
