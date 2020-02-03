@@ -16,7 +16,8 @@
           </div>
           <div class="d-flex flex-column mt-3 mb-5">
             <span>Fecha de vencimiento</span>
-            <span class="fw-700 mt-3" [innerHtml]="check.expirationDate | date:medium" *ngFor="let check of option.checks"></span>
+            <span class="fw-700 mt-3" [innerHtml]="check.expirationDateStr | date:medium"
+              *ngFor="let check of option.checks"></span>
           </div>
         </div>
       </div>
@@ -30,11 +31,12 @@
 <div *ngIf="loanOption">
   <form name="form" (ngSubmit)="continue()" #checksForm="ngForm" novalidate>
     <div class="tab_container">
-      <label *ngFor="let currentCheck of loanOption.checks; let i = index"
-             (click)="setCheck(currentCheck)"
-             class="tab1 d-flex flex-column justify-content-center check-{{i + 1}}" [ngClass]="{'active' : currentCheck === check}"><span>Cheque cuota {{i + 1}}</span></label>
+      <label *ngFor="let currentCheck of loanOption.checks; let i = index" (click)="setCheck(currentCheck,i)"
+        class="tab1 d-flex flex-column justify-content-center check-{{i + 1}}"
+        [ngClass]="{'active' : currentCheck === check}"><span>Cheque cuota {{i + 1}}</span></label>
 
-      <section id="content1" class="tab-content grey-box" *ngFor="let currentCheck of loanOption.checks; let y = index" [hidden]="currentCheck !== check">
+      <section id="content1" class="tab-content grey-box" *ngFor="let currentCheck of loanOption.checks; let y = index"
+        [hidden]="currentCheck !== check">
         <div class="d-flex w-100 align-items-center mb-4">
           <div class="col-4">
             <div class="dropdown chequeSelect">
@@ -51,139 +53,171 @@
               </ul>
             </div>
           </div>
-          <a href="" class="button-white-check">Copiar datos del cheque anterior</a>
+          <a href="#" class="button-white-check" *ngIf="y!=0" (click)="checkCopy(currentCheck,y)">Copiar datos del cheque anterior</a>
         </div>
-        <div class="flex-grid-thirds"><!-- columnas -->
+        <div class="flex-grid-thirds">
+          <!-- columnas -->
           <div class="col text-left">
-            <span class="fs-14 fw-700 " >Datos del cheque</span>
+            <span class="fs-14 fw-700 ">Datos del cheque</span>
             <div class="input-field mt-2">
-              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta"
-              pattern="^[0-9]{1,5}$" name="accountNumber" [(ngModel)]="currentCheck.accountNumber" #accountNumber="ngModel" >
+              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta" pattern="^[0-9]*$"
+                name="accountNumber-{{y}}" [(ngModel)]="currentCheck.accountNumber" #accountNumber="ngModel">
+              <div
+                *ngIf="!accountNumber.pristine && accountNumber.invalid || checksForm.submitted && accountNumber.errors"
+                class="invalid-feedback">
+                <div *ngIf="accountNumber.errors.required">Campo es requerido</div>
+                <div *ngIf="accountNumber.errors.pattern">Campo es numerico</div>
+              </div>
+
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="N° de cheque"
-              pattern="[0-9]*" name="number" [(ngModel)]="currentCheck.number" #number="ngModel" >
-            </div>
-            <div class="input-field">
-              <div class="dropdown select-height-normal w-100">
-                <div class="select">
-                  <span>Fecha de Emisión</span>
-                  <i class="fa fa-chevron-left"></i>
-                </div>
-                <input type="hidden" name="gender">
-                <ul class="dropdown-menu">
-                  <li>Otro</li>
-                </ul>
+              <input type="text" class="d-block w-100" placeholder="N° de cheque" pattern="" name="number-{{y}}"
+                [(ngModel)]="currentCheck.number" #number="ngModel">
+              <div *ngIf="!number.pristine && number.invalid || checksForm.submitted && number.errors"
+                class="invalid-feedback">
+                <div *ngIf="number.errors.required">Campo es requerido</div>
+                <div *ngIf="number.errors.pattern">Campo es numerico</div>
               </div>
             </div>
             <div class="input-field">
-              <div class="dropdown select-height-normal w-100">
-                <div class="select">
-                  <span>Fecha de Vencimiento</span>
-                  <i class="fa fa-chevron-left"></i>
-                </div>
-                <input type="hidden" name="gender">
-                <ul class="dropdown-menu">
-                  <li>Otro</li>
-                </ul>
-              </div>
+              <input class="form-control" readonly placeholder="Fecha de emisión"
+              name="issuanceDate-{{y}}" [(ngModel)]="currentCheck.issuanceDate" ngbDatepicker #issuanceDate="ngModel" #issuanceDateD="ngbDatepicker" (click)="issuanceDateD.toggle()">
+              <div *ngIf="!issuanceDate.pristine && number.invalid || checksForm.submitted && issuanceDate.errors"
+                class="invalid-feedback">
+                <div *ngIf="issuanceDate.errors.required">Campo es requerido</div>
+              </div>              
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Monto"
-             name="amount" [(ngModel)]="currentCheck.amount" #amount="ngModel">
-              
+                <input class="form-control" readonly placeholder="Fecha de vencimiento"
+                name="expirationDate-{{y}}" [(ngModel)]="currentCheck.expirationDate" ngbDatepicker #expirationDate="ngModel" #expirationDateD="ngbDatepicker" (click)="expirationDateD.toggle()">
+              <div *ngIf="!expirationDate.pristine && number.invalid || checksForm.submitted && expirationDate.errors"
+                class="invalid-feedback">
+                <div *ngIf="expirationDate.errors.required">Campo es requerido</div>
+              </div>                  
+            </div>
+            <div class="input-field">
+              <input type="text" class="d-block w-100" placeholder="Monto" name="amount-{{y}}"
+                [(ngModel)]="currentCheck.amount" #amount="ngModel" readonly>
+
             </div>
           </div>
 
           <div class="col text-left">
-            <span class="fs-14 fw-700" >Datos del banco</span>
+            <span class="fs-14 fw-700">Datos del banco</span>
             <div class="input-field mt-2">
-              <ng-select placeholder="Banco"
-                         class="custom-select dropdown select-height-normal mb-0 w-100"
-                         bindLabel="label"
-                         [searchable]="false"
-                         [items]="banks"
-                         [addTag]="false"
-                         name="bank"
-                         [(ngModel)]="currentCheck.bank"
-                         [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && bank.errors}"
-                         #bank="ngModel"
-                         required>
+              <ng-select placeholder="Banco" class="custom-select dropdown select-height-normal mb-0 w-100"
+                bindLabel="label" [searchable]="false" [items]="banks" [addTag]="false" name="bank-{{y}}"
+                [(ngModel)]="currentCheck.bank"
+                [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && bank.errors}" #bank="ngModel" required>
               </ng-select>
-              <div *ngIf="!bank.pristine && bank.invalid || checksForm.submitted && bank.errors" class="invalid-feedback">
+              <div *ngIf="!bank.pristine && bank.invalid || checksForm.submitted && bank.errors"
+                class="invalid-feedback">
                 <div *ngIf="bank.errors.required">Campo es requerido</div>
               </div>
             </div>
             <div class="input-field">
-              <ng-select placeholder="Provincia"
-                         (change)="getCities($event)"
-                         class="custom-select dropdown select-height-normal mb-0 w-100"
-                         bindLabel="label"
-                         [searchable]="false"
-                         [items]="states"
-                         [addTag]="false"
-                         name="state"
-                         [(ngModel)]="currentCheck.address.state"
-                         [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && state.errors}"
-                         #state="ngModel"
-                         required>
+              <ng-select placeholder="Provincia" (change)="getCities($event)"
+                class="custom-select dropdown select-height-normal mb-0 w-100" bindLabel="label" [searchable]="false"
+                [items]="states" [addTag]="false" name="state-{{y}}" [(ngModel)]="currentCheck.address.state"
+                [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && state.errors}" #state="ngModel" required>
               </ng-select>
-              <div *ngIf="!state.pristine && state.invalid || checksForm.submitted && state.errors" class="invalid-feedback">
+              <div *ngIf="!state.pristine && state.invalid || checksForm.submitted && state.errors"
+                class="invalid-feedback">
                 <div *ngIf="state.errors.required">Campo es requerido</div>
               </div>
             </div>
             <div class="input-field">
-              <ng-select placeholder="Ciudad/Barrio"
-                         class="custom-select dropdown select-height-normal mb-0 w-100"
-                         bindLabel="label"
-                         [searchable]="false"
-                         [items]="cities"
-                         [addTag]="false"
-                         name="city"
-                         [(ngModel)]="currentCheck.address.city"
-                         [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && city.errors}"
-                         #city="ngModel"
-                         required>
+              <ng-select placeholder="Ciudad/Barrio" class="custom-select dropdown select-height-normal mb-0 w-100"
+                bindLabel="label" [searchable]="false" [items]="cities" [addTag]="false" name="city-{{y}}"
+                [(ngModel)]="currentCheck.address.city"
+                [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && city.errors}" #city="ngModel" required>
               </ng-select>
-              <div *ngIf="!city.pristine && city.invalid || checksForm.submitted && city.errors" class="invalid-feedback">
+              <div *ngIf="!city.pristine && city.invalid || checksForm.submitted && city.errors"
+                class="invalid-feedback">
                 <div *ngIf="city.errors.required">Campo es requerido</div>
               </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Dirección"
-              name="address" [(ngModel)]="currentCheck.address.addressFull" #address="ngModel">
+              <input type="text" class="d-block w-100" placeholder="Dirección" name="address-{{y}}"
+                [(ngModel)]="currentCheck.address.addressFull" #address="ngModel">
+              <div *ngIf="!address.pristine && address.invalid || checksForm.submitted && address.errors"
+                class="invalid-feedback">
+                <div *ngIf="address.errors.required">Campo es requerido</div>
+              </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Teléfono"
-              name="phone" [(ngModel)]="currentCheck.address.phone" #phone="ngModel">
+              <input type="text" class="d-block w-100" placeholder="Teléfono" name="checkPhone-{{y}}" pattern="^[0-9]*$"
+                [(ngModel)]="currentCheck.address.phone" #checkPhone="ngModel">
+              <div *ngIf="!checkPhone.pristine && checkPhone.invalid || checksForm.submitted && checkPhone.errors"
+                class="invalid-feedback">
+                <div *ngIf="checkPhone.errors.required">Campo es requerido</div>
+                <div *ngIf="checkPhone.errors.pattern">Campo es numerico</div>
+              </div>
             </div>
           </div>
           <div class="col text-left">
-            <span class="fs-14 fw-700" >Datos del firmante</span>
+            <span class="fs-14 fw-700">Datos del firmante</span>
             <div class="input-field mt-2">
-              <input type="text" class="d-block w-100" placeholder="Razón Social">
+              <input type="text" class="d-block w-100" placeholder="Razón Social" name="bussinessName-{{y}}"
+                [(ngModel)]="currentCheck.onwer.bussinessName" #bussinessName="ngModel">
+              <div
+                *ngIf="!bussinessName.pristine && bussinessName.invalid || checksForm.submitted && bussinessName.errors"
+                class="invalid-feedback">
+                <div *ngIf="bussinessName.errors.required">Campo es requerido</div>
+              </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Cuit">
+              <input type="text" class="d-block w-100" placeholder="Cuit" name="cuit-{{y}}"
+                [(ngModel)]="currentCheck.onwer.cuit" #cuit="ngModel">
+              <div *ngIf="!cuit.pristine && cuit.invalid || checksForm.submitted && cuit.errors"
+                class="invalid-feedback">
+                <div *ngIf="cuit.errors.required">Campo es requerido</div>
+              </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Nombre y Apellido">
+              <input type="text" class="d-block w-100" placeholder="Nombre y Apellido" name="fullName-{{y}}"
+                [(ngModel)]="currentCheck.onwer.fullName" #fullName="ngModel">
+              <div *ngIf="!fullName.pristine && fullName.invalid || checksForm.submitted && fullName.errors"
+                class="invalid-feedback">
+                <div *ngIf="fullName.errors.required">Campo es requerido</div>
+              </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="DNI">
+              <input type="text" class="d-block w-100" placeholder="DNI" name="documentNumber-{{y}}" pattern="^[0-9]*$"
+                [(ngModel)]="currentCheck.onwer.documentNumber" #documentNumber="ngModel">
+              <div
+                *ngIf="!documentNumber.pristine && documentNumber.invalid || checksForm.submitted && documentNumber.errors"
+                class="invalid-feedback">
+                <div *ngIf="documentNumber.errors.required">Campo es requerido</div>
+                <div *ngIf="documentNumber.errors.pattern">Campo es numerico</div>
+              </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Teléfono">
+              <input type="text" class="d-block w-100" placeholder="Teléfono" name="phone-{{y}}" pattern="^[0-9]*$"
+                [(ngModel)]="currentCheck.onwer.phone" #phone="ngModel">
+              <div *ngIf="!phone.pristine && phone.invalid || checksForm.submitted && phone.errors"
+                class="invalid-feedback">
+                <div *ngIf="phone.errors.required">Campo es requerido</div>
+                <div *ngIf="phone.errors.pattern">Campo es numerico</div>
+              </div>
             </div>
           </div>
         </div><!-- columnas -->
         <div class="row-buttons p-3 align-items-center justify-content-between mb-4">
-          <a href="#" class="adjuntar-img">
-            <img src="../global/assets/adjuntar.svg" class="icono-adjuntar">Imagen del frente</a>
-          <a href="#" class="adjuntar-img">
-            <img src="../global/assets/adjuntar.svg" class="icono-adjuntar">Imagen del dorso</a>
+          <div class="upload-file"> 
+              <div class="adjuntar-img" (click)="file1.click()">
+                  <img src="assets/images/adjuntar.svg" class="icono-adjuntar">Imagen del frente
+                </div>
+                <input style="visibility: hidden" #file1 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,1)">
+          </div>
+          <div class="upload-file">
+              <div class="adjuntar-img" (click)="file2.click()">
+                  <img src="assets/images/adjuntar.svg" class="icono-adjuntar">Imagen del dorso
+                </div>
+                <input style="visibility: hidden" #file2 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,2)"> 
+          </div>
 
-          <a href="#" class="white-button-border w-auto">Guardar y continuar</a>
+          <a href="#" class="white-button-border w-auto" (click)="saveContinue(currentCheck,y);">Guardar y continuar</a>
         </div>
         <div class="row-buttons p-3 align-items-center justify-content-between mb-4 invalid-feedback text-left">
           <div>Error</div>
@@ -191,7 +225,7 @@
       </section>
 
       <div class="row-buttons justify-content-end mt-3">
-        <a href="5-solicitar-credito-opciones.html" role="button" class="solid-blue-button">Continuar</a>
+        <button [disabled]="!allChecksComplete" type="submit" role="button" class="solid-blue-button">Continuar</button>
       </div>
 
     </div>

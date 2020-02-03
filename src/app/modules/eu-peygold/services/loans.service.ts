@@ -17,7 +17,7 @@ export class LoansService extends HttpService {
    */
   search(type: TransactionType, word = '@', page = 1, perPage = environment.paginator.per_page): Promise<PaginationResponse> {
     const paginator = new PaginationResponse(page, perPage);
-    return this.get(`/loans/searchbyuser/3/${word}/${page}/${perPage}`).toPromise().then(
+    return this.getTest(`https://api.peygold.com/api/loans/searchbyuser/3/${word}/${page}/${perPage}`).toPromise().then(
       (response: any) => {
         paginator.count = response.recordCount;
         paginator.data = response.loansDTOs.map((item: any) => {
@@ -62,6 +62,10 @@ export class LoansService extends HttpService {
     ).catch(() => {
       return paginator;
     });
+  }
+
+  createLoan(params:any){
+    return this.postTest('https://api.peygold.com/api/loans/CreateLoanCreditCheck',params).toPromise();
   }
 
 }

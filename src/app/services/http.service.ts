@@ -23,6 +23,10 @@ export class HttpService extends BaseService {
     return this.http.get(url, options);
   }
 
+  getTest(url: string, options?: any): Observable<any> {
+    return this.http.get(url, options);
+  }
+
   /**
    * Execute the POST request to the PeyGold API.
    * @param url Url context.
@@ -31,6 +35,10 @@ export class HttpService extends BaseService {
    */
   post(url: string, data?: any, options?: any): Observable<any> {
     url = environment.api.url + url;
+    return this.http.post(url, data, options);
+  }
+
+  postTest(url: string, data?: any, options?: any): Observable<any> {
     return this.http.post(url, data, options);
   }
 

@@ -20,18 +20,23 @@ export const environment = {
       validations: {
         pattern: '^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&.+=]).*$',
       }
+    },
+    number: {
+      validations: { 
+        pattern: '^[0-9]*$',
+      }
     }
   },
   interceptors: {
     jwt_interceptor: {
       white_list: [
-        'gmartin-001-site1.ftempurl.com',
+        'api.peygold.com',
       ]
     }
   },
   api: {
-    url: 'http://gmartin-001-site1.ftempurl.com/api',
-    avatarUrl: 'http://gmartin-001-site1.ftempurl.com'
+    url: 'https://api.peygold.com/api',
+    avatarUrl: 'https://api.peygold.com.com'
   },
   localStorage: {
     user_var_name: 'pey_user',

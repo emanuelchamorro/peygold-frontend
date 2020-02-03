@@ -10,35 +10,35 @@
 
           <div class="w-100 mt-2 mb-4">
             <label class="has-float-label mb-0">
-              <ng-select placeholder="Destino de crédito"
-                         class="custom-select dropdown select-height-normal mb-0 w-100"
-                         bindLabel="label"
-                         [searchable]="false"
-                         [items]="creditDestinations"
-                         [addTag]="false"
-                         name="creditDestinations"
-                         [(ngModel)]="loanRequest.creditDestination"
-                         [ngClass]="{'ng-dirty ng-invalid' : loansForm.submitted && creditDestination.errors}"
-                         #creditDestination="ngModel"
-                         required>
+              <ng-select placeholder="Destino de crédito" class="custom-select dropdown select-height-normal mb-0 w-100"
+                bindLabel="label" [searchable]="false" [items]="creditDestinations" [addTag]="false"
+                name="creditDestinations" [(ngModel)]="loanRequest.creditDestination"
+                [ngClass]="{'ng-dirty ng-invalid' : loansForm.submitted && creditDestination.errors}"
+                #creditDestination="ngModel" required>
               </ng-select>
-              <div *ngIf="!creditDestination.pristine && creditDestinations.invalid || loansForm.submitted && creditDestination.errors" class="invalid-feedback">
+              <div
+                *ngIf="!creditDestination.pristine && creditDestinations.invalid || loansForm.submitted && creditDestination.errors"
+                class="invalid-feedback">
                 <div *ngIf="creditDestination.errors.required">Campo es requerido</div>
               </div>
             </label>
           </div>
           <span class="mt-5">Monto a solicitar</span>
           <div class="input-blue-text w-100 mt-2">
-            <input required type="text" [placeholder]="loanRequest.transactionType.coin | translate" class="form-control InputAmount w-100 text-center"
-                   mask="separator.2" thousandSeparator="."
-                   name="amount" [(ngModel)]="loanRequest.amount" #amount="ngModel" />
-            <div *ngIf="!amount.pristine && amount.invalid && loansForm.submitted || !loanRequest.amount && loansForm.submitted" class="invalid-feedback text-left">
+            <input required type="text" [placeholder]="loanRequest.transactionType.coin | translate"
+              class="form-control InputAmount w-100 text-center" mask="separator.2" thousandSeparator="." name="amount"
+              [(ngModel)]="loanRequest.amount" #amount="ngModel" />
+            <div
+              *ngIf="!amount.pristine && amount.invalid && loansForm.submitted || !loanRequest.amount && loansForm.submitted"
+              class="invalid-feedback text-left">
               <div *ngIf="amount.errors.required">Campo es requerido</div>
             </div>
           </div>
-          <input placeholder="Agregar una nota" type="text" class="w-100 mt-5 mb-3 input-line"
-                 required name="notes" #notes="ngModel" [(ngModel)]="loanRequest.notes" />
-          <div *ngIf="!notes.pristine && notes.invalid && loansForm.submitted || !loanRequest.notes && loansForm.submitted" class="invalid-feedback text-left">
+          <input placeholder="Agregar una nota" type="text" class="w-100 mt-5 mb-3 input-line" required name="notes"
+            #notes="ngModel" [(ngModel)]="loanRequest.notes" />
+          <div
+            *ngIf="!notes.pristine && notes.invalid && loansForm.submitted || !loanRequest.notes && loansForm.submitted"
+            class="invalid-feedback text-left">
             <div *ngIf="notes.errors.required">Campo es requerido</div>
           </div>
         </div>
@@ -59,19 +59,93 @@
   <div class="d-flex mt-5 mb-5">
     <div class="grey-box d-flex flex-column w-100 p-4 align-items-center">
       <div class="d-flex flex-column">
-        <span class="fs-14 fw-700 mb-2">Motivo de la solicitud: <span [innerHtml]="loanRequest.creditDestination.label"></span></span>
+        <span class="fs-14 fw-700 mb-2">Motivo de la solicitud: <span
+            [innerHtml]="loanRequest.creditDestination.label"></span></span>
         <span class="fs-14 fw-700">Monto a recibir:
-          <span [innerHtml]="loanRequest.transactionType.coin"></span>&nbsp;<span [innerHtml]="loanRequest.amount | number:'1.2'"></span>
+          <span [innerHtml]="loanRequest.transactionType.coin"></span>&nbsp;<span
+            [innerHtml]="loanRequest.amount | number:'1.2'"></span>
         </span>
         <a href="#" class="fs-14 text-color mt-3">Modificar</a>
       </div>
     </div>
   </div>
 
-  <app-eu-pey-loan-request-checks-form [loanRequest]="loanRequest"></app-eu-pey-loan-request-checks-form>
+  <app-eu-pey-loan-request-checks-form [loanRequest]="loanRequest" (onContinue)="onContinue($event)">
+  </app-eu-pey-loan-request-checks-form>
 </div>
 <div *ngIf="step==3">
   <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
-  <p class="opening-text">Revisa que todos los datos esten bien y haz click en enviar solicitud.</p>
-
+  <p>Revisa que todos los datos esten bien y haz click en enviar solicitud.</p>
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <div class="grey-box d-flex flex-column w-75 align-items-center">
+      <div class="col-12 d-flex border-bottom-grey p-4">
+        <div class="row-solicitud d-flex w-100 justify-content-end">
+          <span class="text-color">{{currentDate | date:medim}}</span>
+        </div>
+      </div>
+      <div class="col-12 d-flex flex-column border-bottom-grey p-4">
+        <div class="row-solicitud d-flex w-100 justify-content-between mb-4">
+          <span class="title-left">Motivo de la solicitud</span>
+          <span class="content-right">{{loanRequest.creditDestination.label}}</span>
+        </div>
+        <div class="row-solicitud d-flex w-100 justify-content-between mb-4">
+          <span class="title-left">Crédito solicitado</span>
+          <span class="content-right">{{loanRequest.amount}}</span>
+        </div>
+        <div class="row-solicitud d-flex w-100 justify-content-between mb-4">
+          <span class="title-left">Forma de pago</span>
+          <span class="content-right">cheque</span>
+        </div>
+        <div class=" row-solicitud d-flex w-100 justify-content-between mb-4">
+          <span class="title-left">Cantidad de cuotas</span>
+          <span class="content-right">{{loanOption.dues}}</span>
+        </div>
+        <div class="row-solicitud d-flex w-100 justify-content-between mb-4">
+          <span class="title-left">Solicitud #1067</span>
+          <span class="content-right">{{currentDate | date:medim}}</span>
+        </div>
+        <div class="row-solicitud d-flex w-100 justify-content-between mb-4">
+          <span class="title-left">Valor de la cuota</span>
+          <span class="content-right">${{loanOption.duesAmount}}</span>
+        </div>
+      </div>
+      <div class="col-12 d-flex flex-column border-bottom-grey p-4">
+        <div class="d-flex w-100 justify-content-center mb-4">
+          <span class="fw-700">Opciones de rescate de cheques</span>
+        </div>
+        <div class="row-options d-flex w-100 justify-content-center mb-4">
+          <a href="#" *ngFor="let rOption of rescueOptions; let i = index;" (click)="selectRescueOption(rOption)"
+            class="{{i==1 || i==2? 'white-btn-options':i==0?'white-btn-options b-radius-left':'white-btn-options b-radius-right'}}"
+            [ngClass]="{'active' : rOption === check}">{{rOption.label}}</a>
+        </div>
+      </div>
+      <div class="col-12 d-flex flex-column p-4">
+        <div class="d-flex w-100 justify-content-center mb-4">
+          <input placeholder="Agregar una nota" type="text" id="input-line" class="d-flex w-75 mt-1 mb-1" />
+        </div>
+      </div>
+    </div>
+    <div class="row-buttons w-75 justify-content-end mt-4">
+      <button [disabled]="isBbusy" (click)="back()" class="white-button-border mr-2">Volver</button>
+      <button [disabled]="isBbusy" (click)="send()" class="solid-blue-button">Enviar solicitud</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="step==4">
+  <div class="row">
+    <div class="col-lg-11 white-container-wrapper">
+      <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
+      <div class="content-center">
+        <div class="grey-box d-flex flex-column w-75 align-items-center p-5">
+          <img src="/assets/images/tildes-17.png" class="mb-3">
+          <span>Se generó la</span>
+          <span class="fs-24 fw-700 mb-4">solicitud N°{{loanRequest.id}}</span>
+          <div class="d-flex flex-column">
+            <span>Su solicitud ha sido enviada a revisión.</span>
+            <span> En la sección <a [routerLink]="routes.loans.index.route" class="fw-500 fs-13 text-color">"Mis
+                Solicitudes"</a> podrá ver el estado de su solicitud.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

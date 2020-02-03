@@ -24,8 +24,23 @@ export class LoanOption extends Model {
       let date =  new Date();
       let month = date.getMonth();
       date.setMonth(month + (i+1));
-      console.log('fecha',date.getMonth())
-      check.expirationDate = date.toDateString();
+      console.log('fecha',date.getMonth());
+      console.log('year',date.getFullYear());
+      console.log('mont',date.getMonth());
+      console.log('day',date.getDay());
+
+      check.issuanceDateStr = date.toDateString();
+      check.expirationDateStr = date.toDateString();
+      check.issuanceDate = {
+        "year": date.getFullYear(),
+        "month": date.getMonth(),
+        "day": date.getDay()
+      };
+      check.expirationDate = {
+        "year": date.getFullYear(),
+        "month": date.getMonth(),
+        "day": date.getDay(),
+      };
 
       check.bank = new Bank();
       check.address = new Address();

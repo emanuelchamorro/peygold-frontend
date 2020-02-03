@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BaseService} from './base.service';
 import {DocumentType} from '../models/document-type';
-import {TransactionType} from '../models';
+import {TransactionType, SelectOption} from '../models';
 import {TransactionTypeEnum} from '../enums';
 import {LoanOption} from '../models/loan-option';
 
@@ -60,6 +60,16 @@ export class InMemoryService extends BaseService {
       new LoanOption('Opción 2', 3, amount/3),
       new LoanOption('Opción 3', 4, amount/4),
     ];
+  }
+
+  get rescueOptions(): Array<SelectOption>{
+
+    return[
+      new SelectOption('1','Rescatar a 60 dias del vencimiento'),
+      new SelectOption('2','Alianza comercial'),
+      new SelectOption('3','Canjear a 60 días del vencimiento por P$G'),
+      new SelectOption('4','Cancelación anticipada')
+    ]
   }
 
 }

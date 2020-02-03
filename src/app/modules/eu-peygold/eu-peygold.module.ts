@@ -38,6 +38,9 @@ import { QRCodeModule } from 'angular2-qrcode';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
+
+import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     EuPeyHomeComponent,
@@ -70,6 +73,7 @@ import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
     QRCodeModule,
     NgQrScannerModule,
     NgQRCodeReaderModule,
+    NgbDatepickerModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {
