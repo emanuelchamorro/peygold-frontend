@@ -65,7 +65,7 @@
           <span [innerHtml]="loanRequest.transactionType.coin"></span>&nbsp;<span
             [innerHtml]="loanRequest.amount | number:'1.2'"></span>
         </span>
-        <a href="#" class="fs-14 text-color mt-3">Modificar</a>
+        <button class="fs-14 text-color mt-3" (click)="back()">Modificar</button>
       </div>
     </div>
   </div>
@@ -74,6 +74,7 @@
   </app-eu-pey-loan-request-checks-form>
 </div>
 <div *ngIf="step==3">
+    <app-eu-pey-loan-help [optionQuestions]="selectOptionQuestion3"></app-eu-pey-loan-help>
   <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
   <p>Revisa que todos los datos esten bien y haz click en enviar solicitud.</p>
   <div class="d-flex justify-content-center align-items-center flex-column">
@@ -116,12 +117,7 @@
         <div class="row-options d-flex w-100 justify-content-center mb-4">
           <a href="#" *ngFor="let rOption of rescueOptions; let i = index;" (click)="selectRescueOption(rOption)"
             class="{{i==1 || i==2? 'white-btn-options':i==0?'white-btn-options b-radius-left':'white-btn-options b-radius-right'}}"
-            [ngClass]="{'active' : rOption === check}">{{rOption.label}}</a>
-        </div>
-      </div>
-      <div class="col-12 d-flex flex-column p-4">
-        <div class="d-flex w-100 justify-content-center mb-4">
-          <input placeholder="Agregar una nota" type="text" id="input-line" class="d-flex w-75 mt-1 mb-1" />
+            [ngClass]="{'white-btn-options:active' : rOption === check}">{{rOption.label}}</a>
         </div>
       </div>
     </div>
@@ -142,7 +138,7 @@
           <span class="fs-24 fw-700 mb-4">solicitud N°{{loanRequest.id}}</span>
           <div class="d-flex flex-column">
             <span>Su solicitud ha sido enviada a revisión.</span>
-            <span> En la sección <a [routerLink]="routes.loans.index.route" class="fw-500 fs-13 text-color">"Mis
+            <span> En la sección <a [routerLink]="routes.loans.index.href" class="fw-500 fs-13 text-color">"Mis
                 Solicitudes"</a> podrá ver el estado de su solicitud.</span></div>
         </div>
       </div>

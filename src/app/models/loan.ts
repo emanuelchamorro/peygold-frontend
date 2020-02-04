@@ -25,8 +25,10 @@ export class Loan extends Model {
   public transactionType: TransactionType;
   public status: LoanStatus;
   public insuranceStatus: LoanStatus;
+  public globalStatus: LoanStatus;
   public checkRescue: CheckRescue;
   public paymentMethod: PaymentMethod;
   public creditDestination: CreditDestination;
   public applicant: User;
+  public comments:string;
 }

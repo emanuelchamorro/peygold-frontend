@@ -6,6 +6,7 @@ import {CreditDestination, LoanRequest, SelectOption, LoanOption} from '../../..
 import { InMemoryService } from '../../../../services/in-memory.service';
 import { LoansService } from '../../services/loans.service';
 import {LoanFactory} from '../../../../factory/loan-factory';
+import { SelectOptionQuestion } from '../../../../models/select-option-question';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
   private rescueOption:SelectOption;
   private step = 1;
   public currentDate:Date = new Date();
+  private selectOptionQuestion3:Array<SelectOptionQuestion>;
 
   constructor(
     private creditDestinationsService: CreditDestinationsService,
@@ -33,6 +35,7 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.loanRequest = new LoanRequest();
+    this.selectOptionQuestion3 = this.inMemoryService.loadOptionsQuestions(3);
     this.creditDestinationsService.all().then(
       (creditDestinations) => this.creditDestinations = creditDestinations
     );

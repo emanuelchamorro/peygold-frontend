@@ -26,19 +26,34 @@ export class Check extends Model {
   public address: Address;
   public frontImage: string;
   public backImage: string;
-  public isValid : boolean;
+  public isValid: boolean;
+  public gender:number; 
 
   get isComplete(): boolean{
-    if(this.accountNumber && this.number && this.amount && this.issuanceDate && this.expirationDate && this.bank.value && 
-      this.address.state.value && this.address.city.value && this.address.addressFull &&
-      this.address.phone && this.onwer.bussinessName && this.onwer.cuit &&
-      this.onwer.fullName && this.onwer.documentNumber && this.onwer.phone && this.frontImage && this.backImage){
-        this.isValid = true;
-        return true;
+    if(this.gender==2){
+      if(this.accountNumber && this.number && this.amount && this.issuanceDate && this.expirationDate && this.bank.value && 
+        this.address.state.value && this.address.city.value && this.address.addressFull &&
+        this.address.phone && this.onwer.bussinessName && this.onwer.cuit &&
+        this.onwer.fullName && this.onwer.documentNumber && this.onwer.phone && this.frontImage && this.backImage){
+          this.isValid = true;
+          return true;
+      }else{
+          this.isValid = false;
+          return false;
+      }
     }else{
-        this.isValid = false;
-        return false;
+      if(this.accountNumber && this.number && this.amount && this.issuanceDate && this.expirationDate && this.bank.value && 
+        this.address.state.value && this.address.city.value && this.address.addressFull &&
+        this.address.phone &&
+        this.onwer.fullName && this.onwer.documentNumber && this.onwer.cuit  && this.onwer.email && this.onwer.phone && this.frontImage && this.backImage){
+          this.isValid = true;
+          return true;
+      }else{
+          this.isValid = false;
+          return false;
+      }
     }
+
   }
 
   checkCopy(check:Check):void{

@@ -9,11 +9,11 @@ export class LoanFactory{
                 {
                     expirationOptionsId: index+1,
                     amountToPay: check.amount,
-                    CBU: "123-4567891-2",
+                    CBU: check.gender==2?check.onwer.bussinessName:'', //se setea la razon social
                     CuentaEmisora:check.accountNumber,
                     DireccionBanco: check.address.addressFull,
                     DNIFirmante: check.onwer.documentNumber,
-                    EmailFirmante: check.onwer.email,
+                    EmailFirmante: check.gender==1?check.onwer.email:'',
                     FechaEmisionCheque: check.issuanceDate.day+'/'+check.issuanceDate.month+'/'+check.issuanceDate.year,
                     FechaVencimientoCheque: check.expirationDate.day+'/'+check.expirationDate.month+'/'+check.expirationDate.year, 
                     FullNameFirmante: check.onwer.fullName,

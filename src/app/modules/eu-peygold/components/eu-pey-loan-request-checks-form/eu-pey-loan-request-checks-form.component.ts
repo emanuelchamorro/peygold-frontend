@@ -3,6 +3,8 @@ import {InMemoryService, LocationService} from '../../../../services';
 import {LoanOption, Check, Bank, State, City, Country, LoanRequest} from '../../../../models';
 import {BanksService} from '../../services/banks.service';
 import {environment} from '../../../../../environments/environment';
+import { SelectOptionQuestion } from '../../../../models/select-option-question';
+
 
 
 
@@ -24,6 +26,9 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
   private states: Array<State>;
   private cities: Array<City>;
   private allChecksComplete:boolean;
+  private selectOptionQuestion1:Array<SelectOptionQuestion>;
+  private selectOptionQuestion2:Array<SelectOptionQuestion>;
+ 
 
 
   constructor(
@@ -40,6 +45,9 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
     this.bankService.all().then((banks) => this.banks = banks);
     const country = new Country(environment.locations.default.id, environment.locations.default.label);
     this.locationService.getStates(country).then((states) => this.states = states);
+    this.selectOptionQuestion1 = this.inMemoryService.loadOptionsQuestions(1);
+    this.selectOptionQuestion2 = this.inMemoryService.loadOptionsQuestions(2);
+
   }
 
   /**
@@ -64,6 +72,10 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
     }else{
       this.check = check;
     }    
+  }
+
+  setGender(check:Check,gender:number){
+    check.gender = gender;
   }
   
 

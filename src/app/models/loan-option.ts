@@ -18,28 +18,25 @@ export class LoanOption extends Model {
     public duesAmount: number) {
     super();
     this.checks = new Array<Check>();
-
+    let date =  new Date();
     for (let i = 0; i < this.dues; i++ ) {
       const check = new Check();
-      let date =  new Date();
-      let month = date.getMonth();
-      date.setMonth(month + (i+1));
-      console.log('fecha',date.getMonth());
-      console.log('year',date.getFullYear());
-      console.log('mont',date.getMonth());
-      console.log('day',date.getDay());
 
-      check.issuanceDateStr = date.toDateString();
-      check.expirationDateStr = date.toDateString();
+      let dueDate = new Date()
+      let month = dueDate.getMonth()+1;
+      dueDate.setMonth(month + (i+1));
+      check.gender = 1;
+      check.issuanceDateStr = date.getDate()+'/'+(date.getMonth()) +'/'+date.getFullYear();
+      check.expirationDateStr = dueDate.getDate()+'/'+(dueDate.getMonth()) +'/'+dueDate.getFullYear();
       check.issuanceDate = {
         "year": date.getFullYear(),
-        "month": date.getMonth(),
-        "day": date.getDay()
+        "month": date.getMonth()+1,
+        "day": date.getDate()
       };
       check.expirationDate = {
-        "year": date.getFullYear(),
-        "month": date.getMonth(),
-        "day": date.getDay(),
+        "year": dueDate.getFullYear(),
+        "month": dueDate.getMonth(),
+        "day": dueDate.getDate(),
       };
 
       check.bank = new Bank();

@@ -40,6 +40,7 @@ import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loan-help.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
     EuPeyLoanRequestChecksFormComponent,
     EuPeyQrGeneratorComponent,
     EuPeyQrScannerComponent,
+    EuPeyLoanHelpComponent,
   ],
   imports: [
     CommonModule,

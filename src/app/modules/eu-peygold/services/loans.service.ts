@@ -32,6 +32,8 @@ export class LoansService extends HttpService {
           loan.loanConcept = item.loanConcept;
           loan.status = new LoanStatus(item.loanStatus);
           loan.insuranceStatus = new LoanStatus(item.loanInsuranceStatus);
+          loan.globalStatus = (loan.status.value=='2' && loan.insuranceStatus.value=='2') ? new LoanStatus('2') : 
+          (loan.status.value=='3' ||  loan.insuranceStatus.value=='3') ? new LoanStatus('3') :  new LoanStatus('1');
           loan.verifiedInformation = item.verifiedInformation;
           loan.verifiedComments = item.verifiedComments;
           loan.approveDeniedComments = item.approveDeniedComments;
@@ -53,6 +55,7 @@ export class LoansService extends HttpService {
           loan.applicant.address = new Address();
           loan.applicant.address.street = item.street;
           loan.applicant.address.state = new State(null, item.stateName);
+          loan.comments = 'No hay notas'
 
           return loan;
         });
