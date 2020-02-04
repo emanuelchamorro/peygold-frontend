@@ -39,6 +39,9 @@ import { NgQrScannerModule } from 'angular2-qrscanner';
 import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 
+import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loan-help.component';
+
 @NgModule({
   declarations: [
     EuPeyHomeComponent,
@@ -59,7 +62,7 @@ import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
     EuPeyLoanRequestChecksFormComponent,
     EuPeyQrGeneratorComponent,
     EuPeyQrScannerComponent,
-   
+    EuPeyLoanHelpComponent,
   ],
   imports: [
     CommonModule,
@@ -72,6 +75,7 @@ import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
     QRCodeModule,
     NgQrScannerModule,
     NgQRCodeReaderModule,
+    NgbDatepickerModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {

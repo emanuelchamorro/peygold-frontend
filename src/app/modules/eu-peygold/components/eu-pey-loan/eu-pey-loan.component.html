@@ -3,7 +3,7 @@
     <ul>
       <li>
         <span [innerHtml]="'Solictud: ' + loan.id"></span>
-        <span [innerHtml]="loan.applicationDate | date"></span>
+        <span [innerHtml]="loan.applicationDate | date:medium"></span>
       </li>
     </ul>
 
@@ -18,7 +18,7 @@
         <span class="fw-600" [innerHtml]="loan.paymentMethod.label"></span>
       </li>
       <li><span>Cantidad de cuotas</span>
-        <span class="fw-600">Undefined</span>
+        <span class="fw-600" [innerHtml]="loan.paymentMethod.label">Undefined</span>
       </li>
       <li><span>Valor de cada cuota</span>
         <span class="fw-600">Undefined</span>
@@ -39,7 +39,7 @@
         <span [innerHtml]="loan.insuranceStatus.label"></span>
       </li>
       <div class="d-flex justify-content-center">
-        <input placeholder="Agregar una nota" type="text" class="d-flex w-75 mt-5 mb-3" id="input-line"/>
+        <input readonly placeholder="Agregar una nota" [(ngModel)]="loan.comments" type="text" class="d-flex w-75 mt-5 mb-3" id="input-line"/>
       </div>
     </ul>
   </div>

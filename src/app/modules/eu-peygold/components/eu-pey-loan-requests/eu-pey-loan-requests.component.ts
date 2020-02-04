@@ -19,6 +19,7 @@ export class EuPeyLoanRequestsComponent implements OnInit {
 
   ngOnInit() {
     this.loansService.search(new TransactionType()).then((response: PaginationResponse) => {
+      console.log('creditos',response)
       this.loans = response;
     });
   }

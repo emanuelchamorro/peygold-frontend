@@ -15,6 +15,8 @@ import {CommonsPeyGoldModule} from './modules/commons-peygold/commons-peygold.mo
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import localeEsAR from '@angular/common/locales/es-AR';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateFRParserFormatter } from './util/ngb-date-fr-Parser-Formatter';
 
 registerLocaleData(localeEsAR, 'es-AR');
 
@@ -57,7 +59,8 @@ registerLocaleData(localeEsAR, 'es-AR');
     { provide: LocationStrategy,  useClass: HashLocationStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
-    { provide: LOCALE_ID, useValue: 'es-AR' }
+    { provide: LOCALE_ID, useValue: 'es-AR' },
+    { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}
   ],
   bootstrap: [AppComponent]
 })

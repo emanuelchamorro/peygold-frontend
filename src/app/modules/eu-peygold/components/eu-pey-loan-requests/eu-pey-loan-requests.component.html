@@ -99,7 +99,7 @@
         <td [innerHtml]="loan.id"></td>
         <td>
           <img
-            src="assets/images/wrong.png"
+            [src]="loan.status.imgIcon"
             width="27"
             height="27"
             alt=""
@@ -107,13 +107,13 @@
         </td>
         <td>
           <img
-            src="assets/images/wrong.png"
+            [src]="loan.insuranceStatus.imgIcon"
             width="27"
             height="27"
             alt=""
           />
         </td>
-        <td>---</td>
+        <td [innerHtml]="loan.globalStatus.label"></td>
         <td width="20">
           <div class="detallePopup">
             <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>

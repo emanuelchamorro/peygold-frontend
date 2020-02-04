@@ -24,5 +24,13 @@ $check-right: 0;
   section {
     border-radius: 0px !important;
   }
+
+  .upload-file{
+    width: 20%;
+    :hover{
+      color:blueviolet;
+      cursor: pointer;
+    }
+  }
 }
 

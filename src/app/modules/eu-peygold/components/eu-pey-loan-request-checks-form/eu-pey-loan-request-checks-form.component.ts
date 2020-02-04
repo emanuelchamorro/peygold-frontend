@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {InMemoryService, LocationService} from '../../../../services';
 import {LoanOption, Check, Bank, State, City, Country, LoanRequest} from '../../../../models';
 import {BanksService} from '../../services/banks.service';
 import {environment} from '../../../../../environments/environment';
+import { SelectOptionQuestion } from '../../../../models/select-option-question';
+
+
 
 
 
@@ -13,13 +16,21 @@ import {environment} from '../../../../../environments/environment';
 })
 export class EuPeyLoanRequestChecksFormComponent implements OnInit {
 
+
   @Input('loanRequest') loanRequest:LoanRequest;
+  @Output()
+  public onContinue: EventEmitter<LoanOption> = new EventEmitter<LoanOption>();
   private loanOptions: Array<LoanOption>;
   private loanOption: LoanOption;
   private check: Check;
   private banks: Array<Bank>;
   private states: Array<State>;
   private cities: Array<City>;
+  private allChecksComplete:boolean;
+  private selectOptionQuestion1:Array<SelectOptionQuestion>;
+  private selectOptionQuestion2:Array<SelectOptionQuestion>;
+ 
+
 
   constructor(
     private inMemoryService: InMemoryService,
@@ -35,6 +46,9 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
     this.bankService.all().then((banks) => this.banks = banks);
     const country = new Country(environment.locations.default.id, environment.locations.default.label);
     this.locationService.getStates(country).then((states) => this.states = states);
+    this.selectOptionQuestion1 = this.inMemoryService.loadOptionsQuestions(1);
+    this.selectOptionQuestion2 = this.inMemoryService.loadOptionsQuestions(2);
+
   }
 
   /**
@@ -50,9 +64,21 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
    * Set the current check to be updated.
    * @param check The check object
    */
-  setCheck(check: Check): void {
-    this.check = check;
+  setCheck(check: Check, index:number): void {
+    if(index!=0){
+      let previous = this.loanOption.checks[index-1];
+      if(previous.isComplete){
+        this.check = check;
+      }
+    }else{
+      this.check = check;
+    }    
   }
+
+  setGender(check:Check,gender:number){
+    check.gender = gender;
+  }
+  
 
  
   /**
@@ -78,4 +104,68 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
       return cities;
     });
   }
+
+  saveContinue(check:Check,index:number):boolean{
+    let isValid:boolean;
+    if(check.isComplete){
+        console.log('check',check);
+        isValid = true;
+    }else{
+        console.log('check','not');
+        isValid = true;
+    }    false
+
+    if(this.loanOption.checks.length == index+1){
+      let isValid = true;
+      this.loanOption.checks.forEach(check => {
+        if(!check.isValid){
+          isValid = false;
+          return;
+        } 
+      });
+      this.allChecksComplete = isValid;
+    }else{
+      if(isValid){
+        const nextCheck = this.loanOption.checks[index+1];
+        this.setCheck(nextCheck,index+1);
+      }
+    }
+
+    return false;
+  }
+
+  public uploadImage($event: Event,check:Check,type:number): void {
+   let file:File =  $event.target[`files`][0]
+
+   const reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = () => {
+     const result: string = reader.result as string;
+     let data = '';
+
+     if (result.includes(',')) {
+       data = result.split(',')[1] || '';
+      if(type == 1){
+        check.frontImage = data;
+      }else{
+        check.backImage = data;
+      }
+     }
+   };
+   reader.onerror = (error) => {
+     console.log(error);
+   };    
+  }
+
+  checkCopy(currentCheck:Check, index:number):boolean{
+    const checkFrom = this.loanOption.checks[index - 1];
+    currentCheck.checkCopy(checkFrom);
+    return false;
+  }
+
+
+  continue(){
+    this.onContinue.emit(this.loanOption);
+  }
+
 }

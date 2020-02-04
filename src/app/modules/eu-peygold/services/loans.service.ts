@@ -17,7 +17,7 @@ export class LoansService extends HttpService {
    */
   search(type: TransactionType, word = '@', page = 1, perPage = environment.paginator.per_page): Promise<PaginationResponse> {
     const paginator = new PaginationResponse(page, perPage);
-    return this.get(`/loans/searchbyuser/3/${word}/${page}/${perPage}`).toPromise().then(
+    return this.getTest(`https://api.peygold.com/api/loans/searchbyuser/3/${word}/${page}/${perPage}`).toPromise().then(
       (response: any) => {
         paginator.count = response.recordCount;
         paginator.data = response.loansDTOs.map((item: any) => {
@@ -32,6 +32,8 @@ export class LoansService extends HttpService {
           loan.loanConcept = item.loanConcept;
           loan.status = new LoanStatus(item.loanStatus);
           loan.insuranceStatus = new LoanStatus(item.loanInsuranceStatus);
+          loan.globalStatus = (loan.status.value=='2' && loan.insuranceStatus.value=='2') ? new LoanStatus('2') : 
+          (loan.status.value=='3' ||  loan.insuranceStatus.value=='3') ? new LoanStatus('3') :  new LoanStatus('1');
           loan.verifiedInformation = item.verifiedInformation;
           loan.verifiedComments = item.verifiedComments;
           loan.approveDeniedComments = item.approveDeniedComments;
@@ -53,6 +55,7 @@ export class LoansService extends HttpService {
           loan.applicant.address = new Address();
           loan.applicant.address.street = item.street;
           loan.applicant.address.state = new State(null, item.stateName);
+          loan.comments = 'No hay notas'
 
           return loan;
         });
@@ -62,6 +65,10 @@ export class LoansService extends HttpService {
     ).catch(() => {
       return paginator;
     });
+  }
+
+  createLoan(params:any){
+    return this.postTest('https://api.peygold.com/api/loans/CreateLoanCreditCheck',params).toPromise();
   }
 
 }
