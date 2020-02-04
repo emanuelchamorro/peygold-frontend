@@ -1,0 +1,26 @@
+
+.file-cta {
+
+    display: flex;
+    cursor: pointer;
+
+.file-label {
+
+    color: #3575BA;
+    font-size: 14px;
+    font-weight: 700;
+    display:flex;
+    align-items:center;
+
+    &:before {
+
+        content:"";
+        background-image: url(../../../../../assets/images/adjuntar.svg);
+        display: flex;
+        height: 30px;
+        background-repeat: no-repeat;
+        margin-right: 7px;
+        width: 30px;
+    }
+}  
+}

@@ -38,6 +38,7 @@ import { QRCodeModule } from 'angular2-qrcode';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
+
 @NgModule({
   declarations: [
     EuPeyHomeComponent,
@@ -58,6 +59,7 @@ import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
     EuPeyLoanRequestChecksFormComponent,
     EuPeyQrGeneratorComponent,
     EuPeyQrScannerComponent,
+   
   ],
   imports: [
     CommonModule,

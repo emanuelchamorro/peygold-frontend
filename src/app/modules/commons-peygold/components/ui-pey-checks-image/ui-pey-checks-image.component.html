@@ -1,0 +1,44 @@
+<div class="d-flex">
+
+<label class="file-label mr-4">
+    <input
+      style="display: none"
+      class="file-input"
+      type="file"
+      name="file"
+      accept="image/*"
+      #fileFrente
+      (change)="onChange(fileFrente.files[0])"
+    />
+    <span class="file-cta">
+     <span class="file-label">
+        Imagen del frente
+      </span>
+    </span>
+    <span class="file-name">
+      {{ fileNameFrente }}
+    </span>
+  </label>
+
+
+  <label class="file-label ml-4">
+    <input
+      style="display: none"
+      class="file-input"
+      type="file"
+      name="file"
+      accept="image/*"
+      #fileDorso
+      (change)="onChange(fileDorso.files[0])"
+    />
+    <span class="file-cta">
+     <span class="file-label">
+        Imagen del Dorso
+      </span>
+    </span>
+    <span class="file-name">
+      {{ fileNameDorso }}
+    </span>
+  </label>
+
+</div>

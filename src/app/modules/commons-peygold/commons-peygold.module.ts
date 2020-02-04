@@ -20,6 +20,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import { UIPeyUserImageComponent } from './components/ui-pey-user-image/ui-pey-user-image.component';
 import { UIPeyUserFormComponent } from './components/ui-pey-user-form/ui-pey-user-form.component';
 import { UIPeyAddressFormComponent } from './components/ui-pey-address-form/ui-pey-address-form.component';
+import { UiPeyChecksImageComponent } from './components/ui-pey-checks-image/ui-pey-checks-image.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { UIPeyAddressFormComponent } from './components/ui-pey-address-form/ui-p
     UIPeyUserImageComponent,
     UIPeyUserFormComponent,
     UIPeyAddressFormComponent,
+    UiPeyChecksImageComponent,
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { UIPeyAddressFormComponent } from './components/ui-pey-address-form/ui-p
     UIPeyMoneyTransactionFormComponent,
     UIPeyUserImageComponent,
     UIPeyUserFormComponent,
-    UIPeyAddressFormComponent
+    UIPeyAddressFormComponent,
+    UiPeyChecksImageComponent
   ]
 })
 export class CommonsPeyGoldModule { }

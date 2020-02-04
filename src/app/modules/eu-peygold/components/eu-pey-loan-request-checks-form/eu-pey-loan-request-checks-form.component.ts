@@ -5,6 +5,7 @@ import {BanksService} from '../../services/banks.service';
 import {environment} from '../../../../../environments/environment';
 
 
+
 @Component({
   selector: 'app-eu-pey-loan-request-checks-form',
   templateUrl: './eu-pey-loan-request-checks-form.component.html',
@@ -53,6 +54,7 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
     this.check = check;
   }
 
+ 
   /**
    * Get the cities by the selected  state
    * @return void
@@ -63,6 +65,8 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
     }
     this.requestCities(state).then();
   }
+
+
 
   /**
    * Request the states by the selected country
