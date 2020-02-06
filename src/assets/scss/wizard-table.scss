@@ -84,8 +84,11 @@
 .tab_container .active {
   z-index: 100;
   background: #3575ba;
+  
 }
-
+.tab_container .active span {
+color:white
+}
 .tab_container [id^="tab"]:checked + label .fa {
   color: #0CE;
 }

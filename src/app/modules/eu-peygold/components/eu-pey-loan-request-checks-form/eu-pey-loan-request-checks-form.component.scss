@@ -36,7 +36,7 @@ input.form-control  {
    width: 100%;
   
    .upload-file{
-    display:flex;
+   
     /*width: 20%;*/
     :hover{
       color:blueviolet;
@@ -45,4 +45,49 @@ input.form-control  {
   }
  }
 }
+.file-label {
+  text-align: left;
+  position: relative;
+  left: 48px;
+  display: flex;
+  width: 100%;
+  font-style: italic;
+}
 
+.date-picker {
+
+ .form-control[readonly] {
+  
+  background-color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.42px;
+  font-weight: 500;
+  border: 0;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
+ }
+}
+.invalid-feedback {
+display: flex;
+  
+
+  span {
+  width: 100%;
+  display: flex;
+  color: #721c24;
+  padding: 1rem;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  align-items: center;
+   
+  & > i {
+  
+    font-size: 16px;
+    margin-right: 14px;
+
+  }
+
+  }
+
+
+}
