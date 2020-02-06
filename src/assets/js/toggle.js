@@ -74,6 +74,16 @@ $(function () {
     $('div[id="lightbox-1"]').css('z-index', '20');
 
   });
+  
+/*Loans btn options*/		
+
+$(document).on('click', '.white-btn-options', function () {
+  
+  $(this).toggleClass('active');
+  $(this).siblings().removeClass('active')
+
+})
+
 
   /*filtrar ordenar*/		
   $(".filtrarOrdenar").click(function() {		

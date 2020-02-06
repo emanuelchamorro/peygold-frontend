@@ -102,12 +102,12 @@
   box-shadow: 0 0 5px #3575bac9 inset;
 
 }
-.white-btn-options:focus, .white-btn-options:active {
+.white-btn-options.active {
   border: solid 1px #3575BA;
   color: #333333;
   box-shadow: 0 0 5px #3575BA inset;
-
 }
+
 .b-radius-left{
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;

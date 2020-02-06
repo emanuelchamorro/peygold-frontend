@@ -109,7 +109,7 @@
           <div class="col text-left">
             <span class="fs-14 fw-700">Datos del banco</span>
             <div class="input-field mt-2">
-              <ng-select placeholder="Banco" class="custom-select dropdown select-height-normal mb-0 w-100"
+              <ng-select placeholder="Banco" class="custom-select mb-0 w-100"
                 bindLabel="label" [searchable]="false" [items]="banks" [addTag]="false" name="bank-{{y}}"
                 [(ngModel)]="currentCheck.bank"
                 [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && bank.errors}" #bank="ngModel" required>
@@ -121,7 +121,7 @@
             </div>
             <div class="input-field">
               <ng-select placeholder="Provincia" (change)="getCities($event)"
-                class="custom-select dropdown select-height-normal mb-0 w-100" bindLabel="label" [searchable]="false"
+                class="custom-select mb-0 w-100" bindLabel="label" [searchable]="false"
                 [items]="states" [addTag]="false" name="state-{{y}}" [(ngModel)]="currentCheck.address.state"
                 [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && state.errors}" #state="ngModel" required>
               </ng-select>
@@ -131,7 +131,7 @@
               </div>
             </div>
             <div class="input-field">
-              <ng-select placeholder="Ciudad/Barrio" class="custom-select dropdown select-height-normal mb-0 w-100"
+              <ng-select placeholder="Ciudad/Barrio" class="custom-select mb-0 w-100"
                 bindLabel="label" [searchable]="false" [items]="cities" [addTag]="false" name="city-{{y}}"
                 [(ngModel)]="currentCheck.address.city"
                 [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && city.errors}" #city="ngModel" required>
@@ -234,21 +234,21 @@
             </div>
           </div>
         </div><!-- columnas -->
-        <div class="row-buttons p-3 align-items-center justify-content-between mb-4">
+        <div class="upload-file-container p-3 a mb-4">
           <div class="upload-file"> 
               <div class="adjuntar-img" (click)="file1.click()">
                   <img src="assets/images/adjuntar.svg" class="icono-adjuntar">Imagen del frente
                 </div>
-                <input style="visibility: hidden" #file1 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,1)">
+                <input style="display: none" #file1 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,1)">
           </div>
           <div class="upload-file">
               <div class="adjuntar-img" (click)="file2.click()">
                   <img src="assets/images/adjuntar.svg" class="icono-adjuntar">Imagen del dorso
                 </div>
-                <input style="visibility: hidden" #file2 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,2)"> 
+                <input style="display: none" #file2 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,2)"> 
           </div>
 
-          <a href="#" class="white-button-border w-auto" (click)="saveContinue(currentCheck,y);">Guardar y continuar</a>
+          <a href="#" class="white-button-border" (click)="saveContinue(currentCheck,y);">Guardar y continuar</a>
         </div>
         <div class="row-buttons p-3 align-items-center justify-content-between mb-4 invalid-feedback text-left">
           <div></div>

@@ -236,6 +236,12 @@
     margin-left: -25%;
     transition: all 0.8s ease;
     z-index: -1;
+
+    & > ul > li > button {
+
+      width: 100%;
+      text-align: left;
+    }
 }
 	
 .lightbox__close {

@@ -25,12 +25,24 @@ $check-right: 0;
     border-radius: 0px !important;
   }
 
-  .upload-file{
-    width: 20%;
+input.form-control  {
+  height: 52px;
+}
+
+  .upload-file-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+  
+   .upload-file{
+    display:flex;
+    /*width: 20%;*/
     :hover{
       color:blueviolet;
       cursor: pointer;
     }
   }
+ }
 }
 

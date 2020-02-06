@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseComponent} from '../base-component.component';
+
 
 
 @Component({
@@ -7,13 +7,14 @@ import {BaseComponent} from '../base-component.component';
   templateUrl: './ui-pey-checks-image.component.html',
   styleUrls: ['./ui-pey-checks-image.component.scss']
 })
-export class UiPeyChecksImageComponent extends BaseComponent implements OnInit {
+export class UiPeyChecksImageComponent implements OnInit {
  
   file: File;
   fileNameFrente: string = "No hay imagen";
   fileNameDorso: string = "No hay imagen";
+  
   constructor() {
-    super();
+
   }
 
   ngOnInit() {

@@ -709,16 +709,44 @@ input[type="hidden"]:focus {
   }
 }
 
-//floating label//
+
+/* Select*/
+
+ng-select.custom-select {
+  font-size: 13px;
+  color: #333333;
+  height: 52px;
+  border:0;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
+}
+
+.ng-dropdown-panel {
+  border:0;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
+}
+.ng-select .ng-select-container {
+
+ border: none;
+  height: 52px;
+  border-radius: 7px;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+  color: #999;
+  font-style: italic;
+  }
 
 
 /* Final formateo Inputs */
 
 
-/* Botones */
+/* BOTONES */
+
+/* Botones Principales*/
 
 .solid-blue-button {
   margin-top:15px;
+  margin-bottom:15px;
   color: white!important;
   text-align: center;
   font-size: 14px;
@@ -735,6 +763,7 @@ input[type="hidden"]:focus {
 
 .solid-white-button {
   margin-top:15px;
+  margin-bottom:15px;
   color: #3575BA;
   text-align: center;
   font-size: 14px;
@@ -753,11 +782,12 @@ input[type="hidden"]:focus {
 .white-button-border {
   background:#fff;
   margin-top:15px;
+  margin-bottom:15px;
   color: #3575BA;
   text-align: center;
   font-size: 14px;
   font-weight: 500;
-  padding: 0.64rem 3.4rem 0.64rem 3.4rem;;
+  padding: 0.64rem 1.8rem 0.64rem 1.8rem;
   border-radius: 2em;
   width: 220px;
   border: solid 2px  #3575BA;

@@ -80,6 +80,7 @@
       </form>
     </div>
     <div class="table colorchange">
+      <div class="top-table-radiobtn"></div>
       <div class="pago-solicitud" *ngFor="let transaction of transactions;"
            [ngClass]="{'highlight': selectedTransaction && transaction.id === selectedTransaction.id}" (click)="setTransaction(transaction)">
         <div class="col">
