@@ -27,7 +27,11 @@ export class Check extends Model {
   public frontImage: string;
   public backImage: string;
   public isValid: boolean;
-  public gender:number; 
+  public gender:number;
+
+  public paymentDate: Date;
+  public checkStatusUpdate:number;
+
 
   get isComplete(): boolean{
     if(this.gender==2){

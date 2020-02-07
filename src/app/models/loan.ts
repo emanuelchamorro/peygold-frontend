@@ -5,6 +5,8 @@ import {LoanStatus} from './loan-status';
 import {CheckRescue} from './check-rescue';
 import {PaymentMethod} from './payment-method';
 import {CreditDestination} from './credit-destination';
+import { SelectOption } from './select-option';
+import { Check } from './check';
 
 /**
  * Loan model
@@ -25,10 +27,14 @@ export class Loan extends Model {
   public transactionType: TransactionType;
   public status: LoanStatus;
   public insuranceStatus: LoanStatus;
-  public globalStatus: LoanStatus;
   public checkRescue: CheckRescue;
   public paymentMethod: PaymentMethod;
   public creditDestination: CreditDestination;
   public applicant: User;
   public comments:string;
+  public insuranceCarrier: SelectOption;
+  public amountOfBeneficiary:number;
+  public checks:Array<Check>;
+
+
 }

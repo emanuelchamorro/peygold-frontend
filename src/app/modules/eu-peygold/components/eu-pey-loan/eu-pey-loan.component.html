@@ -18,10 +18,10 @@
         <span class="fw-600" [innerHtml]="loan.paymentMethod.label"></span>
       </li>
       <li><span>Cantidad de cuotas</span>
-        <span class="fw-600" [innerHtml]="loan.paymentMethod.label">Undefined</span>
+        <span class="fw-600" [innerHtml]="loanDetail.checks.length">Undefined</span>
       </li>
       <li><span>Valor de cada cuota</span>
-        <span class="fw-600">Undefined</span>
+        <span class="fw-600">{{ (loan.amount / loanDetail.checks.length) | currency:' ':'symbol':'1.0' }}</span>
       </li>
       <li><span>Rescate comercial</span>
         <span class="fw-600" [innerHtml]="loan.checkRescue.label"></span>

@@ -99,7 +99,7 @@
         <td [innerHtml]="loan.id"></td>
         <td>
           <img
-            [src]="loan.status.imgIcon"
+            [src]="!loan.verifiedInformation ? 'assets/images/wrong.png':'assets/images/tildes-17.png'"
             width="27"
             height="27"
             alt=""
@@ -113,7 +113,7 @@
             alt=""
           />
         </td>
-        <td [innerHtml]="loan.globalStatus.label"></td>
+        <td [innerHtml]="loan.status.label"></td>
         <td width="20">
           <div class="detallePopup">
             <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
@@ -127,11 +127,11 @@
       </tr>
       </tbody>
     </table>
-    <p class="text-center p-end">
-      No hay más movimientos para mostrar.
-    </p>
+    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+        (pageChange)="loadPage($event)">
+    </ngb-pagination>
   </div>
 </div>
-<app-ui-pey-sidebar *ngIf="loan" (onClose)="loan = null" [closed]="!loan" title="Detalles de la solicitud">
-  <app-eu-pey-loan [loan]="loan"></app-eu-pey-loan>
+<app-ui-pey-sidebar *ngIf="loan && loanDetail" (onClose)="loan = null; loanDetail = null" [closed]="!loan && !loanDetail" title="Detalles de la solicitud">
+  <app-eu-pey-loan [loan]="loan" [loanDetail]="loanDetail"></app-eu-pey-loan>
 </app-ui-pey-sidebar>
