@@ -31,6 +31,7 @@ export class UIPeyUserImageComponent implements OnInit {
    */
   public emitUpdate(file: File): void {
     this.update.emit(file);
+    
   }
 
   /**

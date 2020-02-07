@@ -185,7 +185,7 @@
                 <div class="mb-4" [hidden]="type != 'person'">
                   <label class="has-float-label mb-4 w-100">
                     <ng-select placeholder="Ocupación"
-                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               class="custom-select  mb-0 w-100"
                                bindLabel="label"
                                [searchable]="false"
                                [items]="occupations"
@@ -232,7 +232,7 @@
 
                   <label class="has-float-label mb-4">
                     <ng-select placeholder="Tipo de documento"
-                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               class="custom-select mb-0 w-100"
                                bindLabel="label"
                                [searchable]="false"
                                [items]="documentTypes"
@@ -263,7 +263,7 @@
                   <label class="has-float-label mb-0">
                     <ng-select name="countries"
                                placeholder="País"
-                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               class="custom-select mb-0 w-100"
                                (change)="getStates()"
                                bindLabel="label"
                                [searchable]="false"
@@ -286,7 +286,7 @@
                     <ng-select name="states"
                                placeholder="Provincia"
                                (change)="getCities()"
-                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               class="custom-select mb-0 w-100"
                                bindLabel="label"
                                [searchable]="false"
                                [items]="states"
@@ -305,7 +305,7 @@
                   <label class="has-float-label mb-4">
                     <ng-select name="cities"
                                placeholder="Ciudad/Barrio"
-                               class="custom-select dropdown select-height-normal mb-0 w-100"
+                               class="custom-select mb-0 w-100"
                                bindLabel="label"
                                [searchable]="false"
                                [items]="cities"
@@ -376,7 +376,7 @@
                   <label class="has-float-label mb-4 w-100">
                     <ng-select
                       placeholder="Institución a beneficiar"
-                      class="custom-select dropdown select-height-normal mb-0 w-100"
+                      class="custom-select mb-0 w-100"
                       bindLabel="label"
                       [searchable]="false"
                       [items]="institutions"

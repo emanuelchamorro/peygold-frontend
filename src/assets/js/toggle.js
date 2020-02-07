@@ -50,6 +50,7 @@ $(function () {
       msg = '<span class="msg">Hidden input value: ';
     $('.msg').html(msg + input + '</span>');
   });
+ 
   /* Toggle  menu */
   $(document).on('click', '.open-help', function () {
     $('div[id="lightbox-1"]').css('opacity', '1');
@@ -74,14 +75,22 @@ $(function () {
     $('div[id="lightbox-1"]').css('z-index', '20');
 
   });
-
+ 
   $(document).on('click', '.lightbox__close', function () {
-    $('div[id="lightbox-1"]').css('opacity', '');
-    $('div[id="lightbox-1"]').css('visibility', 'hidden');
-    $('div[id="lightbox-1"]').css('z-index', '');
-  });
+    $('div[class="lightbox"]').css('opacity', '0');
+    $('div[class="lightbox"]').css('visibility', 'hidden');
+    $('div[class="lightbox"]').css('z-index', '0');
 
-  /* Toggle help */
+  });
+  
+  /*Loans btn options*/		
+
+  $(document).on('click', '.white-btn-options', function () {
+    
+    $(this).toggleClass('active');
+    $(this).siblings().removeClass('active')
+
+  });
 
   /*filtrar ordenar*/	
   $(document).on('click','.filtrarOrdenar',function(){

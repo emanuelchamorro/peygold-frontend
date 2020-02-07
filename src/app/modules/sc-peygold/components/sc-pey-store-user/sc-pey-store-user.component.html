@@ -43,7 +43,7 @@
             <div class="col mb-2">
               <label class="has-float-label mb-0">
                 <ng-select placeholder="Tipo de documento"
-                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           class="custom-select  mb-0 w-100"
                            bindLabel="label"
                            [searchable]="false"
                            [items]="documentTypes"
@@ -105,7 +105,7 @@
               <label class="has-float-label mb-0">
                 <ng-select name="roles"
                            placeholder="Roles"
-                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           class="custom-select mb-0 w-100"
                            bindLabel="label"
                            [multiple]="true"
                            [searchable]="false"
@@ -131,7 +131,7 @@
               <label class="has-float-label mb-0">
                 <ng-select name="countries"
                            placeholder="País"
-                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           class="custom-select mb-0 w-100"
                            (change)="getStates()"
                            bindLabel="label"
                            [searchable]="false"
@@ -155,7 +155,7 @@
                 <ng-select name="states"
                            placeholder="Provincia"
                            (change)="getCities()"
-                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           class="custom-select mb-0 w-100"
                            bindLabel="label"
                            [searchable]="false"
                            [items]="states"
@@ -177,7 +177,7 @@
               <label class="has-float-label mb-0">
                 <ng-select name="cities"
                            placeholder="Ciudad/Barrio"
-                           class="custom-select dropdown select-height-normal mb-0 w-100"
+                           class="custom-select mb-0 w-100"
                            bindLabel="label"
                            [searchable]="false"
                            [items]="cities"

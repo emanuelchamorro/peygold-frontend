@@ -3,7 +3,7 @@
     <div class="input-field">
       <label class="has-float-label mb-0">
         <ng-select placeholder="País"
-                   class="custom-select dropdown select-height-normal mb-0 w-100"
+                   class="custom-select mb-0 w-100"
                    (change)="getStates($event)"
                    bindLabel="label"
                    [searchable]="false"
@@ -26,7 +26,7 @@
       <div class="col-6 input-field">
         <ng-select placeholder="Provincia"
                    (change)="getCities($event)"
-                   class="custom-select dropdown select-height-normal mb-0 w-100"
+                   class="custom-select  mb-0 w-100"
                    bindLabel="label"
                    [searchable]="false"
                    [items]="states"
@@ -43,7 +43,7 @@
       </div>
       <div class="col-6 input-field">
         <ng-select placeholder="Ciudad/Barrio"
-                   class="custom-select dropdown select-height-normal mb-0 w-100"
+                   class="custom-select mb-0 w-100"
                    bindLabel="label"
                    (change)="emitAddress()"
                    [searchable]="false"

@@ -12,7 +12,7 @@
 
           <div class="w-100 mt-2 mb-4">
             <label class="has-float-label mb-0">
-              <ng-select placeholder="Destino de crédito" class="custom-select dropdown select-height-normal mb-0 w-100"
+              <ng-select placeholder="Destino de crédito" class="custom-select mb-0 w-100"
                 bindLabel="label" [searchable]="false" [items]="creditDestinations" [addTag]="false"
                 name="creditDestinations" [(ngModel)]="loanRequest.creditDestination"
                 [ngClass]="{'ng-dirty ng-invalid' : loansForm.submitted && creditDestination.errors}"
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <div class="row-buttons w-75 justify-content-end">
+      <div class="row-buttons w-75 justify-content-end mt-2">
         <button type="submit" role="button" class="solid-blue-button">Continuar</button>
       </div>
     </div>
