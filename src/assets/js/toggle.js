@@ -36,6 +36,7 @@ $(function () {
     $(this).find('.dropdown-menu').slideToggle(300);
   });
 
+  
   $(document).on('focusout', '.dropdown', function () {
     $(this).removeClass('active');
     $(this).find('.dropdown-menu').slideUp(300);
@@ -63,11 +64,14 @@ $(function () {
   $(document).on('click', '.option-link', function () {
     var id = $(this).attr('id');
     var idSplit = id.split('-');
+    $('div[id="lightbox-1"]').css('opacity', '0');
+    $('div[id="lightbox-1"]').css('visibility', 'hidden');
     $('div[id="lightbox-'+idSplit[1]+'"]').css('opacity', '1');
     $('div[id="lightbox-'+idSplit[1]+'"]').css('visibility', 'visible');
     $('div[id="lightbox-'+idSplit[1]+'"]').css('z-index', '20');
 
   });
+
 
   $(document).on('click', '.open-help', function () {
     $('div[id="lightbox-1"]').css('opacity', '1');
@@ -76,6 +80,15 @@ $(function () {
 
   });
  
+  $(document).on('click', '.back-arrow-help', function () {
+    
+    $('div[id="lightbox-1"]').css('opacity', '1');
+    $('div[id="lightbox-1"]').css('visibility', 'visible');
+    $('div[id="lightbox-1"]').css('z-index', '20');
+
+  });
+
+
   $(document).on('click', '.lightbox__close', function () {
     $('div[class="lightbox"]').css('opacity', '0');
     $('div[class="lightbox"]').css('visibility', 'hidden');
