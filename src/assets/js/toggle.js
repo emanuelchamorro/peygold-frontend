@@ -94,6 +94,10 @@ $(function () {
 
   /*filtrar ordenar*/	
   $(document).on('click','.filtrarOrdenar',function(){
+    $('#inputSelectFilter').val('');
+    $('#inputFilter').val('');
+    var firstOption = $('.stateDown ul li').first().text();
+    $('.boxSelect').find('span').text(firstOption);
     $(this).toggleClass("activefilter");		
     $(".DownFilters").slideToggle(300);	
   });
@@ -106,10 +110,15 @@ $(function () {
     $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);	  
   });
 
-  $(document).on('click','.stateDrop',function(){
-    $(this).closest(".boxSelect").toggleClass("active");		
-    $(this).find("i").toggleClass("rotate");		
-    $(".downDate").slideToggle(300);		  
+  $(document).on('click', '.stateDown ul li', function () {
+    console.log('click li',$(this).text());
+    $(this).parents('.boxSelect').find('span').html($(this).text());
+    //$(this).parents('.boxSelect').find('input').attr('value', $(this).attr('id'));
+    $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);
+  });
+
+  $(document).on('focus','#inputFilter',function(){
+    $(".filtrarOrdenar").trigger("click");
   });
   
    /* Fin de Select Box 2 */
