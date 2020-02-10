@@ -39,7 +39,7 @@ import { NgQrScannerModule } from 'angular2-qrscanner';
 import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 
-import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDatepickerModule, NgbPaginationModule, NgbPaginationConfig} from '@ng-bootstrap/ng-bootstrap';
 import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loan-help.component';
 
 @NgModule({
@@ -76,6 +76,7 @@ import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loa
     NgQrScannerModule,
     NgQRCodeReaderModule,
     NgbDatepickerModule,
+    NgbPaginationModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {
@@ -86,6 +87,7 @@ import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loa
         deps: [ HttpClient ]
       },
     })
-  ]
+  ],
+  providers: [NgbPaginationConfig]
 })
 export class EuPeyGoldModule { }

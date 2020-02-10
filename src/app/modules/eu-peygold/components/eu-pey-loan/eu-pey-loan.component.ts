@@ -12,6 +12,9 @@ export class EuPeyLoanComponent extends BaseComponent implements OnInit {
   @Input()
   private loan: Loan;
 
+  @Input()
+  private loanDetail: Loan;
+
   /**
    * On Init implementation
    */

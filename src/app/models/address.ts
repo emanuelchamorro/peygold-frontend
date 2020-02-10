@@ -19,7 +19,8 @@ export class Address extends Model {
    * @param floor Building floor
    * @param zipCode ZIP Code
    * @param addressFull Full address
-   * @param phone Full address
+   * @param phone phone
+   * @param billingStreet billing street
    */
   constructor(
     public street?: string,
@@ -27,7 +28,8 @@ export class Address extends Model {
     public buildingFloor?: string,
     public zipCode?: string,
     public addressFull?:string,
-    public phone?:string
+    public phone?:string,
+    public billingStreet?:string
   ) {
     super();
   }

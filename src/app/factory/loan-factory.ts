@@ -9,7 +9,7 @@ export class LoanFactory{
                 {
                     expirationOptionsId: index+1,
                     amountToPay: check.amount,
-                    CBU: check.gender==2?check.onwer.bussinessName:'', //se setea la razon social
+                    CBU: check.gender==2?check.onwer.bussinessName:'0', //se setea la razon social
                     CuentaEmisora:check.accountNumber,
                     DireccionBanco: check.address.addressFull,
                     DNIFirmante: check.onwer.documentNumber,

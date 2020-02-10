@@ -95,50 +95,45 @@ $(function () {
     $('div[class="lightbox"]').css('z-index', '0');
 
   });
-
-
   
-/*Loans btn options*/		
+  /*Loans btn options*/		
 
-$(document).on('click', '.white-btn-options', function () {
-  
-  $(this).toggleClass('active');
-  $(this).siblings().removeClass('active')
+  $(document).on('click', '.white-btn-options', function () {
+    
+    $(this).toggleClass('active');
+    $(this).siblings().removeClass('active')
 
-});
+  });
 
-
-  /*filtrar ordenar*/		
-  $(".filtrarOrdenar").click(function() {		
+  /*filtrar ordenar*/	
+  $(document).on('click','.filtrarOrdenar',function(){
+    $('#inputSelectFilter').val('');
+    $('#inputFilter').val('');
+    var firstOption = $('.stateDown ul li').first().text();
+    $('.boxSelect').find('span').text(firstOption);
     $(this).toggleClass("activefilter");		
-    $(".DownFilters").slideToggle(300);		
-  });		
+    $(".DownFilters").slideToggle(300);	
+  });
+  
   /*Fin de filtrar ordenar*/
 
-  $(".stateDrop").click(function() {		
+  $(document).on('click','.stateDrop',function(){
     $(this).closest(".boxSelect").toggleClass("active");		
-     $(this)		
-       .find("i")		
-       .toggleClass("rotate");		
-     
-   $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);	    	
-   });		
-   $(".dateDrop").click(function() {		
-     $(this).closest(".boxSelect").toggleClass("active");		
-     $(this)		
-       .find("i")		
-       .toggleClass("rotate");		
-     $(".downDate").slideToggle(300);		
-   });	
-   
-   
+    $(this).find("i").toggleClass("rotate");     
+    $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);	  
+  });
+
+  $(document).on('click', '.stateDown ul li', function () {
+    console.log('click li',$(this).text());
+    $(this).parents('.boxSelect').find('span').html($(this).text());
+    //$(this).parents('.boxSelect').find('input').attr('value', $(this).attr('id'));
+    $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);
+  });
+
+  $(document).on('focus','#inputFilter',function(){
+    $(".filtrarOrdenar").trigger("click");
+  });
+  
    /* Fin de Select Box 2 */
-
-
-
-
-  /* opacity: 1;
-    visibility: visible;
-    z-index: 20;*/
 
 });
