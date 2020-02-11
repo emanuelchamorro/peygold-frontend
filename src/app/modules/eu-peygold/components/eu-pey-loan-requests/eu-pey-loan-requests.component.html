@@ -102,13 +102,13 @@
     <p *ngIf="!showPagination" class="text-center p-end">
         No hay movimientos para mostrar.
     </p>
-    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
-        (pageChange)="loadPage($event)">
-    </ngb-pagination>
-
-
   </div>
 </div>
+
+<ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+(pageChange)="loadPage($event)">
+</ngb-pagination>
+
 <app-ui-pey-sidebar *ngIf="loan && loanDetail" (onClose)="loan = null; loanDetail = null" [closed]="!loan && !loanDetail" title="Detalles de la solicitud">
   <app-eu-pey-loan [loan]="loan" [loanDetail]="loanDetail"></app-eu-pey-loan>
 </app-ui-pey-sidebar>
