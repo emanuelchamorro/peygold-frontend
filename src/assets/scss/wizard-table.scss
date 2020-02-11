@@ -149,8 +149,7 @@ label .fa {
   position: absolute;
   background: white;
   width: 100%;
-  -webkit-box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
-  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -215,16 +214,16 @@ label .fa {
   margin: auto;
 }
 
-.DownFilters .boxSelect ul li a.optionDate {
+.DownFilters .boxSelect ul li  {
   display: block;
   padding: 8px 10px;
   font-size: 13px;
   color: $p-dark-grey
 }
 
-.DownFilters .boxSelect ul li a.optionDate:hover {
+.DownFilters .boxSelect ul li:hover {
   color: #3575ba;
-  font-weight: 900;
+  font-weight: 600;
   background: rgba(53, 117, 186, 0.15);
 }
 
@@ -244,9 +243,7 @@ label .fa {
 }
 
 .DownFilters .active a.btn-dropDown {
-  border: 1px solid transparent;
-  -webkit-box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
-  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.32);
+
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   color: #808080d1;

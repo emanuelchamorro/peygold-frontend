@@ -128,6 +128,16 @@ $(function () {
     $(this).parents('.boxSelect').find('span').html($(this).text());
     //$(this).parents('.boxSelect').find('input').attr('value', $(this).attr('id'));
     $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);
+    $(this).closest(".boxSelect").removeClass("active");
+  });
+
+  $(document).on("click", function (event) {
+    // If the target is not the container or a child of the container, then process
+    // the click event for outside of the container.
+    if ($(event.target).closest(".boxSelect").length === 0) {
+      $(".stateDown").slideUp(300);
+      $(".boxSelect").removeClass("active");
+    }
   });
 
   $(document).on('focus','#inputFilter',function(){
