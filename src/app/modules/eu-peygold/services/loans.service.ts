@@ -103,7 +103,7 @@ export class LoansService extends HttpService {
         loan.applicant.address.billingStreet = response.billingStreet;
         loan.applicant.address.state = new State(null, response.stateName);
         loan.applicant.address.city = new State(null, response.cityName);
-        loan.comments = 'No hay notas';
+        loan.comments = response.comments ?response.comments : 'No hay comentarios';
         loan.checks = response.checkInfo.map((item:any)=>{
           const check = new Check();
           check.id = item.paycheckId;

@@ -29,7 +29,7 @@
   </div>
 </div>
 
-<div *ngIf="loanOption">
+<div *ngIf="loanOption">  
   <app-eu-pey-loan-help [optionQuestions]="selectOptionQuestion2"></app-eu-pey-loan-help>
   <form name="form" (ngSubmit)="continue()" #checksForm="ngForm" novalidate>
     <div class="tab_container">
@@ -239,22 +239,23 @@
               <div class="adjuntar-img" (click)="file1.click()">
                   <img src="assets/images/adjuntar.svg" class="icono-adjuntar">Imagen del frente      
                 </div>
-                <span class="file-label">frente.jpg</span>
+                <span class="file-label">{{currentCheck.fileNameFront ? currentCheck.fileNameFront:'Subir imagen'}}</span>
               <input style="visibility: hidden; width: 0px; height:0px;" #file1 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,1)">
           </div>
           <div class="upload-file">
               <div class="adjuntar-img" (click)="file2.click()">
                   <img src="assets/images/adjuntar.svg" class="icono-adjuntar">Imagen del dorso 
                 </div>
-                <span class="file-label">Sube una imagen</span>
+                <span class="file-label">{{currentCheck.fileNameback?currentCheck.fileNameback:'Subir imagen'}}</span>
                 <input style="visibility: hidden; width: 0px; height:0px;" #file2 type="file" accept="image/*" (change)="uploadImage($event,currentCheck,2)"> 
           </div>
 
           <a href="#" class="white-button-border" (click)="saveContinue(currentCheck,y);">Guardar y continuar</a>
         </div>
-        <div class="invalid-feedback">
+      <!--  <div class="invalid-feedback">
           <span><i class="fas fa-exclamation-circle"></i>Completa todos los campos para poder continuar</span>
-        </div>
+        </div> -->
+        <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
       </section>
 
       <div class="row-buttons justify-content-end mt-3">

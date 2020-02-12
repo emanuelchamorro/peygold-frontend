@@ -26,6 +26,7 @@ export const routes = {
   qr : {
     scanner: {route: 'qr/scanner', href: indexRoute + '/qr/scanner'},
     generator: {route: 'qr/generator', href: indexRoute + '/qr/generator'},
+    confirm: {route: 'qr/confirm', href: indexRoute + '/qr/confirm'},
   },
   reports : {
     account_status: {route: 'reports/account_status', href: indexRoute + '/reports/account_status'},
