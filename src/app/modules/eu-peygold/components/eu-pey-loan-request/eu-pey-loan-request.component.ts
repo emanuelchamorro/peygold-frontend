@@ -7,6 +7,8 @@ import { InMemoryService } from '../../../../services/in-memory.service';
 import { LoansService } from '../../services/loans.service';
 import {LoanFactory} from '../../../../factory/loan-factory';
 import { SelectOptionQuestion } from '../../../../models/select-option-question';
+import { NgModel } from '@angular/forms';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -24,11 +26,13 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
   private step = 1;
   public currentDate:Date = new Date();
   private selectOptionQuestion3:Array<SelectOptionQuestion>;
+  private trySubmit = false;
 
   constructor(
     private creditDestinationsService: CreditDestinationsService,
     private inMemoryService:InMemoryService,
-    private loanService: LoansService
+    private loanService: LoansService,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
@@ -50,7 +54,16 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
   /**
    * Go to next step
    */
-  continue() {
+  continue(validators?: Array<NgModel>) {
+    if(this.step == 1){
+      const valid = this.isValidFormModels(validators);
+
+      if (! valid) {
+        this.trySubmit = true;
+        return;
+      }
+
+    }
     this.step++;
   }
 
@@ -69,15 +82,18 @@ export class EuPeyLoanRequestComponent extends BaseComponent implements OnInit {
   
   send(){
     this.busy();
+    this.spinnerService.show();
     this.loanService.createLoan(LoanFactory.make(this.loanRequest,this.loanOption,this.rescueOption)).then(
       (resp:any)=>{
         this.loanRequest.id = resp.idLoan;
+        this.spinnerService.hide();
         this.unbusy();
         this.step++;
       }
     ).catch(
       (error:any)=>{
         this.unbusy();
+        this.spinnerService.hide();
       }
     );
   }

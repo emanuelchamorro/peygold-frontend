@@ -4,6 +4,9 @@ import {LoanOption, Check, Bank, State, City, Country, LoanRequest} from '../../
 import {BanksService} from '../../services/banks.service';
 import {environment} from '../../../../../environments/environment';
 import { SelectOptionQuestion } from '../../../../models/select-option-question';
+import { BaseComponent } from '../base.component';
+import { ErrorResponse } from 'src/app/modules/commons-peygold/entities/error-response';
+
 
 
 
@@ -14,7 +17,7 @@ import { SelectOptionQuestion } from '../../../../models/select-option-question'
   templateUrl: './eu-pey-loan-request-checks-form.component.html',
   styleUrls: ['./eu-pey-loan-request-checks-form.component.scss']
 })
-export class EuPeyLoanRequestChecksFormComponent implements OnInit {
+export class EuPeyLoanRequestChecksFormComponent extends BaseComponent implements  OnInit {
 
 
   @Input('loanRequest') loanRequest:LoanRequest;
@@ -29,6 +32,9 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
   private allChecksComplete:boolean;
   private selectOptionQuestion1:Array<SelectOptionQuestion>;
   private selectOptionQuestion2:Array<SelectOptionQuestion>;
+
+  
+
  
 
 
@@ -36,12 +42,15 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
     private inMemoryService: InMemoryService,
     private bankService: BanksService,
     private locationService: LocationService
-  ) { }
+  ) {
+    super();
+  }
 
   /**
    * On Init implementation
    */
-  ngOnInit() {
+  ngOnInit() { 
+
     this.loanOptions = this.inMemoryService.loanOptions(this.loanRequest.amount);
     this.bankService.all().then((banks) => this.banks = banks);
     const country = new Country(environment.locations.default.id, environment.locations.default.label);
@@ -112,8 +121,9 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
         isValid = true;
     }else{
         console.log('check','not');
-        isValid = true;
-    }    false
+        isValid = false;
+        this.setError("Completa todos los campos para poder continuar.");
+    }    
 
     if(this.loanOption.checks.length == index+1){
       let isValid = true;
@@ -136,7 +146,7 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
 
   public uploadImage($event: Event,check:Check,type:number): void {
    let file:File =  $event.target[`files`][0]
-
+    
    const reader = new FileReader();
    reader.readAsDataURL(file);
    reader.onload = () => {
@@ -147,8 +157,11 @@ export class EuPeyLoanRequestChecksFormComponent implements OnInit {
        data = result.split(',')[1] || '';
       if(type == 1){
         check.frontImage = data;
+        check.fileNameFront = file.name;
+      
       }else{
         check.backImage = data;
+        check.fileNameback = file.name;
       }
      }
    };

@@ -3,6 +3,7 @@ import { LoansService } from '../../services/loans.service';
 import { Loan, TransactionType } from '../../../../models';
 import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
 import { environment } from 'src/environments/environment';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-eu-pey-loan-requests',
@@ -23,15 +24,16 @@ export class EuPeyLoanRequestsComponent implements OnInit {
   public selectFilter:string;
 
   constructor(
-    private loansService: LoansService
+    private loansService: LoansService,
+    private spinnerService:NgxSpinnerService
   ) { }
 
   ngOnInit() {
-   // this.filter = '';
-   // this.selectFilter = '';
+    this.spinnerService.show();
     this.loansService.search(new TransactionType(), '@', 1, environment.paginator.per_page).then((response: PaginationResponse) => {
       console.log('creditos', response)
       this.loans = response;
+      
       if(this.loans.data.length>0){
         this.page = response.page;
         this.previousPage = 1;
@@ -43,12 +45,14 @@ export class EuPeyLoanRequestsComponent implements OnInit {
         this.totalItems = 0;
         this.showPagination = false;
       }
+      this.spinnerService.hide();
     }).catch(
       (erro)=>{
         this.page = 1;
         this.previousPage = 1;
         this.totalItems = 0;
         this.showPagination = false;
+        this.spinnerService.hide();
       }
     );
   }
@@ -59,10 +63,12 @@ export class EuPeyLoanRequestsComponent implements OnInit {
    */
   private setLoan(loan: Loan) {
     this.loan = loan;
+    this.spinnerService.show();
     this.loansService.getById(loan.id).then(
       (response: Loan) => {
         this.loan = loan;
         this.loanDetail = response;
+        this.spinnerService.hide();
       }
     )
   }
@@ -86,14 +92,15 @@ export class EuPeyLoanRequestsComponent implements OnInit {
   }
 
   loadPage(page: number) {
-    console.log('selectFilter',this.selectFilter);
-    console.log('filter',this.filter);
+
     let word = (this.selectFilter && this.selectFilter!='') ? this.selectFilter : (this.filter && this.filter!='') ? this.filter: '@' ;
     console.log('word',word);
     this.previousPage = page - 1;
+    this.spinnerService.show();
     this.loansService.search(new TransactionType(), word, page, environment.paginator.per_page).then((response: PaginationResponse) => {
       console.log('creditos', response)
       this.loans = response;
+     
       if(this.loans.data.length){
         this.page = response.page;
         this.previousPage = 1;
@@ -106,12 +113,14 @@ export class EuPeyLoanRequestsComponent implements OnInit {
         this.totalItems = 0;
         this.showPagination = false;
       }
+      this.spinnerService.hide();
     }).catch(
       (erro)=>{
         this.page = 1;
         this.previousPage = 1;
         this.totalItems = 0;
         this.showPagination = false;
+        this.spinnerService.hide();
       }
     )
 

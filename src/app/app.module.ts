@@ -18,6 +18,7 @@ import localeEsAR from '@angular/common/locales/es-AR';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateFRParserFormatter } from './util/ngb-date-fr-Parser-Formatter';
 
+
 registerLocaleData(localeEsAR, 'es-AR');
 
 @NgModule({
