@@ -1,3 +1,6 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
 <div class="heading d-flex align-items-center">
   <span class="icon-creditos-26 fs-22"></span><h2>Créditos: Mis solicitudes</h2>
 </div>
@@ -45,9 +48,9 @@
             <div class="downFecha stateDown">
               <ul>
                   <li id="all" (click)="setFilter('')" class="optionDate">Todos los Estados</li>
-                  <li id="aprobados" (click)="setFilter('aprobados')" class="optionDate">Aprobados</li>
-                  <li id="rechazados" (click)="setFilter('rechazados')" class="optionDate">Rechazados</li>
-                  <li id="pendientes" (click)="setFilter('pendientes')" class="optionDate">Pendientes</li>
+                  <li id="aprobados" (click)="setFilter('Aprobada')" class="optionDate">Aprobados</li>
+                  <li id="rechazados" (click)="setFilter('Rechazada')" class="optionDate">Rechazados</li>
+                  <li id="pendientes" (click)="setFilter('Pendiente')" class="optionDate">Pendientes</li>
               </ul>
             </div>
           </div>
@@ -59,8 +62,6 @@
       <tr>
         <th scope="col">Fecha</th>
         <th scope="col">N° de solicitud</th>
-        <th scope="col">Análisis Administrador</th>
-        <th scope="col">Análisis Aseguradora</th>
         <th scope="col">Estado de Crédito</th>
         <th scope="col" width="20"></th>
       </tr>
@@ -69,22 +70,6 @@
       <tr *ngFor="let loan of loans.data;">
         <th scope="row" [innerHtml]="loan.applicationDate | date"></th>
         <td [innerHtml]="loan.id"></td>
-        <td>
-          <img
-            [src]="!loan.verifiedInformation ? 'assets/images/wrong.png':'assets/images/tildes-17.png'"
-            width="27"
-            height="27"
-            alt=""
-          />
-        </td>
-        <td>
-          <img
-            [src]="loan.insuranceStatus.imgIcon"
-            width="27"
-            height="27"
-            alt=""
-          />
-        </td>
         <td [innerHtml]="loan.status.label"></td>
         <td width="20">
           <div class="detallePopup">

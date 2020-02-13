@@ -1,4 +1,4 @@
-<div *ngIf="loan">
+ng<div *ngIf="loan">
   <div class="modal-content p-4">
     <ul>
       <li>
@@ -29,12 +29,11 @@
     </ul>
 
     <ul>
-  
       <li><span class="fw-700">Estado de crédito</span>
         <span [innerHtml]="loan.insuranceStatus.label"></span>
       </li>
       <div class="d-flex justify-content-center">
-        <input readonly placeholder="Agregar una nota" [(ngModel)]="loan.comments" type="text" class="d-flex w-75 mt-5 mb-3" id="input-line"/>
+        <input readonly placeholder="Agregar una nota" [(ngModel)]="loanDetail.comments" type="text" class="d-flex w-75 mt-5 mb-3" id="input-line"/>
       </div>
     </ul>
   </div>

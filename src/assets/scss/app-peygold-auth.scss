@@ -59,6 +59,7 @@ a {
 
 
 .social-media-ops-container {
+  position: initial;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -425,21 +426,10 @@ article {
   }
 }
 
-/*Success*/
 
-.successIcon {
-  box-shadow: 0px 0px 15px #63d2a9b8;
-  border-radius: 50px;
-}
 
-.successText {
 
-  span {
 
-    color:#828282;
-    font-weight: 500;
-  }
-}
 
 @media screen and (max-width: 650.98px) {
 

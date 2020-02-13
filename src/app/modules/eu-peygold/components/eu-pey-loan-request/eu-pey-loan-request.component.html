@@ -1,10 +1,13 @@
+<ngx-spinner>
+  <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
 <div *ngIf="step==1">
   <div class="heading d-flex align-items-center">
     <span class="icon-creditos-26 fs-22"></span> <h2>Créditos: Solicitar crédito</h2>
 </div>
   <p class="opening-text">Esta solicitud está sujeta a un análisis crediticio. La solicitud es orientativa.
     Indique el motivo de su solicitud e ingrese el monto total que desea solicitar</p>
-  <form name="form" (ngSubmit)="continue()" #loansForm="ngForm" novalidate>
+  <form name="form" (ngSubmit)="continue([creditDestination,amount,notes])" #loansForm="ngForm" novalidate>
     <div class="content-center">
       <div class="grey-box d-flex flex-column w-75 align-items-center p-3">
         <div class="col-sm-6 flex-column align-items-center pt-4 pb-4">
@@ -47,7 +50,9 @@
       </div>
 
       <div class="row-buttons w-75 justify-content-end mt-2">
-        <button type="submit" role="button" class="solid-blue-button">Continuar</button>
+        <button type="submit" role="button" class="solid-blue-button"
+        [ngClass]="{'button-disable': ! isValidFormModels([creditDestination,amount,notes])}"        
+        >Continuar</button>
       </div>
     </div>
   </form>
@@ -134,15 +139,17 @@
     <div class="col-lg-11 white-container-wrapper">
       <h2><span class="icon-creditos-26 fs-22"></span>Créditos: <span>Solicitar crédito</span></h2>
       <div class="content-center">
-        <div class="grey-box bg-white d-flex flex-column w-75 align-items-center p-5">
-          <img src="/assets/images/confirmacion-blanco.svg" class="successIcon mb-3" height="100" width="100">
+        <div class="grey-box w-75 alertSuccesError p-4 mt-5 mb-5">
+          <div class="alert-container">
+          <img src="/assets/images/confirmacion-blanco.svg" class="SuccessWhite mb-3" height="100" width="100">
           <span>Se generó la</span>
           <span class="fs-24 fw-700 mb-4">solicitud N°{{loanRequest.id}}</span>
-          <div class="successText d-flex flex-column">
+          <div class="d-flex flex-column">
             <span>Su solicitud ha sido enviada a revisión.</span>
             <span> En la sección <a [routerLink]="routes.loans.index.href" class="fw-500 fs-13 text-color">"Mis
                 Solicitudes"</a> podrá ver el estado de su solicitud.</span></div>
-        </div>
+            </div>
+         </div>
       </div>
     </div>
   </div>

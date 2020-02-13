@@ -1,14 +1,12 @@
-<div class="wallet-conteiner mb-2">
-  <div class="DineroIngresado">
-    <div class="row">
-      <div class="col-12 paddingBox">
-        <img *ngIf="message.isSuccess" src="assets/images/confirmacion-blanco.svg" class="SuccessWhite" width="70" height="70"/>
-        <img *ngIf="message.isError" src="assets/images/error-blanco.svg" class="ErrorWhite" width="70" height="70"/>
+<div class="wallet-conteiner fl mb-2">
+  <div class="grey-box w-75 alertSuccesError p-4 mt-5 mb-5">
+    <div class="alert-container">
+        <img *ngIf="message.isSuccess" src="assets/images/confirmacion-blanco.svg" class="SuccessWhite" width="100" height="100"/>
+        <img *ngIf="message.isError" src="assets/images/error-blanco.svg" class="ErrorWhite" width="100" height="100"/>
 
         <h2 *ngIf="message.title" [innerHtml]="message.title">Proceso exitoso</h2>
         <p *ngIf="message.value" [innerHtml]="message.value" class="text-center"></p>
       </div>
-    </div>
   </div>
 </div>
 <div class="actionForm align-items-end">

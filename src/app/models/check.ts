@@ -25,7 +25,9 @@ export class Check extends Model {
   public bank: Bank;
   public address: Address;
   public frontImage: string;
+  public fileNameFront: string;
   public backImage: string;
+  public fileNameback: string;
   public isValid: boolean;
   public gender:number;
 
@@ -71,7 +73,9 @@ export class Check extends Model {
     this.address = check.address;
     this.onwer = check.onwer;
     this.frontImage = check.frontImage;
+    this.fileNameFront = check.fileNameFront;
     this.backImage = check.backImage;
+    this.fileNameback = check.fileNameback;
   }
 
 }

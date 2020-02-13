@@ -1,29 +1,4 @@
-<ngx-spinner>
-  <p style="font-size: 20px; color: white">Procesando...</p>
-</ngx-spinner>
-<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
-  <div [ngStyle]="{'visibility': step==1 ? 'visible' : 'hidden'}">
-    <div class="heading d-flex align-items-center">
-      <span class="icon-Iconos-06 fs-22"></span>
-      <h2>QR: Pagar con QR</h2>
-    </div>
-    <p class="opening-text mb-3">Autoriza el uso de la cámara para escanear un código QR</p>
-  
-    <button *ngIf="!camera" class="btn-blue" type="button" (click)="activateCamera()">Iniciar Camara</button>
-    <button *ngIf="camera" class="btn-blue" type="button" (click)="deactivateCamera()">Detener Camara</button>
-  
-    <input class="btn-blue" type="file" #file name="file" id="file" (change)="preview(file.files)">
-    <div align="center">
-      <ng2-qrcode-reader (result)="readQR($event)" [qrr-show]="validQR" [qrr-value]="value" [qrr-type]="'url'">
-      </ng2-qrcode-reader>
-    </div>
-  
-    <div [hidden]="!camera">
-      <qr-scanner [debug]="false" [canvasWidth]="800" [canvasHeight]="600" [stopAfterScan]="true" [updateTime]="100">
-      </qr-scanner>
-    </div>
-  </div>
-  <div *ngIf="step==2">
+<div *ngIf="step==1">
     <div class="col-lg-11 white-container-wrapper">
       <div class="top">
         <div class="row TopTitle">
@@ -73,21 +48,20 @@
       </div>
     </div>
   </div>
-  <div *ngIf="step==3">
+  <div *ngIf="step==2">
       <div class="col-lg-11 white-container-wrapper">
-          <div class="content-center">
-              <div class="grey-box w-75 alertSuccesError p-4 mt-5 mb-5">
-                <div class="alert-container">
-                 <img src="/assets/images/confirmacion-blanco.svg" alt="confirmacion" width="100" height="100" class="SuccessWhite" />
-                 <h2 class="text-center">¡El pago fue enviado!</h2>
-                 <p class="text-center">Has pagado exitosamente a <b>{{decode.fullName}}</b>.</p>
-                 <p class="text-center">El importe total fue descontado de tu billetera Peygold,<br/>verás  la operacion reflejada en "Movimientos".</p>
-                </div>
-              </div>
+        <div class="content-center">
+          <div class="grey-box w-75 alertSuccesError p-4 mt-5 mb-5">
+            <div class="alert-container">
+              <img src="/assets/images/confirmacion-blanco.svg" alt="confirmacion" class="SuccessWhite"/>
+              <h2 class="text-center">¡El pago fue enviado!</h2>
+              <p class="text-center">Has pagado exitosamente a <b>{{decode.fullName}}</b>.</p>
+              <p class="text-center">El importe total fue descontado de tu billetera Peygold,<br/>verás  la operacion reflejada en "Movimientos".</p>
+            </div>
           </div>
+        </div>
           <div class="ActionBtns">
               <a href="#" class="btn-blue-border">Volver a inicio</a>
           </div>
       </div>
   </div>
-

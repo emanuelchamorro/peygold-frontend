@@ -37,10 +37,10 @@ import { EuPeyQrScannerComponent } from './components/eu-pey-qr-scanner/eu-pey-q
 import { QRCodeModule } from 'angular2-qrcode';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
-
-
-import {NgbDatepickerModule, NgbPaginationModule, NgbPaginationConfig} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDatepickerModule, NgbPaginationModule, NgbPaginationConfig, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loan-help.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { EuPeyQrScannerConfirmComponent } from './components/eu-pey-qr-scanner-confirm/eu-pey-qr-scanner-confirm.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +63,7 @@ import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loa
     EuPeyQrGeneratorComponent,
     EuPeyQrScannerComponent,
     EuPeyLoanHelpComponent,
+    EuPeyQrScannerConfirmComponent,
   ],
   imports: [
     CommonModule,
@@ -77,6 +78,8 @@ import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loa
     NgQRCodeReaderModule,
     NgbDatepickerModule,
     NgbPaginationModule,
+    NgbAlertModule,
+    NgxSpinnerModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {
