@@ -177,8 +177,8 @@
         </div>
       </div>
     </div>
-    <div class="wallet-conteiner mb-2">
-      <div class="ingresarDinero">
+    <div class="d-flex flex-column align-items-center">
+      <div class="col-xs-12 col-sm-6 col-md-8 ingresarDinero">
         <div class="row">
           <div class="col-12 paddingBox border-bottom">
             <p class="text-center">Estás ingresando</p>
@@ -189,12 +189,12 @@
           </div>
           <div class="col-12 paddingBox">
             <p class="text-center">Forma de Pago</p>
-            <p class="text-center"><span class="IconIngresar Tarjeta"></span><b>Tarjeta <span [innerHtml]="transaction.creditCard.type | uppercase"></span></b></p>
+            <p class="text-center"><i class="IconIngresar Tarjeta"></i><b>Tarjeta <span [innerHtml]="transaction.creditCard.type | uppercase"></span></b></p>
           </div>
         </div>
       </div>
     </div>
-    <div class="actionForm ConfirmDebito align-items-end">
+    <div class="actionForm ConfirmDebito col-xs-12 col-sm-6 col-md-8  ">
       <button (click)="back()" class="btn-blue-border">Volver</button>
       <button (click)="send()" class="btn-blue">Confirmar</button>
     </div>

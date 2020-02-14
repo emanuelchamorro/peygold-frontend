@@ -305,6 +305,7 @@ a {
 .navbar-gradient {
   top:0;
   position: fixed;
+  z-index: 3;
   width:100%;
   background: rgba(72,82,160,1);
   background: -moz-linear-gradient(left, rgba(72,82,160,1) 0%, rgba(53,117,186,1) 52%, rgba(67,152,212,1) 100%);
