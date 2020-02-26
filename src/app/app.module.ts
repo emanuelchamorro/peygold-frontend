@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {LOCALE_ID, NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule, APP_INITIALIZER} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
@@ -17,9 +17,21 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import localeEsAR from '@angular/common/locales/es-AR';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateFRParserFormatter } from './util/ngb-date-fr-Parser-Formatter';
+import { LocationService } from './services/location.service';
+import { BanksService } from './services/banks.service';
 
 
 registerLocaleData(localeEsAR, 'es-AR');
+
+export function countriesProviderFactory(
+  locationService:LocationService){
+  return () =>locationService.getCountries();
+}
+
+export function bankProviderFactory(
+  banksService:BanksService){
+  return () =>  banksService.all();
+}
 
 @NgModule({
   declarations: [
@@ -61,7 +73,11 @@ registerLocaleData(localeEsAR, 'es-AR');
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
     { provide: LOCALE_ID, useValue: 'es-AR' },
-    { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}
+    { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter},
+    LocationService,
+    BanksService,
+    { provide: APP_INITIALIZER, useFactory: countriesProviderFactory, deps: [LocationService], multi: true },
+    { provide: APP_INITIALIZER, useFactory: bankProviderFactory, deps: [BanksService], multi: true }
   ],
   bootstrap: [AppComponent]
 })

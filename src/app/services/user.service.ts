@@ -39,8 +39,8 @@ export class UserService extends HttpService {
       user.email = response.email;
       user.idUserType = response.idUserType;
       user.cuit = response.cuit;
-      user.documentType = this.inMemoryService.documentTypeByValue(response.dni);
-      user.documentNumber = response.cti;
+      user.documentType = this.inMemoryService.documentTypeByValue(response.cardId?response.cardId:'DNI');
+      user.documentNumber = response.dni;
       user.bussinessName = response.socialReason;
       user.profitInstitution = new ProfitInstitution(response.idInstitution);
       user.newsLetter = response.newsLetter;
@@ -53,7 +53,7 @@ export class UserService extends HttpService {
       user.linkedIn = response.linkedIn;
       user.twitter = response.twitter;
       user.facebook = response.facebook;
-
+      user.systemUserTypeId = response.roles.filter(x => x ==='Admin').length>0 ? 2: 1; 
       if (response.roles) {
         response.roles.map((role: any) => {
           user.addRole(role);

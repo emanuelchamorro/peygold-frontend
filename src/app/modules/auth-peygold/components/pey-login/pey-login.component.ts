@@ -61,8 +61,8 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    * @return void
    */
   private goToDashboard(user: User): void {
-     //const dashboardUrl = true ?  scRoutes.dashboard.index.href : euRoutes.home.href;
-    const dashboardUrl = euRoutes.home.href;
+    const dashboardUrl = user.isAdmin ?  scRoutes.dashboard.index.href : euRoutes.home.href;
+    //const dashboardUrl = euRoutes.home.href;
     this.home = dashboardUrl;
     this.context = euRoutes.context;
     this.router.navigateByUrl(dashboardUrl, {

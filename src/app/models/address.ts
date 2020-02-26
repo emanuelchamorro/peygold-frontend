@@ -25,6 +25,7 @@ export class Address extends Model {
   constructor(
     public street?: string,
     public houseNumber?: string,
+    public floor?: string,
     public buildingFloor?: string,
     public zipCode?: string,
     public addressFull?:string,

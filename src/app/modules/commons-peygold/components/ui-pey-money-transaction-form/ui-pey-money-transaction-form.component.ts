@@ -30,6 +30,10 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
   @Input()
   public disabled = false;
 
+  @Input()
+  public multipey:boolean;
+
+
   private transactionTypes: Array<TransactionType>;
 
   /**
@@ -53,7 +57,16 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
     if (! this.transaction.type) {
       this.transaction.type = new TransactionType(TransactionTypeEnum.Fiat);
     }
-    this.transactionTypes = this.inMemoryService.transactionTypes();
+
+    this.transactionTypes = this.inMemoryService.transactionTypes(this.multipey);
+    if (this.multipey) {
+      this.transaction.multiPey = [
+        Transaction.createFromType(TransactionTypeEnum.Fiat),
+        Transaction.createFromType(TransactionTypeEnum.Points),
+      ];
+    }
+
+
   }
 
 
@@ -61,6 +74,7 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
    * Emit the transaction to parent component
    */
   public emitTransaction() {
+    console.log('transac', this.transaction);
     if ((this.type === 'request' && this.transaction.isValidToRequestMoney) || this.transaction.isValidToSendMoney) {
       this.continue.emit(this.transaction);
     }

@@ -36,7 +36,7 @@ export const environment = {
   },
   api: {
     url: 'https://api.peygold.com/api',
-    avatarUrl: 'https://api.peygold.com.com'
+    avatarUrl: 'https://api.peygold.com'
   },
   localStorage: {
     user_var_name: 'pey_user',

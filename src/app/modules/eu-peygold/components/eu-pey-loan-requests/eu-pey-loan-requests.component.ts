@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoansService } from '../../services/loans.service';
 import { Loan, TransactionType } from '../../../../models';
 import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({

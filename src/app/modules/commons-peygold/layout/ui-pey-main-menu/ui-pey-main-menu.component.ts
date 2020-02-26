@@ -32,8 +32,8 @@ export class UIPeyMainMenuComponent extends BaseComponent implements OnInit, OnD
   ) {
     super();
     this.authService.user$.subscribe((user: User) => this.user = user);
-    // const items: Array<MenuItem> = user.isAdmin ?  scMenu : euMenu;
-    const items = euMenu;
+    const items: Array<MenuItem> = this.user.isAdmin ?  scMenu : euMenu;
+    //const items = euMenu;
     this.mainMenuService.setItems(items);
     this.items = items;
   }

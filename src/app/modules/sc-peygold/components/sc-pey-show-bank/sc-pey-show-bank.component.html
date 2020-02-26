@@ -1,0 +1,64 @@
+<div *ngIf="bank">
+        <div class="BodyDetail">
+          <div class="TopBody">
+            <div class="RoundedLetter" [innerHtml]="bank.initials"></div>
+            <div class="DataName">
+              <h4 [innerHtml]="bank.socialReason"></h4>
+              <p [innerHtml]="bank.contactUser.email"></p>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+        <div class="DataDetail">
+          <table class="responsive">
+            <tr>
+              <td class="col-6">Razón social</td>
+              <td class="col-6" [innerHtml]="bank.socialReason"></td>
+            </tr>
+            <tr>
+              <td class="col-6">CUIT</td>
+              <td class="col-6" [innerHtml]="bank.cuit"></td>
+            </tr>
+            <tr>
+              <td class="col-6">Teléfono</td>
+              <td class="col-6" [innerHtml]="bank.contactUser.phone"></td>
+            </tr>
+            <tr>
+              <td class="col-6">Correo Electrónico</td>
+              <td class="col-6" [innerHtml]="bank.contactUser.email"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="DataDetail">
+          <table class="responsive">
+            <tr>
+              <!--  -->
+              <td class="col-6">País</td>
+              <td class="col-6" [innerHtml]="bank.address.country.label"></td>
+            </tr>
+            <tr>
+              <td class="col-6">Provincia</td>
+              <td class="col-6" [innerHtml]="bank.address.state.label"></td>
+            </tr>
+            <tr>
+              <td class="col-6">Ciudad/Barrio</td>
+              <td class="col-6" [innerHtml]="bank.address.city.label"></td>
+            </tr>
+            <tr>
+              <td class="col-6">Calle y Nº</td>
+              <td class="col-6" [innerHtml]="bank.address.street"></td>
+            </tr>
+            <tr>
+              <td class="col-6">Piso/depto</td>
+              <td class="col-6" [innerHtml]="bank.address.floor"></td>
+            </tr>
+            <tr>
+              <td class="col-6">Código postal</td>
+              <td class="col-6" [innerHtml]="bank.address.zipCode"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="DataDetail">
+          <a href="#" class="btn-blue-border">Imprimir</a>
+        </div>
+      </div>

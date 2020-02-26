@@ -1,3 +1,6 @@
+<ngx-spinner>
+  <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
 <div [hidden]="step != 1">
   <div class="heading d-flex align-items-center">
  <span class="icon-Iconos-04 fs-22"></span><h2>Pagar: Enviar dinero</h2>
@@ -6,12 +9,13 @@
 
   <div class="content-center">
     <div class="d-flex w-75 flex-column align-items-center">
-      <app-ui-pey-money-transaction-form type="send" [startedByUser]="user" [transaction]="transaction" buttonLabel="Continuar" (continue)="confirm($event)"></app-ui-pey-money-transaction-form>
+      <app-ui-pey-money-transaction-form [multipey]="true" type="send" [startedByUser]="user" [transaction]="transaction" buttonLabel="Continuar" (continue)="confirm($event)"></app-ui-pey-money-transaction-form>
     </div>
   </div>
 </div>
 
 <div *ngIf="step == 2">
+  
   <h2><span class="icon-Iconos-04 fs-22"></span>Pagar: <span>Enviar dinero</span></h2>
   <p class="opening-text">Confirma que los datos sean correctos.</p>
   <div class="content-center">
@@ -21,15 +25,37 @@
         <span [innerHtml]="transaction.receiver.fullName" class="fw-700"></span>
         <span [innerHtml]="transaction.receiver.email"></span>
       </div>
-      <div class="d-flex flex-row justify-content-between b-bottom-line p-4">
+      <div *ngIf="!transaction.type.isMultiPey" class="d-flex flex-row justify-content-between b-bottom-line p-4">
         <span>Recibirá</span>
         <span>{{transaction.type.coin}}{{transaction.amount | number:'1.2'}}</span>
       </div>
-      <div class="d-flex align-items-center justify-content-center b-bottom-line flex-column p-4">
+      <div *ngIf="transaction.type.isMultiPey" class="d-flex flex-row justify-content-between b-bottom-line p-4">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <div class="p-10">
+                <p class="text-left">Recibirá</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-10">
+                <p *ngFor="let trans of transaction.multiPey" class="text-right">
+                  <strong>
+                    {{trans.type.coin}}{{ trans.amount | currency: " ":"symbol":"1.0" }}
+                  </strong>
+                </p>
+              </div>
+            </div>                      
+          </div>
+        </div>
+
+
+      </div>
+    <!--  <div class="d-flex align-items-center justify-content-center b-bottom-line flex-column p-4">
         <span class="mb-3">Forma de pago</span>
         <div class="icon-{{transaction.type.label | lowercase }} mb-3"></div>
         <span class="mb-3">Billetera<br>PEYGOLD {{transaction.type.label | uppercase }}</span>
-      </div>
+      </div>-->
       <div class="d-flex align-items-center justify-content-center p-4">
         <input readonly [value]="transaction.reason" type="text" class="w-75 mt-5 mb-3" id="input-line">
       </div>

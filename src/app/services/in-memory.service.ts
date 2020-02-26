@@ -5,6 +5,8 @@ import {TransactionType, SelectOption} from '../models';
 import {TransactionTypeEnum} from '../enums';
 import {LoanOption} from '../models/loan-option';
 import { SelectOptionQuestion } from '../models/select-option-question';
+import { EffectType } from '../models/effect-type';
+import { EffectApplicationType } from '../models/effect-application-type';
 
 
 @Injectable({
@@ -17,8 +19,11 @@ export class InMemoryService extends BaseService {
    */
   get documentTypes(): Array<DocumentType> {
     return [
-      new DocumentType('1', 'DNI'),
-      new DocumentType('2', 'Libreta de identidad')
+      new DocumentType('DNI', 'DNI'),
+      new DocumentType('CI', 'Cédula'),
+      new DocumentType('LC', 'L.C.'),
+      new DocumentType('LE', 'L.E.'),
+      new DocumentType('Otro', 'Otro')
     ];
   }
 
@@ -98,6 +103,20 @@ export class InMemoryService extends BaseService {
       ];
     }
 
+  }
+
+ get loadEffectTypes():Array<EffectType>{
+    return [
+      new EffectType('1','Cargo'),
+      new EffectType('2','Abono')
+    ]
+  }
+
+ get loadEffectAplicationTypes():Array<EffectApplicationType>{
+    return [
+      new EffectApplicationType('1','Monto base'),
+      new EffectApplicationType('2','Comisión')
+    ]
   }
 
 }

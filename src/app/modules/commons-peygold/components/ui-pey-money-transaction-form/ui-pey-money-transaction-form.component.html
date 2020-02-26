@@ -2,7 +2,7 @@
   <div class="grey-box d-flex flex-column align-items-center">
     <div class="w-100 d-flex justify-content-center b-bottom-line  p-3">
       <div class="col-sm-6 pt-4">
-        <app-ui-pey-user-autocomplete [filterUsers]="[authService.user().id]" (selectUser)="setUser($event)" ></app-ui-pey-user-autocomplete>
+        <app-ui-pey-user-autocomplete  [filterUsers]="[authService.user().id]" (selectUser)="setUser($event)" ></app-ui-pey-user-autocomplete>
         <div *ngIf="(!transaction.receiver || !transaction.sender) && formTransaction.submitted" class="invalid-feedback">
           Por favor seleccione un usuario.
         </div>
@@ -27,7 +27,7 @@
           <div *ngIf="type.errors.required">Campo es requerido</div>
         </div>
 
-        <div class="input-blue-text w-100 mt-3 mb-3">
+        <div *ngIf="!transaction.type.isMultiPey" class="input-blue-text w-100 mt-3 mb-3">
           <input required type="text" placeholder="$0" class="form-control InputAmount w-100 text-center"
                  [prefix]="transaction.type.coin | translate" mask="separator.2" thousandSeparator="."
                  [min]="transaction.type.minAmount"
@@ -38,8 +38,30 @@
           <div *ngIf="transaction.amount < transaction.type.minAmount && formTransaction.submitted" class="invalid-feedback text-left">
             <div >El valor mínimo para la transaccion es {{ transaction.type.minAmount }}</div>
           </div>
-
         </div>
+        <div *ngIf="transaction.type.isMultiPey">
+          <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+                 [prefix]="transaction.multiPey[0].type.coin | translate" mask="separator.2" thousandSeparator="."
+                 [min]="transaction.multiPey[0].minAmount"
+                 name="fiatAmount" [(ngModel)]="transaction.multiPey[0].amount" #fiatAmount="ngModel" />
+          <div *ngIf="!fiatAmount.pristine && fiatAmount.invalid && formTransaction.submitted" class="invalid-feedback text-left">
+            <div *ngIf="fiatAmount.errors.required">Campo es requerido</div>
+          </div>
+          <div *ngIf="transaction.multiPey[0].amount < transaction.multiPey[0].type.minAmount && formTransaction.submitted" class="invalid-feedback text-left">
+            <div >El valor mínimo para la transaccion es {{ transaction.multiPey[1].type.minAmount }}</div>
+          </div>
+          <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+                 [prefix]="transaction.multiPey[1].type.coin | translate" mask="separator.2" thousandSeparator="."
+                 [min]="transaction.multiPey[1].type.minAmount"
+                 name="peygoldAmount" [(ngModel)]="transaction.multiPey[1].amount" #peygoldAmount="ngModel" />
+          <div *ngIf="!peygoldAmount.pristine && peygoldAmount.invalid && formTransaction.submitted" class="invalid-feedback text-left">
+            <div *ngIf="peygoldAmount.errors.required">Campo es requerido</div>
+          </div>
+          <div *ngIf="transaction.multiPey[1].amount < transaction.multiPey[1].type.minAmount && formTransaction.submitted" class="invalid-feedback text-left">
+            <div >El valor mínimo para la transaccion es {{ transaction.multiPey[1].type.minAmount }}</div>
+          </div>
+        </div>
+
         <input placeholder="Agregar una nota" type="text" class="w-100 mt-5 mb-3 input-line"
                required name="reason" #reason="ngModel" [(ngModel)]="transaction.reason" />
         <div *ngIf="!reason.pristine && reason.invalid || !transaction.reason && formTransaction.submitted" class="invalid-feedback text-left">
