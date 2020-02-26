@@ -73,7 +73,7 @@
 
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="N° de cheque" pattern="" name="number-{{y}}"
+              <input type="text" class="d-block w-100" placeholder="N° de cheque" pattern="^[0-9]*$" name="number-{{y}}"
                 [(ngModel)]="currentCheck.number" #number="ngModel"
                 maxlength="8" minlength="8">
               <div *ngIf="!number.pristine && number.invalid || checksForm.submitted && number.errors"
@@ -229,7 +229,7 @@
               <div *ngIf="!phone.pristine && phone.invalid || checksForm.submitted && phone.errors"
                 class="invalid-feedback">
                 <div *ngIf="phone.errors.required">Campo es requerido</div>
-                <div *ngIf="phone.errors.pattern">Campo es numerico</div>
+                <div *ngIf="phone.errors.pattern">Campo es numérico</div>
               </div>
             </div>
           </div>

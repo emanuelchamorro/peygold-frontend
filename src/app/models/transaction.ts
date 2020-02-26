@@ -4,6 +4,7 @@ import {TransactionStatus} from './transaction-status';
 import {TransactionType} from './transaction-type';
 import {stringify} from 'querystring';
 import {TransactionTypeEnum} from '../enums';
+import { OriginTransactionType } from './origin-transaction-type';
 
 /**
  * Transaction model
@@ -27,7 +28,9 @@ export class Transaction extends Model {
   public processedAt: string;
   public processedComments: string;
   public multiPey: Array<Transaction>;
-  public symbol:string
+  public symbol:string;
+  public originRecharge: OriginTransactionType;
+  public paymentCode:string;
 
   /**
    * Get the action label to show to the user about the transaction.
@@ -54,11 +57,23 @@ export class Transaction extends Model {
    * Returns true if the transaction is complete and ready to start.
    */
   get isValidToStart(): boolean {
-    return this.type
+
+    if(this.type && !this.type.isMultiPey){
+
+      return this.type
       && this.amount
       && this.reason
       && this.receiver !== null
       && this.sender !== null;
+    }else{
+      return this.type
+      && this.multiPey[0].amount 
+      && this.multiPey[1].amount
+      && this.reason
+      && this.receiver !== null
+      && this.sender !== null;
+    }
+
   }
 
   /**

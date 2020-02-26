@@ -1,0 +1,55 @@
+<ngx-spinner>
+        <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+    
+    <div class="top NewUser" *ngIf="checkRescue">
+        <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+        <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
+        <form name="form" #storeCheckRescue="ngForm" (ngSubmit)="submited=true; storeCheckRescue.form.valid && onSubmit(checkRescue)">
+    
+            <div class="row TopTitle  mb-3">
+    
+                <h2 *ngIf="checkRescueId==0" class="titleSecurity">
+                    <span class="icon-catalogo"></span> Catálogo:
+                    <span>Nuevo tipo de rescate de cheques</span>
+                </h2>
+                <h2 *ngIf="checkRescueId!=0" class="titleSecurity">
+                    <span class="icon-catalogo"></span> Catálogo:
+                    <span>Editar tipo de rescate de cheques</span>
+                </h2>
+    
+                <div class="col">
+    
+                </div>
+            </div>
+    
+            <div class="w-50 mb-2">
+                <div class="row">
+                    <div class="col">
+                        <h4>Datos del tipo de rescate</h4>
+                        <div class="row">
+                            <div class="col mb-2">
+                                    <label class="has-float-label mb-0 w-100">
+                                            <input type="text" placeholder="Descripción de rescate" class="form-control w-100" name="description"
+                                                [(ngModel)]="checkRescue.label" #description="ngModel" />
+                                            <span>Descripción</span>
+                                        </label>
+                                        <div *ngIf="(!description.pristine && description.invalid) || submited && description.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="description.errors.required">Campo es requerido</div>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="actionForm align-items-end">
+                <button type="submit" [routerLink]="routes.rescuecheck.index.href" class="btn-transparent-NewUser">Volver</button>
+                <button type="submit" class="btn-NewUser" [innerHtml]="checkRescueId!=0 ? 'Actualizar':'Crear'"></button>
+            </div>
+    
+        </form>
+    
+    </div>

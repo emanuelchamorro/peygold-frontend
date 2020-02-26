@@ -39,7 +39,7 @@
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Nombres" class="form-control w-100"
                    [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && name.errors}"
-                   name="name" [(ngModel)]="editableUser.name" #name="ngModel" required/>
+                   name="name" [(ngModel)]="editableUser.name" #name="ngModel" required readonly/>
             <span>Nombres</span>
             <div *ngIf="(!name.pristine && name.invalid) || storeUser.submitted && name.errors" class="invalid-feedback">
               <div *ngIf="name.errors.required">Campo es requerido</div>
@@ -51,7 +51,7 @@
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Apellido" class="form-control w-100"
                    [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && lastName.errors}"
-                   name="lastName" [(ngModel)]="editableUser.lastName" #lastName="ngModel" required/>
+                   name="lastName" [(ngModel)]="editableUser.lastName" #lastName="ngModel" required readonly/>
             <span>Apellido</span>
             <div *ngIf="!lastName.pristine && lastName.invalid || storeUser.submitted && lastName.errors" class="invalid-feedback">
               <div *ngIf="lastName.errors.required">Campo es requerido</div>
@@ -72,7 +72,7 @@
                          [(ngModel)]="editableUser.documentType"
                          [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentType.errors}"
                          #documentType="ngModel"
-                         required>
+                         required disabled>
               </ng-select>
               <div *ngIf="!documentType.pristine && documentType.invalid || storeUser.submitted && documentType.errors" class="invalid-feedback">
                 <div *ngIf="documentType.errors.required">Campo es requerido</div>
@@ -83,7 +83,7 @@
             <label class="has-float-label mb-0">
               <input type="text" placeholder="Número" class="form-control w-100"
                      [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentNumber.errors}"
-                     name="documentNumber" [(ngModel)]="editableUser.documentNumber" #documentNumber="ngModel" required/>
+                     name="documentNumber" [(ngModel)]="editableUser.documentNumber" #documentNumber="ngModel" required readonly/>
               <span>Número</span>
               <div *ngIf="!documentNumber.pristine && documentNumber.invalid || storeUser.submitted && documentNumber.errors" class="invalid-feedback">
                 <div *ngIf="documentNumber.errors.required">Campo es requerido</div>

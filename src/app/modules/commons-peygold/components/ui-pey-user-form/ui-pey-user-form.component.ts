@@ -43,14 +43,19 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.user);
+    this.editableUser = this.user;
     // Get the list of institutions
     this.institutionService.all().then((institutions: Array<Institution>) => {
       this.institutions = institutions.map((institution: Institution) => {
         return institution.toProfitInstitution();
       });
+
+      let intitutionUser = this.institutions.filter(x => x.value == this.user.profitInstitution.value)[0];
+      this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+      
     });
 
-    this.editableUser = this.user;
     this.completeName = this.user.completeName;
     this.documentTypes = this.inMemoryService.documentTypes;
     this.useSameAddress = JSON.stringify(this.editableUser.address) === JSON.stringify(this.editableUser.billingAddress);
@@ -106,10 +111,17 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    console.log('update user',this.editableUser);
     this.userService.update(this.editableUser).then(() => {
       this.completeName = this.editableUser.completeName;
       this.setDefaultSuccess();
-      this.authService.reloadUser().then( (user: User) => this.editableUser = user);
+      this.authService.reloadUser().then( (user: User) =>{ 
+        console.log('reload user',user);
+        this.editableUser = user
+        let intitutionUser = this.institutions.filter(x => x.value == user.profitInstitution.value)[0];
+        this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+        
+      })
     }).catch(this.catchError)
       .finally(() => {
       this.scrollToTop();

@@ -114,7 +114,17 @@ $(function () {
     $(this).toggleClass("activefilter");		
     $(".DownFilters").slideToggle(300);	
   });
-  
+
+  $(document).on('click','.FiltrarOrdenar',function(){
+    $('#inputSelectFilter').val('');
+    $('#inputFilter').val('');
+    var firstOption = $('.DownFiltrarOrdenar > .DownExport ul li').first().text();
+    $('.DownFiltrarOrdenar .Export').find('span').text(firstOption);
+    $(this).toggleClass("activefilter");
+    $(".DownFiltrarOrdenar").slideToggle();
+  });
+
+ 
   /*Fin de filtrar ordenar*/
 
   $(document).on('click','.stateDrop',function(){
