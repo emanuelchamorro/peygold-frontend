@@ -14,7 +14,7 @@ export class User extends Model {
   static TYPE_PERSON      = 'person';
   static TYPE_COMPANY     = 'company';
   static TYPE_INSTITUTION = 'institution';
-  static ADMIN_IDENTIFIER = 1;
+  static ADMIN_IDENTIFIER = 2;
 
   public id: number;
   public avatarURL: string;
@@ -120,9 +120,9 @@ export class User extends Model {
     data.firstName = this.name;
     data.lastName = this.lastName;
     data.phone = this.phone;
-
+  
     if (this.profitInstitution) {
-      data.idInstitution = this.profitInstitution.value;
+      data.idInstitution = parseInt(this.profitInstitution.value);
     }
 
     data.facebook = this.facebook;

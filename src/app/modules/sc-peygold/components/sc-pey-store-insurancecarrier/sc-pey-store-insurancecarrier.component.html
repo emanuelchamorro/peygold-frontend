@@ -1,0 +1,241 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+
+<div class="top NewUser" *ngIf="insurancecarrier">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
+    <form name="form" #storeInsuranceCarrier="ngForm"
+        (ngSubmit)="submited=true; storeInsuranceCarrier.form.valid && onSubmit(insurancecarrier)">
+
+        <div class="row TopTitle  mb-3">
+
+            <h2 *ngIf="!insurancecarrier.id" class="titleSecurity">
+                <span class="icon-catalogo"></span> Catálogo:
+                <span>Nueva Aseguradora</span>
+            </h2>
+            <h2 *ngIf="insurancecarrier.id" class="titleSecurity">
+                <span class="icon-catalogo"></span> Catálogo:
+                <span>Editar Aseguradora</span>
+            </h2>
+
+            <div class="col">
+
+            </div>
+        </div>
+
+        <div class="wallet-conteiner mb-2">
+            <div class="row">
+                <div class="col">
+                    <h4>Datos de contacto</h4>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Razón social" class="form-control w-100"
+                                    name="socialReason" [(ngModel)]="insurancecarrier.socialReason"
+                                    #socialReason="ngModel" required />
+                                <span>Razón social</span>
+
+                            </label>
+                            <div *ngIf="(!socialReason.pristine && socialReason.invalid) || submited && socialReason.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="socialReason.errors.required">Campo es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="CUIT" class="form-control w-100" name="cuit"
+                                    [(ngModel)]="insurancecarrier.cuit" #cuit="ngModel"
+                                    pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" />
+                                <span>CUIT</span>
+                            </label>
+                            <div *ngIf="(!cuit.pristine && cuit.invalid) || submited && cuit.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="cuit.errors.required">Campo es requerido</div>
+                                <div *ngIf="cuit.errors.pattern">CUIT inválido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Teléfono" class="form-control w-100" name="phone"
+                                    [(ngModel)]="insurancecarrier.contactUser.phone" #phone="ngModel"
+                                    pattern="^[0-9]*$" />
+                                <span>Teléfono</span>
+                            </label>
+                            <div *ngIf="(!phone.pristine && phone.invalid) || submited && phone.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="phone.errors.required">Campo es requerido</div>
+                                <div *ngIf="phone.errors.pattern">Campo es numérico</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Correo Electrónico" class="form-control w-100"
+                                    name="email" [(ngModel)]="insurancecarrier.contactUser.email" #email="ngModel"
+                                    email="true" />
+                                <span>Correo Electrónico</span>
+                            </label>
+                            <div *ngIf="(!email.pristine && email.invalid) || submited && email.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="email.errors.required">Campo es requerido</div>
+                                <div *ngIf="email.errors.email">correo inválido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="CBU" class="form-control w-100" name="cbu"
+                                    [(ngModel)]="insurancecarrier.cbu" #cbu="ngModel" pattern="^[0-9]*$" />
+                                <span>CBU</span>
+                            </label>
+                            <div *ngIf="(!cbu.pristine && cbu.invalid) || submited && cbu.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="cbu.errors.required">Campo es requerido</div>
+                                <div *ngIf="cbu.errors.pattern">Campo es numérico</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0">
+                                <ng-select placeholder="Banco" class="custom-select  mb-0 w-100" bindLabel="label"
+                                    [searchable]="false" [items]="banks" [addTag]="false" name="bank"
+                                    [(ngModel)]="insurancecarrier.bank" #bank="ngModel" required>
+                                </ng-select>
+                            </label>
+                            <div *ngIf="(!bank.pristine && bank.invalid) || submited && bank.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="bank.errors.required">Campo es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h4>Domicilio de facturación</h4>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0">
+                                <ng-select name="countries" placeholder="País" class="custom-select mb-0 w-100"
+                                    (change)="getStates()" bindLabel="label" [searchable]="false" [items]="countries"
+                                    [addTag]="false" name="country" [(ngModel)]="insurancecarrier.address.country"
+                                    [ngClass]="{'ng-dirty ng-invalid' : submited && country.errors}" #country="ngModel"
+                                    required>
+                                </ng-select>
+                                <div *ngIf="!country.pristine && country.invalid || submited && country.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="country.errors.required">Campo es requerido</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0">
+                                <ng-select name="states" placeholder="Provincia" (change)="getCities()"
+                                    class="custom-select mb-0 w-100" bindLabel="label" [searchable]="false"
+                                    [items]="states" [addTag]="false" name="state"
+                                    [(ngModel)]="insurancecarrier.address.state"
+                                    [ngClass]="{'ng-dirty ng-invalid' : submited && state.errors}" #state="ngModel"
+                                    required>
+                                </ng-select>
+                                <div *ngIf="!state.pristine && state.invalid || submited && state.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="state.errors.required">Campo es requerido</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0">
+                                <ng-select name="cities" placeholder="Ciudad/Barrio" class="custom-select mb-0 w-100"
+                                    bindLabel="label" [searchable]="false" [items]="cities" [addTag]="false" name="city"
+                                    [(ngModel)]="insurancecarrier.address.city"
+                                    [ngClass]="{'ng-dirty ng-invalid' : submited && city.errors}" #city="ngModel"
+                                    required>
+                                </ng-select>
+                                <div *ngIf="!city.pristine && city.invalid || submited && city.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="city.errors.required">Campo es requerido</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Calle" class="form-control w-100" name="street"
+                                    [(ngModel)]="insurancecarrier.address.street" #street="ngModel" />
+                                <span>Calle</span>
+                            </label>
+                            <div *ngIf="(!street.pristine && street.invalid) || submited && street.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="street.errors.required">Campo es requerido</div>
+                            </div>
+
+                        </div>
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Nº de calle" class="form-control w-100"
+                                    name="houseNumber" [(ngModel)]="insurancecarrier.address.houseNumber"
+                                    #houseNumber="ngModel" />
+                                <span>Nº de calle</span>
+                            </label>
+                            <div *ngIf="(!houseNumber.pristine && houseNumber.invalid) || submited && houseNumber.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="houseNumber.errors.required">Campo es requerido
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Piso / Depto" class="form-control w-100" name="floor"
+                                    [(ngModel)]="insurancecarrier.address.floor" #floor="ngModel" />
+                                <span>Piso / Depto</span>
+                            </label>
+                            <div *ngIf="(!floor.pristine && floor.invalid) || submited && floor.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="floor.errors.required">Campo es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Código postal" class="form-control w-100"
+                                    name="postalCode" [(ngModel)]="insurancecarrier.address.zipCode"
+                                    #postalCode="ngModel" />
+                                <span>Código postal</span>
+                            </label>
+                            <div *ngIf="(!postalCode.pristine && postalCode.invalid) || submited && postalCode.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="postalCode.errors.required">Campo es
+                                    requerido</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="actionForm align-items-end">
+            <button type="submit" [routerLink]="routes.insurancecarriers.index.href" class="btn-transparent-NewUser">Volver</button>
+            <button type="submit" class="btn-NewUser" [innerHtml]="insurancecarrier.id ? 'Actualizar':'Crear'"></button>
+        </div>
+
+    </form>
+
+</div>

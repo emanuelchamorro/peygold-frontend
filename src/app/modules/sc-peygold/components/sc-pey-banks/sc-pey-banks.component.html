@@ -1,0 +1,116 @@
+<ngx-spinner>
+        <p style="font-size: 20px; color: white">Procesando...</p>
+    </ngx-spinner>
+    <div class="top">
+        <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+        <div class="row TopTitle mb-3">
+            <div class="col">
+                <h2 class="titleSecurity"><span class="icon-catalogo"></span> Catálogos: Bancos</h2>
+            </div>
+            <div class="col">
+                <form>
+                    <input id="inputFilter" type="text" class="inputSearch" name="filter" (keyup)="search($event)"
+                        [(ngModel)]="filter" placeholder="Buscar" />
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-6 form-inline">
+                <!--<div class="form-group">
+                    <button class="btn FiltrarOrdenar ">Filtrar/Ordenar</button>
+                    <form name="form" #selectFilterForm="ngForm">
+                        <input id="inputSelectFilter" type="hidden" name="selectFilter" [(ngModel)]="selectFilter" />
+                    </form>
+                </div> -->
+    
+                <div class="form-group">
+                    <div class="Export">
+                        <a class="ExportBtn slide-toggle"><span class="ExportIcon"></span>Exportar como<span
+                                class="ChevronDown"></span></a>
+                        <div class="DownExport slide-toggle-content">
+                            <ul>
+                                <li><a (click)="export('csv')">.CSV</a></li>
+                                <li><a (click)="export('xlsx')">.XLSX</a></li>
+                                <li><a (click)="export('pdf')">.PDF</a></li>
+                                <li><a (click)="export('txt')">.TXT</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6">
+                <a [routerLink]="routes.banks.post.href" class="btn-blue-lg"><span class="plusIcon"></span> Nuevo
+                    banco</a>
+            </div>
+        </div>
+    </div>
+    <div class="mb-2">
+        <div class="tablaDatos">
+           <!-- <div class="DownFiltrarOrdenar">
+                <div class="Export">
+                    <a class="ExportBtn">Estado<span class="ChevronDown"></span></a>
+                    <div class="DownExport">
+                        <ul>
+                            <li id="deleted" (click)="setFilter('true')" class="optionDate">Eliminado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div> -->
+            <table id="tableBanks" class="table responsive" *ngIf="banks && banks.data">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Código ID</th>
+                        <th scope="col" class="text-center">Razón social</th>
+                        <th scope="col" class="text-center">CUIT</th>
+                        <th scope="col" class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bank of banks.data;">
+                        <td>
+                            <p class="text-center">{{bank.id}}</p>
+                        </td>
+                        <td>
+                            <p class="text-center">{{bank.socialReason}}</p>
+                        </td>
+                        <td>
+                            <p class="text-center">{{bank.cuit}}</p>
+                        </td>
+                        <td class="text-center">
+                            <span *ngIf="!bank.deleted" class="status Aprobado"></span>
+                            <span *ngIf="bank.deleted" class="status Bloqueado"></span>
+                        </td>
+                        <td class="text-center">
+                            <div class="DropOptions toggleOptions">
+                                <span class="options slide-toggle"></span>
+                                <div class="OptionsDrop text-left slide-toggle-content">
+                                    <a class="dropdown-item ViewDetails" (click)="showBank(bank)">Ver detalles</a>
+                                    <a class="dropdown-item" [routerLink]="[routes.banks.post.href,bank.id]">Editar banco</a>
+                                    <div class="row">
+                                        <div class="col col-6">
+                                            <a class="dropdown-item" (click)="add(bank)"><span
+                                                    class="Seguridad-icon icon-Activar"></span>Agregar</a>
+                                        </div>
+                                        <div class="col col-6">
+                                            <a class="dropdown-item" (click)="delete(bank)"><span
+                                                    class="Seguridad-icon icon-Desactivar"></span>Eliminar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p *ngIf="!showPagination" class="text-center p-end">
+                No hay bancos para mostrar.
+            </p>
+        </div>
+        <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+            (pageChange)="loadPage($event)">
+        </ngb-pagination>
+    </div>
+    <app-ui-pey-sidebar *ngIf="detailedBank && completed" (onClose)="detailedBank = null"
+        [closed]="!detailedBank" title="Detalles de banco">
+        <app-sc-pey-show-bank [bank]="detailedBank"></app-sc-pey-show-bank>
+    </app-ui-pey-sidebar>

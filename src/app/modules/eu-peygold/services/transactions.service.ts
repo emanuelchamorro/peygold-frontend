@@ -13,8 +13,8 @@ export class TransactionsService extends HttpService {
    * Search transactions.
    * @return Promise<Array<Transaction>> the list of transaction
    */
-  search(): Promise<Array<Transaction>> {
-    return this.get('/transactions/search/@/0/1/10')
+  search(page:number,perPage:number): Promise<Array<Transaction>> {
+    return this.get(`/transactions/search/@/0/${page}/${perPage}`)
       .pipe(
         map((response) => {
           return response.value.map((item: any) => {
@@ -101,5 +101,19 @@ export class TransactionsService extends HttpService {
     }
     console.log('payment en el servicio',payment)
     return this.post(url,payment).toPromise();
+  }
+
+    /**
+   * Start a Send money transaction
+   * @return Promise
+   */
+  createExternal(transaction: Transaction) {
+    return this.post('/transactions/CreateExternalTransaction', {
+      Ammount: transaction.amount,
+      IdTransactionType: parseInt(transaction.type.value),
+      IdOriginRecharge: parseInt(transaction.originRecharge.value),
+      PayerData: "No.REF: 0125452848145 Rapid Pago"
+     
+    }).toPromise();
   }
 }

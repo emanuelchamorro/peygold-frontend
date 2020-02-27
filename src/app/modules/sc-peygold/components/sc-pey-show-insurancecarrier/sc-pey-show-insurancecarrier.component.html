@@ -1,0 +1,72 @@
+<div *ngIf="insuranceCarrier">
+  <div class="BodyDetail">
+    <div class="TopBody">
+      <div class="RoundedLetter" [innerHtml]="insuranceCarrier.initials"></div>
+      <div class="DataName">
+        <h4 [innerHtml]="insuranceCarrier.socialReason"></h4>
+        <p [innerHtml]="insuranceCarrier.contactUser.email"></p>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="DataDetail">
+    <table class="responsive">
+      <tr>
+        <td class="col-6">Razón social</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.socialReason"></td>
+      </tr>
+      <tr>
+        <td class="col-6">CUIT</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.cuit"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Teléfono</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.contactUser.phone"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Correo Electrónico</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.contactUser.email"></td>
+      </tr>
+      <tr>
+        <td class="col-6">CBU</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.cbu"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Banco</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.bank.label"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="DataDetail">
+    <table class="responsive">
+      <tr>
+        <!--  -->
+        <td class="col-6">País</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.address.country.label"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Provincia</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.address.state.label"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Ciudad/Barrio</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.address.city.label"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Calle y Nº</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.address.street"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Piso/depto</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.address.floor"></td>
+      </tr>
+      <tr>
+        <td class="col-6">Código postal</td>
+        <td class="col-6" [innerHtml]="insuranceCarrier.address.zipCode"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="DataDetail">
+    <a href="#" class="btn-blue-border">Imprimir</a>
+  </div>
+</div>

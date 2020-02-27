@@ -1,12 +1,13 @@
+<ngx-spinner>
+  <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
 <div class="heading d-flex align-items-center">
 <span class="icon-Iconos-05 fs-22"></span><h2>Pagar: Solicitudes de pago</h2>
 </div>
 <div class="filtros">
   <div class="row">
     <div class="col-sm-6 left">
-      <button class="btn btn-sm filtrarOrdenar">
-        Filtrar/Ordenar
-      </button>
+
     </div>
     <div class="col-sm-6 right">
       <form action="?" name="buscarFiltro">
@@ -22,63 +23,6 @@
 </div>
 <div class="content-center">
   <div class="grey-box d-flex flex-column w-100 mb-3">
-    <div class="DownFilters">
-      <form class="form-inline">
-        <div class="input-group">
-          <div class="boxSelect">
-            <a class="btn-dropDown stateDrop"
-            >Todos los Estados <i class="fa fa-chevron-right"></i
-            ></a>
-            <div class="downFecha stateDown">
-              <ul>
-                <li>
-                  <a href="#" class="optionDate"
-                  >Todos los Estados</a
-                  >
-                </li>
-                <li>
-                  <a href="#" class="optionDate">Aprobados</a>
-                </li>
-                <li>
-                  <a href="#" class="optionDate">Rechazados</a>
-                </li>
-                <li>
-                  <a href="#" class="optionDate">Pendientes</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="input-group">
-          <div>
-            <div class="boxSelect">
-              <a class="btn-dropDown dateDrop"
-              >Fecha <i class="fa fa-chevron-right"></i
-              ></a>
-              <div class="downFecha downDate">
-                <ul>
-                  <li><a href="#" class="optionDate">Hoy</a></li>
-                  <li><a href="#" class="optionDate">Ayer</a></li>
-                  <li>
-                    <a href="#" class="optionDate">Mes Pasado</a>
-                  </li>
-                  <div class="dropdown-divider"></div>
-                  <li>
-                    <a href="#" class="btn">Desde 05/08/2019</a>
-                  </li>
-                  <li>
-                    <a href="#" class="btn">Desde 05/08/2019</a>
-                  </li>
-                  <li>
-                    <a href="#" class="btn btn-sm">Aceptar</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
     <div class="table colorchange">
       <div class="top-table-radiobtn"></div>
       <div class="pago-solicitud" *ngFor="let transaction of transactions;"

@@ -21,4 +21,8 @@ export class EuPeyMoneyAddComponent extends BaseComponent implements OnInit {
   setTransaction(transaction: Transaction) {
     this.transaction = transaction;
   }
+
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 }

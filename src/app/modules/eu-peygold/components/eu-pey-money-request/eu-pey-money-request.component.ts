@@ -6,6 +6,7 @@ import {RequestTransactionsService} from '../../services/request-transactions.se
 import {Message} from '../../../commons-peygold/entities/message';
 import {Router} from '@angular/router';
 import {ErrorResponse} from '../../../commons-peygold/entities/error-response';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eu-pey-money-request',
@@ -26,6 +27,7 @@ export class EuPeyMoneyRequestComponent extends BaseComponent implements OnInit 
     protected router: Router,
     private authService: AuthService,
     private requestTransactionsService: RequestTransactionsService,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
@@ -49,13 +51,16 @@ export class EuPeyMoneyRequestComponent extends BaseComponent implements OnInit 
         this.submitted = false;
         return;
     }
+    this.spinnerService.show();
     this.requestTransactionsService.create(transaction).then(() => {
+      this.spinnerService.hide();
       this.showSuccessFeedback(new Message(
         '¡Tu solicitud fue enviada!',
         `Hemos enviado una solicitud de pago a <b> ${transaction.sender.completeName}</b> <br>` +
         'Te avisaremos en cuanto el cobro haya sido efectuado de forma exitosa'
-      ));
+      )); 
     }).catch((e: ErrorResponse) => {
+      this.spinnerService.hide();
       this.submitted = false;
       const message = e.message || 'No es posible realizar la transacción';
       this.setError(message);

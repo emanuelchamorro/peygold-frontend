@@ -30,11 +30,15 @@ export class LocationService extends HttpService {
       response.value.map((country: any) => {
         this.countries.push(new Country(country.idCountry, country.name));
       });
-
+      console.log('country',this.countries);
       return this.countries;
     }).catch(e => {
       return this.countries || [];
     });
+  }
+
+  get countryList(){
+    return this.countries;
   }
 
   /**

@@ -1,4 +1,13 @@
-<app-eu-pey-money-add-amount-form *ngIf="!transaction" (continue)="setTransaction($event)"></app-eu-pey-money-add-amount-form>
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+  </ngx-spinner>
+  <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<app-eu-pey-money-add-amount-form 
+*ngIf="!transaction" 
+title="Ingresar Dinero > Transferencia bancaria"
+description="Elegí el monto que deseas ingresar"
+(continue)="sendTransaction($event);">
+</app-eu-pey-money-add-amount-form>
 <div *ngIf="transaction">
   <div class="top">
     <div class="row TopTitle">
@@ -6,7 +15,23 @@
         <span class="icon-Iconos-03"></span> <h2 class="titleSecurity"> Ingresar Dinero</h2>
       </div>
     </div>
-    <div class="row TopTitle">
+    <div class="row TopTitle" *ngIf="transaction.paymentCode">
+        <div class="col-6">
+          <p>Te generamos un código de pago.<br/>
+           <!-- Muéstralo en una sucursal de Pago Fácil o Rapipago y dile cuánto dinero quieres ingresar.--></p>
+        </div>
+    </div> 
+    <div class="wallet-conteiner mb-2" *ngIf="transaction.paymentCode">
+        <div class="ingresarDinero ingresarDineroEfectivo">
+          <div class="row">
+            <div class="col-12">
+              <p class="text-center">Código de Pago</p>
+              <p class="text-center"><strong class="ingresarDineroEfectivo">{{transaction.paymentCode}}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>       
+<!--<div class="row TopTitle">
       <div class="col-6">
         <p>Copiá el CVU o Alias, ingresá a tu Home Banking<br/>y seguí los pasos del apartado "Transferencias".</p>
         <p>También podés hacerlo desde un cajero</p>
@@ -28,5 +53,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
