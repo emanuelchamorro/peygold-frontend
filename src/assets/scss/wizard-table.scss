@@ -354,6 +354,14 @@ label .fa {
   .tab_container label:first-of-type {
     border-top-left-radius: .9rem;
     border-top-right-radius: .9rem;
+    width: 100%!important;
+    top: -40px;
+  }
+  .tab_container label:nth-of-type(2), .tab_container label:nth-of-type(3) {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    width: 100%!important;
+    top: -40px;
   }
 
   .tab_container label span {

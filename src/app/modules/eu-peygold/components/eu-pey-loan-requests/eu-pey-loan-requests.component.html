@@ -68,7 +68,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let loan of loans.data;">
-        <th scope="row" [innerHtml]="loan.applicationDate | date"></th>
+        <td scope="row" [innerHtml]="loan.applicationDate | date"></td>
         <td [innerHtml]="loan.id"></td>
         <td [innerHtml]="loan.status.label"></td>
         <td width="20">

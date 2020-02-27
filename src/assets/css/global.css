@@ -706,12 +706,12 @@ input[type="hidden"]:focus {
   margin: 1rem 0;
   color: white !important;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   padding: 0.64rem 3.4rem 0.64rem 3.4rem;
   border-radius: 2em;
   background-color: #3575BA;
-  width: 220px; }
+}
 .solid-blue-button:hover {
   background-color: #5087c3; }
 
@@ -719,12 +719,12 @@ input[type="hidden"]:focus {
   margin: 1rem 0;
   color: #3575BA;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   padding: 0.64rem 3.4rem 0.64rem 3.4rem;
   border-radius: 2em;
   background-color: #fff;
-  width: 220px; }
+}
 .solid-white-button:hover {
   background-color: none;
   border: solid 1px #fff; }
@@ -734,11 +734,11 @@ input[type="hidden"]:focus {
   margin: 1rem 0;
   color: #3575BA;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   padding: 0.64rem 3.4rem 0.64rem 3.4rem;
   border-radius: 2em;
-  width: 220px;
+
   border: solid 1px  #3575BA; }
 .white-button-border:hover {
   background: #3575BA;

@@ -18,32 +18,39 @@
   
       <!-- container for elements -->
       <div class="col-lg-8 login-input-container">
-        <nav id="top-navbar-register">
+        <nav id="top-navbar-register" class="top-navbar-register">
           <!-- Barra de navegacion superior -->
-          <ul class="top-nav">
-            <div [ngSwitch]="type">
-              <li class="ml-4">
+    
+            <span [ngSwitch]="type">
+          
                 <a class="fw-700" *ngSwitchDefault href="#">Registrarse</a>
-              </li>
-              <li class="ml-4" *ngSwitchCase="'person'">
-                <a class="fw-700" href="#">Registrarse: Persona</a>
-              </li>
-              <li class="ml-4" *ngSwitchCase="'company'">
-                <a class="fw-700" href="#">Registrarse: Empresa</a>
-              </li>
-              <li class="ml-4" *ngSwitchCase="'institution'">
-                <a class="fw-700" href="#">Registrarse: Institución</a>
-              </li>
-            </div>
-            <div>
-              <li class="fs-12 ml-4">
+            
+            
+                <a class="fw-700" *ngSwitchCase="'person'" href="#">Registrarse: Persona</a>
+           
+            
+                <a class="fw-700" *ngSwitchCase="'company'" href="#">Registrarse: Empresa</a>
+         
+              
+                <a class="fw-700" *ngSwitchCase="'institution'" href="#">Registrarse: Institución</a>
+              
+            </span>
+     
+            <label class="hamburger" for="nav-toggle"></label>
+            <input id="nav-toggle" type="checkbox" class="hidden" />
+
+            <div class="nav-right">
+                                    
+              <ul class="top-nav">
+               <li class="fs-12 mr-3">
                 <a [routerLink]="routes.login.href">¿Ya tienes una cuenta?</a>
-              </li>
-              <li class="fs-12 ml-4">
+               </li>
+               <li class="fs-12 ">
                 <a [routerLink]="routes.login.href" class="border-button">Iniciar sesión</a>
-              </li>
+               </li>
+            </ul>
             </div>
-          </ul>
+      
         </nav>
 
         <div class="col-12" *ngIf="!type">

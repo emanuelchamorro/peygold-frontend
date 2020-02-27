@@ -91,3 +91,18 @@ display: flex;
 
 
 }
+
+@media screen and (max-width: 768px) {
+ 
+  .upload-file-container {
+
+    flex-direction: column;
+
+  }
+
+.upload-file {
+  width: 100%;
+  text-align: left;
+}
+
+}

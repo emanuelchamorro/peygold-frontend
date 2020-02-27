@@ -20,7 +20,12 @@
   z-index: 2;
   width: calc(100% - 33.3%);
   position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   top: 0;
+  padding-left: 30px;
+  padding-right: 30px;
   background-color: #C8C8C8;
   -webkit-box-shadow: 0px 0px 6px 8px -3px rgba(14, 14, 14, 0.51);
   -moz-box-shadow: 0px 6px 8px -3px rgba(14, 14, 14, 0.51);
@@ -170,7 +175,7 @@ ul.list-group {
   bottom: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 50;
+  z-index: 100;
   background-color: #fff;
    webkit-box-shadow: 7px -4px 5px -4px rgba(0,0,0,0.51);
    -moz-box-shadow: 7px -4px 5px -4px rgba(0,0,0,0.51);
@@ -576,6 +581,10 @@ div:last-child {
 }
 
 
+
+
+
+
 /* Final CSS para footer */
 
 /* Para telefonos en modo portrait (portrait phones, less than 576px)*/
@@ -620,7 +629,7 @@ div:last-child {
   .sidebar-extended {
     width: 100%;
     z-index: 500;
-    height: 100vh;
+    height: 100%;
   }
   .sidebar-collapse {
     width: 0;
