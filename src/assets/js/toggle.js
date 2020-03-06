@@ -156,4 +156,39 @@ $(function () {
   
    /* Fin de Select Box 2 */
 
+
+   /* Help User Tooltip */
+
+ $(document).on('click', '.btn-user', function () {
+    $(".user-tooltip").toggleClass("active");
+   
+  });
+ 
+  $(document).on("click", function (event) {
+ 
+    if ($(event.target).closest(".btn-user").length === 0) {
+
+      $(".user-tooltip").removeClass("active");
+    }
+  }); 
+
+
+/* Help toggle-menu */
+
+ $(document).on('click', '.help-item', function () {
+  $(".help-item-content").toggleClass("d-block");
+  $(".help-item").toggleClass("active");
+ 
+});
+
+$(document).on("click", function (event) {
+
+  if ($(event.target).closest(".help-item").length === 0) {
+    $(".help-item").removeClass("active");
+    $(".help-item-content").removeClass("d-block");
+  }
+});
+
+
+
 });

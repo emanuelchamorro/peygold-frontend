@@ -25,8 +25,8 @@
         </div>
 
         <div class="wallet-conteiner mb-2">
-            <div class="row">
-                <div class="col">
+            <div class="row d-flex w-100">
+                <div class="col-xs-12 col-sm-6">
                     <h4>Datos de contacto</h4>
                     <div class="row">
                         <div class="col mb-2">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6">
                     <h4>Domicilio de facturación</h4>
                     <div class="row">
                         <div class="col mb-2">
@@ -231,9 +231,11 @@
 
         </div>
 
-        <div class="actionForm align-items-end">
-            <button type="submit" [routerLink]="routes.insurancecarriers.index.href" class="btn-transparent-NewUser">Volver</button>
-            <button type="submit" class="btn-NewUser" [innerHtml]="insurancecarrier.id ? 'Actualizar':'Crear'"></button>
+        <div class="row-buttons justify-content-end">
+         
+            <button type="submit" [routerLink]="routes.insurancecarriers.index.href" class="white-button-border">Volver</button>
+            <button type="submit" class="solid-blue-button ml-3" [innerHtml]="insurancecarrier.id ? 'Actualizar':'Crear'"></button>
+      
         </div>
 
     </form>

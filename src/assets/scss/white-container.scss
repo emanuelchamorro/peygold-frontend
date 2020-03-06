@@ -46,7 +46,9 @@
     font-weight: 500;
     } 
 	  p.p-end {		
-    font-size: 13px;		
+    font-size: 13px;	
+    padding-top: 10px;
+    padding-bottom: 10px;	
   }		
 
     h3 {
@@ -371,7 +373,13 @@
       padding:10px;
       z-index:2;
       .row{
-        border-top:1px solid #BDBDBD;
+        border-top:1px solid #BDBDBD;    
+        justify-content: space-between;
+        padding-right: 15px;
+        padding-left: 15px;
+        display: flex;
+    }
+        
         .col{
           padding-left: 10px;
           padding-right: 10px;
@@ -387,7 +395,7 @@
       }
     }
   }
-}
+
 /*checkbox*/
 .Seguridad-icon{
   width:20px;
@@ -400,15 +408,19 @@
 }
 .Seguridad-icon.icon-Activar{
   background-image:url("~src/assets/images/activar.svg");
+  background-size: 18px;
 }
 .Seguridad-icon.icon-Desactivar{
   background-image:url("~src/assets/images/desactivar.svg");
+  background-size: 18px;
 }
 .Seguridad-icon.icon-Bloquear{
   background-image:url("~src/assets/images/bloquear.svg");
+  background-size: 16px;
 }
 .Seguridad-icon.icon-Desbloquear{
   background-image:url("~src/assets/images/desbloquear.svg");
+  background-size: 16px;
 }
 /*END checkbox*/
 .status{
@@ -420,6 +432,7 @@
 .Aprobado{
   background:url("/assets/images/confirmacion-verde.svg");
   background-size:30px;
+  background-repeat: no-repeat;
 }
 .Bloqueado{
   background:url("~src/assets/images/wrong.png");
@@ -437,6 +450,7 @@
   background-repeat:no-repeat;
   background-size:3px;
   background-position: center;
+  cursor: pointer;
 }
 /*end estado*/
 /*detalles de usuario*/
@@ -574,6 +588,7 @@
     line-height:16px;
     color:#4F4F4F;
     position:relative;
+    cursor: pointer;
     vertical-align: middle;
     position: relative;
     display: block;
@@ -665,7 +680,8 @@
 .btn-blue-lg{
   background:$p-blue;
   color:white;
-  width:152px;
+  padding-left: 15px;
+  padding-right: 15px;
   height:41px;
   font-size:13px;
   line-height: 40px;
@@ -722,6 +738,8 @@
     font-size:14px;
     line-height:17px;
     font-weight:600;
+    text-align: left;
+    margin-top: 15px;
   }
  select {
     height:52px;
@@ -881,12 +899,28 @@ h2, h3, p, span {
   width: auto!important;
   
 }  
+.titleSecurity {
+
+ text-align: left!important;
+}
+
+.TopTitle > div > form {
+
+  display: flex;
+  margin-top: 15px;
+}
+
+.form-group > .Export {
+ 
+  margin-left: 0;
+}
 
 .TopTitle, .heading {
 
   display: flex;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
 
 }
 

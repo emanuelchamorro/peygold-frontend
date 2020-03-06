@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ScPeyDashboardComponent} from './components/sc-pey-dashboard/sc-pey-dashboard.component';
 import {GuardAuthService} from './services/guard-auth.service';
 import {UIPeyLayoutComponent} from '../commons-peygold/layout/ui-pey-layout/ui-pey-layout.component';
+import {UIPeyLayoutDashboardComponent} from '../commons-peygold/layout/ui-pey-layout-dashboard/ui-pey-layout-dashboard.component';
 import {ScPeyUsersComponent} from './components/sc-pey-users/sc-pey-users.component';
 import {ScPeyStoreUserComponent} from './components/sc-pey-store-user/sc-pey-store-user.component';
 import {routes} from './routes';
@@ -20,7 +21,7 @@ import { ScPeyStoreProvinceChargeCreditComponent } from './components/sc-pey-sto
 export const config: Routes = [
   {
     path: routes.home.route,
-    component: UIPeyLayoutComponent,
+    component: UIPeyLayoutDashboardComponent,
     canActivate: [GuardAuthService],
     children: [
       {
@@ -30,6 +31,15 @@ export const config: Routes = [
           title: 'Dashboard'
         },
       },
+]
+},
+  
+  {
+    path: routes.home.route,
+    component: UIPeyLayoutComponent,
+    canActivate: [GuardAuthService],
+    children: [
+     
       {
         path: routes.users.index.route,
         component: ScPeyUsersComponent,
@@ -157,9 +167,9 @@ export const config: Routes = [
         },
       },
     ]
-  }
-];
+  },
 
+]
 @NgModule({
   imports: [ RouterModule.forRoot(config, {
     scrollPositionRestoration: 'enabled'

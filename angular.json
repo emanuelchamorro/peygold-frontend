@@ -33,7 +33,8 @@
             "scripts": [
               "src/assets/js/toggle.js",
               "src/assets/js/layout-menu.js",
-              "src/assets/js/add-money.js"
+              "src/assets/js/add-money.js",
+             
             ]
           },
           "configurations": {

@@ -157,6 +157,7 @@ html, body {
   content: "\78";
   color: #3675bb;
 }
+
 .icon-catalogo:before {
   content: "\79";
   color: #3675bb;
@@ -264,7 +265,9 @@ i.fas.fa-star.active {
   font-size: 14px;
 
 }
-
+td > p {
+  font-size: 14px!important;
+}
 #body-row {
   -webkit-transition: padding-top 0.5s;
   transition: padding-top 0.5s;

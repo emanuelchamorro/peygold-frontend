@@ -405,6 +405,40 @@ ul.sublist-pay {
     #footer .footer-content div:last-child {
       margin-right: 5rem; }
 
+
+      .navbar-gradient {
+        top: 0;
+        position: fixed;
+        width: 100%;
+        background: #4852a0;
+        background: -moz-linear-gradient(left, #4852a0 0%, #3575ba 52%, #4398d4 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, #4852a0), color-stop(52%, #3575ba), color-stop(100%, #4398d4));
+        background: -webkit-linear-gradient(left, #4852a0 0%, #3575ba 52%, #4398d4 100%);
+        background: -o-linear-gradient(left, #4852a0 0%, #3575ba 52%, #4398d4 100%);
+        background: -ms-linear-gradient(left, #4852a0 0%, #3575ba 52%, #4398d4 100%);
+        background: linear-gradient(to right, #4852a0 0%, #3575ba 52%, #4398d4 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4852a0', endColorstr='#4398d4', GradientType=1 );
+        height: 52px;
+        padding: 0px 20px; }
+        .navbar-gradient a {
+          color: #fff; }
+        .navbar-gradient a:hover {
+          color: #fff; }
+        .navbar-gradient a.btn-white {
+          background: white;
+          width: 130px;
+          height: 30px;
+          border-radius: 50px;
+          line-height: 14px;
+          color: #3575BA;
+          text-align: center;
+          padding: .5rem 1.4rem .5rem 1.4rem; }
+      
+      .navbar-gradient a img {
+        width: 173px;
+        height: 29px; }
+
+
 /* Final CSS para footer */
 /* Para telefonos en modo portrait (portrait phones, less than 576px)*/
 @media screen and (min-width: 865px) and (max-width: 955px) {

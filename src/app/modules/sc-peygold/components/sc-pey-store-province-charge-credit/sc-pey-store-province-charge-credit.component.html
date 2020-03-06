@@ -24,9 +24,9 @@
                 </div>
             </div>
     
-            <div class="w-50 mb-2">
+            <div class="">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-xs-12 col-sm-6">
                         <h4>Datos del cargo/abono</h4>
                         <div class="row">
                                 <div class="col mb-2">
@@ -108,13 +108,15 @@
     
             </div>
     
-            <div class="actionForm align-items-end">
+            <div class="row-buttons justify-content-end">
+              
                 <button type="submit" [routerLink]="routes.provincechargescredits.index.href"
-                    class="btn-transparent-NewUser">Volver</button>
-                <button type="submit" class="btn-NewUser"
+                    class="
+                    white-button-border">Volver</button>
+                <button type="submit" class="solid-blue-button ml-3"
                     [innerHtml]="generalChargeCreditId!=0 ? 'Actualizar':'Crear'"></button>
-            </div>
-    
+         
+        </div>
         </form>
     
     </div>

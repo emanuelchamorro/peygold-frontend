@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CAAC;EACP,gBAAgB,EAAE,KAAK;EACvB,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;EACb,aAAa,EAAE,GAAG;EAClB,MAAM,EAAE,IAAI;CACb",
+    "sources": [
+        "ui-pey-layout.component.scss"
+    ],
+    "names": [],
+    "file": "ui-pey-layout.component.css"
+}
