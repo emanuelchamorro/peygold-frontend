@@ -137,6 +137,7 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
     this.spinnerService.show();
     this.insuranceCarrierService.getById(id).then((insurancecarrier: InsuranceCarrier) => {
       this.detailedInsuranceCarrier = insurancecarrier;
+      console.log('detailedInsuranceCarrier', this.detailedInsuranceCarrier);
       if (this.detailedInsuranceCarrier.address.country) {
         this.locationService.getStates(this.detailedInsuranceCarrier.address.country).then((states: Array<State>) => {
           this.detailedInsuranceCarrier.address.state = states.filter( x=> x.value== this.detailedInsuranceCarrier.address.state.value)[0];

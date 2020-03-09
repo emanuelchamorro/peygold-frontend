@@ -7,6 +7,7 @@ import {PaymentMethod} from './payment-method';
 import {CreditDestination} from './credit-destination';
 import { SelectOption } from './select-option';
 import { Check } from './check';
+import { InsuranceLoan } from './insurance-loan';
 
 /**
  * Loan model
@@ -17,7 +18,7 @@ export class Loan extends Model {
   public amount: number;
   public employees: number;
   public loanConcept: string;
-  public verifiedInformation: string;
+  public verifiedInformation: boolean;
   public verifiedComments: string;
   public approveDeniedComments: string;
   public applicationDate: string;
@@ -35,6 +36,12 @@ export class Loan extends Model {
   public insuranceCarrier: SelectOption;
   public amountOfBeneficiary:number;
   public checks:Array<Check>;
+  public adminStatus: LoanStatus;
+  public adminUser: User;
+  public adminProcessingDate:string;
+  public riskySituation:boolean;
+  public adminComments:string;
+  public insuranceLoan:InsuranceLoan;
 
 
 }

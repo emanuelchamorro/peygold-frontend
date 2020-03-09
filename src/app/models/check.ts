@@ -30,6 +30,7 @@ export class Check extends Model {
   public fileNameback: string;
   public isValid: boolean;
   public gender:number;
+  public loanCreditDetailId: number;
 
   public paymentDate: Date;
   public checkStatusUpdate:number;

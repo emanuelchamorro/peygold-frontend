@@ -21,6 +21,7 @@ import { LocationService } from './services/location.service';
 import { BanksService } from './services/banks.service';
 
 
+
 registerLocaleData(localeEsAR, 'es-AR');
 
 export function countriesProviderFactory(
@@ -30,12 +31,12 @@ export function countriesProviderFactory(
 
 export function bankProviderFactory(
   banksService:BanksService){
-  return () =>  banksService.all();
+  return () =>  banksService.getBanks();
 }
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -74,9 +75,9 @@ export function bankProviderFactory(
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
     { provide: LOCALE_ID, useValue: 'es-AR' },
     { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter},
-    LocationService,
-    BanksService,
+    LocationService,    
     { provide: APP_INITIALIZER, useFactory: countriesProviderFactory, deps: [LocationService], multi: true },
+    BanksService,
     { provide: APP_INITIALIZER, useFactory: bankProviderFactory, deps: [BanksService], multi: true }
   ],
   bootstrap: [AppComponent]

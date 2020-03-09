@@ -8,27 +8,42 @@ import {HttpService} from './http.service';
 })
 export class BanksService extends HttpService {
 
-  private banks: Array<Bank>;
+  public banks: Array<Bank>;
 
   /**
    * Get all banks
    */
-  all(): void {
-    this.get('/bank')
+  all(): Promise<Array<Bank>> {
+    return this.get('/bank')
       .pipe(
         map((banks: Array<any>) => banks.map((item: any) => {
             return new Bank(item.value, item.label);
           })
         )
-      ).toPromise().then(
-        (resp:any)=> {
-          this.banks = resp;          
-        }
-      ).catch(
-        (error:any)=>{
-          console.log(error);
-        }
-      );
+      ).toPromise();
+  }
+
+
+  getBanks(): Promise<Bank[]>  {
+    if (this.banks) {
+      return this.resolveWith(this.banks);
+    }
+
+    return this.get('/bank').toPromise().then((response: any) => {
+      this.banks = [];
+
+      if (!response) {
+        return this.banks;
+      }
+
+      response.map((bank: any) => {
+        this.banks.push(new Bank(bank.value, bank.label));
+      });
+      console.log('banks',this.banks);
+      return this.banks;
+    }).catch(e => {
+      return this.banks || [];
+    });
   }
 
   get banksList(){

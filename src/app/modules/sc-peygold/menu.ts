@@ -19,7 +19,7 @@ export const menu: Array<MenuItem> = [
 
   ]}),
   new MenuItem().fromJSON({label: 'Gestión de créditos', icon: 'icon-creditos-26', childs: [
-    new MenuItem().fromJSON({label: 'Solicitudes', href: routes.home.href}),
+    new MenuItem().fromJSON({label: 'Solicitudes', href: routes.creditmanagement.index.href}),
     new MenuItem().fromJSON({label: 'Liquidaciones', href: routes.home.href}),
     new MenuItem().fromJSON({label: 'Control de pagos', href: routes.home.href}),
   ]}),

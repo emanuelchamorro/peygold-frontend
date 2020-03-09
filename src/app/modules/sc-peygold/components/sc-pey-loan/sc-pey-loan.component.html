@@ -1,0 +1,96 @@
+<div *ngIf="loan">
+    <div class="modal-content p-4">
+        <ul>
+            <li>
+                <span [innerHtml]="'Solictud: ' + loan.id"></span>
+                <span [innerHtml]="loan.applicationDate | date:medium"></span>
+            </li>
+        </ul>
+
+        <ul>
+            <li class="fw-700">Solicitante</li>
+
+            <li>
+                <span>Nombre de la empresa</span>
+                <span [innerHtml]="loanDetail.applicant.bussinessName"></span>
+            </li>
+            <li><span>CUIT</span>
+                <span [innerHtml]="loanDetail.applicant.cuit"></span>
+            </li>
+            <li><span>Teléfono</span>
+                <span [innerHtml]="loanDetail.applicant.phone"></span>
+            </li>
+            <li><span>Mail</span>
+                <span [innerHtml]="loanDetail.applicant.email"></span>
+            </li>
+            <li><span>Dirección</span>
+                <span [innerHtml]="loanDetail.applicant.address.state.label"></span>
+            </li>
+        </ul>
+
+        <ul>
+            <li class="fw-700">Solicitud</li>
+
+            <li><span>Motivo de la solicitud</span>
+                <span [innerHtml]="loan.creditDestination.label"></span>
+            </li>
+            <li><span>Monto</span>
+                <span>{{ loan.transactionType.coin }}&nbsp;{{loan.amount | number:'1.2'}}</span>
+            </li>
+            <li><span>Plan de cuotas</span>
+                <span *ngIf="loanDetail.checks.length==1">Opción 1</span>
+                <span *ngIf="loanDetail.checks.length==3">Opción 2</span>
+                <span *ngIf="loanDetail.checks.length==4">Opción 3</span>
+            </li>
+            <li><span>Rescate</span>
+                <span [innerHtml]="loanDetail.checkRescue.label"></span>
+            </li>
+        </ul>
+
+        <ul>
+            <li class="fw-700">Análisis del administrador</li>
+
+            <li><span>Situación crediticia de la empresa</span>
+                <span [innerHtml]="loan.riskySituation ? 'Situación segura':'Situación riesgosa'"></span>
+            </li>
+            <li><span>Cheques presentados</span>
+                <a href="#">Descargar todos</a>
+            </li>
+            <li><span>Estado</span>
+                <span [innerHtml]="loan.adminStatus.label"></span>
+            </li>
+
+            <div class="d-flex justify-content-center">
+                <input readonly placeholder="No informa" [(ngModel)]="loan.adminComments" type="text" class="d-flex w-75 mt-5 mb-3" id="input-line" />
+            </div>
+        </ul>
+
+        <ul *ngIf="loanDetail.insuranceLoan">
+            <li class="fw-700">Gestión aseguradora</li>
+
+            <li><span>Fecha de creación</span>
+                <span [innerHtml]="loanDetail.insuranceLoan.creationDate | date:medium"></span>
+            </li>
+            <li><span>Aseguradora</span>
+                <span>La Caja Seguros</span>
+            </li>
+            <li><span>Solicitante</span>
+                <span [innerHtml]="loanDetail.insuranceLoan.userAdmin.name"></span>
+            </li>
+            <li><span>Fecha de revisión</span>
+                <span [innerHtml]="loanDetail.insuranceLoan.revisionDate | date:medium"></span>
+            </li>
+            <li><span>N° de póliza</span>
+                <span [innerHtml]="loanDetail.insuranceLoan.policyNumber"></span>
+            </li>
+            <li><span>Estado</span>
+                <span [innerHtml]="loanDetail.insuranceLoan.insuranceStatus.label"></span>
+            </li>
+            <div class="d-flex justify-content-center">
+                <input readonly placeholder="No informa" [(ngModel)]="loanDetail.insuranceLoan.comments"  type="text" class="d-flex w-75 mt-5 mb-3" id="input-line" />
+            </div>
+
+        </ul>
+    </div>
+
+</div>

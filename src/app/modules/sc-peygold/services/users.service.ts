@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpService} from '../../../services/http.service';
-import {Address, City, Contact, Country, ProfitInstitution, State, User, UserStatus, DocumentType, Person} from '../../../models';
-import {HttpClient} from '@angular/common/http';
-import {InMemoryService} from '../../../services';
-import {UserService} from '../../../services/user.service';
+import { HttpService } from '../../../services/http.service';
+import { Address, City, Contact, Country, ProfitInstitution, State, User, UserStatus, DocumentType, Person } from '../../../models';
+import { HttpClient } from '@angular/common/http';
+import { InMemoryService } from '../../../services';
+import { UserService } from '../../../services/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,7 @@ export class UsersService extends UserService {
         nUser.idUserType = user.idUserType;
         return nUser;
       })
-    );
+      );
   }
 
   /**

@@ -11,12 +11,15 @@ import { City } from '../../../models/city';
 import { Bank } from '../../../models/bank';
 import { BanksService } from '../../../services/banks.service';
 import { LocationService } from '../../../services/location.service';
+import { SelectOption } from '../../../models/select-option';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class InsuranceCarrierService extends HttpService {
+
+  public insurancesCarriers: Array<SelectOption>;
 
   constructor(protected http: HttpClient, protected banksService:BanksService,
     protected locationService:LocationService) {
@@ -93,7 +96,6 @@ export class InsuranceCarrierService extends HttpService {
     const insurancecarrier = new InsuranceCarrier();
     return this.get(`/insurancecarriers/${id}`).toPromise().then(
       (resp)=>{
-        console.log(resp);
         insurancecarrier.id = resp.insuranceCarrierId;
         insurancecarrier.socialReason = resp.insuranceSocialReason;
         insurancecarrier.cuit = resp.insuranceCUIT;
@@ -107,11 +109,12 @@ export class InsuranceCarrierService extends HttpService {
         insurancecarrier.address.floor = resp.floor;
         insurancecarrier.address.zipCode = resp.postalCode;
         const country = this.locationService.countryList.filter(x => Number(x.value)==resp.idCountry)[0];
+        console.log('in service country',country);
         insurancecarrier.address.country = new Country(country.value,country.label);
         insurancecarrier.address.state = new State(resp.idState);
         insurancecarrier.address.city = new City(resp.idCity);
         const bank = this.banksService.banksList.filter(x => Number(x.value) == resp.idBank)[0];
-        console.log('in service',bank);
+        console.log('in service bank',bank);
         insurancecarrier.bank = new Bank(bank.value,bank.label);
         insurancecarrier.cbu = resp.cbu;
         insurancecarrier.currentAccount = resp.cuentaCorriente;
@@ -124,6 +127,26 @@ export class InsuranceCarrierService extends HttpService {
         return null;
       }
     );
+  }
+
+  all():Promise<Array<SelectOption>>{
+    if (this.insurancesCarriers) {
+      return this.resolveWith(this.insurancesCarriers);
+    }
+    return this.get('/insurancecarriers').toPromise().then(
+      (response:any)=>{
+        this.insurancesCarriers = new Array();
+        if (!response) {
+          return this.insurancesCarriers;
+        }
+
+        response.map((item:any)=>{
+          this.insurancesCarriers.push(new SelectOption(item.value,item.label))
+        });
+        return this.insurancesCarriers;
+      }).catch(e => {
+        return this.insurancesCarriers || [];
+      });
   }
 
 

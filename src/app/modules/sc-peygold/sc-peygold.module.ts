@@ -13,7 +13,7 @@ import { ScPeyInsurancecarriersComponent } from './components/sc-pey-insuranceca
 import { ScPeyShowInsurancecarrierComponent } from './components/sc-pey-show-insurancecarrier/sc-pey-show-insurancecarrier.component';
 import { ScPeyStoreInsurancecarrierComponent } from './components/sc-pey-store-insurancecarrier/sc-pey-store-insurancecarrier.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbAlertModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { ExportAsModule } from 'ngx-export-as';
 import { ScPeyBanksComponent } from './components/sc-pey-banks/sc-pey-banks.component';
 import { ScPeyShowBankComponent } from './components/sc-pey-show-bank/sc-pey-show-bank.component';
@@ -25,6 +25,11 @@ import { ScPeyGeneralChargesCreditsComponent } from './components/sc-pey-general
 import { ScPeyStoreGeneralChargeCreditComponent } from './components/sc-pey-store-general-charge-credit/sc-pey-store-general-charge-credit.component';
 import { ScPeyProvinceChargesCreditsComponent } from './components/sc-pey-province-charges-credits/sc-pey-province-charges-credits.component';
 import { ScPeyStoreProvinceChargeCreditComponent } from './components/sc-pey-store-province-charge-credit/sc-pey-store-province-charge-credit.component';
+import { ScPeyCreditManagementComponent } from './components/sc-pey-credit-management/sc-pey-credit-management.component';
+import { ScPeyLoanComponent } from './components/sc-pey-loan/sc-pey-loan.component';
+import { ScPeyLoanAdministratorReviewComponent } from './components/sc-pey-loan-administrator-review/sc-pey-loan-administrator-review.component';
+import { ScPeyLoanAdministratorCheckReviewComponent } from './components/sc-pey-loan-administrator-check-review/sc-pey-loan-administrator-check-review.component';
+import { ScPeyLoanCompanyCreditRequestHistoryComponent } from './components/sc-pey-loan-company-credit-request-history/sc-pey-loan-company-credit-request-history.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,11 @@ import { ScPeyStoreProvinceChargeCreditComponent } from './components/sc-pey-sto
     ScPeyStoreGeneralChargeCreditComponent,
     ScPeyProvinceChargesCreditsComponent,
     ScPeyStoreProvinceChargeCreditComponent,
+    ScPeyCreditManagementComponent,
+    ScPeyLoanComponent,
+    ScPeyLoanAdministratorReviewComponent,
+    ScPeyLoanAdministratorCheckReviewComponent,
+    ScPeyLoanCompanyCreditRequestHistoryComponent,
   ],
   imports: [
     FormsModule,
@@ -56,6 +66,7 @@ import { ScPeyStoreProvinceChargeCreditComponent } from './components/sc-pey-sto
     ScPeyGoldRouting,
     NgxSpinnerModule,
     NgbPaginationModule,
+    NgbDatepickerModule,
     ExportAsModule,
     NgbAlertModule
   ]

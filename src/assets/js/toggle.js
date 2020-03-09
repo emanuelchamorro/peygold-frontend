@@ -156,4 +156,14 @@ $(function () {
   
    /* Fin de Select Box 2 */
 
+  /*carousel cheques*/
+
+  $(document).on('click','a[data-slide="prev"]',function(){
+    $('#carouselCheque').carousel('prev');
+  });
+  $(document).on('click','a[data-slide="next"]',function(){
+    $('#carouselCheque').carousel('next');
+  });
+   /* fin carousel cheques*/
+
 });

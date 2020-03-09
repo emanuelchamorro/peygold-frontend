@@ -17,7 +17,7 @@ export class LoanStatus extends SelectOption {
 
     switch (this.value) {
       case LoanStatusEnum.Approved:
-        this.label = 'Aprobada';
+        this.label = 'Aprobado';
         this.imgIcon = "assets/images/tildes-17.png"
         break;
       case LoanStatusEnum.Pending:
@@ -25,7 +25,7 @@ export class LoanStatus extends SelectOption {
         this.imgIcon = "assets/images/wrong.png"
         break;
       case LoanStatusEnum.Denied:
-        this.label = 'Denegada';
+        this.label = 'Rechazado';
         this.imgIcon = "assets/images/error-rojo.svg"
         break;
     }
