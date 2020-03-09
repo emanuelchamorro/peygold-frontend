@@ -1,0 +1,104 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<h2><span class="icon-creditos-26 fs-22"></span>Gestión de Créditos: <span>Solicitudes</span></h2>
+<p class="opening-text">
+    Seleccione un solicitud para ver detalles o comenzar a realizar el análisis de riesgo. Para que
+    una solicitud se acredite, deben estar aprobadas las dos instancias de evaluación.
+</p>
+<div class="filtros">
+    <div class="row">
+        <div class="col-sm-6 left">
+            <button class="btn btn-sm filtrarOrdenar">
+                Filtrar/Ordenar
+            </button>
+            <form name="form" #selectFilterForm="ngForm">
+                <input id="inputSelectFilter" type="hidden" name="selectFilter" [(ngModel)]="selectFilter" />
+            </form>
+
+        </div>
+        <div class="col-sm-6 right">
+            <form>
+                <input id="inputFilter" type="text" class="input-buscar" name="filter" (keyup)="search($event)"
+                    [(ngModel)]="filter" placeholder="Buscar" />
+            </form>
+        </div>
+    </div>
+</div>
+<div class="content-center">
+    <div class="grey-box d-flex flex-column w-100">
+        <div class="DownFilters">
+            <form class="form-inline">
+                <div class="input-group">
+                    <div class="boxSelect">
+                        <a class="btn-dropDown stateDrop">Todos los Estados <i class="fa fa-chevron-right"></i></a>
+                        <div class="downFecha stateDown">
+                            <ul>
+                                <li id="all" (click)="setFilter('')" class="optionDate">Todos los Estados</li>
+                                <li id="aprobados" (click)="setFilter('Aprobada')" class="optionDate">Aprobados</li>
+                                <li id="rechazados" (click)="setFilter('Rechazada')" class="optionDate">Rechazados</li>
+                                <li id="pendientes" (click)="setFilter('Pendiente')" class="optionDate">Pendientes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+       <table class="table" *ngIf="loans && loans.data">
+            <thead>
+                <tr>
+                    <th scope="col">N° de solicitud</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col" style="width: 120px">Análisis Administrador</th>
+                    <th scope="col" style="width: 120px">Análisis Aseguradora</th>
+                    <th scope="col">Estado de crédito</th>
+                    <th scope="col" width="20"></th>
+                </tr>
+            </thead>
+            <tbody class="list">
+                <tr *ngFor="let loan of loans.data;">
+                <td scope="row" [innerHtml]="loan.id"></td>
+                <td [innerHtml]="loan.applicationDate | date"></td>
+                <td [innerHtml]="loan.applicant.bussinessName"></td>
+                <td>
+                    <img [src]="loan.adminStatus.imgIcon" width="27" height="27" alt="" />
+                </td>
+                <td>
+                    <img [src]="loan.insuranceStatus.imgIcon" width="27" height="27" alt="" />
+                </td>
+                <td [innerHtml]="loan.status.label"></td>
+                <td width="20">
+                    <div class="detallePopup">
+                        <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                        <div class="details slide-toggle-content">
+                            <ul class="OptionsDrop">
+                                <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value!='2'"><button
+                                        type="button" class="ViewDetails" (click)="setLoan(loan)"> Ver detalle</button>
+                                <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value=='1'"><button
+                                        type="button" (click)="deleteLoan(loan)">Eliminar solicitud de Aseguradora</button></li>
+                                <li *ngIf="loan.adminStatus.value=='1' && loan.insuranceStatus.value=='1'"><a
+                                        [routerLink]="[routes.loanadministratorreview.index.href,loan.id]">Análisis del administrador</a></li>
+                                <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value=='2'"><a
+                                        href="historial-creditos-admin.html">Detalles del crédito</a></li>
+                                <li><a [routerLink]="[routes.companycreditrequesthistory.index.href,loan.applicant.id]">Historial de la empresa</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                </tr>
+            </tbody>
+        </table> 
+        <p *ngIf="!showPagination" class="text-center p-end">
+            No hay solicitudes para mostrar.
+        </p>
+    </div>
+</div>
+<ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage($event)">
+</ngb-pagination>
+
+<app-ui-pey-sidebar *ngIf="loan && loanDetail" (onClose)="loan = null; loanDetail = null"
+    [closed]="!loan && !loanDetail" title="Detalles de la solicitud">
+    <app-sc-pey-loan [loan]="loan" [loanDetail]="loanDetail"></app-sc-pey-loan>
+</app-ui-pey-sidebar> 

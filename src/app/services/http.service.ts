@@ -44,4 +44,9 @@ export class HttpService extends BaseService {
     url = environment.api.url + url;
     return this.http.put(url, data, options);
   }
+
+  delete(url: string, data?: any):Observable<any>{
+    url = environment.api.url + url;
+    return this.http.delete(url, data);
+  }
 }

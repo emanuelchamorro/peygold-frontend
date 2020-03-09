@@ -38,4 +38,16 @@ export const routes = {
     post: {route: 'provincechargecredit', href: homeRoute + '/provincechargecredit'},
     put: {route: 'provincechargecredit/:provincechargecreditId', href: homeRoute + '/provincechargecredit'},
   },
+  creditmanagement : {
+    index: {route: 'creditmanagement', href: homeRoute + '/creditmanagement'},
+  },
+  loanadministratorreview : {
+    index: {route: 'loanadministratorreview/:idLoan', href: homeRoute + '/loanadministratorreview'},
+  },
+  loanadministratorcheckreview : {
+    index: {route: 'loanadministratorcheckreview/:idLoan/:idCheck', href: homeRoute + '/loanadministratorcheckreview'},
+  },
+  companycreditrequesthistory : {
+    index: {route: 'companycreditrequesthistory/:idUser', href: homeRoute + '/companycreditrequesthistory'},
+  },
 };

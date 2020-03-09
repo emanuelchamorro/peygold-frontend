@@ -87,7 +87,7 @@ export class LoansService extends HttpService {
         loan.id = response.idLoan;
         loan.amount = response.ammount;
         loan.checkRescue = new CheckRescue(null, response.checkRescueName);
-        loan.insuranceCarrier = new SelectOption(response.insuranceCarrierId, response.insuranceLoanInfo);
+        loan.insuranceCarrier = new SelectOption(response.insuranceCarrierId, null);
         loan.amountOfBeneficiary = response.amountOfBeneficiary;
         loan.verifiedInformation = response.verifiedInformation;
 

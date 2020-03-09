@@ -18,6 +18,7 @@ export class Bank extends SelectOption {
   constructor(value?: string,
     public label?: string){
     super();
+    this.value = String(value);
     this.address = new Address();
     this.contactUser = new User();
   }

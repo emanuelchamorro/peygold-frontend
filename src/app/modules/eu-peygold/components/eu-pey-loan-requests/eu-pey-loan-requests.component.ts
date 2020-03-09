@@ -73,12 +73,20 @@ export class EuPeyLoanRequestsComponent implements OnInit {
     )
   }
 
+  /**
+   * set filter 
+   * @param filter 
+   */
   setFilter(filter:string){
     this.filter = '';
     this.selectFilter = filter;
     this.loadPage(1);
   }
 
+  /**
+   * search loans by word
+   * @param filter 
+   */
   search(filter:string){
     console.log('filter',this.filter);
     this.selectFilter = '';
@@ -91,6 +99,10 @@ export class EuPeyLoanRequestsComponent implements OnInit {
     }
   }
 
+    /**
+   * load page de loans
+   * @param page 
+   */
   loadPage(page: number) {
 
     let word = (this.selectFilter && this.selectFilter!='') ? this.selectFilter : (this.filter && this.filter!='') ? this.filter: '@' ;

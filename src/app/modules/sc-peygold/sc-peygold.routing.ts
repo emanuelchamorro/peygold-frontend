@@ -17,6 +17,10 @@ import { ScPeyGeneralChargesCreditsComponent } from './components/sc-pey-general
 import { ScPeyStoreGeneralChargeCreditComponent } from './components/sc-pey-store-general-charge-credit/sc-pey-store-general-charge-credit.component';
 import { ScPeyProvinceChargesCreditsComponent } from './components/sc-pey-province-charges-credits/sc-pey-province-charges-credits.component';
 import { ScPeyStoreProvinceChargeCreditComponent } from './components/sc-pey-store-province-charge-credit/sc-pey-store-province-charge-credit.component';
+import { ScPeyCreditManagementComponent } from './components/sc-pey-credit-management/sc-pey-credit-management.component';
+import { ScPeyLoanAdministratorReviewComponent } from './components/sc-pey-loan-administrator-review/sc-pey-loan-administrator-review.component';
+import { ScPeyLoanAdministratorCheckReviewComponent } from './components/sc-pey-loan-administrator-check-review/sc-pey-loan-administrator-check-review.component';
+import { ScPeyLoanCompanyCreditRequestHistoryComponent } from './components/sc-pey-loan-company-credit-request-history/sc-pey-loan-company-credit-request-history.component';
 
 export const config: Routes = [
   {
@@ -164,6 +168,34 @@ export const config: Routes = [
         component: ScPeyStoreProvinceChargeCreditComponent,
         data: {
           title: 'Catalogo: Cargo y abono por provincia'
+        },
+      },
+      {
+        path: routes.creditmanagement.index.route,
+        component: ScPeyCreditManagementComponent,
+        data: {
+          title: 'Gestión de créditos: Solicitudes'
+        },
+      },
+      {
+        path: routes.loanadministratorreview.index.route,
+        component: ScPeyLoanAdministratorReviewComponent,
+        data: {
+          title: 'Gestión de créditos: Análisis de riesgo'
+        },
+      },
+      {
+        path: routes.loanadministratorcheckreview.index.route,
+        component: ScPeyLoanAdministratorCheckReviewComponent,
+        data: {
+          title: 'Gestión de créditos: Verificación de cheque'
+        },
+      },
+      {
+        path: routes.companycreditrequesthistory.index.route,
+        component: ScPeyLoanCompanyCreditRequestHistoryComponent,
+        data: {
+          title: 'Gestión de créditos: Historial de empresa'
         },
       },
     ]

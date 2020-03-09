@@ -1,0 +1,138 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<div *ngIf="loanDetail">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
+    <h2><span class="icon-creditos-26 fs-22"></span>Gestión de Créditos: <span>Solicitudes</span></h2>
+    <p class="mb-4">Evaluación del administrador. Análisis de riesgo</p>
+
+    <div class="d-flex container-info justify-content-between">
+
+        <div class="d-flex grey-box flex-wrap w-100 mb-5">
+
+            <div class="container-analisis-riesgo b-right-line p-4 ">
+                <span class="fw-700 text-color mb-3">Información del solicitante</span>
+                <span class="text-color" [innerHtml]="loanDetail.applicant.bussinessName"></span>
+                <span [innerHtml]="loanDetail.applicant.email"></span>
+                <span [innerHtml]="loanDetail.applicant.phone"></span>
+                <span [innerHtml]="loanDetail.applicant.address.billingStreet"></span>
+                <span [innerHtml]="loanDetail.applicant.cuit"></span>
+            </div>
+
+            <div class="container-analisis-riesgo border-0 p-4">
+                <span class="fw-700 text-color mb-3">Información de la solicitud</span>
+                <span class="fw-600" [innerHtml]="'N° '+loanDetail.id"></span>
+                <span>Forma de pago:
+                    <span class="fw-600" *ngIf="loanDetail.checks.length > 0"> cheque</span>
+                    <span class="fw-600" *ngIf="!loanDetail.checks"> otra</span>
+                </span>
+                <span>Personas beneficiadas:
+                    <span class="fw-600"> Preguntar ???</span>
+                </span>
+                <span>Plan de vencimiento:
+                    <span class="fw-600" *ngIf="loanDetail.checks.length==1">Opción 1</span>
+                    <span class="fw-600" *ngIf="loanDetail.checks.length==3">Opción 2</span>
+                    <span class="fw-600" *ngIf="loanDetail.checks.length==4">Opción 3</span>
+                </span>
+            </div>
+        </div>
+        <div class="d-flex flex-column w-50 grey-box ml-4 mb-5">
+            <div class="d-flex flex-column b-bottom-line justify-content-center p-3 h-100">
+                <span class="mb-2">Cantidad a solicitar</span>
+                <span
+                    class="fw-800 fs-24 text-color">{{ loanDetail.transactionType.coin }}&nbsp;{{loanDetail.amount | number:'1.2'}}</span>
+            </div>
+            <div class="d-flex flex-column align justify-content-center p-3 h-100">
+                <span class="mb-2" [innerHtml]="loanDetail.checkRescue.label"></span>
+            </div>
+        </div>
+    </div>
+    <h4 class="text-color mb-3 fs-16">Situación crediticia</h4>
+    <p class="opening-text mb-5">Consulte la información disponible en el <a href="http://www.bcra.gov.ar/"
+            target="_blank">Banco Central</a> para confirmar la
+        situación crediticia de la empresa solicitante</p>
+
+    <div class="d-flex w-100 justify-content-center grey-box">
+        <div class="row-buttons justify-content-center">
+            <button id="situacion-riesgosa" class="btn-situacion-crediticia btn-red mt-4 mb-4"
+                [ngClass]="{'active':loanDetail.riskySituation!=null && !loanDetail.riskySituation}"
+                (click)="changeRisky(false)">Situación riesgosa</button>
+            <button id="situacion-segura" class="btn-situacion-crediticia btn-green mt-4 mb-4"
+                [ngClass]="{'active':loanDetail.riskySituation!=null && loanDetail.riskySituation}"
+                (click)="changeRisky(true)">Situación Segura</button>
+        </div>
+    </div>
+
+    <h4 *ngIf="loanDetail.checks" class="text-color mb-3 mt-5 fs-16">Listado de cheques</h4>
+    <p *ngIf="loanDetail.checks" class="opening-text mb-5">Verifique la información de los cheques para confirmar el
+        análisis</p>
+
+    <!---tabla--->
+    <form name="form" #adminReviewForm="ngForm" (ngSubmit)="adminReviewForm.form.valid && onSubmit(loanDetail)" novalidate>
+        <div *ngIf="loanDetail.checks" class="grey-box d-flex flex-column w-100">
+
+            <table *ngIf="loanDetail.checks" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="border-top-0">ID</th>
+                        <th scope="col" class="border-top-0">N° de cheque</th>
+                        <th scope="col" class="border-top-0">Monto</th>
+                        <th scope="col" class="border-top-0">Verificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let check of loanDetail.checks">
+                        <td [innerHtml]="check.id"></td>
+                        <td [innerHtml]="check.number"></td>
+                        <td>{{ loanDetail.transactionType.coin }}&nbsp;{{check.amount | number:'1.2'}}</td>
+                        <td *ngIf="check.checkStatusUpdate==1"><a [routerLink]="[routes.loanadministratorcheckreview.index.href,loanDetail.id,check.id]"
+                                class="text-color">Verificar<i class="fas fa-arrow-right"></i></a></td>
+                        <td *ngIf="check.checkStatusUpdate==2" class="fa fa-check"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--  <input type="hidden" name="verifiedInformation" [(ngModel)]="loanDetail.verifiedInformation"
+                #verifiedInformation="ngModel" required /> 
+            <div *ngIf="(!verifiedInformation.pristine && verifiedInformation.invalid) || submited && verifiedInformation.errors"
+                class="invalid-feedback">
+                <div *ngIf="verifiedInformation.errors.required">Se deben verificar todos los cheques</div>
+            </div>-->
+        </div>
+
+        <h4 class="text-color mb-3 mt-5 fs-16">Listado de Aseguradoras</h4>
+        <p class="opening-text mb-5">Seleccione la aseguradora que desee asignar.</p>
+
+        <div class="grey-box d-flex w-100 flex-column justify-content-center p-3">
+            <span>Aseguradora</span>
+            <div class="d-flex w-100 justify-content-center mt-3">
+
+                <ng-select name="insurances" placeholder="Aseguradoras" class="custom-select mb-0 w-100"
+                    bindLabel="label" [searchable]="false" [items]="insurancesCarriers" [addTag]="false"
+                    [(ngModel)]="loanDetail.insuranceCarrier" #insurances="ngModel" required>
+                </ng-select>
+
+            </div>
+            <div *ngIf="(adminReviewForm.submitted && insurances.invalid)"
+                class="invalid-feedback">
+                <div *ngIf="insurances.errors.required">Seleccione la aseguradora</div>
+            </div>
+        </div>
+        <div class="grey-box d-flex w-100 justify-content-center mt-5 p-3">
+                <input name="adminComments" [(ngModel)]="loanDetail.adminComments" #adminComment="ngModel" placeholder="Agregar una nota" type="text" id="input-line" class="d-block w-75  mb-3" required/>
+        </div>
+        <div *ngIf="(adminReviewForm.submitted && adminComment.invalid)" class="invalid-feedback">
+                <div *ngIf="adminComment.errors.required">Campo requerido</div>
+        </div>
+        <div class="row-buttons w-100 justify-content-center mt-4">
+            <button [routerLink]="routes.creditmanagement.index.href" role="button"
+                class="white-button-border">Volver</button>
+            <button type="button" (click)="refuse(loanDetail)" href="#" role="button"
+                class="solid-blue-button  ml-3 mr-3">Rechazar</button>
+            <button type="submit" data-balloon-visible aria-label="I am always visible!" data-balloon-pos="up"
+                class="solid-blue-button ">Enviar a aseguradora</button>
+        </div>
+    </form>
+
+
+</div>
