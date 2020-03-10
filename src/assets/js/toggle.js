@@ -198,6 +198,7 @@ $(document).on("click", function (event) {
   $(document).on('click','a[data-slide="next"]',function(){
     $('#carouselCheque').carousel('next');
   });
-   /* fin carousel cheques*/
+  
+  /* fin carousel cheques*/
 
 });

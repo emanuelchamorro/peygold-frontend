@@ -60,7 +60,14 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 
 }
-
+.icon-check:before {
+  content: "\7a";
+  color: #3675bb;
+}
+.icon-Peygold:before {
+  content: "\f1";
+  color: #3675bb;
+}
 .icon-Iconos-01:before {
   content: "\61";
   color: #3675bb;
@@ -732,7 +739,7 @@ ng-select.custom-select {
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
 }
 .ng-select .ng-select-container {
-
+  overflow: inherit!important;
  border: none;
   height: 52px;
   border-radius: 7px;

@@ -49,6 +49,16 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+
+.icon-check:before {
+  content: "\7a";
+  color: #3675bb;
+}
+.icon-Peygold:before {
+  content: "\f1";
+  color: #3675bb;
+}
+
 .icon-Iconos-01:before {
   content: "\61";
   color: #3675bb; }

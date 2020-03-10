@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?4mfr5r');
-  src:  url('fonts/icomoon.eot?4mfr5r#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?4mfr5r') format('truetype'),
-    url('fonts/icomoon.woff?4mfr5r') format('woff'),
-    url('fonts/icomoon.svg?4mfr5r#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?7ih3to');
+  src:  url('fonts/icomoon.eot?7ih3to#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7ih3to') format('truetype'),
+    url('fonts/icomoon.woff?7ih3to') format('woff'),
+    url('fonts/icomoon.svg?7ih3to#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-check:before {
+  content: "\7a";
+  color: #3675bb;
+}
+.icon-Peygold:before {
+  content: "\f1";
+  color: #3675bb;
+}
 .icon-Iconos-01:before {
   content: "\61";
   color: #3675bb;

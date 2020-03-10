@@ -361,6 +361,22 @@ a {
 
 }
 
+.alert-success {
+  width:inherit;
+  position: fixed;
+  top: 65px;
+
+z-index: 200;
+}
+
+.alert-danger {
+  width:inherit;
+  position: fixed;
+  top: 65px;
+
+z-index: 200;
+}
+
 .alertMessage span {
   color: #9e0e00;
   font-size: 13px;
