@@ -19,6 +19,7 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateFRParserFormatter } from './util/ngb-date-fr-Parser-Formatter';
 import { LocationService } from './services/location.service';
 import { BanksService } from './services/banks.service';
+import { PePeygoldModule } from './modules/pe-peygold/pe-peygold.module';
 
 
 
@@ -45,6 +46,7 @@ export function bankProviderFactory(
     CommonsPeyGoldModule,
     ScPeyGoldModule,
     EuPeyGoldModule,
+    PePeygoldModule,
     OAuthModule.forRoot(),
     JwtModule.forRoot({
       config: {

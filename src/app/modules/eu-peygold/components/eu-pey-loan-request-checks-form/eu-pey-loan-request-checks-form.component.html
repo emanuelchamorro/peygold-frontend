@@ -17,7 +17,7 @@
           </div>
           <div class="d-flex flex-column mt-3 mb-5">
             <span>Fecha de vencimiento</span>
-            <span class="fw-700 mt-3" [innerHtml]="check.expirationDateStr | date:medium"
+            <span class="fw-700 mt-3" [innerHtml]="check.expirationDateStr"
               *ngFor="let check of option.checks"></span>
           </div>
         </div>

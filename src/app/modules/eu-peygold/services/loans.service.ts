@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../../../services/http.service';
-import {Address, CheckRescue, Loan, LoanStatus, PaymentMethod, State, Transaction, TransactionType, User, LoanRequest, SelectOption, Check, Bank, Country, City} from '../../../models';
+import {Address, CheckRescue, Loan, LoanStatus, PaymentMethod, State, Transaction, TransactionType, User, LoanRequest, SelectOption, Check, Bank, Country, City, CreditDestination} from '../../../models';
 import {environment} from '../../../../environments/environment';
 import {PaginationResponse} from '../../commons-peygold/entities/pagination-response';
+import {Response} from '../../commons-peygold/entities/response';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class LoansService extends HttpService {
           loan.approveDeniedComments = item.approveDeniedComments;
           loan.checkRescue = new CheckRescue(null, item.checkRescueName);
           loan.paymentMethod = new PaymentMethod(null, item.paymentMethodName);
-          loan.creditDestination = new PaymentMethod(null, item.creditDestinationName);
+          loan.creditDestination = new CreditDestination(null, item.creditDestinationName);
           loan.applicationDate = item.applicationDate;
           loan.responseDate = item.responseDate;
           loan.verifiedDate = item.verifiedDate;
@@ -53,8 +54,7 @@ export class LoansService extends HttpService {
           loan.applicant.address = new Address();
           loan.applicant.address.street = item.street;
           loan.applicant.address.state = new State(null, item.stateName);
-          loan.comments = 'No hay notas'
-
+          loan.comments = item.comments ? item.comments:'No hay comentarios';
           return loan;
         });
 
@@ -77,17 +77,19 @@ export class LoansService extends HttpService {
     /**
    * get loan detail.
    * @param id
-   * @return Promise<Loan> credit info by id
+   * @return Promise<Response> credit info by id
    */
 
-  getById(id:number):Promise<Loan>{
-    const loan = new Loan();
+  getById(id:number):Promise<Response>{
+    let responseService = null;
+    let loan = null;
     return this.get(`/loans/GetLoanCreditCheck/${id}`).toPromise().then(
       (response)=>{
+        loan = new Loan();
         loan.id = response.idLoan;
         loan.amount = response.ammount;
         loan.checkRescue = new CheckRescue(null, response.checkRescueName);
-        loan.insuranceCarrier = new SelectOption(response.insuranceCarrierId, null);
+        loan.insuranceCarrier = new SelectOption(response.insuranceCarrierId, response.insuranceSocialReason);
         loan.amountOfBeneficiary = response.amountOfBeneficiary;
         loan.verifiedInformation = response.verifiedInformation;
 
@@ -134,10 +136,17 @@ export class LoansService extends HttpService {
           check.onwer.phone = item.telefonoFirmante;
           return check;
          });
-        return loan;
+         responseService = new Response('',200,true,loan);
+         return responseService;
       }
-    ).catch(() => {
-      return loan;
+    ).catch((error) => {
+      if(error.code == 404){
+        responseService = new Response('Esta solicitud no existe',error.code,false,null);
+        return responseService;
+      }else{
+        responseService = new Response('Ha ocurrido un error. No será posible ver el detalle de la solicitud.',error.code,false,null);
+        return responseService;
+      }
     });
 
   }

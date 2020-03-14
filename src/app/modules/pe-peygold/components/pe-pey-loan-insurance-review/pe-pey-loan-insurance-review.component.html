@@ -1,0 +1,152 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
+<div *ngIf="loanDetail && loanDetail!=null">
+
+    <div class="solicitud-wrapper">
+        <nav class="navbar-gradient shadow position-relative">
+            <!-- Barra de navegacion superior -->
+            <ul class="top-nav justify-content-center">
+                <li>
+                    <a href="/">
+                        <img src="/assets/images/Isologotipo.svg" alt="">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <form name="form" #loanIinsuranceReviewForm="ngForm"
+            (ngSubmit)="loanIinsuranceReviewForm.form.valid && onSubmit(loanDetail)" novalidate>
+            <article class="solicitud-seguro">
+                <section class="w-100 d-flex flex-column align-items-center pl-3 pr-3">
+
+
+                    <div class="grey-box bg-white col-xs-12 col-sm-6 p-0">
+                        <div class="title d-flex w-100 align-items-center">
+                            <h2>Solicitud de seguro</h2>
+                        </div>
+
+                        <ul class="fecha-solicitud d-flex w-100 justify-content-between">
+                            <li>
+                                <span [innerHtml]="'Solicitud #'+loanDetail.id"></span>
+                                <span [innerHtml]="loanDetail.insuranceLoan.creationDate | date"></span>
+                            </li>
+                        </ul>
+
+                        <ul class="pay-info d-flex w-100 justify-content-between">
+                            <li class="d-flex flex-column">
+                                <span>Moneda</span>
+                                <span>Pesos ARG</span>
+                            </li>
+                            <li class="d-flex flex-column">
+                                <span>Forma de pago</span>
+                                <span>Cheque</span>
+                            </li>
+                            <li class="d-flex flex-column">
+                                <span>Monto a asegurar</span>
+                                <span>{{ loanDetail.transactionType.coin }}&nbsp;{{loanDetail.amount | number:'1.2'}}</span>
+                            </li>
+                        </ul>
+
+                        <div class="main-content">
+                            <ul class="d-flex w-100 flex-column ">
+                                <li>Datos relacionados con el contratante<br>(responsable del pago de primas)</li>
+                                <li><span>Razon social</span><span>Peygold S.A</span></li>
+                                <li><span>Dirección</span><span>Calle 14 5124</span></li>
+                                <li><span>Localidad</span><span>Berazategui</span></li>
+                                <li><span>Provincia</span><span>Buenos Aires</span></li>
+                                <li><span>País de residencia</span><span>Argentina</span></li>
+                                <li><span>Teléfono</span><span>45896251</span></li>
+                            </ul>
+
+                            <ul class="d-flex w-100 flex-column">
+                                <li>Datos relacionados con el asegurado</li>
+                                <li><span>Razon social</span><span
+                                        [innerHtml]="loanDetail.applicant.bussinessName"></span>
+                                </li>
+                                <li><span>Dirección</span><span
+                                        [innerHtml]="loanDetail.applicant.address.billingStreet?loanDetail.applicant.address.billingStreet:loanDetail.applicant.address.street"></span>
+                                </li>
+                                <li><span>Localidad</span><span
+                                        [innerHtml]="loanDetail.applicant.address.city.label"></span></li>
+                                <li><span>Provincia</span><span
+                                        [innerHtml]="loanDetail.applicant.address.state.label"></span></li>
+                                <li><span>País de residencia</span><span>No lo devuelve el servicio</span></li>
+                                <li><span>Teléfono</span><span
+                                        [innerHtml]="loanDetail.applicant.phone?loanDetail.applicant.phone:'No lo devuelve el servicio'"></span>
+                                </li>
+                                <li><span>Email</span><span
+                                        [innerHtml]="loanDetail.applicant.email?loanDetail.applicant.email:'No lo devuelve el servicio'"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div *ngIf="loanDetail && loanDetail.insuranceLoan.insuranceStatus.value=='1'">
+                            <div class="bottom-content d-flex w-100 justufy-content-start flex-column">
+
+                                <div class="form-group">
+                                    <ng-select name="status" placeholder="Estado de la solicitud"
+                                        class="custom-select mb-0 w-100" bindLabel="label" [searchable]="false"
+                                        [items]="statusOptions" [addTag]="false"
+                                        [(ngModel)]="loanDetail.insuranceStatus" #status="ngModel" required>
+                                    </ng-select>
+                                    <div *ngIf="(loanIinsuranceReviewForm.submitted && status.invalid)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="status.errors.required">Campo es requerido</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="number" name="policyN" [(ngModel)]="loanDetail.policyNumber"
+                                        #policyN="ngModel" class="form-control" placeholder="N° de póliza" required>
+                                    <div *ngIf="(loanIinsuranceReviewForm.submitted && policyN.invalid)"
+                                        class="invalid-feedback">
+                                        <div *ngIf="policyN.errors.required">Campo es requerido</div>
+                                    </div>
+
+
+                                </div>
+                                <div class="upload-file">
+                                    <div class="adjuntar-poliza" (click)="file1.click()">
+                                        <img src="/assets/images/adjuntar.svg"> <span>Póliza</span>
+                                    </div>
+                                    <span
+                                        class="file-label">{{loanDetail.policyFile.name  ? loanDetail.policyFile.name:'Subir póliza'}}</span>
+                                    <input name="policyFile" [(ngModel)]="pFile" #policyFile
+                                        style="visibility: hidden; width: 0px; height:0px;" #file1 type="file"
+                                        accept="*/*" (change)="uploadImage($event)" required>
+                                </div>
+                                <div *ngIf="(loanIinsuranceReviewForm.submitted && policyFile.invalid)"
+                                    class="invalid-feedback">
+                                    <div *ngIf="policyFile.errors.required">Debe adjuntar la póliza</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center w-100 mb-3">
+                                <input name="comments" [(ngModel)]="loanDetail.loanInsuranceComments"
+                                    #comments="ngModel" class="form-control" placeholder="Agregar una nota" type="text"
+                                    class="d-flex w-75 mt-2 mb-4" id="input-line" required>
+
+                            </div>
+                            <div *ngIf="(loanIinsuranceReviewForm.submitted && comments.invalid)"
+                                class="invalid-feedback">
+                                <div *ngIf="comments.errors.required">Campo es requerido</div>
+                            </div>
+                        </div>
+                        <div *ngIf="loanDetail &&loanDetail.insuranceLoan.insuranceStatus.value!='1'">
+                                <div class="bottom-content d-flex w-100 justufy-content-start flex-column">
+                                    La solicitud ya fue procesada.
+                                </div>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="loanDetail && loanDetail.insuranceLoan.insuranceStatus.value=='1'" class="d-flex w-100 justify-content-center">
+                        <button type="submit" class="solid-blue-button">Enviar</button>
+                    </div>
+
+                </section>
+            </article>
+        </form>
+    </div>
+</div>

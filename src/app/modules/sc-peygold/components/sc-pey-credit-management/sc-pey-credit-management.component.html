@@ -45,7 +45,7 @@
                 </div>
             </form>
         </div>
-       <table class="table" *ngIf="loans && loans.data">
+        <table class="table" *ngIf="loans && loans.data">
             <thead>
                 <tr>
                     <th scope="col">N° de solicitud</th>
@@ -59,37 +59,41 @@
             </thead>
             <tbody class="list">
                 <tr *ngFor="let loan of loans.data;">
-                <td scope="row" [innerHtml]="loan.id"></td>
-                <td [innerHtml]="loan.applicationDate | date"></td>
-                <td [innerHtml]="loan.applicant.bussinessName"></td>
-                <td>
-                    <img [src]="loan.adminStatus.imgIcon" width="27" height="27" alt="" />
-                </td>
-                <td>
-                    <img [src]="loan.insuranceStatus.imgIcon" width="27" height="27" alt="" />
-                </td>
-                <td [innerHtml]="loan.status.label"></td>
-                <td width="20">
-                    <div class="detallePopup">
-                        <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
-                        <div class="details slide-toggle-content">
-                            <ul class="OptionsDrop">
-                                <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value!='2'"><button
-                                        type="button" class="ViewDetails" (click)="setLoan(loan)"> Ver detalle</button>
-                                <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value=='1'"><button
-                                        type="button" (click)="deleteLoan(loan)">Eliminar solicitud de Aseguradora</button></li>
-                                <li *ngIf="loan.adminStatus.value=='1' && loan.insuranceStatus.value=='1'"><a
-                                        [routerLink]="[routes.loanadministratorreview.index.href,loan.id]">Análisis del administrador</a></li>
-                                <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value=='2'"><a
-                                        href="historial-creditos-admin.html">Detalles del crédito</a></li>
-                                <li><a [routerLink]="[routes.companycreditrequesthistory.index.href,loan.applicant.id]">Historial de la empresa</a></li>
-                            </ul>
+                    <td scope="row" [innerHtml]="loan.id"></td>
+                    <td [innerHtml]="loan.applicationDate | date"></td>
+                    <td [innerHtml]="loan.applicant.bussinessName"></td>
+                    <td>
+                        <img [src]="loan.adminStatus.imgIcon" width="27" height="27" alt="" />
+                    </td>
+                    <td>
+                        <img [src]="loan.insuranceStatus.imgIcon" width="27" height="27" alt="" />
+                    </td>
+                    <td [innerHtml]="loan.status.label"></td>
+                    <td width="20">
+                        <div class="detallePopup">
+                            <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                            <div class="details slide-toggle-content">
+                                <ul class="OptionsDrop">
+                                    <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value!='2'"><button
+                                            type="button" class="ViewDetails" (click)="setLoan(loan)"> Ver
+                                            detalle</button>
+                                    <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value=='1'"><button
+                                            type="button" (click)="deleteLoan(loan)">Eliminar solicitud de
+                                            Aseguradora</button></li>
+                                    <li *ngIf="loan.adminStatus.value=='1' && loan.insuranceStatus.value=='1'"><a
+                                            [routerLink]="[routes.loanadministratorreview.index.href,loan.id]">Análisis
+                                            del administrador</a></li>
+                                    <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value=='2'"><a
+                                            (click)="goToDetail(loan.id)">Detalles del crédito</a></li>
+                                    <li><a [routerLink]="[routes.companycreditrequesthistory.index.href,loan.applicant.id]">Historial
+                                            de la empresa</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </td>
+                    </td>
                 </tr>
             </tbody>
-        </table> 
+        </table>
         <p *ngIf="!showPagination" class="text-center p-end">
             No hay solicitudes para mostrar.
         </p>
@@ -101,4 +105,4 @@
 <app-ui-pey-sidebar *ngIf="loan && loanDetail" (onClose)="loan = null; loanDetail = null"
     [closed]="!loan && !loanDetail" title="Detalles de la solicitud">
     <app-sc-pey-loan [loan]="loan" [loanDetail]="loanDetail"></app-sc-pey-loan>
-</app-ui-pey-sidebar> 
+</app-ui-pey-sidebar>

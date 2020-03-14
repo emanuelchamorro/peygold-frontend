@@ -8,7 +8,7 @@ import {CreditDestination} from './credit-destination';
 import { SelectOption } from './select-option';
 import { Check } from './check';
 import { InsuranceLoan } from './insurance-loan';
-
+import { DataFile } from './data-file';
 /**
  * Loan model
  */
@@ -42,6 +42,8 @@ export class Loan extends Model {
   public riskySituation:boolean;
   public adminComments:string;
   public insuranceLoan:InsuranceLoan;
-
+  public policyNumber:string;//set by insurance review page
+  public loanInsuranceComments:string; //set by insurance review page
+  public policyFile:DataFile;
 
 }

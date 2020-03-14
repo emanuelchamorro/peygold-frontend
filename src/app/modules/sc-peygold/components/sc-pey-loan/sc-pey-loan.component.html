@@ -54,7 +54,7 @@
                 <span [innerHtml]="loan.riskySituation ? 'Situación segura':'Situación riesgosa'"></span>
             </li>
             <li><span>Cheques presentados</span>
-                <a href="#">Descargar todos</a>
+                <a href="#">Descargar todos ???</a>
             </li>
             <li><span>Estado</span>
                 <span [innerHtml]="loan.adminStatus.label"></span>
@@ -72,7 +72,7 @@
                 <span [innerHtml]="loanDetail.insuranceLoan.creationDate | date:medium"></span>
             </li>
             <li><span>Aseguradora</span>
-                <span>La Caja Seguros</span>
+                <span [innerHtml]="loanDetail.insuranceCarrier.label"></span>
             </li>
             <li><span>Solicitante</span>
                 <span [innerHtml]="loanDetail.insuranceLoan.userAdmin.name"></span>

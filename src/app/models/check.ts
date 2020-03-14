@@ -34,6 +34,7 @@ export class Check extends Model {
 
   public paymentDate: Date;
   public checkStatusUpdate:number;
+  public comments:string;
 
 
   get isComplete(): boolean{

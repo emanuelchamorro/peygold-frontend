@@ -1,0 +1,96 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<h2>Liquidaciones de créditos</h2>
+<p class="opening-text">
+    Seleccione aquellas solicitudes que desee liquidar.
+</p>
+<div class="filtros">
+    <div class="row">
+         <div class="col-sm-6 left" style="visibility: hidden;">
+            <button class="btn btn-sm filtrarOrdenar">
+                Filtrar/Ordenar
+            </button>
+        </div>
+        <div class="col-sm-6 right">
+            <form>
+                <input id="inputFilter" type="text" class="input-buscar" name="filter" (keyup)="search($event)"
+                    [(ngModel)]="filter" placeholder="Buscar" />
+            </form>
+        </div>
+    </div>
+</div>
+<div class="content-center">
+    <div class="grey-box d-flex flex-column w-100">
+        <!--   <div class="DownFilters">
+            <form class="form-inline">
+                <div class="input-group">
+                    <div class="boxSelect">
+                        <a class="btn-dropDown stateDrop">Monto<i class="fa fa-chevron-right"></i></a>
+                        <div class="downFecha stateDown">
+                            <ul>
+                                <li>
+                                    <a href="#" class="optionDate">Menor primero</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="optionDate">Mayor primero</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>-->
+        <table class="table colorchange" *ngIf="loans && loans.data">
+            <thead>
+                <tr>
+                    <th scope="col" class="border-top-0">N° de Solicitud</th>
+                 <!--  <th scope="col" class="border-top-0">Fecha de vencimiento</th>--> 
+                    <th scope="col" class="border-top-0">Empresa</th>
+                 <!--    <th scope="col" class="border-top-0">Aseguradora</th>-->
+                 <!--   <th scope="col" class="border-top-0">N° de póliza</th>--> 
+                    <th scope="col" class="border-top-0">Monto</th>
+                    <th scope="col" class="border-top-0">Seleccionar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let loan of loans.data;">
+                    <td [innerHtml]="loan.id"></td>
+                 <!--  <td >11/12/2019  ???? </td>-->  
+                    <td [innerHtml]="loan.applicant.bussinessName"></td>
+                 <!--   <td>Sancor Seguros ????????</td> --> 
+                  <!--   <td>0123456789 ????</td> -->
+                    <td>{{ loan.transactionType.coin }}&nbsp;{{loan.amount | number:'1.2'}}</td>
+                    <td class="">
+                        <div class="d-flex justify-content-center"><input (click)="selectLoan(loan.id)" type="radio" name="check" class="d-flex">
+                        </div>
+                    </td>
+                    <td width="20">
+                        <div class="detallePopup">
+                            <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                            <div class="details slide-toggle-content">
+                                <ul>
+                                    <li><button type="button" data-toggle="modal" data-target="#exampleModal" (click)="setLoan(loan)"> Ver
+                                            detalle</button>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p *ngIf="!showPagination" class="text-center p-end">
+            No hay solicitudes para mostrar.
+        </p>
+    </div>
+    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage($event)">
+    </ngb-pagination>
+    <div class="row-buttons justify-content-end mt-3">
+        <button (click)="goToLiquidate()" role="button" class="solid-blue-button">Continuar</button>
+    </div>
+</div>
+<app-ui-pey-sidebar *ngIf="loan && loanDetail" (onClose)="loan = null; loanDetail = null"
+    [closed]="!loan && !loanDetail" title="Detalles de la solicitud">
+    <app-sc-pey-loan [loan]="loan" [loanDetail]="loanDetail"></app-sc-pey-loan>
+</app-ui-pey-sidebar>

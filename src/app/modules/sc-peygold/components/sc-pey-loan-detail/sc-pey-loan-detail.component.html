@@ -1,0 +1,113 @@
+<ngx-spinner>
+        <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<div *ngIf="loanDetail">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
+    <h2>Detalles del crédito</h2>
+
+    <div class="d-flex container-info justify-content-between">
+
+        <div class="d-flex grey-box flex-wrap w-100 mb-5">
+
+            <div class="container-analisis-riesgo p-4 ">
+                <span class="fw-700 text-color mb-3">Información del solicitante</span>
+                <span class="text-color" [innerHtml]="loanDetail.applicant.bussinessName"></span>
+                <span [innerHtml]="loanDetail.applicant.email"></span>
+                <span [innerHtml]="loanDetail.applicant.phone"></span>
+                <span [innerHtml]="loanDetail.applicant.address.billingStreet"></span>
+                <span [innerHtml]="'Cuit: '+loanDetail.applicant.cuit"></span>
+            </div>
+
+            <div class="container-analisis-riesgo border-0 p-4">
+                <span class="fw-700 text-color mb-3">Información de la solicitud</span>
+                <span class="fw-600" [innerHtml]="'N° '+loanDetail.id"></span>
+                <span>Motivo:<span class="fw-600" [innerHtml]="loanDetail.creditDestination.label"></span></span>
+                <span>Aseguradora:<span class="fw-600" [innerHtml]="loanDetail.insuranceCarrier.label"></span></span>
+                <span>N° de póliza: <span class="fw-600" [innerHtml]="loanDetail.insuranceLoan.policyNumber"> </span></span>
+                <span>Vencimiento: <span class="fw-600"> {{loanDetail.checks[2].expirationDateStr}}</span></span>
+
+
+            </div>
+        </div>
+        <div class="d-flex flex-column w-50 grey-box ml-4 mb-5">
+            <div class="d-flex flex-column justify-content-center p-3 h-100">
+                <span class="mb-2">Monto otorgado</span>
+                <span class="fw-800 fs-24 text-color">{{ loanDetail.transactionType.coin }}&nbsp;{{loanDetail.amount | number:'1.2'}}</span>
+            </div>
+            <div class="d-flex flex-column align justify-content-center p-3 h-100">
+                <span class="mb-2" [innerHtml]="loanDetail.checkRescue.label"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-flex w-100 flex-column justify-content-center grey-box">
+        <div class="p-3 d-flex flex-column">
+            <span class="fw-600 mt-1 mb-1">Financiación: 
+                    <span class="fw-600" *ngIf="loanDetail.checks.length==1"> Opción 1</span>
+                    <span class="fw-600" *ngIf="loanDetail.checks.length==3"> Opción 2</span>
+                    <span class="fw-600" *ngIf="loanDetail.checks.length==4"> Opción 3</span>
+            </span>
+            <span class="fw-600 mt-1 mb-1">Iniciación de pago: {{loanDetail.checks[0].issuanceDateStr}}</span>
+            <span class="fw-600 mt-1 mb-1">Fin de pago: {{loanDetail.checks[2].expirationDateStr}}</span>
+            <span class="fw-600 mt-1 mb-1">Cuotas pendientes: 1 ?????</span>
+        </div>
+    </div>
+
+ <!--   <h4 class="text-color mb-3 mt-5 fs-16">Historial de pagos</h4> -->
+
+
+    <!---tabla--->
+
+ <!--  <div class="grey-box d-flex flex-column w-100">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="border-top-0">N° de cuota</th>
+                    <th scope="col" class="border-top-0">Monto</th>
+                    <th scope="col" class="border-top-0">Fecha de vencimiento</th>
+                    <th scope="col" class="border-top-0">Fecha de pago</th>
+                    <th scope="col" class="border-top-0">Forma de pago</th>
+                    <th scope="col" class="border-top-0">N° de comprobante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1/3</td>
+                    <td>$5.899,75</td>
+                    <td>10/08/2019</td>
+                    <td>10/08/2019</td>
+                    <td>Transf. Bancaria</td>
+                    <td>12345678<a href="detalles-contraparte-admin.html"><i class="fas fa-arrow-right"></i></a></td>
+                </tr>
+                <tr>
+                    <td>2/3</td>
+                    <td>$5.899,75</td>
+                    <td>10/09/2019</td>
+                    <td>10/09/2019</td>
+                    <td>Cobro de cheque</td>
+                    <td>87654321<a href="detalles-contraparte-admin.html"><i class="fas fa-arrow-right"></i></a></td>
+                </tr>
+                <tr>
+                    <td>3/3</td>
+                    <td>$5.899,75</td>
+                    <td>10/10/2019</td>
+                    <td>10/10/2019</td>
+                    <td>No hay datos</td>
+                    <td>No hay datos</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>--> 
+
+
+
+
+    <div class="row-buttons w-100 justify-content-center mt-4">
+        <button [routerLink]="routes.creditmanagement.index.href" role="button" class="white-button-border">Volver</button>
+    </div>
+
+</div>

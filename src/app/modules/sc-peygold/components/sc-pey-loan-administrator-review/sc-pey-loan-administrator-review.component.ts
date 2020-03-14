@@ -5,8 +5,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { InsuranceCarrierService } from '../../services/insurance-carrier.service';
 import { BaseComponent } from '../base.component';
 import { ActivatedRoute } from '@angular/router';
-import { InsuranceCarrier } from '../../../../models/insurance-carrier';
-import { every } from 'rxjs/operators';
+import { Response } from '../../../../modules/commons-peygold/entities/response';
+
 
 
 
@@ -37,29 +37,25 @@ export class ScPeyLoanAdministratorReviewComponent extends BaseComponent impleme
 
     this.spinnerService.show();
     this.loansService.getById(this.idLoan).then(
-      (response: Loan) => { 
-        this.loanDetail = response;
-        
-        this.insuranceCarrierService.getById(Number(this.loanDetail.insuranceCarrier.value)).then(
-          (insuranceCarrier:InsuranceCarrier)=>{
-            this.spinnerService.hide();
-            this.loanDetail.insuranceCarrier.label = insuranceCarrier.socialReason;
-            console.log('loanDetail',this.loanDetail);
-            this.insuranceCarrierService.all().then((insurancesCarriers: Array<SelectOption>) => {
-              this.insurancesCarriers = insurancesCarriers;
-              this.verifiedInformation(this.loanDetail.checks);
-              console.log('aseguradoras',this.insurancesCarriers);
-            });
-          }          
-        ).catch(
-          (error)=>{
-            this.spinnerService.hide();
-            this.setError("Ha ocurrido un error. No será posible ver el detalle de la solicitud.");
-          }
-          
-        )
-       
+      (response: Response) => { 
+        this.spinnerService.hide();
+        if(response.ok){
+          this.loanDetail = response.data;
+          this.insuranceCarrierService.all().then((insurancesCarriers: Array<SelectOption>) => {
+            this.insurancesCarriers = insurancesCarriers;
+            this.verifiedInformation(this.loanDetail.checks);
+            console.log('aseguradoras',this.insurancesCarriers);
+          });
+        }else{
+          this.setError(response.message);
+        } 
       }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        this.setError("Ha ocurrido un error. No será posible ver el detalle de la solicitud.");
+      }
+      
     );
 
 
@@ -108,7 +104,7 @@ export class ScPeyLoanAdministratorReviewComponent extends BaseComponent impleme
   onSubmit(loan:Loan){
     this.submited = true;
 
-    if(!this.loanDetail.riskySituation){
+    if(this.loanDetail.riskySituation==null){
       this.setError("Debe indicar la situación crediticia.");
       return;
     } 

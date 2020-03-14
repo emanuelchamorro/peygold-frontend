@@ -7,7 +7,7 @@ export const menu: Array<MenuItem> = [
 
   new MenuItem().fromJSON({label: 'Gestión de usuarios', icon: 'icon-seguridad', childs: [
     new MenuItem().fromJSON({label: 'Usuarios', href: routes.users.index.href}),
-    new MenuItem().fromJSON({label: 'Roles de usuarios', href: routes.home.href}),
+    //new MenuItem().fromJSON({label: 'Roles de usuarios', href: routes.home.href}),
   ]}),
   new MenuItem().fromJSON({label: 'Catálogos', icon: 'icon-catalogo', childs: [
     new MenuItem().fromJSON({label: 'Aseguradoras', href: routes.insurancecarriers.index.href}),
@@ -20,8 +20,7 @@ export const menu: Array<MenuItem> = [
   ]}),
   new MenuItem().fromJSON({label: 'Gestión de créditos', icon: 'icon-creditos-26', childs: [
     new MenuItem().fromJSON({label: 'Solicitudes', href: routes.creditmanagement.index.href}),
-    new MenuItem().fromJSON({label: 'Liquidaciones', href: routes.home.href}),
-    new MenuItem().fromJSON({label: 'Control de pagos', href: routes.home.href}),
+    new MenuItem().fromJSON({label: 'Liquidaciones', href: routes.loansettlements.index.href})    
   ]}),
   new MenuItem().fromJSON({label: 'Reportes', icon: 'icon-reportes-27', childs: [
     new MenuItem().fromJSON({label: 'Estado de cuenta', href: routes.home.href}),
