@@ -45,7 +45,10 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    */
   login(): void {
     this.busy();
+    const userAccount = this._userAccountMapper(this.user);
     this.authService.login(this.user.email, this.user.password, this.user.rememberMe).then((user: User) => {
+
+      localStorage.setItem("hsu",btoa(JSON.stringify(userAccount)));
       this.unbusy();
       this.goToDashboard(user);
     }).catch((e: ErrorResponse) => {
@@ -70,5 +73,15 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
         securedRedirection: true
       }
     });
+  }
+
+  _userAccountMapper(user:User):any{
+
+    let userAccount = {
+      email:user.email,
+      password:user.password,
+      rememberMe:user.rememberMe
+    }
+    return userAccount;
   }
 }

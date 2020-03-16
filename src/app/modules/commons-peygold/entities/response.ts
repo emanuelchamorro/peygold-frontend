@@ -14,5 +14,6 @@ export class Response {
     public message: string,
     public code: number,
     public ok?: boolean,
+    public data?:any
   ) { }
 }

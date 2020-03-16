@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BaseService} from './base.service';
 import {DocumentType} from '../models/document-type';
-import {TransactionType, SelectOption} from '../models';
+import {TransactionType, SelectOption, LoanStatus} from '../models';
 import {TransactionTypeEnum} from '../enums';
 import {LoanOption} from '../models/loan-option';
 import { SelectOptionQuestion } from '../models/select-option-question';
@@ -116,6 +116,14 @@ export class InMemoryService extends BaseService {
     return [
       new EffectApplicationType('1','Monto base'),
       new EffectApplicationType('2','Comisión')
+    ]
+  }
+
+  get loadStatus():Array<LoanStatus>{
+
+    return [
+      new LoanStatus('2'),
+      new LoanStatus('3')
     ]
   }
 

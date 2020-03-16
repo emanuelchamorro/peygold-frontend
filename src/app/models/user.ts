@@ -61,6 +61,7 @@ export class User extends Model {
   public systemUserTypeId: number;
   public canChargePeygold: boolean;
   public rememberMe: boolean;
+  public active: boolean;
 
   /**
    * Get the user complete Name

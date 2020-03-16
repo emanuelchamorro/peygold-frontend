@@ -21,6 +21,9 @@ import { ScPeyCreditManagementComponent } from './components/sc-pey-credit-manag
 import { ScPeyLoanAdministratorReviewComponent } from './components/sc-pey-loan-administrator-review/sc-pey-loan-administrator-review.component';
 import { ScPeyLoanAdministratorCheckReviewComponent } from './components/sc-pey-loan-administrator-check-review/sc-pey-loan-administrator-check-review.component';
 import { ScPeyLoanCompanyCreditRequestHistoryComponent } from './components/sc-pey-loan-company-credit-request-history/sc-pey-loan-company-credit-request-history.component';
+import { ScPeyLoanDetailComponent } from './components/sc-pey-loan-detail/sc-pey-loan-detail.component';
+import { ScPeyLoanSettlementsComponent } from './components/sc-pey-loan-settlements/sc-pey-loan-settlements.component';
+import { ScPeyLoanLiquidateComponent } from './components/sc-pey-loan-liquidate/sc-pey-loan-liquidate.component';
 
 export const config: Routes = [
   {
@@ -196,6 +199,27 @@ export const config: Routes = [
         component: ScPeyLoanCompanyCreditRequestHistoryComponent,
         data: {
           title: 'Gestión de créditos: Historial de empresa'
+        },
+      },
+      {
+        path: routes.loandetail.index.route,
+        component: ScPeyLoanDetailComponent,
+        data: {
+          title: 'Gestión de créditos: Detalle del credito'
+        },
+      },
+      {
+        path: routes.loansettlements.index.route,
+        component: ScPeyLoanSettlementsComponent,
+        data: {
+          title: 'Gestión de créditos: Liquidaciones'
+        },
+      },
+      {
+        path: routes.loanliquidate.index.route,
+        component: ScPeyLoanLiquidateComponent,
+        data: {
+          title: 'Gestión de créditos: Confirmación de liquidación'
         },
       },
     ]

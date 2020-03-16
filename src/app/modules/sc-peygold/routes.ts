@@ -50,4 +50,13 @@ export const routes = {
   companycreditrequesthistory : {
     index: {route: 'companycreditrequesthistory/:idUser', href: homeRoute + '/companycreditrequesthistory'},
   },
+  loandetail : {
+    index: {route: 'loandetail/:idLoan', href: homeRoute + '/loandetail'},
+  },
+  loansettlements : {
+    index: {route: 'loansettlements', href: homeRoute + '/loansettlements'},
+  },
+  loanliquidate : {
+    index: {route: 'loanliquidate/:idLoan', href: homeRoute + '/loanliquidate'},
+  },
 };

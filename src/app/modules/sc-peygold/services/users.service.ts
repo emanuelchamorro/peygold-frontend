@@ -4,6 +4,7 @@ import { Address, City, Contact, Country, ProfitInstitution, State, User, UserSt
 import { HttpClient } from '@angular/common/http';
 import { InMemoryService } from '../../../services';
 import { UserService } from '../../../services/user.service';
+import { PaginationResponse } from '../../commons-peygold/entities/pagination-response';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,41 @@ export class UsersService extends UserService {
       );
   }
 
+    /**
+   * Search loans.
+   * @return Promise<Array<Transaction>> the list of transaction
+   */
+  searchAll( word: string, page: number, perPage: number): Promise<PaginationResponse> {
+    const paginator = new PaginationResponse(page, perPage);
+    return this.get(`/users/search/${word}/${page}/${perPage}`).toPromise().then(
+      (response:any)=>{
+        paginator.count = response.recordCount;
+        paginator.data = response.userDTOs.map((item:any)=>{
+          const nUser = new User();
+          nUser.id = item.idUser;
+          nUser.idAspNetUser = item.idAspNetUser;
+          nUser.avatarURL = item.avatarURL;
+          nUser.dateRegistered = item.dateRegistered;
+          nUser.name = item.firstName;
+          nUser.lastName = item.lastName;
+          nUser.fullName = item.fullName;
+          nUser.phone = item.phone;
+          nUser.email = item.email;
+          nUser.idUserType = item.idUserType;
+          return nUser;
+        });
+
+        return paginator
+      }
+    ).catch(
+      ()=>{
+        return paginator; 
+      }
+    )
+
+  }
+
+
   /**
    * Create a new user.
    * @param user The new user
@@ -64,7 +100,19 @@ export class UsersService extends UserService {
   update(user: User): Promise<boolean> {
     console.log(user);
 
-    return this.put('/users', user).toPromise();
+    return this.put(`/users/${user.id}`, user).toPromise();
+  }
+
+    /**
+   * active and inactive
+   * @param id is id of the user
+   */
+  changeActive(id: number,isActive:boolean): Promise<boolean> {
+    const params = {
+      IdUser: id,
+      Active: isActive,
+    }
+    return this.put(`/users/${id}`, params).toPromise();
   }
 
 

@@ -30,6 +30,11 @@ import { ScPeyLoanComponent } from './components/sc-pey-loan/sc-pey-loan.compone
 import { ScPeyLoanAdministratorReviewComponent } from './components/sc-pey-loan-administrator-review/sc-pey-loan-administrator-review.component';
 import { ScPeyLoanAdministratorCheckReviewComponent } from './components/sc-pey-loan-administrator-check-review/sc-pey-loan-administrator-check-review.component';
 import { ScPeyLoanCompanyCreditRequestHistoryComponent } from './components/sc-pey-loan-company-credit-request-history/sc-pey-loan-company-credit-request-history.component';
+import { ScPeyLoanDetailComponent } from './components/sc-pey-loan-detail/sc-pey-loan-detail.component';
+import { ScPeyLoanSettlementsComponent } from './components/sc-pey-loan-settlements/sc-pey-loan-settlements.component';
+import { ScPeyLoanLiquidateComponent } from './components/sc-pey-loan-liquidate/sc-pey-loan-liquidate.component';
+import { MustMatchDirective } from './directive/must-match.directive';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +60,11 @@ import { ScPeyLoanCompanyCreditRequestHistoryComponent } from './components/sc-p
     ScPeyLoanAdministratorReviewComponent,
     ScPeyLoanAdministratorCheckReviewComponent,
     ScPeyLoanCompanyCreditRequestHistoryComponent,
+    ScPeyLoanDetailComponent,
+    ScPeyLoanSettlementsComponent,
+    ScPeyLoanLiquidateComponent,
+    MustMatchDirective
+    
   ],
   imports: [
     FormsModule,

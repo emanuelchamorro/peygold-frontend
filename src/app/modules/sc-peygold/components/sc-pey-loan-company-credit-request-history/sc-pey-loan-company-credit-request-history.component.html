@@ -1,89 +1,79 @@
-<div>
-    <h2>Historial de Confortsur S.A.</h2>
-    <h4 class="text-color mb-5 mt-5 fs-16">Créditos otorgados</h4>
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<h2>Historial de Confortsur S.A.</h2>
+<h4 class="text-color mb-5 mt-5 fs-16">Solicitudes aprobadas</h4>
 
 
-    <!---tabla--->
+<!---tabla--->
 
-    <div class="grey-box d-flex flex-column w-100">
+<div class="grey-box d-flex flex-column w-100">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col" class="border-top-0">N° de crédito</th>
-                    <th scope="col" class="border-top-0">Aseguradora</th>
-                    <th scope="col" class="border-top-0">N° de poliza</th>
-                    <th scope="col" class="border-top-0">Monto otorgado</th>
-                    <th scope="col" class="border-top-0">Fecha de acreditación</th>
-                    <th scope="col" class="border-top-0">Inicio de pago</th>
-                    <th scope="col" class="border-top-0">Fin de pago</th>
-                    <th scope="col" class="border-top-0">Historial de pagos</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>123456789</td>
-                    <td>Sancor Seguros</td>
-                    <td>9876543</td>
-                    <td>9.000</td>
-                    <td>08/02/2018</td>
-                    <td>04/05/2018</td>
-                    <td>04/08/2018</td>
-                    <td><a href="#" class="text-color">Ver<i class="fas fa-arrow-right"></i></a></td>
-                </tr>
-                <tr>
-                    <td>123456789</td>
-                    <td>Sancor Seguros</td>
-                    <td>9876543</td>
-                    <td>9.000</td>
-                    <td>08/02/2018</td>
-                    <td>04/05/2018</td>
-                    <td>04/08/2018</td>
-                    <td><a href="#" class="text-color">Ver<i class="fas fa-arrow-right"></i></a></td>
-                </tr>
-            </tbody>
-        </table>
-        <p class="text-center p-end">
-            No hay más créditos para mostrar.
-        </p>
-    </div>
+    <table class="table" *ngIf="loans && loans.data && loansApprove.length>0">
+        <thead>
+            <tr>
+                <th scope="col" class="border-top-0">N° de crédito</th>
+                <th scope="col" class="border-top-0">Aseguradora</th>
+                <th scope="col" class="border-top-0">N° de poliza</th>
+                <th scope="col" class="border-top-0">Monto otorgado</th>
+                <th scope="col" class="border-top-0">Fecha de acreditación</th>
+                <th scope="col" class="border-top-0">Inicio de pago</th>
+                <th scope="col" class="border-top-0">Fin de pago</th>
+                <!--  <th scope="col" class="border-top-0">Historial de pagos</th>-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let loanApprove of loansApprove">
+                <td [innerHtml]="loanApprove.id"></td>
+                <td>???</td>
+                <td>???</td>
+                <td> {{ loanApprove.transactionType.coin }}&nbsp;{{loanApprove.amount | number:'1.2'}}</td>
+                <td>???</td>
+                <td>???</td>
+                <td>???</td>
+                <!--   <td><a href="#" class="text-color">Ver<i class="fas fa-arrow-right"></i></a></td> -->
+            </tr>
+        </tbody>
+    </table>
+    <p class="text-center p-end" *ngIf="!loans || !loans.data || loansApprove.length==0">
+        No hay créditos para mostrar.
+    </p>
+</div>
 
-    <h4 class="text-color mb-5 mt-5 fs-16">Solicitudes rechazadas</h4>
+<h4 class="text-color mb-5 mt-5 fs-16">Solicitudes rechazadas</h4>
 
 
-    <!---tabla--->
+<!---tabla--->
 
-    <div class="grey-box d-flex flex-column w-100">
+<div class="grey-box d-flex flex-column w-100">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col" class="border-top-0">N° de solicitud</th>
-                    <th scope="col" class="border-top-0">Fecha de solicitud</th>
-                    <th scope="col" class="border-top-0">Análisis administrativo</th>
-                    <th scope="col" class="border-top-0">Análisis aseguradora</th>
-                    <th scope="col" class="border-top-0">Observaciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>123456789</td>
-                    <td>08/02/2018</td>
-                    <td>Rechazado</td>
-                    <td>No hay datos</td>
-                    <td>La empresa presenta cheques rechazados</td>
-                </tr>
-            </tbody>
-        </table>
-        <p class="text-center p-end">
-            No hay más solicitudes para mostrar.
-        </p>
-    </div>
+    <table class="table" *ngIf="loans && loans.data && loansReject.length>0">
+        <thead>
+            <tr>
+                <th scope="col" class="border-top-0">N° de solicitud</th>
+                <th scope="col" class="border-top-0">Fecha de solicitud</th>
+                <th scope="col" class="border-top-0">Análisis administrativo</th>
+                <th scope="col" class="border-top-0">Análisis aseguradora</th>
+                <th scope="col" class="border-top-0">Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let loanReject of loansReject">
+                <td [innerHtml]="loanReject.id"></td>
+                <td [innerHtml]="loanReject.applicationDate | date:short"></td>
+                <td [innerHtml]="loanReject.adminComments"></td>
+                <td>???</td>
+                <td [innerHtml]="loanReject.approveDeniedComments"></td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="text-center p-end" *ngIf="!loans || !loans.data || loansRejectlength==0">
+        No hay solicitudes para mostrar.
+    </p>
+</div>
 
 
-    <div class="row-buttons w-100 justify-content-center mt-4">
-        <button [routerLink]="routes.creditmanagement.index.href" role="button"
-            class="white-button-border">Volver</button>
-    </div>
-
+<div class="row-buttons w-100 justify-content-center mt-4">
+    <button [routerLink]="routes.creditmanagement.index.href" role="button" class="white-button-border">Volver</button>
 </div>

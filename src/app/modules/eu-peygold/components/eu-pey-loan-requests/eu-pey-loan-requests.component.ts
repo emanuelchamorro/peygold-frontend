@@ -4,13 +4,15 @@ import { Loan, TransactionType } from '../../../../models';
 import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
 import { environment } from '../../../../../environments/environment';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Response } from '../../../../modules/commons-peygold/entities/response';
+import { BaseComponent } from '../base.component';
 
 @Component({
   selector: 'app-eu-pey-loan-requests',
   templateUrl: './eu-pey-loan-requests.component.html',
   styleUrls: ['./eu-pey-loan-requests.component.scss']
 })
-export class EuPeyLoanRequestsComponent implements OnInit {
+export class EuPeyLoanRequestsComponent extends BaseComponent implements OnInit {
 
   private loans: PaginationResponse;
   private loan: Loan;
@@ -26,7 +28,9 @@ export class EuPeyLoanRequestsComponent implements OnInit {
   constructor(
     private loansService: LoansService,
     private spinnerService:NgxSpinnerService
-  ) { }
+  ) { 
+    super();
+  }
 
   ngOnInit() {
     this.spinnerService.show();
@@ -65,10 +69,14 @@ export class EuPeyLoanRequestsComponent implements OnInit {
     this.loan = loan;
     this.spinnerService.show();
     this.loansService.getById(loan.id).then(
-      (response: Loan) => {
-        this.loan = loan;
-        this.loanDetail = response;
+      (response: Response) => {
         this.spinnerService.hide();
+        if(response.ok){
+          this.loan = loan;
+          this.loanDetail = response.data;
+        }else{
+          this.setError(response.message);
+        }
       }
     )
   }
