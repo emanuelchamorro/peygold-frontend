@@ -433,10 +433,13 @@
   background:url("/assets/images/confirmacion-verde.svg");
   background-size:30px;
   background-repeat: no-repeat;
+  
 }
 .Bloqueado{
   background:url("~src/assets/images/wrong.png");
   background-size:30px;
+  background-repeat: no-repeat;
+
 }
 .Rechazado{
   background:url("/assets/images/bloquear-rojo.svg");

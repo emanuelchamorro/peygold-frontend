@@ -1,0 +1,17 @@
+.icon-verificado{
+    background:url("/assets/images/confirmacion-verde.svg");
+    background-size:30px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    height: 30px;
+  }
+  .icon-sin-verificar{
+    background:url("~src/assets/images/wrong.png");
+    background-size:30px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    height: 30px;
+  
+  }
