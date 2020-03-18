@@ -72,7 +72,7 @@
                                         [innerHtml]="loanDetail.applicant.address.city.label"></span></li>
                                 <li><span>Provincia</span><span
                                         [innerHtml]="loanDetail.applicant.address.state.label"></span></li>
-                                <li><span>País de residencia</span><span>No lo devuelve el servicio</span></li>
+                                <li><span>País de residencia</span><span [innerHtml]="loanDetail.applicant.address.country.label">No lo devuelve el servicio</span></li>
                                 <li><span>Teléfono</span><span
                                         [innerHtml]="loanDetail.applicant.phone?loanDetail.applicant.phone:'No lo devuelve el servicio'"></span>
                                 </li>

@@ -25,7 +25,7 @@
                 <span>Motivo:<span class="fw-600" [innerHtml]="loanDetail.creditDestination.label"></span></span>
                 <span>Aseguradora:<span class="fw-600" [innerHtml]="loanDetail.insuranceCarrier.label"></span></span>
                 <span>N° de póliza: <span class="fw-600" [innerHtml]="loanDetail.insuranceLoan.policyNumber"> </span></span>
-                <span>Vencimiento: <span class="fw-600"> {{loanDetail.checks[2].expirationDateStr}}</span></span>
+                <span>Vencimiento: <span class="fw-600"> {{loanDetail.checks[loanDetail.checks.length - 1].expirationDateStr}}</span></span>
 
 
             </div>
@@ -50,8 +50,8 @@
                     <span class="fw-600" *ngIf="loanDetail.checks.length==4"> Opción 3</span>
             </span>
             <span class="fw-600 mt-1 mb-1">Iniciación de pago: {{loanDetail.checks[0].issuanceDateStr}}</span>
-            <span class="fw-600 mt-1 mb-1">Fin de pago: {{loanDetail.checks[2].expirationDateStr}}</span>
-            <span class="fw-600 mt-1 mb-1">Cuotas pendientes: 1 ?????</span>
+            <span class="fw-600 mt-1 mb-1">Fin de pago: {{loanDetail.checks[loanDetail.checks.length - 1].expirationDateStr}}</span>
+        <!--   <span class="fw-600 mt-1 mb-1">Cuotas pendientes: 1 ?????</span> --> 
         </div>
     </div>
 

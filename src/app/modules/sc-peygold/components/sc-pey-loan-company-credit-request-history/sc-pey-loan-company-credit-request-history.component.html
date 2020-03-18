@@ -18,21 +18,21 @@
                 <th scope="col" class="border-top-0">N° de poliza</th>
                 <th scope="col" class="border-top-0">Monto otorgado</th>
                 <th scope="col" class="border-top-0">Fecha de acreditación</th>
-                <th scope="col" class="border-top-0">Inicio de pago</th>
+             <!--   <th scope="col" class="border-top-0">Inicio de pago</th>
                 <th scope="col" class="border-top-0">Fin de pago</th>
-                <!--  <th scope="col" class="border-top-0">Historial de pagos</th>-->
+                  <th scope="col" class="border-top-0">Historial de pagos</th>-->
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let loanApprove of loansApprove">
                 <td [innerHtml]="loanApprove.id"></td>
-                <td>???</td>
+                <td [innerHtml]="loanApprove.insuranceCarrier.label"></td>
                 <td>???</td>
                 <td> {{ loanApprove.transactionType.coin }}&nbsp;{{loanApprove.amount | number:'1.2'}}</td>
                 <td>???</td>
+            <!--     <td>???</td>
                 <td>???</td>
-                <td>???</td>
-                <!--   <td><a href="#" class="text-color">Ver<i class="fas fa-arrow-right"></i></a></td> -->
+                  <td><a href="#" class="text-color">Ver<i class="fas fa-arrow-right"></i></a></td> -->
             </tr>
         </tbody>
     </table>
