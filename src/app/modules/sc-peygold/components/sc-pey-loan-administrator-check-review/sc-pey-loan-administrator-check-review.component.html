@@ -1,10 +1,11 @@
 <ngx-spinner>
     <p style="font-size: 20px; color: white">Procesando...</p>
 </ngx-spinner>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
 <div *ngIf="check">
     <form name="form" (ngSubmit)="checksForm.form.valid && continue()" #checksForm="ngForm">
-        <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
-        <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
+
         <div class="grey-box d-flex flex-column w-100 justify-content-center mt-5">
             <div class="w-100 d-flex justify-content-start b-bottom-line">
                 <span class="text-color p-3" [innerHtml]="'Cheque N° '+check.number"></span>

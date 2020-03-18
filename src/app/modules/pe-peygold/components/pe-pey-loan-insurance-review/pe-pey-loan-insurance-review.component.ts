@@ -80,7 +80,7 @@ export class PePeyLoanInsuranceReviewComponent extends BaseComponent implements 
       this.loansService.changeStatusLoanInsurance(loan).then(
         (resp)=>{
           this.spinnerService.hide();
-          this.setError('La solicitud fué procesada exitosamente.');
+          this.setSuccess('La solicitud fué procesada exitosamente.');
           console.log('changeStatusLoanInsurance service success',resp);
         }
       ).catch(

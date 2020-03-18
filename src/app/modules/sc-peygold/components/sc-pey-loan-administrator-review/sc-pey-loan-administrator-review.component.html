@@ -87,10 +87,10 @@
                         <td [innerHtml]="check.id"></td>
                         <td [innerHtml]="check.number"></td>
                         <td>{{ loanDetail.transactionType.coin }}&nbsp;{{check.amount | number:'1.2'}}</td>
-                        <td *ngIf="check.checkStatusUpdate==2; else errorStatus" class="icon-verificado" ></td>
-                        <ng-template #errorStatus ><td class="icon-sin-verificar" ></td></ng-template>
-                        <td *ngIf="check.checkStatusUpdate==1 || check.checkStatusUpdate==2"><a [routerLink]="[routes.loanadministratorcheckreview.index.href,loanDetail.id,check.id]"
-                                class="text-color">Verificar<i class="fas fa-arrow-right"></i></a></td>
+                        <td *ngIf="check.checkStatusUpdate==2" class="icon-verificado" ></td>
+                        <td *ngIf="!check.checkStatusUpdate || check.checkStatusUpdate==1" class="icon-sin-verificar" ></td>
+                        <td><a [routerLink]="[routes.loanadministratorcheckreview.index.href,loanDetail.id,check.id]"
+                                class="text-color" [innerHtml]="!check.checkStatusUpdate || check.checkStatusUpdate==1 ? 'Verificar ->':'Ver ->'" ><i class="fas fa-arrow-right"></i></a></td>
                         
                     </tr>
                 </tbody>

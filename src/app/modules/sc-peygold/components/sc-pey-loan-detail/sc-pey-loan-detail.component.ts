@@ -31,12 +31,13 @@ export class ScPeyLoanDetailComponent extends BaseComponent implements OnInit {
     this.loansService.getLoanInsuranceById(this.loanInsuranceId).then(
       (response: Response) => { 
 
-        this.spinnerService.hide();
+
         if(response.ok){
           this.loanDetail = response.data;
         }else{
           this.setError(response.message);
         }      
+        this.spinnerService.hide();
       }
     ).catch(
       (error)=>{

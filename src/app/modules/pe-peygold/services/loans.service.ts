@@ -220,13 +220,15 @@ export class LoansService extends HttpService {
         loan.applicant.cuit = response.cuit;
         loan.applicant.bussinessName = response.socialReason ? response.socialReason : response.name;
         loan.applicant.email = response.email;
-        loan.applicant.phone = response.phoneNumber;
+        loan.applicant.phone = response.phone;
         loan.applicant.avatarURL = environment.api.avatarUrl + response.avatarURL;
         loan.applicant.address = new Address();
         loan.applicant.address.street = response.street;
         loan.applicant.address.billingStreet = response.billingStreet;
         loan.applicant.address.state = new State(null, response.stateName);
         loan.applicant.address.city = new State(null, response.cityName);
+        loan.applicant.address.country = new Country(response.idCountry,response.conuntryName);
+
         loan.insuranceLoan = null
         if (response.insuranceLoanInfo) {
           loan.insuranceLoan = new InsuranceLoan();
