@@ -59,7 +59,7 @@
                             [ngClass]="{'is-valid' : !repeatPassword.errors}" name="repeatPassword"
                             [(ngModel)]="repeatPasswordInput" #repeatPassword="ngModel" required
                             autocomplete="new-password" />
-
+                       <div class="validation-space" >
                         <div *ngIf="!repeatPassword.pristine && repeatPassword.invalid || processLoanForm.submitted && repeatPassword.errors"
                             class="invalid-feedback">
                             <div *ngIf="repeatPassword.errors.required">Campo es requerido</div>
@@ -67,7 +67,8 @@
                                 La contraseña es inválida
                             </div>
                         </div>
-                    </div>
+                     </div>
+                 </div>
 
                 </div>
                 <div class="container-analisis-riesgo border-0 p-4">
@@ -81,11 +82,13 @@
                         <label for="password" class="d-none">Token</label>
                         <input type='password' name="token" pattern="^[0-9]*$" [(ngModel)]="tokenInput" #token="ngModel"
                             class="p-3 w-100" [disabled]="repeatPassword.invalid" required />
-                        <div *ngIf="!token.pristine && token.invalid || processLoanForm.submitted && token.errors"
+                    <div class="validation-space" >
+                         <div *ngIf="!token.pristine && token.invalid || processLoanForm.submitted && token.errors"
                             class="invalid-feedback">
                             <div *ngIf="token.errors.required">Campo es requerido</div>
                             <div *ngIf="token.errors.pattern">Campo es inválido</div>
                         </div>
+                    </div>
                     </div>
 
                 </div>
@@ -93,7 +96,7 @@
             </div>
 
             <div class="d-flex flex-column w-50 grey-box ml-4 mb-5">
-                <div class="d-flex flex-column justify-content-center p-3 h-100">
+                <div class="d-flex flex-column justify-content-center border-0 p-3 h-100">
                     <span class="mb-2">Monto total</span>
                     <span
                         class="fw-800 fs-26 text-color">{{ loanDetail.transactionType.coin }}&nbsp;{{loanDetail.amount | number:'1.2'}}</span>
@@ -111,9 +114,9 @@
         </div>
         <div class="row-buttons w-100 justify-content-end">
             <button [routerLink]="routes.loansettlements.index.href" role="button"
-                class="white-button-border">Volver</button>
-            <button type="submit" role="button" class="solid-blue-button" (click)="status=3">Rechazar</button>
-            <button type="submit" role="button" class="solid-blue-button" (click)="status=2">Confirmar</button>
+                class="white-button-border ml-2 mr-2">Volver</button>
+            <button type="submit" role="button" class="solid-blue-button ml-2 mr-2" (click)="status=3">Rechazar</button>
+            <button type="submit" role="button" class="solid-blue-button ml-2 mr-2" (click)="status=2">Confirmar</button>
         </div>
     </form>
 </div>

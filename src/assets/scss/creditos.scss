@@ -342,10 +342,10 @@ z-index: 1;
     overflow: hidden;
     padding: 13px;
     z-index: 2;
-    margin-top: 60px;
+   
 
     a {
-        
+        cursor: pointer;
         font-size: 14px;
         color: $p-blue;
     }
@@ -384,7 +384,8 @@ justify-content: space-between;
 border-right: solid 1px #c8c8c8;
     
     input[type="password"] {
-        letter-spacing: 20px;
+        letter-spacing: 6px;
+        padding-right: 35px!important;
     }
     
     span {
