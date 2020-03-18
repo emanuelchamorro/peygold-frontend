@@ -78,6 +78,7 @@
                         <th scope="col" class="border-top-0">ID</th>
                         <th scope="col" class="border-top-0">N° de cheque</th>
                         <th scope="col" class="border-top-0">Monto</th>
+                        <th scope="col" class="border-top-0">Estado</th>
                         <th scope="col" class="border-top-0">Verificación</th>
                     </tr>
                 </thead>
@@ -86,9 +87,11 @@
                         <td [innerHtml]="check.id"></td>
                         <td [innerHtml]="check.number"></td>
                         <td>{{ loanDetail.transactionType.coin }}&nbsp;{{check.amount | number:'1.2'}}</td>
-                        <td *ngIf="check.checkStatusUpdate==1"><a [routerLink]="[routes.loanadministratorcheckreview.index.href,loanDetail.id,check.id]"
+                        <td *ngIf="check.checkStatusUpdate==2; else errorStatus" class="icon-verificado" ></td>
+                        <ng-template #errorStatus ><td class="icon-sin-verificar" ></td></ng-template>
+                        <td *ngIf="check.checkStatusUpdate==1 || check.checkStatusUpdate==2"><a [routerLink]="[routes.loanadministratorcheckreview.index.href,loanDetail.id,check.id]"
                                 class="text-color">Verificar<i class="fas fa-arrow-right"></i></a></td>
-                        <td *ngIf="check.checkStatusUpdate==2" class="fa fa-check"></td>
+                        
                     </tr>
                 </tbody>
             </table>
