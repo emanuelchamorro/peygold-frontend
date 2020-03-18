@@ -68,7 +68,7 @@ export class ScPeyLoanAdministratorReviewComponent extends BaseComponent impleme
     this.loansService.updateRiskySituation(this.loanDetail).then(
       (resp)=>{
         this.spinnerService.hide();
-        this.setSuccess("La solicitud fué enviada a la aseguradora.");
+        this.setSuccess("La situación crediticia fué actualizada.");
       }
     ).catch(
       (error)=>{

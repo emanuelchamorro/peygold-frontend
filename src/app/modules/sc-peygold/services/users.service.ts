@@ -69,6 +69,9 @@ export class UsersService extends UserService {
           nUser.phone = item.phone;
           nUser.email = item.email;
           nUser.idUserType = item.idUserType;
+          nUser.active = item.active;
+          nUser.cuit = item.cuit;
+          nUser.documentNumber = item.dni;
           return nUser;
         });
 
@@ -97,10 +100,10 @@ export class UsersService extends UserService {
    * Edit the user.
    * @param user The user to edit
    */
-  update(user: User): Promise<boolean> {
+  update(user: any): Promise<boolean> {
     console.log(user);
 
-    return this.put(`/users/${user.id}`, user).toPromise();
+    return this.put(`/users/${user.IdUser}`, user).toPromise();
   }
 
     /**

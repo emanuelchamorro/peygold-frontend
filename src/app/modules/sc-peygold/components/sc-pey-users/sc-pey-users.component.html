@@ -58,7 +58,7 @@
       <thead>
         <tr>
           <th scope="col" class="text-center">Usuario</th>
-          <th scope="col" class="text-center">DNI</th>
+          <th scope="col" class="text-center">DNI/CUIT</th>
           <th scope="col" class="text-center">Email</th>
           <th scope="col" class="text-center">Estado</th>
           <th scope="col" class="text-center"></th>
@@ -70,12 +70,15 @@
             <p class="text-center" [innerHtml]="user.completeName"></p>
           </td>
           <td>
-            <p class="text-center" [innerHtml]="user.documentNumber"></p>
+            <p class="text-center" [innerHtml]="user.cuit ? user.cuit : user.documentNumber"></p>
           </td>
           <td>
             <p class="text-center" [innerHtml]="user.email"></p>
           </td>
-          <td class="text-center"><span class="status Aprobado"></span></td>
+          <td class="text-center">
+            <span *ngIf="user.active" class="status Aprobado"></span>
+            <span *ngIf="!user.active" class="status Bloqueado"></span>
+          </td>
           <td class="text-center">
             <div class="DropOptions toggleOptions">
               <span class="options slide-toggle"></span>

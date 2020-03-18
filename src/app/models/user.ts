@@ -48,6 +48,7 @@ export class User extends Model {
   public twitter: string;
   public facebook: string;
   public roles: Array<Role>;
+  public rolesTemp: Array<Role>;
   public primaryActivityName: string;
   public documents: Array<any>;
   public locals: Array<any>;
@@ -96,8 +97,10 @@ export class User extends Model {
   addRole(name: string) {
     if (! this.roles) {
       this.roles = new Array<Role>();
+      this.rolesTemp = new Array<Role>();
     }
     this.roles.push(new Role(name, name));
+    this.rolesTemp.push(new Role(name, name));
   }
 
   /**
