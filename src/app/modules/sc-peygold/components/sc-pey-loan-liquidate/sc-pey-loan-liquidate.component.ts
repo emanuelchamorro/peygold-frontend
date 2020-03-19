@@ -24,6 +24,10 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
   public repeatPasswordInput:string;
   public tokenInput:string;
   public status:number;
+  public step:number;
+  public title:string;
+  public message:string;
+  public routeTo:string;
 
   constructor(private route:ActivatedRoute,
     private loansService: LoansService,
@@ -34,6 +38,7 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
     }
 
   ngOnInit() {
+    this.step = 1;
     this.userAccount = localStorage.getItem("hsu")?JSON.parse(atob(localStorage.getItem("hsu"))):undefined;
     this.repeatPasswordInput = null;
     this.tokenInput = null;
@@ -82,11 +87,22 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
     console.log('status',this.status);
     this.spinnerService.show();
     this.loanDetail.status = new LoanStatus(String(this.status));
+
     this.loansService.processLoan(this.loanDetail,this.tokenInput).then(
       (resp)=>{
         this.spinnerService.hide();
         console.log('resp send token',resp);
-        this.setSuccess('El token fué enviado a su correo exitosamente.');
+        if(this.status == 2){ 
+          this.title = '¡P$G enviados exitosamente!';
+          this.message = 'La empresa '+this.loanDetail.applicant.bussinessName+' ya tiene acreditado'+ 
+                          'el crédito que solicitaron.Sus P$G vencerán en la fecha ????';
+        }else{ 
+          this.title = '¡Rechazaste la liquidación!';
+          this.message = 'La liquidación de los P$G para la empresa '+this.loanDetail.applicant.bussinessName+' fué rechazada.'+
+          ' Ya no verás esta opción en la lista';
+        }
+        this.routeTo = this.routes.loansettlements.index.href;
+        this.step = 2;
       }
     ).catch(
       (error)=>{
@@ -99,7 +115,7 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
         }
         
       }
-    )
+    );
   }
 
 

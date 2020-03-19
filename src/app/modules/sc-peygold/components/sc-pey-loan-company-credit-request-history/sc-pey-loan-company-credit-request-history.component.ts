@@ -25,12 +25,14 @@ export class ScPeyLoanCompanyCreditRequestHistoryComponent extends BaseComponent
   public page: number;
   public previousPage: number;
   public showPagination: boolean;
+  public socialReason: string;
 
   constructor(private route:ActivatedRoute,
               private loansService: LoansService,
               private spinnerService: NgxSpinnerService, ) {
       super();
       this.idUser = Number(this.route.snapshot.paramMap.get("idUser"));
+      this.socialReason = this.route.snapshot.paramMap.get("socialReason");
   }
 
   ngOnInit() {

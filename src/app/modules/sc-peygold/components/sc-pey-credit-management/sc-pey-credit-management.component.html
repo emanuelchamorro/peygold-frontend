@@ -85,7 +85,7 @@
                                             del administrador</a></li>
                                     <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value=='2'"><a
                                             (click)="goToDetail(loan.id)">Detalles del crédito</a></li>
-                                    <li><a [routerLink]="[routes.companycreditrequesthistory.index.href,loan.applicant.id]">Historial
+                                    <li><a [routerLink]="[routes.companycreditrequesthistory.index.href, loan.applicant.id, loan.applicant.bussinessName?loan.applicant.bussinessName:loan.applicant.name]">Historial
                                             de la empresa</a></li>
                                 </ul>
                             </div>

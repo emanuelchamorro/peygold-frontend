@@ -22,6 +22,7 @@ import { UIPeyUserImageComponent } from './components/ui-pey-user-image/ui-pey-u
 import { UIPeyUserFormComponent } from './components/ui-pey-user-form/ui-pey-user-form.component';
 import { UIPeyAddressFormComponent } from './components/ui-pey-address-form/ui-pey-address-form.component';
 import { UiPePeyLayoutComponent } from './layout/ui-pe-pey-layout/ui-pe-pey-layout.component';
+import { UiPeyMessageSuccessComponent } from './components/ui-pey-message-success/ui-pey-message-success.component';
 
 
 
@@ -39,6 +40,7 @@ import { UiPePeyLayoutComponent } from './layout/ui-pe-pey-layout/ui-pe-pey-layo
     UIPeyUserFormComponent,
     UIPeyAddressFormComponent,
     UiPePeyLayoutComponent,
+    UiPeyMessageSuccessComponent,
 
   ],
   imports: [
@@ -68,6 +70,7 @@ import { UiPePeyLayoutComponent } from './layout/ui-pe-pey-layout/ui-pe-pey-layo
     UIPeyUserImageComponent,
     UIPeyUserFormComponent,
     UIPeyAddressFormComponent,
+    UiPeyMessageSuccessComponent
  
   ]
 })
