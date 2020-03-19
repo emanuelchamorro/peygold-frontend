@@ -31,7 +31,7 @@
         <div *ngIf="item.isSeparator" class="mt-3 mb-3 border-top-white"></div>
         <a *ngIf="! item.hasChilds && !item.isSeparator"
            class="nav-link sidebar-link justify-content-between slide-toggle"
-           routerLinkActive="active"
+           routerLinkActive=""
            [routerLink]="item.routerLink"
            [attr.data-el-target]="'#menu' + i">
           <div class="d-flex">
