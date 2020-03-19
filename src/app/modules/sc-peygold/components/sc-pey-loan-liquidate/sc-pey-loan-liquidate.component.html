@@ -3,7 +3,7 @@
 </ngx-spinner>
 <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
 <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
-<div *ngIf="loanDetail && userAccount">
+<div *ngIf="loanDetail && userAccount && step==1">
 
     <h2>Confirmación de liquidación</h2>
     <p class="opening-text mb-5">Revisa que hayas seleccionado correctamente las solicitudes e ingresa las claves de
@@ -119,4 +119,7 @@
             <button type="submit" role="button" class="solid-blue-button ml-2 mr-2" (click)="status=2">Confirmar</button>
         </div>
     </form>
+</div>
+<div *ngIf="loanDetail && userAccount && step==2">
+        <app-ui-pey-message-success [title]="title" [message]="message" [routeTo]="routeTo"></app-ui-pey-message-success>
 </div>
