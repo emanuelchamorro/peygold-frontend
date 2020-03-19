@@ -48,7 +48,7 @@ export const routes = {
     index: {route: 'loanadministratorcheckreview/:idLoan/:idCheck', href: homeRoute + '/loanadministratorcheckreview'},
   },
   companycreditrequesthistory : {
-    index: {route: 'companycreditrequesthistory/:idUser', href: homeRoute + '/companycreditrequesthistory'},
+    index: {route: 'companycreditrequesthistory/:idUser/:socialReason', href: homeRoute + '/companycreditrequesthistory'},
   },
   loandetail : {
     index: {route: 'loandetail/:idLoan', href: homeRoute + '/loandetail'},
