@@ -23,6 +23,7 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
   private cities: Array<City>;
   private documentTypes: Array<DocumentType>;
   private availableRoles: Array<Role>;
+  private userId:number
 
   constructor(
     private route: ActivatedRoute,
@@ -34,10 +35,10 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {
     super();
-    const userId = Number(this.route.snapshot.paramMap.get('userId'));
+    this.userId = Number(this.route.snapshot.paramMap.get('userId'));
 
-    if (userId && ! isNaN(userId)) {
-      this.getUser(userId);
+    if (this.userId && ! isNaN(this.userId)) {
+      this.getUser(this.userId);
       return;
     }
 
@@ -54,7 +55,7 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
     });
     this.documentTypes = this.inMemoryService.documentTypes;
     this.rolesService.all().then((roles: Array<Role>) => {
-      if(this.user && this.user.idUserType && this.user.idUserType!=5){
+      if(this.user && this.user.systemUserTypeId==1){
         this.availableRoles = roles;
       }else{
         this.availableRoles = roles.filter(rol => rol.name!= "Client");
@@ -91,13 +92,54 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
             user.address.city.label = citiesTemp[0].label;
           } 
           this.rolesService.all().then((roles: Array<Role>) => {
-            if(user.idUserType && user.idUserType!=5){
+            if(this.user && this.user.systemUserTypeId==1){
               this.availableRoles = roles;
             }else{
               this.availableRoles = roles.filter(rol => rol.name!= "Client");
             }
             this.user = user;                  
             this.spinnerService.hide();
+          }); 
+
+        });
+      });
+
+    });
+  }
+
+    /**
+   * Get the user info by the id.
+   * @param id User id
+   */
+  private getUserBackground(id: number): void {
+
+    this.usersService.one(id).then((user: User) => {
+      
+      console.log('user',user);
+      const countriesTemp = this.countries.filter(x => x.value == user.address.country.value);
+      if(countriesTemp.length > 0){
+          user.address.country.label = countriesTemp[0].label;
+      }
+      
+      this.locationService.getStates(user.address.country).then((states: Array<State>) => {
+        this.states = states;
+        const statesTemp = states.filter(x => x.value == user.address.state.value);
+        if(statesTemp.length > 0 ){
+          user.address.state.label = statesTemp[0].label;
+        }        
+        this.locationService.getCities(user.address.state).then((cities: Array<City>) => {
+          this.cities = cities;
+          const citiesTemp = cities.filter(x => x.value == user.address.city.value);
+          if(citiesTemp.length > 0){
+            user.address.city.label = citiesTemp[0].label;
+          } 
+          this.rolesService.all().then((roles: Array<Role>) => {
+            if(this.user && this.user.systemUserTypeId==1){
+              this.availableRoles = roles;
+            }else{
+              this.availableRoles = roles.filter(rol => rol.name!= "Client");
+            }
+            this.user = user;                  
           }); 
 
         });
@@ -195,6 +237,7 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
     this.usersService.update(UserFactory.makeToUpdate(user)).then((success: boolean)  => {
       this.spinnerService.hide();
       this.setSuccess("El usuario fué actualizado exitosamente.");
+      this.getUserBackground(this.userId);
       console.log(success);
     }).catch((e: ErrorResponse) => {
       this.spinnerService.hide();
@@ -202,4 +245,5 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
       console.log(e);
     });
   }
+
 }

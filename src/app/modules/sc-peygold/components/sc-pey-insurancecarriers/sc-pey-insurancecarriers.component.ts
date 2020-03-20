@@ -6,9 +6,9 @@ import { PaginationResponse } from '../../../../modules/commons-peygold/entities
 import { NgxSpinnerService } from 'ngx-spinner';
 import { InsuranceCarrierFactory } from '../../../../factory/insurance-carrier-factory';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
-import {BaseComponent} from '../base.component';
+import { BaseComponent } from '../base.component';
 import { LocationService, } from '../../../../services';
-import {City, State} from '../../../../models';
+import { City, State } from '../../../../models';
 
 @Component({
   selector: 'app-sc-pey-insurancecarriers',
@@ -26,16 +26,16 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
   public showPagination: boolean;
   public filter: string;
   private exportAsConfig: ExportAsConfig;
-  private completed:boolean;
+  private completed: boolean;
 
 
   constructor(private insuranceCarrierService: InsuranceCarrierService,
     private spinnerService: NgxSpinnerService,
     private exportAsService: ExportAsService,
-    private locationService: LocationService) {       
-      super();
-    }
-    
+    private locationService: LocationService) {
+    super();
+  }
+
 
   ngOnInit() {
     this.completed = false;
@@ -53,7 +53,7 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
         this.totalItems = 0;
         this.showPagination = false;
       }
-      
+
       this.spinnerService.hide();
     }).catch(
       (erro) => {
@@ -62,7 +62,7 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
         this.totalItems = 0;
         this.showPagination = false;
         this.spinnerService.hide();
-        this.setError("No es posible cargar las aseguradoras.");
+        this.setError("Ha ocurrido un error. No es posible cargar las aseguradoras.");
       }
     );
   }
@@ -94,7 +94,7 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
         this.totalItems = 0;
         this.showPagination = false;
         this.spinnerService.hide();
-        this.setError("No es posible cargar las aseguradoras.");
+        this.setError("Ha ocurrido un error. No es posible cargar las aseguradoras.");
       }
     )
 
@@ -112,11 +112,11 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
       elementId: 'tableInsurancecarriers', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Aseguradoras').subscribe(
-      () => {},// save started
+      () => { },// save started
       (error) => {
-        this.setError("No es posible exportar el reporte en el formato seleccionado.");
+        this.setError("Ha ocurrido un error. No es posible exportar el reporte en el formato seleccionado.");
       }
-      );
+    );
   }
 
 
@@ -136,29 +136,37 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
   private getInsuranceCarrier(id: number): void {
     this.spinnerService.show();
     this.insuranceCarrierService.getById(id).then((insurancecarrier: InsuranceCarrier) => {
-      this.detailedInsuranceCarrier = insurancecarrier;
-      console.log('detailedInsuranceCarrier', this.detailedInsuranceCarrier);
-      if (this.detailedInsuranceCarrier.address.country) {
-        this.locationService.getStates(this.detailedInsuranceCarrier.address.country).then((states: Array<State>) => {
-          this.detailedInsuranceCarrier.address.state = states.filter( x=> x.value== this.detailedInsuranceCarrier.address.state.value)[0];
-          if (this.detailedInsuranceCarrier.address.state) {
-            this.locationService.getCities(this.detailedInsuranceCarrier.address.state).then((cities: Array<City>) => {
-              this.completed = true;
-              this.spinnerService.hide();
-              this.detailedInsuranceCarrier.address.city = cities.filter( x=> x.value== this.detailedInsuranceCarrier.address.city.value)[0];
-            }).catch( ()=> {
-              this.spinnerService.hide();
-              this.completed = false;
-              this.setError("No es posible mostrar el detalle de la aseguradora.");
+      if (insurancecarrier) {
+        this.detailedInsuranceCarrier = insurancecarrier;
+        console.log('detailedInsuranceCarrier', this.detailedInsuranceCarrier);
+        if (this.detailedInsuranceCarrier.address.country) {
+          this.locationService.getStates(this.detailedInsuranceCarrier.address.country).then((states: Array<State>) => {
+            this.detailedInsuranceCarrier.address.state = states.filter(x => x.value == this.detailedInsuranceCarrier.address.state.value)[0];
+            if (this.detailedInsuranceCarrier.address.state) {
+              this.locationService.getCities(this.detailedInsuranceCarrier.address.state).then((cities: Array<City>) => {
+                this.completed = true;
+                this.spinnerService.hide();
+                this.detailedInsuranceCarrier.address.city = cities.filter(x => x.value == this.detailedInsuranceCarrier.address.city.value)[0];
+              }).catch(() => {
+                this.spinnerService.hide();
+                this.completed = false;
+                this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
               });
-          }
-        }).catch( ()=> {
-          this.spinnerService.hide();
-          this.completed = false;
-          this.setError("No es posible mostrar el detalle de la aseguradora.");
-        });
+            }
+          }).catch(() => {
+            this.spinnerService.hide();
+            this.completed = false;
+            this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
+          });
+        }
+      } else {
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
       }
-    });
+    }).catch(
+      (error) => {
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
+      }
+    );
   }
 
   /**
@@ -168,10 +176,18 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
    */
   add(insurancecarrier: InsuranceCarrier): void {
     insurancecarrier.deleted = false;
+    this.spinnerService.show();
     this.insuranceCarrierService.update(InsuranceCarrierFactory.make(insurancecarrier)).then(
-      (resp) => { }
+      (insurance: InsuranceCarrier) => {
+        this.spinnerService.hide();
+        if (!insurance) {
+          this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+        }
+      }
     ).catch(
-      (error) => { }
+      (error) => {
+        this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+      }
     );
   }
 
@@ -184,9 +200,15 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
   delete(insurancecarrier: InsuranceCarrier): void {
     insurancecarrier.deleted = true;
     this.insuranceCarrierService.update(InsuranceCarrierFactory.make(insurancecarrier)).then(
-      (resp) => { }
+      (insurance: InsuranceCarrier) => {
+        if (!insurance) {
+          this.setError("Ha ocurrido un error. No es posible eliminar la entidad.");
+        }
+      }
     ).catch(
-      (error) => { }
+      (error) => { 
+        this.setError("Ha ocurrido un error. No es posible eliminar la entidad.");
+      }
     );
   }
 

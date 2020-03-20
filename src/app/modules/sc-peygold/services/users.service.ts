@@ -72,6 +72,7 @@ export class UsersService extends UserService {
           nUser.active = item.active;
           nUser.cuit = item.cuit;
           nUser.documentNumber = item.dni;
+          nUser.systemUserTypeId = item.systemUserTypeId;
           return nUser;
         });
 

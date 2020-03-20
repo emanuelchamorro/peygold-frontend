@@ -1,4 +1,4 @@
-import { User } from '../models';
+import { User, Role } from '../models';
 
 
 export class UserFactory {
@@ -39,14 +39,29 @@ export class UserFactory {
         const rolesToAdd = new Array<string>();
         const rolesToRemove = new Array<string>();
 
-        user.roles.forEach((role: any) => {
-            rolesToAdd.push(role.label);
-        });
-        user.rolesTemp.forEach((role: any) => {
-            rolesToRemove.push(role.label);
+        user.roles.forEach((role: Role) => {
+            if(user.rolesTemp && user.rolesTemp.length > 0){
+                console.log('user.rolesTemp.includes',user.rolesTemp.some((item:Role) => { return item.value == role.value }))
+               if(!user.rolesTemp.some((item:Role) => { return item.label == role.label })){
+                rolesToAdd.push(role.label);
+               } 
+            }else{
+                rolesToAdd.push(role.label);
+            }
+            
         });
 
-        if (user.idUserType && user.idUserType != 5) {
+        if(user.rolesTemp && user.rolesTemp.length > 0){
+            user.rolesTemp.forEach((role: Role) => {
+                console.log('user.roles.includes',user.roles.some((item:Role) => { return item.value == role.value }))
+                if(!user.roles.some((item:Role) => { return item.label == role.label })){
+                    rolesToRemove.push(role.label);
+                }
+                
+            });
+        }
+
+        if (user.systemUserTypeId == 1) {
             if (user.cuit) {
                 return {
                     IdUser: user.id,
@@ -109,12 +124,8 @@ export class UserFactory {
                 }
             } 
         }
-
-
-
-
-
-
+    
     }
+
 
 }

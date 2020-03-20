@@ -71,10 +71,15 @@ export class ScPeyStoreInsurancecarrierComponent extends BaseComponent implement
     this.spinnerService.show();
     this.insuranceCarrierService.store(InsuranceCarrierFactory.make(insurancecarrier)).then((resp: InsuranceCarrier)  => {
       this.spinnerService.hide();
-      this.setSuccess('La aseguradora fué creada con exito.');
+      if(InsuranceCarrier){
+        this.setSuccess('La aseguradora fué creada con exito.');
+      }else{
+        this.setError('Ha ocurrido un error. La aseguradora no pudo ser creada.');
+      }
+     
     }).catch((error) => {      
       this.spinnerService.hide();
-      this.setError('La aseguradora no pudo ser creada.');
+      this.setError('Ha ocurrido un error. La aseguradora no pudo ser creada.');
     });
   }
 
@@ -87,10 +92,15 @@ export class ScPeyStoreInsurancecarrierComponent extends BaseComponent implement
     this.spinnerService.show();
     this.insuranceCarrierService.update(InsuranceCarrierFactory.make(insurancecarrier)).then((resp: InsuranceCarrier)  => {
       this.spinnerService.hide();
-      this.setSuccess("La aseguradora fué actualizada con exito.");
+      if(InsuranceCarrier){
+        this.setSuccess("La aseguradora fué actualizada con exito.");
+      }else{
+        this.setError("Ha ocurrido un error. La aseguradora no pudo ser actualizada.");
+      }
+      
     }).catch((error) => {
       this.spinnerService.hide();
-      this.setError("La aseguradora no pudo ser actualizada.");
+      this.setError("Ha ocurrido un error. La aseguradora no pudo ser actualizada.");
     });
   }
 
@@ -120,19 +130,33 @@ export class ScPeyStoreInsurancecarrierComponent extends BaseComponent implement
   private getInsuranceCarrier(id: number): void {
     this.spinnerService.show();
     this.insuranceCarrierService.getById(id).then((insurancecarrier: InsuranceCarrier) => {
-      this.insurancecarrier = insurancecarrier;
-      if (this.insurancecarrier.address.country) {
-        this.locationService.getStates(this.insurancecarrier.address.country).then((states: Array<State>) => {
-          this.insurancecarrier.address.state = states.filter( x=> x.value== this.insurancecarrier.address.state.value)[0];
-          if (this.insurancecarrier.address.state) {
-            this.locationService.getCities(this.insurancecarrier.address.state).then((cities: Array<City>) => {
-              this.spinnerService.hide()
-              this.insurancecarrier.address.city = cities.filter( x=> x.value== this.insurancecarrier.address.city.value)[0];
-            }).catch( ()=> this.spinnerService.hide() );
-          }
-        }).catch( ()=> this.spinnerService.hide() );
+      if(insurancecarrier){
+        if (insurancecarrier.address.country) {
+          this.locationService.getStates(insurancecarrier.address.country).then((states: Array<State>) => {
+            insurancecarrier.address.state = states.filter( x=> x.value== insurancecarrier.address.state.value)[0];
+            if (insurancecarrier.address.state) {
+              this.locationService.getCities(insurancecarrier.address.state).then((cities: Array<City>) => {
+                insurancecarrier.address.city = cities.filter( x=> x.value== insurancecarrier.address.city.value)[0];
+                this.insurancecarrier = insurancecarrier;
+                this.spinnerService.hide();
+              }).catch( ()=> {
+                this.spinnerService.hide();
+                this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
+              });
+            }
+          }).catch( ()=> {
+            this.spinnerService.hide();
+            this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
+          });
+        }  
+      }else{
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
       }
-    });
+    }).catch(
+      (error) => {
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la aseguradora.");
+      }
+    );;
   }
 
     /**

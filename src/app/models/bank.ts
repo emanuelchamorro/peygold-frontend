@@ -7,6 +7,7 @@ import { User } from './user';
  */
 export class Bank extends SelectOption {
 
+  public idBank:number;
   public socialReason: string;
   public cuit: string;
   public contactUser:User;

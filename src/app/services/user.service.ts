@@ -53,7 +53,7 @@ export class UserService extends HttpService {
       user.linkedIn = response.linkedIn;
       user.twitter = response.twitter;
       user.facebook = response.facebook;
-      user.systemUserTypeId = response.roles.filter(x => x ==='Admin').length>0 ? 2: 1; 
+      user.systemUserTypeId = response.systemUserTypeId; 
       if (response.roles) {
         response.roles.map((role: any) => {
           user.addRole(role);

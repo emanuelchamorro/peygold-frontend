@@ -17,7 +17,7 @@ export class LoansService extends HttpService {
 
   /**
    * Search loans.
-   * @return Promise<Array<Transaction>> the list of transaction
+   * @return Promise<Array<PaginationResponse>> the PaginationResponse
    */
   search(type: TransactionType, word: string, page: number, perPage: number): Promise<PaginationResponse> {
     const paginator = new PaginationResponse(page, perPage);

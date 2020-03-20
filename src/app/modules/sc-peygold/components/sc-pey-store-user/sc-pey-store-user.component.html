@@ -120,7 +120,7 @@
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="Correo eléctronico" class="form-control w-100"
                   [ngClass]="{'ng-dirty ng-invalid' : submited && email.errors}" name="email" [(ngModel)]="user.email"
-                  #email="ngModel" required email />
+                  #email="ngModel" required email readonly />
                 <span *ngIf="type=='person'">Tu correo eléctronico</span>
                 <span *ngIf="type!='person'">Correo eléctronico</span>
                 <div *ngIf="!email.pristine && email.invalid || submited && email.errors" class="invalid-feedback">
@@ -136,7 +136,7 @@
                 <ng-select name="roles" placeholder="Roles" class="custom-select mb-0 w-100" bindLabel="label"
                   [multiple]="true" [searchable]="false" [items]="availableRoles" [addTag]="false"
                   [(ngModel)]="user.roles" [ngClass]="{'ng-dirty ng-invalid' : submited && roles.errors}"
-                  #roles="ngModel" required [readonly]="user.idUserType && user.idUserType!=5">
+                  #roles="ngModel" required [readonly]="user.systemUserTypeId==1">
                 </ng-select> 
                 <div *ngIf="!roles.pristine && roles.invalid || submited && roles.errors" class="invalid-feedback">
                   <div *ngIf="roles.errors.required">Campo es requerido</div>

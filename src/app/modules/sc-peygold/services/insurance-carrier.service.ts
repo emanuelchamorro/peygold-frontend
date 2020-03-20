@@ -26,6 +26,12 @@ export class InsuranceCarrierService extends HttpService {
     super(http);
   }
 
+  /**
+   * search insurance with paginator by word
+   * @param page 
+   * @param perPage 
+   * @param word 
+   */
   search(page:number, perPage:number, word?:string): Promise<PaginationResponse>{
     const paginator = new PaginationResponse(page, perPage);
     const url = word && word!='' ? `/insurancecarriers/search/${page}/${perPage}/${word}` : `/insurancecarriers/search/${page}/${perPage}`
@@ -66,6 +72,10 @@ export class InsuranceCarrierService extends HttpService {
     )
   }
 
+  /**
+   * update insurance
+   * @param insuranceCarrier 
+   */
   update(insuranceCarrier:any): Promise<InsuranceCarrier>{
    return this.put(`/insurancecarriers/${insuranceCarrier.insuranceCarrierId}`,insuranceCarrier).toPromise().then(
       (resp)=>{
@@ -78,6 +88,10 @@ export class InsuranceCarrierService extends HttpService {
     );
   }
 
+  /**
+   * create at insurance
+   * @param insuranceCarrier 
+   */
   store(insuranceCarrier:any): Promise<InsuranceCarrier>{
     return this.post('/insurancecarriers',insuranceCarrier).toPromise().then(
       (resp)=>{
@@ -91,6 +105,11 @@ export class InsuranceCarrierService extends HttpService {
       }
     );
   }
+
+  /**
+   * get by id at insurance
+   * @param id 
+   */
 
   getById(id:number): Promise<InsuranceCarrier>{
     const insurancecarrier = new InsuranceCarrier();
@@ -129,6 +148,9 @@ export class InsuranceCarrierService extends HttpService {
     );
   }
 
+  /**
+   * get all insurance
+   */
   all():Promise<Array<SelectOption>>{
     if (this.insurancesCarriers) {
       return this.resolveWith(this.insurancesCarriers);

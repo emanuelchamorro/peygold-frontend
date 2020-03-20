@@ -4,6 +4,11 @@ import { PaginationResponse } from '../../../../modules/commons-peygold/entities
 import { Bank } from '../../../../models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
+import { BanksService } from '../../services/banks.service';
+import { environment } from '../../../../../environments/environment';
+import { LocationService, } from '../../../../services';
+import {City, State} from '../../../../models';
+import { BankFactory } from '../../../../factory/bank-factory';
 
 @Component({
   selector: 'app-sc-pey-banks',
@@ -25,17 +30,72 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
   private completed:boolean;
 
   constructor(private spinnerService: NgxSpinnerService,
-              private exportAsService: ExportAsService) {
+              private exportAsService: ExportAsService,
+              private banksService:BanksService,
+              private locationService: LocationService) {
     super();
   }
 
   ngOnInit() {
     this.completed = false;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.banksService.search(1,environment.paginator.per_page, undefined).then((response: PaginationResponse) => {
+      this.banks = response;
+      if (this.banks.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+        this.setError("No es posible cargar los bancos.");
+      }
+    );
   }
 
   loadPage(page: number) {
-    //TODO CALL SERVICE
+    let word = (this.filter && this.filter != '') ? this.filter : undefined;
+    this.previousPage = page - 1;
+    this.spinnerService.show();
+    this.banksService.search(page, environment.paginator.per_page, word).then((response: PaginationResponse) => {
+      console.log('creditos', response)
+      this.banks = response;
+
+      if (this.banks.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+        this.setError("No es posible cargar los bancos.");
+      }
+    )
   }
 
     /**
@@ -63,7 +123,7 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
    * @return void
    */
   showBank(bank: Bank): void {
-    this.getBank(Number(bank.id));
+    this.getBank(Number(bank.idBank));
   }
 
     /**
@@ -71,9 +131,41 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
    * @param id bank id
   */
   private getBank(id: number): void {
-    //TODO CALL SERVICE
-    this.detailedBank = new Bank();
-    this.completed = true;
+
+    this.spinnerService.show();
+    this.banksService.getById(id).then((bank: Bank) => {
+      if(bank){
+        this.detailedBank = bank;
+        console.log('bank', this.detailedBank);
+
+       if (this.detailedBank.address.country) {
+          this.locationService.getStates(this.detailedBank.address.country).then((states: Array<State>) => {
+            this.detailedBank.address.state = states.filter( x=> x.value== this.detailedBank.address.state.value)[0];
+            if (this.detailedBank.address.state) {
+              this.locationService.getCities(this.detailedBank.address.state).then((cities: Array<City>) => {
+                this.completed = true;
+                this.spinnerService.hide();
+                this.detailedBank.address.city = cities.filter( x=> x.value== this.detailedBank.address.city.value)[0];
+              }).catch( ()=> {
+                this.spinnerService.hide();
+                this.completed = false;
+                this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
+                });
+            }
+          }).catch( ()=> {
+            this.spinnerService.hide();
+            this.completed = false;
+            this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
+          });
+        }
+      }else{
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
+      }
+    }).catch(
+      (error)=>{
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
+      }
+    );
   }
 
     /**
@@ -83,7 +175,20 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
    */
   add(bank: Bank): void {
     bank.deleted = false;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.banksService.update(BankFactory.make(bank)).then(
+      (bank:Bank) => {
+        this.spinnerService.hide();
+        if(!bank){
+          this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+        }
+
+      }
+    ).catch(
+      (error) => { 
+        this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+      }
+    );
   }
 
   /**
@@ -94,7 +199,19 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
 
   delete(bank: Bank): void {
     bank.deleted = true;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.banksService.update(BankFactory.make(bank)).then(
+      (bank:Bank) => { 
+        this.spinnerService.hide();
+        if(!bank){
+          this.setError("Ha ocurrido un error. No es posible eliminar la entidad.");
+        }
+      }
+    ).catch(
+      (error) => { 
+        this.setError("Ha ocurrido un error. No es posible eliminar la entidad.");
+      }
+    );
   }
 
     /**

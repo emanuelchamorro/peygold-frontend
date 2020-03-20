@@ -118,7 +118,7 @@
         (pageChange)="loadPage($event)">
     </ngb-pagination>
 </div>
-<app-ui-pey-sidebar *ngIf="detailedInsuranceCarrier && completed" (onClose)="detailedInsuranceCarrier = null"
+<app-ui-pey-sidebar *ngIf="detailedInsuranceCarrier && completed" (onClose)="detailedInsuranceCarrier = null; completed=false"
     [closed]="!detailedInsuranceCarrier" title="Detalles de aseguradora">
     <app-sc-pey-show-insurancecarrier [insuranceCarrier]="detailedInsuranceCarrier"></app-sc-pey-show-insurancecarrier>
 </app-ui-pey-sidebar>
