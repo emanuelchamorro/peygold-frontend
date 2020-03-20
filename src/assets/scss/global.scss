@@ -396,6 +396,12 @@ select {
   background: transparent!important;
 }
 
+input[name="comments"].ng-invalid.ng-dirty{
+    
+
+  border-bottom: solid 2px rgba(158, 14, 0, 0.83) !important;
+}
+
 #input-line:focus {
   border-bottom-width: 2px;
   border-color: $p-blue;

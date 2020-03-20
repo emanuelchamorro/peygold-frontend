@@ -1,7 +1,7 @@
 <ngx-spinner>
     <p style="font-size: 20px; color: white">Procesando...</p>
 </ngx-spinner>
-<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error" hidden></ngb-alert>
 <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
 <div *ngIf="loanDetail && loanDetail!=null">
 
@@ -98,7 +98,10 @@
 
                                 <div class="form-group">
                                     <input type="number" name="policyN" [(ngModel)]="loanDetail.policyNumber"
-                                        #policyN="ngModel" class="form-control" placeholder="N° de póliza" required>
+                                        #policyN="ngModel" class="form-control" placeholder="N° de póliza" 
+                                        [ngClass]="{'ng-dirty ng-invalid' : loanIinsuranceReviewForm.submitted && policyN.invalid}"
+                                        required>
+
                                     <div *ngIf="(loanIinsuranceReviewForm.submitted && policyN.invalid)"
                                         class="invalid-feedback">
                                         <div *ngIf="policyN.errors.required">Campo es requerido</div>
@@ -122,16 +125,18 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-center w-100 mb-3">
+                            <div class="d-flex justify-content-center flex-column w-100 mb-3 pl-4 pr-4">
                                 <input name="comments" [(ngModel)]="loanDetail.loanInsuranceComments"
-                                    #comments="ngModel" class="form-control" placeholder="Agregar una nota" type="text"
-                                    class="d-flex w-75 mt-2 mb-4" id="input-line" required>
+                                    #comments="ngModel" type="text" class="form-control" placeholder="Agregar una nota"
+                                    [ngClass]="{'ng-dirty ng-invalid' : loanIinsuranceReviewForm.submitted && comments.invalid}"
+                                    class="d-flex mt-2 mb-2" id="input-line" required>
 
+                                    <div *ngIf="(loanIinsuranceReviewForm.submitted && comments.invalid)"
+                                    class="invalid-feedback">
+                                    <div *ngIf="comments.errors.required" >Campo es requerido</div>
+                                </div>     
                             </div>
-                            <div *ngIf="(loanIinsuranceReviewForm.submitted && comments.invalid)"
-                                class="invalid-feedback">
-                                <div *ngIf="comments.errors.required">Campo es requerido</div>
-                            </div>
+               
                         </div>
                         <div *ngIf="loanDetail &&loanDetail.insuranceLoan.insuranceStatus.value!='1'">
                                 <div class="bottom-content d-flex w-100 justufy-content-start flex-column">
@@ -150,6 +155,39 @@
         </form>
     </div>
 </div>
-<div *ngIf="!loanDetail || loanDetail==null">
-    Aca va la plantilla en el caso de que la solicitud no exista
+<div *ngIf="!loanDetail || loanDetail==null" class="h-100"> 
+    
+        <div class=" h-100 bg-mail">
+            <nav class="navbar-gradient shadow position-relative">
+                <!-- Barra de navegacion superior -->
+    
+            <ul class="top-nav">
+              <li>
+                <a [routerLink]="routes.home.href">
+                  <img src="../assets/images/Isologotipo.svg" alt=""/>
+                </a>
+              </li>
+              <div>
+                <li class="fs-12 ml-4 text-white">
+                  <a [routerLink]="routes.login.href">¿Ya tienes una cuenta?</a>
+                </li>
+                <li class="fs-12 ml-4">
+                  <a [routerLink]="routes.login.href" class="btn-white">Iniciar sesión</a>
+                </li>
+              </div>
+            </ul>
+          </nav>
+       
+          <main class="solicitud-null">
+               <section class="w-100 d-flex flex-column align-items-center pl-3 pr-3">
+                 <div class="grey-box bg-white p-4 mt-5 mb-5">
+                  <div class="d-flex justify-content-center align-items-center flex-column">
+                    <img src="assets/images/error-blanco.svg" class="ErrorWhite mt-4 mb-4" width="100" height="100">
+                     <span class="mb-3">¡La solicitud no existe!</span>
+                     <p class="w-75 mb-5">Lo sentimos pero esta solicitud ha sido eliminada y ya no está disponible</p>   
+                </div>
+            </div>
+       </section>	 
+    </main>
+    </div>
 </div>
