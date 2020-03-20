@@ -19,6 +19,7 @@ export class PePeyLoanInsuranceReviewComponent extends BaseComponent implements 
   private loanDetail:Loan;
   private statusOptions: Array<LoanStatus>;
   private pFile:File;
+  private failure:boolean;
 
   constructor(private route:ActivatedRoute,
               private loansService:LoansService,
@@ -30,6 +31,7 @@ export class PePeyLoanInsuranceReviewComponent extends BaseComponent implements 
   }
 
   ngOnInit() {
+    this.failure = false;
     this.spinnerService.show();
     this.statusOptions = this.inMemoryService.loadStatus;
     this.loansService.getLoanInsuranceById(this.loanInsuranceId).then(
@@ -38,6 +40,7 @@ export class PePeyLoanInsuranceReviewComponent extends BaseComponent implements 
         if(response.ok){
           this.loanDetail = response.data;
         }else{
+          this.failure = true;
           this.setError(response.message);
         }       
       }

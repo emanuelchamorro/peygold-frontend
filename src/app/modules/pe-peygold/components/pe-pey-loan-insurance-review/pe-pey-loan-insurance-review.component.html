@@ -155,7 +155,7 @@
         </form>
     </div>
 </div>
-<div *ngIf="!loanDetail || loanDetail==null" class="h-100"> 
+<div *ngIf="(!loanDetail || loanDetail==null) && failure" class="h-100"> 
     
         <div class=" h-100 bg-mail">
             <nav class="navbar-gradient shadow position-relative">
@@ -163,16 +163,16 @@
     
             <ul class="top-nav">
               <li>
-                <a [routerLink]="routes.home.href">
-                  <img src="../assets/images/Isologotipo.svg" alt=""/>
+                <a href="#">
+                  <img src="/assets/images/Isologotipo.svg" alt=""/>
                 </a>
               </li>
               <div>
                 <li class="fs-12 ml-4 text-white">
-                  <a [routerLink]="routes.login.href">¿Ya tienes una cuenta?</a>
+                  <a href="#">¿Ya tienes una cuenta?</a>
                 </li>
                 <li class="fs-12 ml-4">
-                  <a [routerLink]="routes.login.href" class="btn-white">Iniciar sesión</a>
+                  <a href="#" class="btn-white">Iniciar sesión</a>
                 </li>
               </div>
             </ul>
