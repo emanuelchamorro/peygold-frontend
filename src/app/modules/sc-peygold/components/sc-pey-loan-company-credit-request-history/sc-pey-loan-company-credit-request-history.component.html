@@ -27,9 +27,9 @@
             <tr *ngFor="let loanApprove of loansApprove">
                 <td [innerHtml]="loanApprove.id"></td>
                 <td [innerHtml]="loanApprove.insuranceCarrier.label"></td>
-                <td>???</td>
+                <td [innerHtml]="loanApprove.policyNumber"></td>
                 <td> {{ loanApprove.transactionType.coin }}&nbsp;{{loanApprove.amount | number:'1.2'}}</td>
-                <td>???</td>
+                <td [innerHtml]="loanApprove.responseDate | date:short"></td>
             <!--     <td>???</td>
                 <td>???</td>
                   <td><a href="#" class="text-color">Ver<i class="fas fa-arrow-right"></i></a></td> -->
@@ -63,7 +63,7 @@
                 <td [innerHtml]="loanReject.id"></td>
                 <td [innerHtml]="loanReject.applicationDate | date:short"></td>
                 <td [innerHtml]="loanReject.adminComments"></td>
-                <td>???</td>
+                <td [innerHtml]="loanReject.loanInsuranceComments"></td>
                 <td [innerHtml]="loanReject.approveDeniedComments"></td>
             </tr>
         </tbody>

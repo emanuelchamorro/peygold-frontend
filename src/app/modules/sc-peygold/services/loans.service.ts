@@ -586,6 +586,9 @@ export class LoansService extends HttpService {
           loan.adminUser.id = item.adminIdUser;
           loan.riskySituation = item.riskySituation;
           loan.insuranceCarrier = new SelectOption(null,item.insuranceSocialReason);
+          loan.policyNumber = item.loanInsuranceNumeroPoliza;
+          loan.loanInsuranceComments = item.loanInsuranceComentarios;
+
           return loan;
         });
         return paginator;
