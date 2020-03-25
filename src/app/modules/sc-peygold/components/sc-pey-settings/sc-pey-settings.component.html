@@ -1,0 +1,122 @@
+<div>
+    <h2><span class="icon-configuracion-40 fs-22"></span>Ajustes del sistema: <span>Configuración Inicial</span></h2>
+    <p class="mb-5">Indique el valor de comisión por defecto que tendrán las operaciones.</p>
+    <form name="form" #formSettings="ngForm" (onSubmit)="formSettings.form.valid && onSubmit()" novalidate>
+        <div class="d-flex jusfify-content-start flex-column">
+            <div class="col-sm-6">
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="institutionCommission" [(ngModel)]="peySetting.institutionCommission"
+                            #institutionCommission="ngModel" placeholder="Comisión institución" value="0%" class="w-100"
+                            required />
+                        <span>Comisión institución</span>
+                    </label>
+                    <div *ngIf="!institutionCommission.pristine && institutionCommission.invalid || formSettings.submitted && institutionCommission.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="institutionCommission.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+
+
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="peygoldCommission" [(ngModel)]="peySetting.peygoldCommission"
+                            #peygoldCommission="ngModel" placeholder="Comisión Peygold" value="0%" class="w-100"
+                            required />
+                        <span>Comisión Peygold</span>
+                    </label>
+                    <div *ngIf="!peygoldCommission.pristine && peygoldCommission.invalid || formSettings.submitted && peygoldCommission.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="peygoldCommission.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+
+
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="iva" [(ngModel)]="peySetting.iva" #iva="ngModel" placeholder="IVA"
+                            value="0%" class="w-100" required />
+                        <span>IVA</span>
+                    </label>
+                    <div *ngIf="!iva.pristine && iva.invalid || formSettings.submitted && iva.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="iva.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="peygoldPointOfSaleCommission"
+                            [(ngModel)]="peySetting.peygoldPointOfSaleCommission"
+                            #peygoldPointOfSaleCommission="ngModel" placeholder="Comisión punto de venta Peygold"
+                            value="0%" class="w-100" required />
+                        <span>Comisión punto de venta Peygold</span>
+                    </label>
+                    <div *ngIf="!peygoldPointOfSaleCommission.pristine && peygoldPointOfSaleCommission.invalid || formSettings.submitted && peygoldPointOfSaleCommission.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="peygoldPointOfSaleCommission.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="minimumAmountOfPeygoldPointOfSale"
+                            [(ngModel)]="peySetting.minimumAmountOfPeygoldPointOfSale"
+                            #minimumAmountOfPeygoldPointOfSale="ngModel"
+                            placeholder="Monto mínimo punto de venta Peygold" value="$" class="w-100" required />
+                        <span>Monto mínimo punto de venta Peygold</span>
+                    </label>
+                    <div *ngIf="!minimumAmountOfPeygoldPointOfSale.pristine && minimumAmountOfPeygoldPointOfSale.invalid || formSettings.submitted && minimumAmountOfPeygoldPointOfSale.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="minimumAmountOfPeygoldPointOfSale.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="minimumAmountOfPeygoldCredit"
+                            [(ngModel)]="peySetting.minimumAmountOfPeygoldCredit"
+                            #minimumAmountOfPeygoldCredit="ngModel" placeholder="Monto mínimo punto de venta Peygold"
+                            value="$" class="w-100" required />
+                        <span>Monto mínimo crédito Peygold</span>
+                    </label>
+                    <div *ngIf="!minimumAmountOfPeygoldCredit.pristine && minimumAmountOfPeygoldCredit.invalid || formSettings.submitted && minimumAmountOfPeygoldCredit.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="minimumAmountOfPeygoldCredit.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="maximumAmountOfPeygoldCredit"
+                            [(ngModel)]="peySetting.maximumAmountOfPeygoldCredit"
+                            #maximumAmountOfPeygoldCredit="ngModel" placeholder="Monto mínimo punto de venta Peygold"
+                            value="$" class="w-100" required />
+                        <span>Monto máximo crédito Peygold</span>
+                    </label>
+                    <div *ngIf="!maximumAmountOfPeygoldCredit.pristine && maximumAmountOfPeygoldCredit.invalid || formSettings.submitted && maximumAmountOfPeygoldCredit.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="maximumAmountOfPeygoldCredit.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label class="has-float-label w-100 text-left">
+                        <input type="text" name="maximumSettlementAmount"
+                            [(ngModel)]="peySetting.maximumSettlementAmount" #maximumSettlementAmount="ngModel"
+                            placeholder="Monto mínimo punto de venta Peygold" value="$" class="w-100" required />
+                        <span>Monto máximo de liquidación</span>
+                    </label>
+                    <div *ngIf="!maximumSettlementAmount.pristine && maximumSettlementAmount.invalid || formSettings.submitted && maximumSettlementAmount.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="maximumSettlementAmount.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-6 row-buttons justify-content-end">
+                <!-- <a href="" role="button" class="white-button-border">Volver</a> -->
+                <button type="submit" role="button" class="solid-blue-button mr-2 ml-2">Guardar cambios</button>
+            </div>
+        </div>
+    </form>
+
+</div>

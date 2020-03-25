@@ -1,0 +1,71 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<div class="top">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <div class="row TopTitle">
+        <div class="col">
+            <h2 class="titleSecurity"><span class="icon-reportes"></span> Reportes: Detalles de retencion</h2>
+            <p>Período Diciembre 2019, Provincia de Buenos Aires</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col form-inline">
+            <div class="form-group">
+                <button class="btn-blue-border">Imprimir</button>
+            </div>
+            <div class="form-group">
+                <div class="Export">
+                    <a class="ExportBtn slide-toggle"><span class="ExportIcon"></span>Exportar como<span
+                            class="ChevronDown"></span></a>
+                    <div class="DownExport slide-toggle-content">
+                        <ul>
+                            <li><a (click)="export('csv')">.CSV</a></li>
+                            <li><a (click)="export('xlsx')">.XLSX</a></li>
+                            <li><a (click)="export('pdf')">.PDF</a></li>
+                            <li><a (click)="export('txt')">.TXT</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mb-2">
+    <div class="tablaDatos tablaReportes">
+        <table id="tableDetails" class="table responsive" *ngIf="details && details.data">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Fecha</th>
+                    <th scope="col" class="text-center">Nº de operación</th>
+                    <th scope="col" class="text-center">Operación relacionada</th>
+                    <th scope="col" class="text-center">Importe cobrado</th>
+                    <th scope="col" class="text-center">Comisión</th>
+                    <th scope="col" class="text-center">IVA 5%</th>
+                    <th scope="col" class="text-center">Retención del IVA</th>
+                    <th scope="col" class="text-center">Retención de IIBB</th>
+                    <th scope="col" class="text-center">Total Recibido</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let detail of details.data;">
+                    <td class="text-center">10/06/2018</td>
+                    <td class="text-center">123456789</td>
+                    <td class="text-center">2156487231</td>
+                    <td class="text-center">300</td>
+                    <td class="text-center">300</td>
+                    <td class="text-center">00</td>
+                    <td class="text-center">00</td>
+                    <td class="text-center">00</td>
+                    <td class="text-center">300</td>
+                </tr>
+            </tbody>
+        </table>
+        <p *ngIf="!showPagination" class="text-center p-end">
+            No hay aseguradoras para mostrar.
+        </p>
+    </div>
+    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+        (pageChange)="loadPage($event)">
+    </ngb-pagination>
+</div>

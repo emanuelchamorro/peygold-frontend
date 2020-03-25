@@ -59,4 +59,17 @@ export const routes = {
   loanliquidate : {
     index: {route: 'loanliquidate/:idLoan', href: homeRoute + '/loanliquidate'},
   },
+  settings : {
+    index: {route: 'settings', href: homeRoute + '/settings'},
+  },
+  reportaccountstatus : {
+    index: {route: 'reportaccountstatus', href: homeRoute + '/reportaccountstatus'},
+  },
+  reportretentions : {
+    index: {route: 'reportretentions', href: homeRoute + '/reportretentions'},
+  },
+  reportretentionsdetails : {
+    index: {route: 'reportretentionsdetails', href: homeRoute + '/reportretentionsdetails'},
+  },
+  
 };

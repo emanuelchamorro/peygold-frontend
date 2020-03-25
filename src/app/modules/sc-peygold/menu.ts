@@ -23,10 +23,10 @@ export const menu: Array<MenuItem> = [
     new MenuItem().fromJSON({label: 'Liquidaciones', href: routes.loansettlements.index.href})    
   ]}),
   new MenuItem().fromJSON({label: 'Reportes', icon: 'icon-reportes-27', childs: [
-    new MenuItem().fromJSON({label: 'Estado de cuenta', href: routes.home.href}),
-    new MenuItem().fromJSON({label: 'Retenciones', href: routes.home.href}),
+    new MenuItem().fromJSON({label: 'Estado de cuenta', href: routes.reportaccountstatus.index.href}),
+    new MenuItem().fromJSON({label: 'Retenciones', href: routes.reportretentions.index.href}),
   ]}),
-  new MenuItem().fromJSON({label: 'Ajustes de sistema', icon: 'icon-configuracion-40', href: routes.home.href}),
+  new MenuItem().fromJSON({label: 'Ajustes de sistema', icon: 'icon-configuracion-40', href: routes.settings.index.href}),
   new MenuSeparator(),
   new MenuItem().fromJSON({label: 'Mi Usuario', icon: 'icon-Iconos-09', href: routes.me.index.href}),
 ];

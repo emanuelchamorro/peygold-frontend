@@ -24,6 +24,10 @@ import { ScPeyLoanCompanyCreditRequestHistoryComponent } from './components/sc-p
 import { ScPeyLoanDetailComponent } from './components/sc-pey-loan-detail/sc-pey-loan-detail.component';
 import { ScPeyLoanSettlementsComponent } from './components/sc-pey-loan-settlements/sc-pey-loan-settlements.component';
 import { ScPeyLoanLiquidateComponent } from './components/sc-pey-loan-liquidate/sc-pey-loan-liquidate.component';
+import { ScPeySettingsComponent } from './components/sc-pey-settings/sc-pey-settings.component';
+import { ScPeyReportAccountStatusComponent } from './components/sc-pey-report-account-status/sc-pey-report-account-status.component';
+import { ScPeyReportRetentionsComponent } from './components/sc-pey-report-retentions/sc-pey-report-retentions.component';
+import { ScPeyReportRetentionDetailComponent } from './components/sc-pey-report-retention-detail/sc-pey-report-retention-detail.component';
 
 export const config: Routes = [
   {
@@ -220,6 +224,34 @@ export const config: Routes = [
         component: ScPeyLoanLiquidateComponent,
         data: {
           title: 'Gestión de créditos: Confirmación de liquidación'
+        },
+      },
+      {
+        path: routes.settings.index.route,
+        component: ScPeySettingsComponent,
+        data: {
+          title: 'Configuración del sistema'
+        },
+      },
+      {
+        path: routes.reportaccountstatus.index.route,
+        component: ScPeyReportAccountStatusComponent,
+        data: {
+          title: 'Reportes: Estado de cuenta'
+        },
+      },
+      {
+        path: routes.reportretentions.index.route,
+        component: ScPeyReportRetentionsComponent,
+        data: {
+          title: 'Reportes: Retenciones'
+        },
+      },
+      {
+        path: routes.reportretentionsdetails.index.route,
+        component: ScPeyReportRetentionDetailComponent,
+        data: {
+          title: 'Reportes: Retenciones - Detalles'
         },
       },
     ]

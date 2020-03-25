@@ -34,6 +34,11 @@ import { ScPeyLoanDetailComponent } from './components/sc-pey-loan-detail/sc-pey
 import { ScPeyLoanSettlementsComponent } from './components/sc-pey-loan-settlements/sc-pey-loan-settlements.component';
 import { ScPeyLoanLiquidateComponent } from './components/sc-pey-loan-liquidate/sc-pey-loan-liquidate.component';
 import { MustMatchDirective } from './directive/must-match.directive';
+import { ScPeySettingsComponent } from './components/sc-pey-settings/sc-pey-settings.component';
+import { ScPeyReportAccountStatusComponent } from './components/sc-pey-report-account-status/sc-pey-report-account-status.component';
+import { ScPeyReportShowAccountStatusComponent } from './components/sc-pey-report-show-account-status/sc-pey-report-show-account-status.component';
+import { ScPeyReportRetentionsComponent } from './components/sc-pey-report-retentions/sc-pey-report-retentions.component';
+import { ScPeyReportRetentionDetailComponent } from './components/sc-pey-report-retention-detail/sc-pey-report-retention-detail.component';
 
 
 @NgModule({
@@ -63,7 +68,12 @@ import { MustMatchDirective } from './directive/must-match.directive';
     ScPeyLoanDetailComponent,
     ScPeyLoanSettlementsComponent,
     ScPeyLoanLiquidateComponent,
-    MustMatchDirective
+    MustMatchDirective,
+    ScPeySettingsComponent,
+    ScPeyReportAccountStatusComponent,
+    ScPeyReportShowAccountStatusComponent,
+    ScPeyReportRetentionsComponent,
+    ScPeyReportRetentionDetailComponent
     
   ],
   imports: [
