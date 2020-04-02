@@ -19,8 +19,9 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
   private camera = false;
 
 
-  @ViewChild(QrScannerComponent, { static: true })
-  private qrScannerComponent: QrScannerComponent;
+  @ViewChild(QrScannerComponent,{ static: false }) qrScannerComponent: QrScannerComponent;
+  @ViewChild('result', { static: false }) resultElement: ElementRef;
+  @ViewChild('step1',{static: false}) step1:ElementRef;
   private video: any;
   public value: any;
   public validQR = false;
@@ -110,31 +111,66 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
     reader.readAsDataURL(files[0]);
     reader.onload = (event) => {
       this.value = reader.result;
-      setTimeout(()=>{
+      this.validQR = true;
+      console.log('value en preview',this.value)
+     /* setTimeout(()=>{
         this.value=undefined;        
-      },5000);
+      },5000);*/
     };
   }
 
   readQR(e) {    
+    console.log('step ',this.step);
     
-    if (this._isValidQR(JSON.parse(e.result))) {
-      this.validQR = true;
+    if (this._isValidQR(JSON.parse(e.result))) { 
       this.decode = JSON.parse(e.result);
-      this.step++;
-    } else {
-      this.validQR = false;
-      this.setError("El código QR no es válido.");
+
+      const button1 = this.renderer.createElement('button');
+      const buttonText1 = this.renderer.createText('Continuar');
+      const button2 = this.renderer.createElement('button');
+      const buttonText2 = this.renderer.createText('Cancelar');
+      for (let node of this.resultElement.nativeElement.childNodes) {  
+        this.renderer.removeChild(this.resultElement.nativeElement, node);  
+      }  
+      this.renderer.appendChild(button1, buttonText1);
+      this.renderer.appendChild(button2, buttonText2);
+      this.renderer.appendChild(this.resultElement.nativeElement, button2); 
+      this.renderer.appendChild(this.resultElement.nativeElement, button1); 
+      this.renderer.listen(button2, 'click', () => this.cancel());
+      this.renderer.listen(button1, 'click', () => this.nextStep());        
+    }else{
+      let element: Element = this.renderer.createElement('h1');  
+      element.innerHTML = "El código QR no es válido.";
+      this.renderElement(element);
     }
+
   }
 
   _isValidQR(dataDecode: any) {
-
+    console.log('dataDecode ',dataDecode)
     if (dataDecode && dataDecode.fullName && dataDecode.email && dataDecode.payments && dataDecode.payments.length > 0) {
       return true;
     } else {
       return false;
     }
+  }
+
+  renderElement(element) {  
+    for (let node of this.resultElement.nativeElement.childNodes) {  
+      this.renderer.removeChild(this.resultElement.nativeElement, node);  
+    }  
+    this.renderer.appendChild(this.resultElement.nativeElement, element);  
+  }
+
+  cancel(){
+    window.location.reload();
+  }
+
+  nextStep(){
+    let firstDiv:HTMLElement = this.step1.nativeElement;
+    firstDiv.style.removeProperty("visibility");
+    firstDiv.style.setProperty('display','none');
+    this.step++;
   }
 
 
@@ -191,8 +227,10 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
 
   }
 
-
   back() {
+    let firstDiv:HTMLElement = this.step1.nativeElement;
+    firstDiv.style.removeProperty("display");
+    firstDiv.style.setProperty('visibility','visible');
     this.step--;
   }
 
