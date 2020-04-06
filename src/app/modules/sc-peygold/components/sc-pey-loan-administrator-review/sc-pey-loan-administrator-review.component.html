@@ -127,13 +127,13 @@
         <div *ngIf="(adminReviewForm.submitted && adminComment.invalid)" class="invalid-feedback">
                 <div *ngIf="adminComment.errors.required">Campo requerido</div>
         </div>
-        <div class="row-buttons w-100 justify-content-center mt-4">
+        <div class="row-buttons w-100 justify-content-end mt-4">
             <button [routerLink]="routes.creditmanagement.index.href" role="button"
                 class="white-button-border">Volver</button>
             <button type="button" (click)="refuse(loanDetail)" href="#" role="button"
                 class="solid-blue-button  ml-3 mr-3">Rechazar</button>
             <button type="submit" data-balloon-visible aria-label="I am always visible!" data-balloon-pos="up"
-                class="solid-blue-button ">Enviar a aseguradora</button>
+                class="solid-blue-button ml-3 ">Aprobar</button>
         </div>
     </form>
 

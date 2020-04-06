@@ -585,11 +585,32 @@ div:last-child {
 }
 
 
-
-
-
-
 /* Final CSS para footer */
+
+/* Scrollbar del sidebar */
+#sidebar-container::-webkit-scrollbar-track
+{
+
+	border-radius: 10px;
+
+}
+
+#sidebar-container::-webkit-scrollbar
+{
+	width: 12px;
+	
+}
+
+#sidebar-container::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+
+	background-color: #d8d8d8;
+}
+
+/*
+
+
 
 /* Para telefonos en modo portrait (portrait phones, less than 576px)*/
 @media screen and (min-width: 865px) and (max-width: 955px) {
