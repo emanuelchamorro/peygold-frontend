@@ -575,6 +575,30 @@
     }
   }
 }
+
+
+
+.BoxDetails::-webkit-scrollbar-track
+{
+
+	border-radius: 10px;
+
+}
+
+.BoxDetails::-webkit-scrollbar
+{
+	width: 12px;
+	
+}
+
+.BoxDetails::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+
+	background-color: #d8d8d8;
+}
+
+
 /*ENd detalles de usuario*/
 /*Botones*/
 .Export{
@@ -884,6 +908,19 @@ border:none;
   margin-bottom: 20px;
 }
 
+/*fix toggle last-of-type*/
+.table-container{
+
+  flex-direction: column;
+}
+
+.table-container.active {
+
+  margin-bottom: 100px!important;
+}
+
+
+
 /*END NewUser*/
 @media screen and (max-width:375px){
   .white-container-wrapper .TopTitle{height:auto;}
@@ -924,10 +961,7 @@ h2, h3, p, span {
   width: auto!important;
   
 }  
-.titleSecurity {
 
- text-align: left!important;
-}
 
 .TopTitle > div > form {
 

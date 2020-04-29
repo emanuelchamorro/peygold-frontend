@@ -44,7 +44,7 @@
         </div>
     </div>
 </div>
-<div class="mb-2">
+<div class="mb-2 table-container">
     <div class="tablaDatos">
        <!-- <div class="DownFiltrarOrdenar">
             <div class="Export">
@@ -91,6 +91,7 @@
                     <td class="text-center">
                         <div class="DropOptions toggleOptions">
                             <span class="options slide-toggle"></span>
+                           
                             <div class="OptionsDrop text-left slide-toggle-content">
                                 <a class="dropdown-item ViewDetails" (click)="showInsuranceCarrier(insurancecarrier)">Ver detalles</a>
                                 <a class="dropdown-item" [routerLink]="[routes.insurancecarriers.post.href,insurancecarrier.id]">Editar aseguradora</a>
@@ -104,6 +105,7 @@
                                                 class="Seguridad-icon icon-Desactivar"></span>Eliminar</a>
                                     </div>
                                 </div>
+                            
                             </div>
                         </div>
                     </td>

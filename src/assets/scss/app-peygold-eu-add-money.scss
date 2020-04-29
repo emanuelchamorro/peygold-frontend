@@ -159,6 +159,8 @@
     padding: 10px;
     .rotateCard {
       transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+      z-index: 1000;
+      height: 200px;
     }
     .BoxTarjeta {
       background-color: #d0cdcd;

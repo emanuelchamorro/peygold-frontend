@@ -775,7 +775,7 @@ ng-select.custom-select {
   padding: 0.64rem 3.4rem 0.64rem 3.4rem;
   border-radius: 2em;
   background-color: #3575BA;
-
+min-width: 165px;
   &:hover {
     background-color: #5087c3;
   }
@@ -914,7 +914,7 @@ span, p, {
 /* Scroll styles */
 
 /* width */
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
   width: 8px;
 }
 ::-moz-scrollbar {
@@ -926,7 +926,7 @@ span, p, {
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+/*::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px #272b51;
   border-radius: 10px;
 }
@@ -939,7 +939,7 @@ span, p, {
   border-radius: 10px;
 }
 /* Handle */
-::-webkit-scrollbar-thumb {
+/*::-webkit-scrollbar-thumb {
   background: #276587;
   border-radius: 10px;
 }
@@ -953,7 +953,7 @@ span, p, {
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/*::-webkit-scrollbar-thumb:hover {
   background: #2c7297;
 }
 ::-moz-scrollbar-thumb:hover {

@@ -19,7 +19,7 @@ $(function () {
         $('.slide-toggle-content').hide();
         setTimeout(function () {
           $(target).slideToggle();
-        }, 100)
+        }, 10)
       }
     }
   });
@@ -27,6 +27,25 @@ $(function () {
   $(document).on('click', function () {
     $('.slide-toggle-content:visible').slideToggle();
   });
+  
+/*Fix toggle last-of-type*/		
+
+$(document).on('click', 'tr:last-of-type td .toggleOptions .slide-toggle', function () {
+    
+  $(".table-container").toggleClass("active");
+   
+});
+
+$(document).on("click", function (event) {
+
+  if ($(event.target).closest(".slide-toggle").length === 0) {
+
+    $(".table-container").removeClass("active");
+  }
+}); 
+  
+  
+  
   /* Toggle feature */
 
   /* Toggle  menu */
@@ -208,6 +227,8 @@ $(function () {
    /* Fin de Select Box 2 */
 
 
+
+
    /* Help User Tooltip */
 
  $(document).on('click', '.btn-user', function () {
@@ -239,6 +260,8 @@ $(document).on("click", function (event) {
     $(".help-item-content").removeClass("d-block");
   }
 });
+
+
 
 
   /*carousel cheques*/

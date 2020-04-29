@@ -40,7 +40,7 @@
     </div>
   </div>
 </div>
-<div class="wallet-conteiner mb-2">
+<div class="wallet-conteiner table-container mb-2">
   <div class="tablaDatos">
     <!--  <div class="DownFiltrarOrdenar">
       <div class="Export">
@@ -110,9 +110,10 @@
       No hay usuarios para mostrar.
     </p>
   </div>
+  <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage($event)">
+  </ngb-pagination>
 </div>
-<ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage($event)">
-</ngb-pagination>
+
 <app-ui-pey-sidebar *ngIf="detailedUser" (onClose)="detailedUser = null" [closed]="!detailedUser"
   title="Detalles de usuario">
   <app-sc-pey-show-user [id]="detailedUser.id"></app-sc-pey-show-user>
