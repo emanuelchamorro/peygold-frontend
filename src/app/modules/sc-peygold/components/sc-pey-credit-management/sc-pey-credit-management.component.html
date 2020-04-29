@@ -8,8 +8,8 @@
     una solicitud se acredite, deben estar aprobadas las dos instancias de evaluación.
 </p>
 <div class="filtros">
-    <div class="row">
-        <div class="col-sm-6 left">
+    <div class="d-flex justify-content-between">
+        <div class="left">
             <button class="btn btn-sm filtrarOrdenar">
                 Filtrar/Ordenar
             </button>
@@ -18,7 +18,7 @@
             </form>
 
         </div>
-        <div class="col-sm-6 right">
+        <div class="right">
             <form>
                 <input id="inputFilter" type="text" class="input-buscar" name="filter" (keyup)="search($event)"
                     [(ngModel)]="filter" placeholder="Buscar" />

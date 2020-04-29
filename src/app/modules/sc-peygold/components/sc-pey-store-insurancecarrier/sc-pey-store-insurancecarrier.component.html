@@ -8,13 +8,13 @@
     <form name="form" #storeInsuranceCarrier="ngForm"
         (ngSubmit)="submited=true; storeInsuranceCarrier.form.valid && onSubmit(insurancecarrier)">
 
-        <div class="row TopTitle  mb-3">
+        <div class="row mb-3">
 
-            <h2 *ngIf="!insurancecarrier.id" class="titleSecurity">
+            <h2 *ngIf="!insurancecarrier.id" >
                 <span class="icon-catalogo"></span> Catálogo:
                 <span>Nueva Aseguradora</span>
             </h2>
-            <h2 *ngIf="insurancecarrier.id" class="titleSecurity">
+            <h2 *ngIf="insurancecarrier.id" >
                 <span class="icon-catalogo"></span> Catálogo:
                 <span>Editar Aseguradora</span>
             </h2>

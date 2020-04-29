@@ -7,13 +7,13 @@
     Seleccione aquellas solicitudes que desee liquidar.
 </p>
 <div class="filtros">
-    <div class="row">
-         <div class="col-sm-6 left" style="visibility: hidden;">
+    <div class="d-flex justify-content-between">
+         <div class="left" style="visibility: hidden;">
             <button class="btn btn-sm filtrarOrdenar">
                 Filtrar/Ordenar
             </button>
         </div>
-        <div class="col-sm-6 right">
+        <div class="right">
             <form>
                 <input id="inputFilter" type="text" class="input-buscar" name="filter" (keyup)="search($event)"
                     [(ngModel)]="filter" placeholder="Buscar" />

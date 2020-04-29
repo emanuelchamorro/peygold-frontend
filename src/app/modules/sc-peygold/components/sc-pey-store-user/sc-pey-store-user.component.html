@@ -5,11 +5,11 @@
 <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
 <div class="top NewUser" *ngIf="user">
   <form name="form" (ngSubmit)="submited=true; storeUser.form.valid && onSubmit(user)" #storeUser="ngForm" novalidate>
-    <div class="row TopTitle">
+    <div class="row ">
       <div class="col">
-        <h2 *ngIf="user.id" class="titleSecurity"><span class="icon-Security"></span> Seguridad: <span>Editar
+        <h2 *ngIf="user.id" ><span class="icon-Security"></span> Seguridad: <span>Editar
             Usuario</span></h2>
-        <h2 *ngIf="!user.id" class="titleSecurity"><span class="icon-Security"></span> Seguridad: <span>Nuevo
+        <h2 *ngIf="!user.id" ><span class="icon-Security"></span> Seguridad: <span>Nuevo
             Usuario</span></h2>
       </div>
       <div class="col">

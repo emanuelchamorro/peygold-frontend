@@ -7,13 +7,13 @@
         <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
         <form name="form" #storeCheckRescue="ngForm" (ngSubmit)="submited=true; storeCheckRescue.form.valid && onSubmit(checkRescue)">
     
-            <div class="row TopTitle  mb-3">
+            <div class="row mb-3">
     
-                <h2 *ngIf="checkRescueId==0" class="titleSecurity">
+                <h2 *ngIf="checkRescueId==0" >
                     <span class="icon-catalogo"></span> Catálogo:
                     <span>Nuevo tipo de rescate de cheques</span>
                 </h2>
-                <h2 *ngIf="checkRescueId!=0" class="titleSecurity">
+                <h2 *ngIf="checkRescueId!=0" >
                     <span class="icon-catalogo"></span> Catálogo:
                     <span>Editar tipo de rescate de cheques</span>
                 </h2>

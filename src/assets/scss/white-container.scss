@@ -1,4 +1,13 @@
 @import "colors.scss";
+
+.heading span {
+  font-size: 20px!important;
+  vertical-align: middle;
+}
+.top {
+  display: flex;
+  flex-direction: column;
+}
 .white-container-wrapper {
   top: 51px;
   margin-left: auto;
@@ -9,7 +18,9 @@
   overflow: hidden;
   background-color: #fff;
 
-
+  .heading{
+    margin-bottom: 15px;
+  }
     h2 {
     margin-top: 20px;
      margin-bottom: 20px;
@@ -338,7 +349,7 @@
   vertical-align: top;
   margin-right: 0px;
 }
-.white-container-wrapper h2.titleSecurity{
+.white-container-wrapper h2{
   margin:0px;
   span{
     color:$p-blue;
@@ -952,12 +963,13 @@ h2, h3, p, span {
   margin-left: 0;
 }
 
-.TopTitle, .heading {
+.top, .heading {
 
   display: flex;
   justify-content: center;
   text-align: center;
   flex-direction: column;
+  align-items: center;
 
 }
 

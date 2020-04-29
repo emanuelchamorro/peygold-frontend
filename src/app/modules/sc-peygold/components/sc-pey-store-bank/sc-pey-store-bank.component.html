@@ -7,13 +7,13 @@
     <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
     <form name="form" #storeBank="ngForm" (ngSubmit)="submited=true; storeBank.form.valid && onSubmit(bank)">
 
-        <div class="row TopTitle  mb-3">
+        <div class="row  mb-3">
 
-            <h2 *ngIf="bankId==0" class="titleSecurity">
+            <h2 *ngIf="bankId==0" >
                 <span class="icon-catalogo"></span> Catálogo:
                 <span>Nuevo Banco</span>
             </h2>
-            <h2 *ngIf="bankId!=0" class="titleSecurity">
+            <h2 *ngIf="bankId!=0" >
                 <span class="icon-catalogo"></span> Catálogo:
                 <span>Editar Banco</span>
             </h2>
