@@ -1,124 +1,122 @@
 <ngx-spinner>
-        <p style="font-size: 20px; color: white">Procesando...</p>
-    </ngx-spinner>
-    
-    <div class="top NewUser" *ngIf="generalChargeCredit">
-        <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
-        <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
-        <form name="form" #storeGeneralChargeCredit="ngForm"
-            (ngSubmit)="submited=true; storeGeneralChargeCredit.form.valid && onSubmit(generalChargeCredit)">
-    
-            <div class="row TopTitle  mb-3">
-    
-                <h2 *ngIf="generalChargeCreditId==0" class="titleSecurity">
-                    <span class="icon-catalogo"></span> Catálogo:
-                    <span>Nuevo cargo/abono por provincia</span>
-                </h2>
-                <h2 *ngIf="generalChargeCreditId!=0" class="titleSecurity">
-                    <span class="icon-catalogo"></span> Catálogo:
-                    <span>Editar cargo/abono por provincia</span>
-                </h2>
-    
-                <div class="col">
-    
-                </div>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+
+<div class="top NewUser" *ngIf="generalChargeCredit">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
+    <form name="form" #storeGeneralChargeCredit="ngForm"
+        (ngSubmit)="submited=true; storeGeneralChargeCredit.form.valid && onSubmit(generalChargeCredit)">
+
+        <div class="row TopTitle  mb-3">
+
+            <h2 *ngIf="generalChargeCreditId==0" class="titleSecurity">
+                <span class="icon-catalogo"></span> Catálogo:
+                <span>Nuevo cargo/abono por provincia</span>
+            </h2>
+            <h2 *ngIf="generalChargeCreditId!=0" class="titleSecurity">
+                <span class="icon-catalogo"></span> Catálogo:
+                <span>Editar cargo/abono por provincia</span>
+            </h2>
+
+            <div class="col">
+
             </div>
-    
-            <div class="">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <h4>Datos del cargo/abono</h4>
-                        <div class="row">
-                                <div class="col mb-2">
-                                    <label class="has-float-label mb-0">
-                                        <ng-select placeholder="Provincia"
-                                            class="custom-select mb-0 w-100" bindLabel="label" [searchable]="false"
-                                            [items]="states" [addTag]="false" name="state" [(ngModel)]="generalChargeCredit.state"
-                                            #state="ngModel"
-                                            required>
-                                        </ng-select>
-                                        <div *ngIf="!state.pristine && state.invalid || submited && state.errors"
-                                            class="invalid-feedback">
-                                            <div *ngIf="state.errors.required">Campo es requerido</div>
-                                        </div>
-                                    </label>
-                                </div>
-                        </div>                        
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label class="has-float-label mb-0 w-100">
-                                    <input type="text" placeholder="Descripción" class="form-control w-100"
-                                        name="description" [(ngModel)]="generalChargeCredit.label" #description="ngModel"
-                                        required />
-                                    <span>Descripción</span>
-    
-                                </label>
-                                <div *ngIf="(!description.pristine && description.invalid) || submited && description.errors"
+        </div>
+
+        <div class="">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <h4>Datos del cargo/abono</h4>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0">
+                                <ng-select placeholder="Provincia" class="custom-select mb-0 w-100" bindLabel="label"
+                                    [searchable]="false" [items]="states" [addTag]="false" name="state"
+                                    [(ngModel)]="generalChargeCredit.state" #state="ngModel" required>
+                                </ng-select>
+                                <div *ngIf="!state.pristine && state.invalid || submited && state.errors"
                                     class="invalid-feedback">
-                                    <div *ngIf="description.errors.required">Campo es requerido</div>
+                                    <div *ngIf="state.errors.required">Campo es requerido</div>
                                 </div>
-                            </div>
+                            </label>
                         </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label class="has-float-label mb-0">
-                                    <ng-select placeholder="Efecto" class="custom-select mb-0 w-100" bindLabel="label"
-                                        [searchable]="false" [items]="effects" [addTag]="false" name="effect"
-                                        [(ngModel)]="generalChargeCredit.effect" #effect="ngModel" required>
-                                    </ng-select>
-                                    <div *ngIf="!effect.pristine && effect.invalid || submited && effect.errors"
-                                        class="invalid-feedback">
-                                        <div *ngIf="effect.errors.required">Campo es requerido</div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label class="has-float-label mb-0">
-                                    <ng-select placeholder="Aplicación de efecto sobre" class="custom-select mb-0 w-100"
-                                        bindLabel="label" [searchable]="false" [items]="effectApplications" [addTag]="false"
-                                        name="effectApplication" [(ngModel)]="generalChargeCredit.effectApplication"
-                                        #effectApplication="ngModel" required>
-                                    </ng-select>
-                                    <div *ngIf="!effectApplication.pristine && effectApplication.invalid || submited && effectApplication.errors"
-                                        class="invalid-feedback">
-                                        <div *ngIf="effectApplication.errors.required">Campo es requerido</div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col mb-2">
-                                <label class="has-float-label mb-0 w-100">
-                                    <input type="text" placeholder="%" class="form-control w-100" name="amount"
-                                        [(ngModel)]="generalChargeCredit.amount" #amount="ngModel" />
-                                    <span>%</span>
-                                </label>
-                                <div *ngIf="(!amount.pristine && amount.invalid) || submited && amount.errors"
-                                    class="invalid-feedback">
-                                    <div *ngIf="amount.errors.required">Campo es requerido</div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="Descripción" class="form-control w-100"
+                                    name="description" [(ngModel)]="generalChargeCredit.label" #description="ngModel"
+                                    required />
+                                <span>Descripción</span>
+
+                            </label>
+                            <div *ngIf="(!description.pristine && description.invalid) || submited && description.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="description.errors.required">Campo es requerido</div>
                             </div>
                         </div>
                     </div>
-    
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0">
+                                <ng-select placeholder="Efecto" class="custom-select mb-0 w-100" bindLabel="label"
+                                    [searchable]="false" [items]="effects" [addTag]="false" name="effect"
+                                    [(ngModel)]="generalChargeCredit.effect" #effect="ngModel" required>
+                                </ng-select>
+                                <div *ngIf="!effect.pristine && effect.invalid || submited && effect.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="effect.errors.required">Campo es requerido</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0">
+                                <ng-select placeholder="Aplicación de efecto sobre" class="custom-select mb-0 w-100"
+                                    bindLabel="label" [searchable]="false" [items]="effectApplications" [addTag]="false"
+                                    name="effectApplication" [(ngModel)]="generalChargeCredit.effectApplication"
+                                    #effectApplication="ngModel" required>
+                                </ng-select>
+                                <div *ngIf="!effectApplication.pristine && effectApplication.invalid || submited && effectApplication.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="effectApplication.errors.required">Campo es requerido</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label class="has-float-label mb-0 w-100">
+                                <input type="text" placeholder="%" class="form-control w-100" name="amount"
+                                    [(ngModel)]="generalChargeCredit.amountStr" mask="separator.2" thousandSeparator="."
+                                    #amount="ngModel" required />
+                                <span>%</span>
+                            </label>
+                            <div *ngIf="(!amount.pristine && amount.invalid) || submited && amount.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="amount.errors.required">Campo es requerido</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-    
+
             </div>
-    <div class="row">
-         <div class="col-xs-12 col-sm-6">
-            <div class="row-buttons justify-content-end">
-              
-                <button type="submit" [routerLink]="routes.provincechargescredits.index.href"
-                    class="
-                    white-button-border">Volver</button>
-                <button type="submit" class="solid-blue-button ml-3"
-                    [innerHtml]="generalChargeCreditId!=0 ? 'Actualizar':'Crear'"></button>
-         
+
         </div>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="row-buttons justify-content-end">
+
+                    <button type="submit" [routerLink]="routes.provincechargescredits.index.href" class="
+                    white-button-border">Volver</button>
+                    <button type="submit" class="solid-blue-button ml-3"
+                        [innerHtml]="generalChargeCreditId!=0 ? 'Actualizar':'Crear'"></button>
+
+                </div>
+            </div>
+        </div>
     </form>
-    </div>
+</div>

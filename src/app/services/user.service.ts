@@ -98,9 +98,9 @@ export class UserService extends HttpService {
    * Get the user by a keyword. Filtered by the user name or user email
    */
   search(keyword: string): Promise<Array<User>> {
-    return this.get(`/users/search/${keyword}`)
+    return this.get(`/users/search/${keyword}/1/30`)
       .pipe(
-        map((users: Array<any>) => users.map(
+        map((result: any) => result.userDTOs.map(
           (user) => this.castUser(user))
         )
       )

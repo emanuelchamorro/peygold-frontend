@@ -140,10 +140,12 @@ export class ScPeyStoreBankComponent extends BaseComponent implements OnInit {
           });
         }
       }else{
+        this.spinnerService.hide();
         this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
       }
     }).catch(
       (error)=>{
+        this.spinnerService.hide();
         this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
       }
     );

@@ -9,6 +9,7 @@ import {Transaction, User} from '../../../../models';
 import {AuthService} from '../../../auth-peygold/services/auth.service';
 import {Message} from '../../../commons-peygold/entities/message';
 import {Router} from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eu-pey-money-add-by-credit-card',
@@ -30,6 +31,7 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
     private mercadoPagoService: MercadoPagoService,
     private authService: AuthService,
     protected router: Router,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
     this.mercadoPago.setPublishableKey(environment.mercado_pago.publishable_key);
@@ -71,10 +73,13 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
    * Get the trasacion token
    */
   prepareTransaction() {
+    this.spinnerService.show();
     this.mercadoPago.createToken(this.transaction.mercadoPagoTransaction).then((token: string) => {
       this.transaction.creditCard.token = token;
+      this.spinnerService.hide();
       this.continue();
     }).catch(() => {
+      this.spinnerService.hide();
       this.hasCardError = true;
     });
   }
@@ -84,7 +89,9 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
    * @return void
    */
   send(): void {
+    this.spinnerService.show();
     this.mercadoPagoService.createPayment(this.transaction.addMoneyTransaction).then((success) => {
+      this.spinnerService.hide();
       if (!success) {
         this.showErrorFeedback(new Message(
           'Ha ocurrido un error al procesar su pago',

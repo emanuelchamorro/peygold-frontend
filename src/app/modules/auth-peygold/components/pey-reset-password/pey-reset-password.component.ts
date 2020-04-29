@@ -5,6 +5,7 @@ import {BaseComponent} from '../../components/base.component';
 import {NgModel} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-pey-reset-password',
@@ -21,6 +22,7 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
   constructor(
     private authService: AuthService,
     protected router: Router,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
@@ -65,10 +67,12 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
     if (!valid) {
       return;
     }
-
+    this.spinnerService.show();
     this.authService.retrieveResetPasswordTokenByEmail(this.user.email).then((response) => {
+      this.spinnerService.hide();
       this.nextStep();
     }).catch(() => {
+      this.spinnerService.hide();
       this.addError('El correo eléctronico no se encuentra registrado en nuestra plataforma');
     });
   }
@@ -82,10 +86,12 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
     if (!valid) {
       return;
     }
-
+    this.spinnerService.show();
     this.authService.validateResetPasswordToken(this.user.email, this.user.token).then((response) => {
+      this.spinnerService.hide();
       this.nextStep();
     }).catch(() => {
+      this.spinnerService.hide();
       this.addError('El código de seguridad es incorrecto');
     });
   }
@@ -99,15 +105,17 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
     if (!valid) {
       return;
     }
-
+    this.spinnerService.show();
     this.authService.resetUserPassword(this.user.email, this.user.token, this.user.password).then((response) => {
       this.user = null;
+      this.spinnerService.hide();
       this.router.navigateByUrl(this.routes.reset_password.success.href, {
         state : {
           securedRedirection: true
         }
       });
     }).catch(() => {
+      this.spinnerService.hide();
       this.addError('Ha ocurrido un error al cambiar la contraseña');
     });
   }

@@ -4,6 +4,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 import { GeneralChargeCredit } from '../../../../models/general-charge-credit';
 import { PaginationResponse } from '../../../../modules/commons-peygold/entities/pagination-response';
+import { environment } from '../../../../../environments/environment'; 
+import { ChargeCreditFactory } from '../../../../factory/chargecredit-factory';
+import { ChargecreditService } from '../../services/chargecredit.service';
 
 @Component({
   selector: 'app-sc-pey-province-charges-credits',
@@ -21,22 +24,76 @@ export class ScPeyProvinceChargesCreditsComponent extends BaseComponent implemen
   public filter: string;
 
   private exportAsConfig: ExportAsConfig;
-  private completed:boolean;
+
 
   constructor(
     private spinnerService: NgxSpinnerService,
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
+    private chargecreditService: ChargecreditService
   ) { 
     super();
   }
 
   ngOnInit() {
-    this.completed = false;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.chargecreditService.search(2, 1,environment.paginator.per_page, undefined).then((response: PaginationResponse) => {
+      this.generalChargesCredits = response;
+
+      if (this.generalChargesCredits.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+        this.setError("No es posible cargar los cargos y abonos.");
+      }
+    );    
   }
 
   loadPage(page: number) {
-    //TODO CALL SERVICE
+    let word = (this.filter && this.filter != '') ? this.filter : undefined;
+    this.previousPage = page - 1;
+    this.spinnerService.show();
+    this.chargecreditService.search(2, page, environment.paginator.per_page, word).then((response: PaginationResponse) => {
+
+      this.generalChargesCredits = response;
+
+      if (this.generalChargesCredits.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+        this.setError("No es posible cargar los cargos y abonos.");
+      }
+    )
   }
 
     /**
@@ -59,14 +116,27 @@ export class ScPeyProvinceChargesCreditsComponent extends BaseComponent implemen
   }
 
 
-      /**
+  /**
    * add generalChargeCredit 
    * @param generalChargeCredit The generalChargeCredit to add
    * @return void
    */
   add(generalChargeCredit: GeneralChargeCredit): void {
     generalChargeCredit.deleted = false;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.chargecreditService.update(ChargeCreditFactory.make(generalChargeCredit, 2), 2).then(
+      (chargeCredit:GeneralChargeCredit) => {
+        this.spinnerService.hide();
+        if(!chargeCredit){
+          this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+        }
+
+      }
+    ).catch(
+      (error) => { 
+        this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+      }
+    );
   }
 
   /**
@@ -77,7 +147,20 @@ export class ScPeyProvinceChargesCreditsComponent extends BaseComponent implemen
 
   delete(generalChargeCredit: GeneralChargeCredit): void {
     generalChargeCredit.deleted = true;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.chargecreditService.update(ChargeCreditFactory.make(generalChargeCredit,2), 2).then(
+      (chargeCredit:GeneralChargeCredit) => {
+        this.spinnerService.hide();
+        if(!chargeCredit){
+          this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+        }
+
+      }
+    ).catch(
+      (error) => { 
+        this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+      }
+    );
   }
 
     /**

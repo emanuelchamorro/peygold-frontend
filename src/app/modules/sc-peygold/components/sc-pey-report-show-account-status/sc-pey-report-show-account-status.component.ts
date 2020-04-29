@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Transaction } from '../../../../models/transaction';
 
 @Component({
   selector: 'app-sc-pey-report-show-account-status',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ScPeyReportShowAccountStatusComponent implements OnInit {
 
-  @Input() detailedTransaction: any; //cambiar tipo
+  @Input() detailedTransaction: Transaction; //cambiar tipo
 
   constructor() { }
 

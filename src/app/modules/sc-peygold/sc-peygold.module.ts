@@ -39,6 +39,8 @@ import { ScPeyReportAccountStatusComponent } from './components/sc-pey-report-ac
 import { ScPeyReportShowAccountStatusComponent } from './components/sc-pey-report-show-account-status/sc-pey-report-show-account-status.component';
 import { ScPeyReportRetentionsComponent } from './components/sc-pey-report-retentions/sc-pey-report-retentions.component';
 import { ScPeyReportRetentionDetailComponent } from './components/sc-pey-report-retention-detail/sc-pey-report-retention-detail.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgMaskConfig } from '../../config';
 
 
 @NgModule({
@@ -88,7 +90,8 @@ import { ScPeyReportRetentionDetailComponent } from './components/sc-pey-report-
     NgbPaginationModule,
     NgbDatepickerModule,
     ExportAsModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NgxMaskModule.forRoot(NgMaskConfig)
   ]
 })
 export class ScPeyGoldModule { }

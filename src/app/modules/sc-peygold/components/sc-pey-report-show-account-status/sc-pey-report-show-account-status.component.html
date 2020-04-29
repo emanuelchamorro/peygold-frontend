@@ -2,32 +2,21 @@
     <div class="DataDetail">
         <table class="responsive w-100">
             <tr>
-                <td class="col-6"><span class="color-blue">Operación 123456789</span></td>
-                <td class="col-6 text-right"><span class="color-blue">1 de Septiembre 14:18hs</span></td>
+                <td class="col-6"><span class="color-blue" [innerHtml]="'Operación '+ detailedTransaction.id"></span></td>
+                <td class="col-6 text-right"><span class="color-blue" [innerHtml]="detailedTransaction.createdAt | date:medium"></span></td>
             </tr>
         </table>
     </div>
     <div class="DataDetail">
         <table class="responsive w-100">
             <tr>
-                <td class="col-8">Importe cobrado</td>
-                <td class="col-4 text-right">P$G 1.520,25</td>
+                <td class="col-8">Importe base</td>
+                <td class="col-4 text-right">{{ detailedTransaction.type.coin }}&nbsp;{{detailedTransaction.amount+detailedTransaction.commissionAmmount | number:'1.2'}}</td>
             </tr>
-            <tr>
-                <td class="col-8">Comisión de PeyGold</td>
-                <td class="col-4 text-right">-$ 100</td>
-            </tr>
-            <tr>
-                <td class="col-8">Impuesto al Valor Agregado (IVA)</td>
-                <td class="col-4 text-right">-$ 21</td>
-            </tr>
-            <tr>
-                <td class="col-8">Retención del IVA</td>
-                <td class="col-4 text-right">-$ 4,41</td>
-            </tr>
-            <tr>
-                <td class="col-8">Retención de IIBB</td>
-                <td class="col-4 text-right">-$ 5</td>
+            <tr *ngFor="let detail of detailedTransaction.detailsTransaction">
+                <td class="col-8" *ngIf="detail.generalChargeCredit">{{detail.generalChargeCredit.label}}</td>
+                <td class="col-8" *ngIf="detail.provinceChargeCredit">{{detail.provinceChargeCredit.label}}</td>
+                <td class="col-4 text-right">$&nbsp;{{(detail.amount) | number:'1.2'}}</td>
             </tr>
         </table>
     </div>
@@ -35,23 +24,23 @@
         <table class="responsive w-100 totalAmount">
             <tr>
                 <td class="col-8"><strong>Total recibido</strong></td>
-                <td class="col-4 text-right"><strong class="color-blue">$ 1.390,14</strong></td>
+                <td class="col-4 text-right"><strong class="color-blue">$&nbsp;{{detailedTransaction.totalAmount| number:'1.2'}}</strong></td>
             </tr>
         </table>
     </div>
     <div class="FooterDetail">
         <div class="Topfooter border-bottom">
             <p class="text-center">Contraparte</p>
-            <div class="RoundedLetter">P</div>
+            <div class="RoundedLetter" [innerHtml]="detailedTransaction.receiver.initials"></div>
             <div class="DataName text-center">
-                <h4 class="color-blue">Paula Navarro</h4>
-                <p>mpaulanavarro@gmail.com</p>
+                <h4 class="color-blue" [innerHtml]="detailedTransaction.receiver.initials"></h4>
+                <p [innerHtml]="detailedTransaction.receiver.email"></p>
             </div>
             <div class="clear"></div>
         </div>
         <div class="bottomFooter">
             <div>
-                <p class="text-center">Envío de dinero por venta de producto</p>
+                <p class="text-center" [innerHtml]="detailedTransaction.messages"></p>
             </div>
         </div>
     </div>

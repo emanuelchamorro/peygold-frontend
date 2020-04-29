@@ -124,6 +124,8 @@ $(function () {
     $(".DownFiltrarOrdenar").slideToggle();
   });
 
+
+
  
   /*Fin de filtrar ordenar*/
 
@@ -136,7 +138,6 @@ $(function () {
   $(document).on('click', '.stateDown ul li', function () {
     console.log('click li',$(this).text());
     $(this).parents('.boxSelect').find('span').html($(this).text());
-    //$(this).parents('.boxSelect').find('input').attr('value', $(this).attr('id'));
     $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);
     $(this).closest(".boxSelect").removeClass("active");
   });
@@ -150,9 +151,59 @@ $(function () {
     }
   });
 
-  $(document).on('focus','#inputFilter',function(){
-    $(".filtrarOrdenar").trigger("click");
+  /** menu filtro de reportes */
+  $(document).on('click','.FiltrarOrdenarReporte',function(){
+    $('#inputFilter').val('');
+    $('#inputSelectTypeTransaction').val('');
+    $('#sDInput').val('');
+    $('#eDInput').val('');
+    var firstOption1 = $('.DownFiltrarOrdenar > .f1 ul li').first().text();
+    var firstOption2 = $('.DownFiltrarOrdenar > .f2 ul li').first().text();
+    console.log('firstOption1',firstOption1)
+    console.log('firstOption2',firstOption2)
+    
+    $('.DownFiltrarOrdenar > .f1').find('a').html(firstOption1+'<span class="ChevronDown"></span>');
+    $('.DownFiltrarOrdenar > .f2').find('a').html(firstOption2+'<span class="ChevronDown"></span>');
+    $(this).toggleClass("activefilter");
+    $(".DownFiltrarOrdenar").slideToggle();
   });
+
+  $(document).on('click', '.moneda ul li', function () {
+    console.log('click li',$(this).text());
+    $(this).parents('.Export').find('a').html($(this).text()+'<span class="ChevronDown"></span>');
+    $(this).closest(".Export").removeClass("active");
+  });
+
+  $(document).on('click', '.range ul li', function () {
+    console.log('click li',$(this).text());
+    $(this).parents('.Export').find('a').html($(this).text()+'<span class="ChevronDown"></span>');
+    $(this).closest(".Export").removeClass("active");
+    $(this).closest(".Export").find(".range").slideToggle(300);
+  });
+
+  $(document).on('click','.selectedValue',function(){
+    $(this).closest(".Export").toggleClass("active");   
+    $(this).closest(".Export").find(".range").slideToggle(300);	  
+  });
+
+  $(document).on('click','#btnAccountState',function(){
+    $('#inputFilter').val('');
+    $('#inputSelectTypeTransaction').val('');
+    $('#sDInput').val('');
+    $('#eDInput').val('');
+    var firstOption1 = $('.DownFiltrarOrdenar > .f1 ul li').first().text();
+    var firstOption2 = $('.DownFiltrarOrdenar > .f2 ul li').first().text();
+    console.log('firstOption1',firstOption1)
+    console.log('firstOption2',firstOption2)
+    
+    $('.DownFiltrarOrdenar > .f1').find('a').html(firstOption1+'<span class="ChevronDown"></span>');
+    $('.DownFiltrarOrdenar > .f2').find('a').html(firstOption2+'<span class="ChevronDown"></span>');
+    $(this).closest(".Export").find(".range").slideToggle(300);	  
+  });
+
+
+  
+  /**fin menu filtro de reportes */ 
   
    /* Fin de Select Box 2 */
 

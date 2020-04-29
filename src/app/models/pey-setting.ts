@@ -8,6 +8,7 @@ import {Model} from './model';
  */
 export class PeySetting extends Model {
 
+  public idConfiguration:number;
   public institutionCommission: string; //Comisión institución
   public peygoldCommission: string; //Comisión Peygold
   public iva: string; // iva

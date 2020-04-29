@@ -88,14 +88,16 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
     this.spinnerService.show();
     this.loanDetail.status = new LoanStatus(String(this.status));
 
-    this.loansService.processLoan(this.loanDetail,this.tokenInput).then(
+   this.loansService.processLoan(this.loanDetail,this.tokenInput).then(
       (resp)=>{
         this.spinnerService.hide();
         console.log('resp send token',resp);
         if(this.status == 2){ 
+          var today  = new Date(this.loanDetail.peygoldExpirationDate);
+          console.log(today.toLocaleDateString("es-AR"));
           this.title = '¡P$G enviados exitosamente!';
           this.message = 'La empresa '+this.loanDetail.applicant.bussinessName+' ya tiene acreditado'+ 
-                          'el crédito que solicitaron.Sus P$G vencerán en la fecha ????';
+                          'el crédito que solicitaron.Sus P$G vencerán en la fecha '+ today.toLocaleDateString("es-AR");
         }else{ 
           this.title = '¡Rechazaste la liquidación!';
           this.message = 'La liquidación de los P$G para la empresa '+this.loanDetail.applicant.bussinessName+' fué rechazada.'+

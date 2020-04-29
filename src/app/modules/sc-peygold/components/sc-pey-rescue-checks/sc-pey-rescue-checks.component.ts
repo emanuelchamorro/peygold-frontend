@@ -3,7 +3,10 @@ import { PaginationResponse } from '../../../../modules/commons-peygold/entities
 import { CheckRescue } from '../../../../models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
-import { BaseComponent } from '../base.component';
+import { BaseComponent } from '../base.component'; 
+import { RescuecheckService } from '../../services/rescuecheck.service';
+import { environment } from '../../../../../environments/environment';
+import { CheckRescueFactory } from '../../../../factory/checkrescue-factory';
 
 @Component({
   selector: 'app-sc-pey-rescue-checks',
@@ -22,16 +25,42 @@ export class ScPeyRescueChecksComponent extends BaseComponent implements OnInit 
   public filter: string;
 
   private exportAsConfig: ExportAsConfig;
-  private completed: boolean;
+
 
   constructor(private spinnerService: NgxSpinnerService,
-    private exportAsService: ExportAsService) {
+    private exportAsService: ExportAsService,
+    private rescuecheckService: RescuecheckService) {
     super();
   }
 
   ngOnInit() {
-    this.completed = false;
-    //TODO CALL SERVICE
+
+    this.spinnerService.show();
+    this.rescuecheckService.search(1,environment.paginator.per_page, undefined).then((response: PaginationResponse) => {
+      this.rescuechecks = response;
+      if (this.rescuechecks.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+        this.setError("No es posible cargar los tipos de rescate de cheque.");
+      }
+    );
   }
 
 
@@ -41,7 +70,35 @@ export class ScPeyRescueChecksComponent extends BaseComponent implements OnInit 
    * @returns void
   */
   loadPage(page: number) {
-    //TODO CALL SERVICE
+    let word = (this.filter && this.filter != '') ? this.filter : undefined;
+    this.previousPage = page - 1;
+    this.spinnerService.show();
+    this.rescuecheckService.search(page, environment.paginator.per_page, word).then((response: PaginationResponse) => {
+      console.log('creditos', response)
+      this.rescuechecks = response;
+
+      if (this.rescuechecks.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+        this.setError("No es posible cargar los tipos de rescate de cheque.");
+      }
+    )
   }
 
   /**
@@ -70,7 +127,20 @@ export class ScPeyRescueChecksComponent extends BaseComponent implements OnInit 
    */
   add(checkRescue: CheckRescue): void {
     checkRescue.deleted = false;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.rescuecheckService.update(CheckRescueFactory.make(checkRescue)).then(
+      (checkRescue:CheckRescue) => {
+        this.spinnerService.hide();
+        if(!checkRescue){
+          this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+        }
+
+      }
+    ).catch(
+      (error) => { 
+        this.setError("Ha ocurrido un error. No es posible agregar la entidad.");
+      }
+    );
   }
 
   /**
@@ -81,7 +151,19 @@ export class ScPeyRescueChecksComponent extends BaseComponent implements OnInit 
 
   delete(checkRescue: CheckRescue): void {
     checkRescue.deleted = true;
-    //TODO CALL SERVICE
+    this.spinnerService.show();
+    this.rescuecheckService.update(CheckRescueFactory.make(checkRescue)).then(
+      (checkRescue:CheckRescue) => { 
+        this.spinnerService.hide();
+        if(!checkRescue){
+          this.setError("Ha ocurrido un error. No es posible eliminar la entidad.");
+        }
+      }
+    ).catch(
+      (error) => { 
+        this.setError("Ha ocurrido un error. No es posible eliminar la entidad.");
+      }
+    );
   }
 
     /**

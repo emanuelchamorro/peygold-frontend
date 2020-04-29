@@ -42,6 +42,7 @@ import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loa
 import { NgxSpinnerModule } from "ngx-spinner";
 import { EuPeyQrScannerConfirmComponent } from './components/eu-pey-qr-scanner-confirm/eu-pey-qr-scanner-confirm.component';
 
+
 @NgModule({
   declarations: [
     EuPeyHomeComponent,
@@ -63,7 +64,7 @@ import { EuPeyQrScannerConfirmComponent } from './components/eu-pey-qr-scanner-c
     EuPeyQrGeneratorComponent,
     EuPeyQrScannerComponent,
     EuPeyLoanHelpComponent,
-    EuPeyQrScannerConfirmComponent,
+    EuPeyQrScannerConfirmComponent,    
   ],
   imports: [
     CommonModule,

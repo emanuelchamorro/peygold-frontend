@@ -77,7 +77,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="%" class="form-control w-100" name="amount"
-                                    [(ngModel)]="generalChargeCredit.amount" #amount="ngModel" />
+                                    [(ngModel)]="generalChargeCredit.amountStr" mask="separator.2" thousandSeparator="." #amount="ngModel" required/>
                                 <span>%</span>
                             </label>
                             <div *ngIf="(!amount.pristine && amount.invalid) || submited && amount.errors"

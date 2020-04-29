@@ -2,9 +2,9 @@ import {Model} from './model';
 import {User} from './user';
 import {TransactionStatus} from './transaction-status';
 import {TransactionType} from './transaction-type';
-import {stringify} from 'querystring';
 import {TransactionTypeEnum} from '../enums';
 import { OriginTransactionType } from './origin-transaction-type';
+import {DetailTransaction} from './detail-transaction';
 
 /**
  * Transaction model
@@ -31,6 +31,9 @@ export class Transaction extends Model {
   public symbol:string;
   public originRecharge: OriginTransactionType;
   public paymentCode:string;
+  public detailsTransaction: Array<DetailTransaction>;
+  public totalAmount; //monto neto
+  
 
   /**
    * Get the action label to show to the user about the transaction.
