@@ -20,6 +20,7 @@ import { NgbDateFRParserFormatter } from './util/ngb-date-fr-Parser-Formatter';
 import { LocationService } from './services/location.service';
 import { BanksService } from './services/banks.service';
 import { PePeygoldModule } from './modules/pe-peygold/pe-peygold.module';
+import { PgHelpModule } from './modules/pg-help/pg-help.module';
 
 
 
@@ -69,7 +70,8 @@ export function bankProviderFactory(
         },
         deps: [ HttpClient ]
       },
-    })
+    }),
+    PgHelpModule
   ],
   providers: [
     { provide: LocationStrategy,  useClass: HashLocationStrategy},

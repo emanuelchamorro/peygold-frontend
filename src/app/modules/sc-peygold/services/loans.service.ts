@@ -127,7 +127,7 @@ export class LoansService extends HttpService {
         loan.adminUser = new User();
         loan.adminUser.id = response.adminIdUser;
         loan.riskySituation = response.riskySituation;
-
+        loan.peygoldExpirationDate = response.peygoldExpirationDate;
 
         loan.comments = response.comments ? response.comments : 'No hay comentarios';
         loan.checks = response.checkInfo.map((item: any) => {

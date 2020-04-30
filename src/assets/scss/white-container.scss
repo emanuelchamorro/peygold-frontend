@@ -710,6 +710,28 @@
   color:white;
   border:1px solid transparent;
 }
+
+.FiltrarOrdenarReporte{
+  background:transparent;
+  color:$p-blue;
+  border:1px solid $p-blue;
+  width:136px;
+  height:26px;
+  font-size:13px;
+  line-height:16px;
+  border-radius:50px;
+  padding:0;
+  &:hover{
+    background:$p-blue;
+    color:white;
+    border:1px solid transparent;
+  }
+}
+.FiltrarOrdenarReporte.Active{
+  background:$p-blue;
+  color:white;
+  border:1px solid transparent;
+}
 .DownFiltrarOrdenar{
   display:none;
   padding-top:15px;

@@ -39,4 +39,5 @@ export const routes = {
   ecommerces : {
     index: {route: 'ecommerces', href: indexRoute + '/ecommerces'},
   },
+
 };

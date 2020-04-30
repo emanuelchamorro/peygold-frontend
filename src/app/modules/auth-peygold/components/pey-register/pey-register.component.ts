@@ -8,6 +8,7 @@ import {NgModel} from '@angular/forms';
 import {BaseComponent} from '../../components/base.component';;
 import {ErrorResponse} from '../../../commons-peygold/entities/error-response';
 import {OK} from 'http-status-codes';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-pey-register',
@@ -34,6 +35,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
     private authService: AuthService,
     private inMemoryService: InMemoryService,
     protected router: Router,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
@@ -184,9 +186,10 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
         signUpPromise = this.authService.signUpPerson( this.user as Person);
         break;
     }
-
+    this.spinnerService.show();
     signUpPromise.then(
       (resp)=>{
+        this.spinnerService.hide();
         this.user = new User();
         this.router.navigateByUrl(this.routes.register.success.href, {
           state : {
@@ -196,7 +199,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
       }
       
     ).catch((e: ErrorResponse) => {
-      
+      this.spinnerService.hide();
       if (e.code === OK) {
         // Hack for pass the not valid json response.
         return this.signUpSuccessful();

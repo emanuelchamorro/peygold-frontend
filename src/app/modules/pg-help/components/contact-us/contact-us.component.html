@@ -1,0 +1,62 @@
+<article class="help">
+  <section class="help-faq w-100 d-flex flex-column align-items-center pl-3 pr-3">
+    <div class="help-contacto-container">
+      <div>
+        <h2 class="mb-4"><i class="far fa-question-circle mr-2"></i>Ayuda: Contactanos</h2>
+        <p>¿En qué podemos ayudarte?<br>
+          Envianos un mensaje contándonos cuál es tu problema. Te responderemos a la brevedad.
+        </p>
+      </div>
+
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-8">
+          <div class="grey-box container p-4 mb-4 faq-container about">
+            <form>
+              <div class="form-group">
+                <select class="form-control">
+                  <option selected>Asunto</option>
+                  <option>Sobre Peygold</option>
+                  <option>Registro en la plataforma</option>
+                  <option>Mi cuenta</option>
+                  <option>Seguridad</option>
+                  <option>Ingresar dinero</option>
+                  <option>Ingresar dinero</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" rows="8" placeholder="Escriba su mensaje..."> </textarea>
+              </div>
+
+              <div class="upload-file d-flex">
+                <div class="adjuntar-img">
+                  <img src="/assets/images/adjuntar.svg" class="icono-adjuntar">Adjuntar archivo
+                </div>
+                <span class="file-label"></span>
+                <input style="visibility: hidden; width: 0px; height:0px;">
+              </div>
+              <div class="d-flex justify-content-end pt-2">
+                <button type="submit" class="solid-blue-button">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <div class="grey-box container p-4 help-aside">
+            <h4>Preguntas frecuentes</h4>
+            <ul>
+              <li><a>¿Que es Peygold?</a></li>
+              <li><a>¿Qué son los P$G créditos?</a></li>
+              <li><a>¿Usar la billetera tiene costo?</a></li>
+              <li><a>Me pagaron ¿Cuando tendré mi dinero disponible?</a></li>
+              <li><a>¿Qué es la Tarjeta Prepaga Peygold?</a></li>
+            </ul>
+            <div class="d-flex justify-content-center pt-2">
+              <a [routerLink]="routes.frequentquestions.href" class="solid-blue-button">Ver más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>

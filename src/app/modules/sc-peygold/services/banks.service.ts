@@ -106,6 +106,11 @@ export class BanksService extends HttpService {
     );
   }
 
+  /**
+   * get bank by id
+   * @param id 
+   */
+
   getById(id:number): Promise<Bank>{
     const bank = new Bank();
     return this.get(`/bank/${id}`).toPromise().then(

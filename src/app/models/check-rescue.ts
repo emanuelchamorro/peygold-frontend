@@ -5,5 +5,15 @@ import { SelectOption } from './select-option';
  */
 export class CheckRescue extends SelectOption {
 
-    public deleted:boolean;
+  public idCheckRescue:number;
+  public  deleted:boolean;
+
+   constructor(
+        value?: string,
+        public label?: string,
+        deleted?:boolean
+      ) {
+        super();
+        this.deleted = deleted;
+      }
 }

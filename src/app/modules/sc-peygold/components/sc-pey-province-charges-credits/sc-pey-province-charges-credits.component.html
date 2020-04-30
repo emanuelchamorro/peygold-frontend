@@ -40,7 +40,7 @@
             </div>
             <div class="col col-6">
                 <a [routerLink]="routes.provincechargescredits.post.href" class="btn-blue-lg"><span class="plusIcon"></span> Nuevo
-                    cargo/abono</a>
+                    cargo / abono</a>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
                 <tbody>
                     <tr *ngFor="let generalChargeCredit of generalChargesCredits.data;">
                         <td>
-                            <p class="text-center">{{generalChargeCredit.id}}</p>
+                            <p class="text-center">{{generalChargeCredit.idChargeCredit}}</p>
                         </td>
                         <td>
                             <p class="text-center">{{generalChargeCredit.state.label}}</p>
@@ -83,10 +83,10 @@
                             <p class="text-center">{{generalChargeCredit.effect.label}}</p>
                         </td>
                         <td>
-                            <p class="text-center">{{generalChargeCredit.effectApplication.labe}}</p>
+                            <p class="text-center">{{generalChargeCredit.effectApplication.label}}</p>
                         </td>
                         <td>
-                            <p class="text-center">{{generalChargeCredit.amount}}</p>
+                            <p class="text-center">{{generalChargeCredit.amount | currency:' ':'symbol':'1.0'}}</p>
                         </td>                        
                         <td class="text-center">
                             <span *ngIf="!generalChargeCredit.deleted" class="status Aprobado"></span>
@@ -96,7 +96,7 @@
                             <div class="DropOptions toggleOptions">
                                 <span class="options slide-toggle"></span>
                                 <div class="OptionsDrop text-left slide-toggle-content">
-                                    <a class="dropdown-item" [routerLink]="[routes.provincechargescredits.post.href,generalChargeCredit.id]">Editar cargo/abono</a>
+                                    <a class="dropdown-item" [routerLink]="[routes.provincechargescredits.post.href,generalChargeCredit.idChargeCredit]">Editar cargo / abono</a>
                                     <div class="row">
                                         <div class="col col-6">
                                             <a class="dropdown-item" (click)="add(generalChargeCredit)"><span
@@ -114,7 +114,7 @@
                 </tbody>
             </table>
             <p *ngIf="!showPagination" class="text-center p-end">
-                No hay cargos/abonos para mostrar.
+                No hay cargos / abonos para mostrar.
             </p>
         </div>
         <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"

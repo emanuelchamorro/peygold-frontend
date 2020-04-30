@@ -1,0 +1,68 @@
+<div class="help-wrapper">
+    <nav class="navbar-gradient shadow position-relative">
+      <!-- Barra de navegacion superior -->
+      <ul class="top-nav" *ngIf="routes">
+        <li>
+          <a [routerLink]="routes.home.href">
+            <img src="/assets/images/Isologotipo.svg" alt=""/>
+          </a>
+        </li>
+        <div class="user-toolbar d-flex">
+            <li class="position-relative">
+              <a class="btn-user d-flex justify-content-center align-items-center" id="cityclick">
+                <div class="circle-user mr-2">
+                  <span [innerHtml]="user.initials"></span>
+                </div>  
+                <span [innerHtml]="user.completeName"></span>
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="chevron-right">
+                  <g>
+                    <g>
+                      <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                            l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                            c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z"></path>
+                    </g>
+                  </g>
+                </svg>
+                 </a>
+               <!--User Tooltip-->
+                 <div class="user-tooltip"> 
+                  <ul>
+                   <li>
+                     <a [routerLink]="routes.home.href">Ir a mi cuenta</a>
+                   </li>
+                   <li>
+                    <a> Cerrar sesión</a>
+                  </li>
+                  </ul>
+                </div>
+            </li>                
+          </div>
+         </ul>
+    </nav>
+    <router-outlet></router-outlet>
+   
+<!--Footer-->
+
+<footer class="footer-help">
+  <div class="w-100 d-flex justify-content-between align-items-center pr-4 pl-4">
+   
+    <span>Copyright © 2020 Peygold S.A. </span>
+
+     <nav class="d-flex  p-0">
+      <ul class="footer-nav w-100">
+        <li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li>
+        <li><a href="contactanos.html">Contacto</a></li>
+        <li><a>Políticas de privacidad</a></li>
+        <li><a>Términos de uso</a></li>
+        <li><a>Ayuda</a></li>
+      </ul>
+      <ul class="social-media">
+        <li><a><i class="icon-facebook"></i></a></li>
+        <li><a><i class="icon-linkedin"></i></a></li>
+        <li><a><i class="icon-twitter"></i></a></li>
+        <li><a><i class="icon-instagram"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+</div>

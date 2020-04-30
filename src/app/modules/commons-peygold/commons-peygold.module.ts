@@ -23,6 +23,8 @@ import { UIPeyUserFormComponent } from './components/ui-pey-user-form/ui-pey-use
 import { UIPeyAddressFormComponent } from './components/ui-pey-address-form/ui-pey-address-form.component';
 import { UiPePeyLayoutComponent } from './layout/ui-pe-pey-layout/ui-pe-pey-layout.component';
 import { UiPeyMessageSuccessComponent } from './components/ui-pey-message-success/ui-pey-message-success.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { UiPeyHelpLayoutComponent } from './layout/ui-pey-help-layout/ui-pey-help-layout.component';
 
 
 
@@ -41,6 +43,7 @@ import { UiPeyMessageSuccessComponent } from './components/ui-pey-message-succes
     UIPeyAddressFormComponent,
     UiPePeyLayoutComponent,
     UiPeyMessageSuccessComponent,
+    UiPeyHelpLayoutComponent,
 
   ],
   imports: [
@@ -51,6 +54,7 @@ import { UiPeyMessageSuccessComponent } from './components/ui-pey-message-succes
     ReactiveFormsModule,
     NgSelectModule,
     AutocompleteLibModule,
+    NgxSpinnerModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {

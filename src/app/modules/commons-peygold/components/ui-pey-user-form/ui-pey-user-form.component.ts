@@ -6,6 +6,7 @@ import {InMemoryService, InstitutionService, LocationService} from '../../../../
 import {BaseComponent} from '../base-component.component';
 import {ErrorResponse} from '../../entities/error-response';
 import {environment} from '../../../../../environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ui-pey-user-form',
@@ -37,7 +38,8 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
     private inMemoryService: InMemoryService,
     private authService: AuthService,
     private userService: UserService,
-    private institutionService: InstitutionService
+    private institutionService: InstitutionService,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
@@ -112,8 +114,10 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
     }
 
     console.log('update user',this.editableUser);
+    this.spinnerService.show();
     this.userService.update(this.editableUser).then(() => {
       this.completeName = this.editableUser.completeName;
+      this.spinnerService.hide();
       this.setDefaultSuccess();
       this.authService.reloadUser().then( (user: User) =>{ 
         console.log('reload user',user);
@@ -124,6 +128,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
       })
     }).catch(this.catchError)
       .finally(() => {
+        this.spinnerService.hide();
       this.scrollToTop();
       this.editableUser.password = null;
     });

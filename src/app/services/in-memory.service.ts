@@ -107,8 +107,8 @@ export class InMemoryService extends BaseService {
 
  get loadEffectTypes():Array<EffectType>{
     return [
-      new EffectType('1','Cargo'),
-      new EffectType('2','Abono')
+      new EffectType('-1','Cargo'),
+      new EffectType('1','Abono')
     ]
   }
 

@@ -3,6 +3,8 @@ import { CheckRescue } from '../../../../models/check-rescue';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from '../base.component';
+import { RescuecheckService } from '../../services/rescuecheck.service';
+import { CheckRescueFactory } from '../../../../factory/checkrescue-factory';
 
 @Component({
   selector: 'app-sc-pey-store-rescue-check',
@@ -15,7 +17,8 @@ export class ScPeyStoreRescueCheckComponent extends BaseComponent implements OnI
   checkRescueId: number;
 
   constructor(private route: ActivatedRoute,    
-    private spinnerService: NgxSpinnerService,) {
+    private spinnerService: NgxSpinnerService,
+    private rescuecheckService: RescuecheckService) {
       super(); 
       this.checkRescueId = Number( this.route.snapshot.paramMap.get("rescuecheckId"));
     }
@@ -36,32 +39,27 @@ export class ScPeyStoreRescueCheckComponent extends BaseComponent implements OnI
    * @param id checkRescue id
    */
   private getCheckRescue(id: number): void {
-    /* this.spinnerService.show();
-     this.insuranceCarrierService.getById(id).then((insurancecarrier: InsuranceCarrier) => {
-       this.insurancecarrier = insurancecarrier;
-       if (this.insurancecarrier.address.country) {
-         this.locationService.getStates(this.insurancecarrier.address.country).then((states: Array<State>) => {
-           this.insurancecarrier.address.state = states.filter( x=> x.value== this.insurancecarrier.address.state.value)[0];
-           if (this.insurancecarrier.address.state) {
-             this.locationService.getCities(this.insurancecarrier.address.state).then((cities: Array<City>) => {
-               this.spinnerService.hide()
-               this.insurancecarrier.address.city = cities.filter( x=> x.value== this.insurancecarrier.address.city.value)[0];
-             }).catch( ()=> this.spinnerService.hide() );
-           }
-         }).catch( ()=> this.spinnerService.hide() );
-       }
-     });*/
+     this.spinnerService.show();
+     this.rescuecheckService.getById(id).then((checkRescue: CheckRescue) => {
+       this.checkRescue = checkRescue;
+       this.spinnerService.hide();
+     }).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle de la opcion de rescate.");
+      }
+    );
    }
 
 
        /**
-   * Store the bank data
-   * @param bank the bank to be stored.
+   * Store the checkRescue data
+   * @param checkRescue option to be stored.
    * @return void;
    */
   onSubmit(checkRescue: CheckRescue){
 
-    if(checkRescue.id){
+    if(checkRescue.idCheckRescue){
      this.updateCheckRescue(checkRescue);
       return;
     }
@@ -70,35 +68,35 @@ export class ScPeyStoreRescueCheckComponent extends BaseComponent implements OnI
 
 
     /**
-   * Store the bank data
-   * @param bank the user to be created.
+   * Store the checkRescue data
+   * @param checkRescue option to be created.
    * @return void;
    */
   private createCheckRescue(checkRescue: CheckRescue): void{
-   /*this.spinnerService.show();
-    this.insuranceCarrierService.store(InsuranceCarrierFactory.make(insurancecarrier)).then((resp: InsuranceCarrier)  => {
+   this.spinnerService.show();
+    this.rescuecheckService.store(CheckRescueFactory.make(checkRescue)).then((resp: CheckRescue)  => {
       this.spinnerService.hide();
-      this.setSuccess('La aseguradora fué creada con exito.');
+      this.setSuccess('La opción de rescate fué creada con exito.');
     }).catch((error) => {      
       this.spinnerService.hide();
-      this.setError('La aseguradora no pudo ser creada.');
-    });*/
+      this.setError('La opción de rescate no pudo ser creada.');
+    });
   }
 
     /**
-   * Store the bank data
-   * @param bank the user to be created.
+   * Store the checkRescue data
+   * @param checkRescue option to be created.
    * @return void;
    */
   private updateCheckRescue(checkRescue: CheckRescue): void{
-   /* this.spinnerService.show();
-    this.insuranceCarrierService.update(InsuranceCarrierFactory.make(insurancecarrier)).then((resp: InsuranceCarrier)  => {
+    this.spinnerService.show();
+    this.rescuecheckService.update(CheckRescueFactory.make(checkRescue)).then((resp: CheckRescue)  => {
       this.spinnerService.hide();
-      this.setSuccess("La aseguradora fué actualizada con exito.");
+      this.setSuccess("La opción de rescate fué actualizada con exito.");
     }).catch((error) => {
       this.spinnerService.hide();
-      this.setError("La aseguradora no pudo ser actualizada.");
-    });*/
+      this.setError("La opción de rescate no pudo ser actualizada.");
+    });
   }
 
 }

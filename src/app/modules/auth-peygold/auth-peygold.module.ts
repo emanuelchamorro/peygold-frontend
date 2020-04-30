@@ -12,6 +12,7 @@ import { PeyResetPasswordComponent } from './components/pey-reset-password/pey-r
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MustMatchDirective } from './directive/must-match.directive';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MustMatchDirective } from './directive/must-match.directive';
     HttpClientModule,
     NgSelectModule,
     NgbAlertModule,
+    NgxSpinnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
 import {routes as scRoutes} from '../../../sc-peygold/routes';
 import {routes as euRoutes} from '../../../eu-peygold/routes';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-pey-login',
@@ -21,7 +22,8 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    */
   constructor(
     private authService: AuthService,
-    protected router: Router
+    protected router: Router,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
@@ -44,14 +46,16 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
    * @return void
    */
   login(): void {
+    this.spinnerService.show();
     this.busy();
     const userAccount = this._userAccountMapper(this.user);
     this.authService.login(this.user.email, this.user.password, this.user.rememberMe).then((user: User) => {
-
+      this.spinnerService.hide();
       localStorage.setItem("hsu",btoa(JSON.stringify(userAccount)));
       this.unbusy();
       this.goToDashboard(user);
     }).catch((e: ErrorResponse) => {
+      this.spinnerService.hide();
       console.log(e)
       this.catchError(e);
 

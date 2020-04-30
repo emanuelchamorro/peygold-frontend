@@ -6,6 +6,8 @@ import { GeneralChargeCredit } from '../../../../models/general-charge-credit';
 import { InMemoryService } from '../../../../services/in-memory.service';
 import { EffectType } from '../../../../models/effect-type';
 import { EffectApplicationType } from '../../../../models/effect-application-type';
+import { ChargecreditService } from '../../services/chargecredit.service';
+import { ChargeCreditFactory } from '../../../../factory/chargecredit-factory';
 
 @Component({
   selector: 'app-sc-pey-store-general-charge-credit',
@@ -22,7 +24,8 @@ export class ScPeyStoreGeneralChargeCreditComponent extends BaseComponent implem
 
   constructor(private route: ActivatedRoute,
     private spinnerService: NgxSpinnerService,
-    private inMemoryService: InMemoryService) {
+    private inMemoryService: InMemoryService,
+    private chargecreditService: ChargecreditService) {
     super();
 
     this.generalChargeCreditId = Number(this.route.snapshot.paramMap.get("generalchargecreditId"));
@@ -47,21 +50,16 @@ export class ScPeyStoreGeneralChargeCreditComponent extends BaseComponent implem
  * @param id generalChargeCredit id
  */
   private getGeneralChargeCredit(id: number): void {
-    /* this.spinnerService.show();
-     this.insuranceCarrierService.getById(id).then((insurancecarrier: InsuranceCarrier) => {
-       this.insurancecarrier = insurancecarrier;
-       if (this.insurancecarrier.address.country) {
-         this.locationService.getStates(this.insurancecarrier.address.country).then((states: Array<State>) => {
-           this.insurancecarrier.address.state = states.filter( x=> x.value== this.insurancecarrier.address.state.value)[0];
-           if (this.insurancecarrier.address.state) {
-             this.locationService.getCities(this.insurancecarrier.address.state).then((cities: Array<City>) => {
-               this.spinnerService.hide()
-               this.insurancecarrier.address.city = cities.filter( x=> x.value== this.insurancecarrier.address.city.value)[0];
-             }).catch( ()=> this.spinnerService.hide() );
-           }
-         }).catch( ()=> this.spinnerService.hide() );
-       }
-     });*/
+    this.spinnerService.show();
+     this.chargecreditService.getById(id, 1).then((generalChargeCredit: GeneralChargeCredit) => {
+       this.generalChargeCredit = generalChargeCredit;
+       this.spinnerService.hide();
+     }).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        this.setError("Ha ocurrido un error. No es posible mostrar el detalle del cargo y abono.");
+      }
+    );
   }
 
   /**
@@ -71,7 +69,7 @@ export class ScPeyStoreGeneralChargeCreditComponent extends BaseComponent implem
 */
   onSubmit(generalChargeCredit: GeneralChargeCredit) {
 
-    if (generalChargeCredit.id) {
+    if (generalChargeCredit.idChargeCredit) {
       this.updateGeneralChargeCredit(generalChargeCredit);
       return;
     }
@@ -85,14 +83,14 @@ export class ScPeyStoreGeneralChargeCreditComponent extends BaseComponent implem
  * @return void;
  */
   private createGeneralChargeCredit(generalChargeCredit: GeneralChargeCredit): void {
-    /*this.spinnerService.show();
-     this.insuranceCarrierService.store(InsuranceCarrierFactory.make(insurancecarrier)).then((resp: InsuranceCarrier)  => {
+    this.spinnerService.show();
+     this.chargecreditService.store(ChargeCreditFactory.make(generalChargeCredit, 1), 1).then((resp: GeneralChargeCredit)  => {
        this.spinnerService.hide();
-       this.setSuccess('La aseguradora fué creada con exito.');
+       this.setSuccess('El cargo y abono fué creado con exito.');
      }).catch((error) => {      
        this.spinnerService.hide();
-       this.setError('La aseguradora no pudo ser creada.');
-     });*/
+       this.setError('El cargo y abono no pudo ser creado.');
+     });
   }
 
   /**
@@ -101,14 +99,14 @@ export class ScPeyStoreGeneralChargeCreditComponent extends BaseComponent implem
  * @return void;
  */
   private updateGeneralChargeCredit(generalChargeCredit: GeneralChargeCredit): void {
-    /* this.spinnerService.show();
-     this.insuranceCarrierService.update(InsuranceCarrierFactory.make(insurancecarrier)).then((resp: InsuranceCarrier)  => {
+     this.spinnerService.show();
+     this.chargecreditService.update(ChargeCreditFactory.make(generalChargeCredit, 1), 1).then((resp: GeneralChargeCredit)  => {
        this.spinnerService.hide();
-       this.setSuccess("La aseguradora fué actualizada con exito.");
+       this.setSuccess('El cargo y abono fué actualizado con exito.');
      }).catch((error) => {
        this.spinnerService.hide();
-       this.setError("La aseguradora no pudo ser actualizada.");
-     });*/
+       this.setError('El cargo y abono no pudo ser actualizado.');
+     });
   }
 
 }
