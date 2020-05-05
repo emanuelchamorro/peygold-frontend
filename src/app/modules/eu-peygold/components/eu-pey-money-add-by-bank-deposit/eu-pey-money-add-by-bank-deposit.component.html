@@ -10,19 +10,19 @@ description="Elegí el monto que deseas ingresar"
 </app-eu-pey-money-add-amount-form>
 <div *ngIf="transaction">
   <div class="top">
-    <div class="row TopTitle">
+    <div class="row">
       <div class="heading d-flex align-items-center">
-        <span class="icon-Iconos-03"></span> <h2 class="titleSecurity"> Ingresar Dinero > Depósito</h2>
+        <span class="icon-Iconos-03"></span> <h2 > Ingresar Dinero > Depósito</h2>
       </div>
     </div>
-    <div class="row TopTitle" *ngIf="transaction.paymentCode">
+    <div class="row mb-3" *ngIf="transaction.paymentCode">
     
           <p>Te generamos un código de pago.<br/>
            <!-- Muéstralo en una sucursal de Pago Fácil o Rapipago y dile cuánto dinero quieres ingresar.--></p>
         
     </div>
     <div class="wallet-conteiner mb-2" *ngIf="transaction.paymentCode">
-        <div class="ingresarDinero ingresarDineroEfectivo justify-content-center d-flex w-75">
+        <div class="ingresarDinero ingresarDineroEfectivo justify-content-center d-flex col-xs-12 col-sm-9">
           <div class="row">
             <div class="col-12">
               <p class="text-center">Código de Pago</p>

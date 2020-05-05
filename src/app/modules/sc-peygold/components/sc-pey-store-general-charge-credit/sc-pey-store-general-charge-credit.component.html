@@ -8,13 +8,13 @@
     <form name="form" #storeGeneralChargeCredit="ngForm"
         (ngSubmit)="submited=true; storeGeneralChargeCredit.form.valid && onSubmit(generalChargeCredit)">
 
-        <div class="row TopTitle  mb-3">
+        <div class="row mb-3">
 
-            <h2 *ngIf="generalChargeCreditId==0" class="titleSecurity">
+            <h2 *ngIf="generalChargeCreditId==0" >
                 <span class="icon-catalogo"></span> Catálogo:
                 <span>Nuevo cargo/abono general</span>
             </h2>
-            <h2 *ngIf="generalChargeCreditId!=0" class="titleSecurity">
+            <h2 *ngIf="generalChargeCreditId!=0" >
                 <span class="icon-catalogo"></span> Catálogo:
                 <span>Editar cargo/abono general</span>
             </h2>
