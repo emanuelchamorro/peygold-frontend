@@ -1,9 +1,10 @@
 <div *ngIf="detailedTransaction">
+ <div class="detailTransaction">
     <div class="DataDetail">
         <table class="responsive w-100">
             <tr>
-                <td class="col-6"><span class="color-blue" [innerHtml]="'Operación '+ detailedTransaction.id"></span></td>
-                <td class="col-6 text-right"><span class="color-blue" [innerHtml]="detailedTransaction.createdAt | date:medium"></span></td>
+                <td class="col-6"><span [innerHtml]="'Operación '+ detailedTransaction.id"></span></td>
+                <td class="col-6 text-right"><span  [innerHtml]="detailedTransaction.createdAt | date:medium"></span></td>
             </tr>
         </table>
     </div>
@@ -28,11 +29,11 @@
             </tr>
         </table>
     </div>
-    <div class="FooterDetail">
-        <div class="Topfooter border-bottom">
-            <p class="text-center">Contraparte</p>
+    <div class="BodyDetail">
+        <div class="d-flex justify-content-center align-items-center flex-column TopBody border-bottom">
+            <span class="text-center mb-3">Contraparte</span>
             <div class="RoundedLetter" [innerHtml]="detailedTransaction.receiver.initials"></div>
-            <div class="DataName text-center">
+            <div class="DataName pl-0 text-center">
                 <h4 class="color-blue" [innerHtml]="detailedTransaction.receiver.initials"></h4>
                 <p [innerHtml]="detailedTransaction.receiver.email"></p>
             </div>
@@ -44,4 +45,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

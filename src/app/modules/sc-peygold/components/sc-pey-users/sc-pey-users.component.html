@@ -3,7 +3,7 @@
 </ngx-spinner>
 <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
 <div class="top ">
-  <div class="row ">
+  <div class="row mb-3 ">
     <div class="col">
       <h2 ><span class="icon-Security"></span> Seguridad: Usuarios</h2>
     </div>
@@ -90,15 +90,15 @@
               <div class="OptionsDrop text-left slide-toggle-content">
                 <a class="dropdown-item ViewDetails" (click)="showUser(user)">Ver detalles</a>
                 <a class="dropdown-item" [routerLink]="[routes.users.post.href, user.id]">Editar Usuario</a>
-                <div class="row">
-                  <div class="d-flex">
-                    <button (click)="activateUser(user)" class="dropdown-item" href="#"><span
+                <div class="">
+                 
+                    <button (click)="activateUser(user)" class="" href="#"><span
                         class="Seguridad-icon icon-Activar"></span>Activar</button>
-                  </div>
-                  <div class="d-flex">
-                    <button (click)="deactivateUser(user)" class="dropdown-item" href="#"><span
+                
+                  
+                    <button (click)="deactivateUser(user)" class="" href="#"><span
                         class="Seguridad-icon icon-Desactivar"></span>Desactivar</button>
-                  </div>
+                 
                 </div>
               </div>
             </div>

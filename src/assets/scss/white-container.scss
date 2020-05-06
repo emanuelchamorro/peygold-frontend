@@ -376,19 +376,41 @@
       display:none;
       position: absolute;
       right: 0;
-      width: 260px;
+      width: 213px;
       background: white;
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(51, 51, 51, .5);
       overflow:hidden;
-      padding:10px;
+     
       z-index:2;
-      .row{
-        border-top:1px solid #BDBDBD;    
+      div:first-of-type, form{
+        border-top: 1px solid #BDBDBD;
         justify-content: space-between;
-        padding-right: 15px;
-        padding-left: 15px;
+        flex-direction: column;
+        padding: 5px 0px;
         display: flex;
+
+        & > button {
+          font-size: 13px;
+          display: flex;
+          padding: 8px 10px;
+       
+          
+          &:hover {
+           
+            color: #3575ba;
+           font-weight: 600;
+             background: rgba(53, 117, 186, 0.15)
+  
+  
+            }
+          
+        }
+        & > button.detalleCobro {
+
+          justify-content: center;
+          align-items:center;
+        }
     }
         
         .col{
@@ -544,13 +566,15 @@
         }
         .RoundedLetter{
           float:left;
-          width:100px;
-          height:100px;
+          width:70px;
+          height:70px;
           border-radius:100%;
           color:white;
           text-align:center;
-          line-height:100px;
-          font-size:45px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size:35px;
           background: rgba(72,82,160,1);
           background: -moz-linear-gradient(left, rgba(72,82,160,1) 0%, rgba(53,117,186,1) 52%, rgba(67,152,212,1) 100%);
           background: -webkit-gradient(left top, right top, color-stop(0%, rgba(72,82,160,1)), color-stop(52%, rgba(53,117,186,1)), color-stop(100%, rgba(67,152,212,1)));
