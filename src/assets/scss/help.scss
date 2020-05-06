@@ -19,12 +19,12 @@ article.help {
  
   padding-top: 42px;
   min-height: calc(100vh - 91px);
-
+background:white;
 }
 
 article.help section {
 
-  margin-bottom: 30px;  
+  padding-bottom: 30px;  
  
 }
 
@@ -107,11 +107,7 @@ align-items: center;
   width: 100%;
 }
 
-.help-mas > div {
 
-  padding-top: 30px;
-
-}
 .help-mas > div > h3 {
 
   
@@ -237,7 +233,7 @@ align-items: center;
   height: 26px;
   padding-top: 0px;
   padding: 2px;
-  width: 136px;
+  width: 186px;
   padding: 0.15rem 0.5rem;
   font-size: 13px;
   background-image: url(/assets/images/lupa-21.png);
@@ -311,6 +307,7 @@ align-items: center;
   box-shadow: 0 0px 3px 0 rgba(32,33,36,.38);
   font-size: 12px;
   color: #828282;
+  background: white;
 
 }
 .footer-help span {
