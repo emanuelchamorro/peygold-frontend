@@ -210,6 +210,10 @@
 .Seguridad-icon.icon-Desbloquear {
   background-image: url("../images/desbloquear.svg"); }
 
+  .Seguridad-icon.icon-Finalizar {
+    background-image: url("~src/assets/images//finalizar.svg"); 
+   }
+
 /*END checkbox*/
 .status {
   width: 30px;
