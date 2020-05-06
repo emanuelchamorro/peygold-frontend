@@ -44,6 +44,20 @@
     .Export {
       width: 200px;
       .DownExport {
+        
+          
+        & > ul > li {
+          cursor: pointer;
+          padding: 8px 10px;
+          padding:10px;
+          &:hover {
+            color: #3575ba;
+            font-weight: 600;
+            background: rgba(53, 117, 186, 0.15)
+
+          }
+        }
+
         .formFiltrarDown {
           padding: 10px;
           input {
@@ -64,7 +78,7 @@
             height: 30px;
             display: block;
             margin: auto;
-            line-height: 20px;
+            line-height: 0!important;
           }
         }
       }
@@ -179,3 +193,24 @@ h2 {
   vertical-align: middle;
 }
 
+/* Modal */
+
+.detailTransaction {
+
+.DataDetail:first-of-type  span {
+
+  color: #3575BA;
+}
+
+.DataDetail .totalAmount tr td:first-of-type strong {
+
+  font-weight: 700;
+}
+.DataDetail .totalAmount  tr td:nth-of-type(2) strong {
+  color: #3575BA;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+
+}
