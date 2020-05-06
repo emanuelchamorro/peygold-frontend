@@ -127,4 +127,13 @@ export class InMemoryService extends BaseService {
     ]
   }
 
+  get loadYears():Array<SelectOption>{
+    const currenteDate = new Date();
+    const years = new Array<SelectOption>();
+    for (let i = currenteDate.getFullYear(); i > 2017; i--) {
+      years.push(new SelectOption(String(i),String(i)));
+    }
+    return years;
+  }
+
 }

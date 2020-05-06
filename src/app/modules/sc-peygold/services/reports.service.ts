@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../../services/http.service';
 import { PaginationResponse } from '../../commons-peygold/entities/pagination-response';
-import { Address, CheckRescue, Loan, LoanStatus, PaymentMethod, State, Transaction, TransactionType, User, LoanRequest, SelectOption, Check, Bank, Country, City, CreditDestination } from '../../../models';
+import {  Transaction, TransactionType, User } from '../../../models';
 import { OriginTransactionType } from '../../../models/origin-transaction-type';
 import { DetailTransaction } from '../../../models/detail-transaction';
 import {GeneralChargeCredit} from '../../../models/general-charge-credit';
 import { EffectType } from '../../../models/effect-type';
+import { Retention } from '../../../models/retention';
 
 @Injectable({
   providedIn: 'root'
@@ -100,23 +101,6 @@ export class ReportsService extends HttpService {
           })
 
           return transaction;
-
-          /**
-                    "idPeyGoldBalance": 2671,
-                    "idTransactionHistory": 2987,
-                    "transactionDate": "2020-04-01T14:16:18.4047267",
-                    "idConceptoCargoAbono": 2,
-                    "idConceptoCargoAbonoProvincia": null,
-                    "tipoMovimiento": "Comisión PeyGold",
-                    "signo": 1,
-                    "porcentaje": 0.0800,
-                    "monto": 88.0000,
-                    "transactionHistory": null,
-                    "conceptoCargoAbonoGeneral": null,
-                    "conceptoCargoAbonoProvincia": null
-           */
-
-
         });
 
         return paginator;
@@ -126,9 +110,28 @@ export class ReportsService extends HttpService {
         return paginator;
       }
     );
+  }
 
+  searchRetentions(year:number):Promise<Array<Retention>>{
+    let retentions:Array<Retention>;
+    return this.get(`/peygoldbalances/reporteretenciones/${year}`).toPromise().then(
+      (resp)=>{
+        retentions = resp.map((item:any)=>{
+          let retention = new Retention();
+          retention.monthNumber = item.mes;
+          retention.tax = new GeneralChargeCredit(item.tipoImpuesto, item.tipoMovimiento);
+          retention.amount = item.totalMes;
+          return retention;
 
+        });
+        return retentions;
+      }
 
+    ).catch(
+      (error)=>{
+        return null;
+      }
+    )
   }
 
 }
