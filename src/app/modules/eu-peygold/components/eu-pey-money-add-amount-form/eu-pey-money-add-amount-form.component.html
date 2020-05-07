@@ -16,9 +16,21 @@
     <div class="ingresarDinero">
       <div class="row">
         <div class="col-12">
+          <ng-select placeholder="Importe"
+            class="custom-select mb-3 w-100 Export "
+            bindLabel="label"
+            [searchable]="false"
+            [items]="transactionTypes"
+            [addTag]="false"
+            name="type"
+            [clearable]="false"
+            [(ngModel)]="transaction.type"
+            #type="ngModel"
+            required>
+          </ng-select>
 
           <div class="Export">
-            <a class="ExportBtn slide-toggle">Importe en:
+              <a class="ExportBtn slide-toggle">Importe en:
               <span *ngIf="transaction.type" class="color-blue" [innerHtml]="transaction.type.label | translate"></span>
               <span class="ChevronDown"></span>
             </a>
