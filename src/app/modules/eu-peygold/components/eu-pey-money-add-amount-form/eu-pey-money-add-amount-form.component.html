@@ -29,19 +29,6 @@
             required>
           </ng-select>
 
-          <div class="Export">
-              <a class="ExportBtn slide-toggle">Importe en:
-              <span *ngIf="transaction.type" class="color-blue" [innerHtml]="transaction.type.label | translate"></span>
-              <span class="ChevronDown"></span>
-            </a>
-            <div class="DownExport slide-toggle-content">
-              <ul>
-                <li *ngFor="let type of transactionTypes">
-                  <a (click)="setTransactionType(type)" [innerHtml]="type.label | translate"></a>
-                </li>
-              </ul>
-            </div>
-          </div>
           <div class="input-blue-text" *ngIf="!transaction.type.isMultiPey">
             <input [required]="!transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
                    [prefix]="transaction.type.coin | translate" mask="separator.2" thousandSeparator="."
