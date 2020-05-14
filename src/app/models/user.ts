@@ -15,6 +15,7 @@ export class User extends Model {
   static TYPE_COMPANY     = 'company';
   static TYPE_INSTITUTION = 'institution';
   static ADMIN_IDENTIFIER = 2;
+  static COMPANY = 2;
 
   public id: number;
   public avatarURL: string;
@@ -166,6 +167,18 @@ export class User extends Model {
     data.idUser = this.id;
 
     return data;
+  }
+
+
+    /**
+   * Get
+   */
+  get isCompany(): boolean {
+    if (! this.idUserType) {
+      return false;
+    }
+
+    return this.idUserType === User.COMPANY;
   }
 }
 

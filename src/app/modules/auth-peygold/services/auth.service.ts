@@ -328,4 +328,18 @@ export class AuthService extends HttpService {
       documents: null
     };
   }
+
+  verifyEmail(params:string): Promise<any>{
+    return this.get(`/Email/ConfirmEmail${params}`).toPromise().then(
+      (resp:any) =>{
+        console.log('resp',resp);
+        return true;
+      }
+    ).catch(
+      (error:any) =>{
+        console.log('error',error);
+        return false;
+      }
+    );
+  }
 }

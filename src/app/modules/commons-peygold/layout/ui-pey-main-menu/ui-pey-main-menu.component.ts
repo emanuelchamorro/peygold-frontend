@@ -8,6 +8,7 @@ import {User} from '../../../../models';
 import {Subscription} from 'rxjs';
 import {BaseComponent} from '../../components/base-component.component';
 
+
 /**
  * UIPeyMainMenuComponent
  */
@@ -32,8 +33,12 @@ export class UIPeyMainMenuComponent extends BaseComponent implements OnInit, OnD
   ) {
     super();
     this.authService.user$.subscribe((user: User) => this.user = user);
-    const items: Array<MenuItem> = this.user.isAdmin ?  scMenu : euMenu;
-    //const items = euMenu;
+    let items: Array<MenuItem> = this.user.isAdmin ?  scMenu : euMenu;
+    if(!this.user.isAdmin && !this.user.isCompany){
+      items = items.filter((opc:MenuItem)=>{
+        return opc.label != 'Creditos';
+      })
+    }
     this.mainMenuService.setItems(items);
     this.items = items;
   }
@@ -43,7 +48,8 @@ export class UIPeyMainMenuComponent extends BaseComponent implements OnInit, OnD
    */
   ngOnInit() {
     this.$items = this.mainMenuService.$items.subscribe((items) => {
-      this.items = items; console.log(items);
+      this.items = items; 
+      console.log(items);
     });
   }
 

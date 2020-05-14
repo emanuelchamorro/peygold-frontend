@@ -13,6 +13,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MustMatchDirective } from './directive/must-match.directive';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { PeyVerifyEmailComponent } from './components/pey-verify-email/pey-verify-email.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     PeyRegisterComponent,
     PeySuccessComponent,
     PeyResetPasswordComponent,
-    MustMatchDirective],
+    MustMatchDirective,
+    PeyVerifyEmailComponent],
   imports: [
     CommonModule,
     AuthPeyGoldRouting,

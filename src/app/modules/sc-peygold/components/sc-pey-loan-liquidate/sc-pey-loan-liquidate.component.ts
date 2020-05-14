@@ -14,108 +14,119 @@ import { Response } from '../../../../modules/commons-peygold/entities/response'
 })
 export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit {
 
-  private idLoan:number;
+  private idLoan: number;
   public loanDetail: Loan;
   public insurancesCarriers: Array<SelectOption>;
-  public insuranceCarrierSelected:SelectOption;
-  public submited:boolean;
-  public userAccount:any={};
-  public password:string;
-  public repeatPasswordInput:string;
-  public tokenInput:string;
-  public status:number;
-  public step:number;
-  public title:string;
-  public message:string;
-  public routeTo:string;
+  public insuranceCarrierSelected: SelectOption;
+  public submited: boolean;
+  public userAccount: any = {};
+  public password: string;
+  public repeatPasswordInput: string;
+  public tokenInput: string;
+  public status: number;
+  public step: number;
+  public title: string;
+  public message: string;
+  public routeTo: string;
 
-  constructor(private route:ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private loansService: LoansService,
-    private spinnerService:NgxSpinnerService,
-    private insuranceCarrierService:InsuranceCarrierService) { 
-      super();
-      this.idLoan = Number( this.route.snapshot.paramMap.get("idLoan")); 
-    }
+    private spinnerService: NgxSpinnerService,
+    private insuranceCarrierService: InsuranceCarrierService) {
+    super();
+    this.idLoan = Number(this.route.snapshot.paramMap.get("idLoan"));
+  }
 
   ngOnInit() {
     this.step = 1;
-    this.userAccount = localStorage.getItem("hsu")?JSON.parse(atob(localStorage.getItem("hsu"))):undefined;
+    this.userAccount = localStorage.getItem("hsu") ? JSON.parse(atob(localStorage.getItem("hsu"))) : undefined;
     this.repeatPasswordInput = null;
     this.tokenInput = null;
     this.spinnerService.show();
     this.loansService.getById(this.idLoan).then(
-      (response: Response) => { 
+      (response: Response) => {
         this.spinnerService.hide();
-        if(response.ok){
+        if (response.ok) {
           this.loanDetail = response.data;
-          console.log('loanDetail',this.loanDetail );
+          console.log('loanDetail', this.loanDetail);
           this.insuranceCarrierService.all().then((insurancesCarriers: Array<SelectOption>) => {
             this.insurancesCarriers = insurancesCarriers;
-            console.log('aseguradoras',this.insurancesCarriers);
+            console.log('aseguradoras', this.insurancesCarriers);
           });
-        }else{
+        } else {
           this.setError(response.message);
         }
       }
     ).catch(
-      (error)=>{
+      (error) => {
         this.spinnerService.hide();
         this.setError("Ha ocurrido un error. No será posible ver el detalle de la solicitud.");
-      }      
+      }
     );
   }
 
-  sendToken(){
+  sendToken() {
     this.spinnerService.show();
     this.loansService.sendToken().then(
-      (resp)=>{
+      (resp) => {
         this.spinnerService.hide();
-        console.log('resp send token',resp);
+        console.log('resp send token', resp);
         this.setSuccess('El token fué enviado a su correo exitosamente.');
       }
     ).catch(
-      (error)=>{
+      (error) => {
         this.spinnerService.hide();
-        console.log('error send token',error);
+        console.log('error send token', error);
         this.setError('Ha ocurrido un error. No fué posible enviar el token a su correo.');
       }
     )
   }
 
-  onSubmit(){
-    console.log('token',this.tokenInput);
-    console.log('status',this.status);
+  onSubmit() {
     this.spinnerService.show();
     this.loanDetail.status = new LoanStatus(String(this.status));
 
-   this.loansService.processLoan(this.loanDetail,this.tokenInput).then(
-      (resp)=>{
-        this.spinnerService.hide();
-        console.log('resp send token',resp);
-        if(this.status == 2){ 
-          var today  = new Date(this.loanDetail.peygoldExpirationDate);
-          console.log(today.toLocaleDateString("es-AR"));
-          this.title = '¡P$G enviados exitosamente!';
-          this.message = 'La empresa '+this.loanDetail.applicant.bussinessName+' ya tiene acreditado'+ 
-                          'el crédito que solicitaron.Sus P$G vencerán en la fecha '+ today.toLocaleDateString("es-AR");
-        }else{ 
+    this.loansService.processLoan(this.loanDetail, this.tokenInput).then(
+      (resp) => {
+
+        if (this.status == 2) {
+          this.loansService.getById(this.idLoan).then(
+            (response: Response) => {
+              this.spinnerService.hide();
+              if (response.ok) {
+                const loanDetail = response.data;
+                var today = new Date(loanDetail.peygoldExpirationDate);
+                console.log(today.toLocaleDateString("es-AR"));
+                this.title = '¡P$G enviados exitosamente!';
+                this.message = 'La empresa ' + loanDetail.applicant.bussinessName + ' ya tiene acreditado' +
+                  'el crédito que solicitaron.Sus P$G vencerán en la fecha ' + today.toLocaleDateString("es-AR");
+              } else {
+                this.setError(response.message);
+              }
+            }
+          ).catch(
+            (error) => {
+              this.spinnerService.hide();
+              this.setError("Ha ocurrido un error. No fué posible procesar la liquidación.");
+            }
+          )
+        } else {
           this.title = '¡Rechazaste la liquidación!';
-          this.message = 'La liquidación de los P$G para la empresa '+this.loanDetail.applicant.bussinessName+' fué rechazada.'+
-          ' Ya no verás esta opción en la lista';
+          this.message = 'La liquidación de los P$G para la empresa ' + this.loanDetail.applicant.bussinessName + ' fué rechazada.' +
+            ' Ya no verás esta opción en la lista';
         }
         this.routeTo = this.routes.loansettlements.index.href;
         this.step = 2;
       }
     ).catch(
-      (error)=>{
+      (error) => {
         this.spinnerService.hide();
-        console.log('error send token',error);
-        if(error.code==404){
+        console.log('error send token', error);
+        if (error.code == 404) {
           this.setError('Ha ocurrido un error. El Token no existe o ya fue usado.');
-        }else{
-          this.setError('Ha ocurrido un error. No fué posible enviar el token a su correo.');
+        } else {
+          this.setError('Ha ocurrido un error. No fué posible procesar la liquidación.');
         }
-        
       }
     );
   }

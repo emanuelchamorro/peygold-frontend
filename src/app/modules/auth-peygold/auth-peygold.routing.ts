@@ -6,6 +6,7 @@ import {PeyRegisterComponent} from './components/pey-register/pey-register.compo
 import {PeySuccessComponent} from './components/pey-success/pey-success.component';
 import {PeyResetPasswordComponent} from './components/pey-reset-password/pey-reset-password.component';
 import {LogoutService} from './services/logout.service';
+import { PeyVerifyEmailComponent } from './components/pey-verify-email/pey-verify-email.component';
 
 export const config: Routes = [
   {
@@ -74,6 +75,10 @@ export const config: Routes = [
       message: '¡Has restablecido tu contraseña existosamente!<br/>' +
         '¡Ya podés iniciar sesión!',
     }
+  },
+  {
+    path: routes.verify_email.route,
+    component: PeyVerifyEmailComponent,
   },
   // { path: '**', component: P404Component }
 ];

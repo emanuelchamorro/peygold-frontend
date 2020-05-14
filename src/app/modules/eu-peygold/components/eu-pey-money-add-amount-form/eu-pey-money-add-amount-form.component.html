@@ -29,6 +29,7 @@
             required>
           </ng-select>
 
+          
           <div class="input-blue-text" *ngIf="!transaction.type.isMultiPey">
             <input [required]="!transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
                    [prefix]="transaction.type.coin | translate" mask="separator.2" thousandSeparator="."
