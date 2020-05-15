@@ -54,9 +54,10 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
       localStorage.setItem("hsu",btoa(JSON.stringify(userAccount)));
       this.unbusy();
       this.goToDashboard(user);
-    }).catch((e: ErrorResponse) => {
+    }).catch((e) => {
       this.spinnerService.hide();
-      console.log(e)
+      //const errorThrown = new Error(JSON.parse(e.message));
+      console.log('e',e)
       this.catchError(e);
 
     });

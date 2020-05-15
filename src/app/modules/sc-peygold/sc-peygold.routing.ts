@@ -28,6 +28,7 @@ import { ScPeySettingsComponent } from './components/sc-pey-settings/sc-pey-sett
 import { ScPeyReportAccountStatusComponent } from './components/sc-pey-report-account-status/sc-pey-report-account-status.component';
 import { ScPeyReportRetentionsComponent } from './components/sc-pey-report-retentions/sc-pey-report-retentions.component';
 import { ScPeyReportRetentionDetailComponent } from './components/sc-pey-report-retention-detail/sc-pey-report-retention-detail.component';
+import { EuPeyUserComponent } from '../eu-peygold/components/eu-pey-user/eu-pey-user.component';
 
 export const config: Routes = [
   {
@@ -62,14 +63,14 @@ export const config: Routes = [
         path: routes.users.post.route,
         component: ScPeyStoreUserComponent,
         data: {
-          title: 'Login Page'
+          title: 'User Page'
         },
       },
       {
         path: routes.users.put.route,
         component: ScPeyStoreUserComponent,
         data: {
-          title: 'Login Page'
+          title: 'Usere Page'
         },
       },
       {
@@ -253,6 +254,10 @@ export const config: Routes = [
         data: {
           title: 'Reportes: Retenciones - Detalles'
         },
+      },
+      {
+        path: routes.me.index.route,
+        component: EuPeyUserComponent,
       },
     ]
   },

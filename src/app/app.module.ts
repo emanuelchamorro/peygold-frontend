@@ -9,7 +9,7 @@ import {HttpErrorInterceptor} from './modules/commons-peygold/interceptors/http-
 import {ScPeyGoldModule} from './modules/sc-peygold/sc-peygold.module';
 import {JwtInterceptor, JwtModule} from '@auth0/angular-jwt';
 import {environment} from '../environments/environment';
-import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
+import { LocationStrategy, registerLocaleData, PathLocationStrategy} from '@angular/common';
 import {EuPeyGoldModule} from './modules/eu-peygold/eu-peygold.module';
 import {CommonsPeyGoldModule} from './modules/commons-peygold/commons-peygold.module';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -74,7 +74,7 @@ export function bankProviderFactory(
     PgHelpModule
   ],
   providers: [
-    { provide: LocationStrategy,  useClass: HashLocationStrategy},
+    { provide: LocationStrategy,  useClass: PathLocationStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
     { provide: LOCALE_ID, useValue: 'es-AR' },
