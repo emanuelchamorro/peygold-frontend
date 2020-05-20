@@ -134,6 +134,7 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
 
     this.spinnerService.show();
     this.banksService.getById(id).then((bank: Bank) => {
+
       if(bank){
         this.detailedBank = bank;
         console.log('bank', this.detailedBank);
@@ -157,12 +158,17 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
             this.completed = false;
             this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
           });
+        }else{
+          this.spinnerService.hide();
+          this.completed = true;
         }
       }else{
+        this.spinnerService.hide();
         this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
       }
     }).catch(
       (error)=>{
+        this.spinnerService.hide();
         this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
       }
     );

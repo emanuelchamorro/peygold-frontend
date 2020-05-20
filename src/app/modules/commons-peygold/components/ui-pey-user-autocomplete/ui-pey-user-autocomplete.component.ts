@@ -45,7 +45,7 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
       setTimeout(() => {
         this.userService.search(keyword).then((users: Array<User>) => {
           if (this.filterUsers) {
-            users = users.filter((user) => !this.filterUsers.includes(user.id));
+            users = users.filter((user) => !this.filterUsers.includes(user.id) && user.active) ;
           }
           this.users = users;
         });

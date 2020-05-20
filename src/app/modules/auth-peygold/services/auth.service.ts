@@ -91,7 +91,7 @@ export class AuthService extends HttpService {
    * Register a new person in the platform
    * @param company The new user
    */
-  signUpCompany(company: Company): Promise<boolean> {
+  signUpCompany(company: Company): Promise<any> {
     const userInfo = {
       ... this.buildCompanyInfo(company),
       ... this.buildAddresses(company.address),
@@ -108,7 +108,7 @@ export class AuthService extends HttpService {
           resolve(true);
         },
         (error)=>{
-          reject(false);
+          reject(error);
         }
       )
     });

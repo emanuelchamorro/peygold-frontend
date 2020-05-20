@@ -25,7 +25,7 @@ export class InsuranceCarrier extends Model {
       super();
       this.address = new Address();
       this.contactUser = new User();
-      this.bank = new Bank();   
+      //this.bank = new Bank();   
     }
 
 

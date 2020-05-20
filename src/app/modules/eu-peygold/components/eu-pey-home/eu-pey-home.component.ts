@@ -22,6 +22,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
   public creditBalance = new Balance();
   public fiatBalance = new Balance();
+  public pontsBalance = new Balance();
   public transactions;
 
   constructor(
@@ -43,6 +44,11 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
       balances.map((balance: Balance) => {
         if (balance.isFiat) {
           this.fiatBalance = balance;
+          return;
+        }
+
+        if (balance.isPoints) {
+          this.pontsBalance = balance;
           return;
         }
 

@@ -24,9 +24,9 @@
     <div class="wallet-item" id="pg-wallet">
       <div class="wallet-first-line">
         <span class="fw-600">Saldo disponible</span>
-        <span class="fw-700 mb-3" [innerHtml]="creditBalance.amount | currency:creditBalance.currencyType + ' '"></span>
-        <span class="fs-14">Peygold créditos</span>
-        <span class="fs-14" [innerHtml]="creditBalance.pendingAmount | currency:creditBalance.currencyType + ' '"></span>
+        <span class="fw-700 mb-3" [innerHtml]="pontsBalance.amount | currency:pontsBalance.currencyType + ' '"></span>
+        <span class="fs-14">Envios pendientes</span>
+        <span class="fs-14" [innerHtml]="pontsBalance.pendingAmount | currency:pontsBalance.currencyType + ' '"></span>
       </div>
     </div>
 

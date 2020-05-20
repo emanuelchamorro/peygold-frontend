@@ -128,7 +128,10 @@ export class BanksService extends HttpService {
         bank.address.zipCode = resp.postalCode;
         const country = this.locationService.countryList.filter(x => Number(x.value)==resp.idCountry)[0];
         console.log('in service country',country);
-        bank.address.country = new Country(country.value,country.label);
+        if(country){
+          bank.address.country = new Country(country.value,country.label);
+        }
+        
         bank.address.state = new State(resp.idState);
         bank.address.city = new City(resp.idCity);
         bank.deleted = resp.deleted;

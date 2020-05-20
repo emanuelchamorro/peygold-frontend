@@ -79,7 +79,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Calle" class="form-control w-100" name="street"
-                                    [(ngModel)]="bank.address.street" #street="ngModel" />
+                                    [(ngModel)]="bank.address.street" #street="ngModel" required/>
                                 <span>Calle</span>
                             </label>
                             <div *ngIf="(!street.pristine && street.invalid) || submited && street.errors"
@@ -91,7 +91,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Nº de calle" class="form-control w-100"
-                                    name="houseNumber" [(ngModel)]="bank.address.houseNumber" #houseNumber="ngModel" />
+                                    name="houseNumber" [(ngModel)]="bank.address.houseNumber" #houseNumber="ngModel" required/>
                                 <span>Nº de calle</span>
                             </label>
                             <div *ngIf="(!houseNumber.pristine && houseNumber.invalid) || submited && houseNumber.errors"
@@ -107,7 +107,7 @@
 
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Piso / Depto" class="form-control w-100" name="floor"
-                                    [(ngModel)]="bank.address.floor" #floor="ngModel" />
+                                    [(ngModel)]="bank.address.floor" #floor="ngModel" required/>
                                 <span>Piso / Depto</span>
                             </label>
                             <div *ngIf="(!floor.pristine && floor.invalid) || submited && floor.errors"
@@ -120,7 +120,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Código postal" class="form-control w-100"
-                                    name="postalCode" [(ngModel)]="bank.address.zipCode" #postalCode="ngModel" />
+                                    name="postalCode" [(ngModel)]="bank.address.zipCode" #postalCode="ngModel" required/>
                                 <span>Código postal</span>
                             </label>
                             <div *ngIf="(!postalCode.pristine && postalCode.invalid) || submited && postalCode.errors"
@@ -154,7 +154,7 @@
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="CUIT" class="form-control w-100" name="cuit"
                                     [(ngModel)]="bank.cuit" #cuit="ngModel"
-                                    pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" />
+                                    pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" required/>
                                 <span>CUIT</span>
                             </label>
                             <div *ngIf="(!cuit.pristine && cuit.invalid) || submited && cuit.errors"
@@ -168,7 +168,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Teléfono" class="form-control w-100" name="phone"
-                                    [(ngModel)]="bank.contactUser.phone" #phone="ngModel" pattern="^[0-9]*$" />
+                                    [(ngModel)]="bank.contactUser.phone" #phone="ngModel" pattern="^[0-9]*$" required/>
                                 <span>Teléfono</span>
                             </label>
                             <div *ngIf="(!phone.pristine && phone.invalid) || submited && phone.errors"
@@ -182,7 +182,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Correo Electrónico" class="form-control w-100"
-                                    name="email" [(ngModel)]="bank.contactUser.email" #email="ngModel" email="true" />
+                                    name="email" [(ngModel)]="bank.contactUser.email" #email="ngModel" email="true" required/>
                                 <span>Correo Electrónico</span>
                             </label>
                             <div *ngIf="(!email.pristine && email.invalid) || submited && email.errors"

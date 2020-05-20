@@ -23,7 +23,7 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
   private cities: Array<City>;
   private documentTypes: Array<DocumentType>;
   private availableRoles: Array<Role>;
-  private userId:number
+  public userId:number
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +37,7 @@ export class ScPeyStoreUserComponent extends BaseComponent implements OnInit {
     super();
     this.userId = Number(this.route.snapshot.paramMap.get('userId'));
 
-    if (this.userId && ! isNaN(this.userId)) {
+    if (this.userId && !isNaN(this.userId)) {
       this.getUser(this.userId);
       return;
     }
