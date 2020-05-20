@@ -13,10 +13,12 @@
   >
   </ng-autocomplete>
   <ng-template #itemTemplateStatic let-item>
-    <div class="item">
-      <img [src]="item.avatarURL" (error)="this.src = 'assets/images/Isologotipo.svg'" height="25">
-      <span [innerHTML]="item.fullName"></span><br>
-      <small>Email: {{item.email}}</small>
+    <div class="item d-flex p-2">
+      <img [src]="item.avatarURL" (error)="this.src = 'assets/images/Isologotipo.svg'">
+      <div class="d-flex flex-column w-100">
+       <span [innerHTML]="item.fullName"></span>
+       <small>{{item.email}}</small>
+      </div>
     </div>
   </ng-template>
   <span class="placeholder">Nombre o correo electrónico</span>
