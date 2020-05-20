@@ -69,9 +69,9 @@ export class UserService extends HttpService {
       address.houseNumber = response.houseNumber;
       address.buildingFloor = response.floor;
       address.zipCode = response.postalCode;
-      address.city = new City(response.idCity);
-      address.state = new State(response.idState);
-      address.country = new Country(response.idCountry);
+      address.city = new City(response.idCity, response.cityName);
+      address.state = new State(response.idState, response.stateName);
+      address.country = new Country(response.idCountry, response.countryName);
       user.address = address;
 
       const billingAddress = new Address();
