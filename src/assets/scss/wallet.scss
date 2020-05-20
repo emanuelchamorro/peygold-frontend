@@ -235,8 +235,7 @@ margin-right: 5%;
     background-image: url("~src/assets/images/Deposito-01.svg");
   }
   .InputAmount {
-    width: 70%;
-    margin: 15px auto 10px auto;
+    width: 100%;
     display: block;
     text-align: center;
     font-size: 35px;
@@ -250,7 +249,7 @@ margin-right: 5%;
     }
   }
   .Export {
-    width: 70%;
+  
     margin: auto;
     line-height: 20px;
     cursor: pointer;
@@ -450,10 +449,7 @@ margin-right: 5%;
     width: 2.25rem;
     height: 2.25rem;
   }
-  .ingresarDinero .InputAmount,
-  .ingresarDinero .Export {
-    width: 90%;
-  } 
+
 }
   
 @media screen and (max-width: 430px) {

@@ -248,16 +248,15 @@ $(document).on("click", function (event) {
 /* Help toggle-menu */
 
  $(document).on('click', '.help-item', function () {
-  $(".help-item-content").toggleClass("d-block");
-  $(".help-item").toggleClass("active");
- 
+  $(this).closest(".help-item").toggleClass("active");
+
 });
 
 $(document).on("click", function (event) {
 
-  if ($(event.target).closest(".help-item").length === 0) {
+  if ($(event.target).closest(".help-item a").length === 0) {
     $(".help-item").removeClass("active");
-    $(".help-item-content").removeClass("d-block");
+
   }
 });
 

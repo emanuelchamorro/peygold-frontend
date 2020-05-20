@@ -243,7 +243,7 @@ align-items: center;
   background-position: 6px 5px;
 }
 
-.faq-container > a {
+.faq-container a {
   width: 100%;
   border-bottom: solid 1px #dcdcdc;
   display: flex;
@@ -252,42 +252,42 @@ align-items: center;
   align-items: center;
   cursor: pointer;
 }
-.faq-container > a:last-of-type {
+.faq-container a:last-of-type {
 
   border-bottom: 0;
 
 }
 
-.faq-container > a > span{
+.faq-container a > span{
  font-size: 14px;
  margin-left: 5px;
 }
-.faq-container >  a > i {
+.faq-container a > i {
   font-size: 18px;
   margin-left: 5px;
  
 }
-.faq-container >  a:hover span {
+.faq-container a:hover span {
   color:  #3575BA!important;
  
 }
 
-.faq-container >  a > i:before {
+.faq-container a > i:before {
   color: #333333!important;
 }
 
-.faq-container >  a:hover > i:before {
+.faq-container a:hover > i:before {
   color:  #3575BA!important;
 }
 
-.faq-container.about > a > span {
+.faq-container.about a > span {
 
   display: list-item;          
   list-style-type: disc;       
   list-style-position: inside; 
 }
 
-.faq-container.about > a:hover > span {
+.faq-container.about a:hover > span {
   color: #3575BA;
 }
 
@@ -295,7 +295,8 @@ align-items: center;
   color: #3575BA!important; 
 }
 
-.help-item-content > p {
+.help-item-content > p,
+.help-item-content > div {
   color: #4F4F4F;
   font-size: 13px;
   text-align: left;
@@ -379,6 +380,19 @@ cursor: pointer;
   max-width: 900px;
   width: 100%;
 }
+
+.help-item.active {
+   
+  .help-item-content {
+
+  display: block!important;
+  cursor: text;
+        
+  }
+
+}
+
+
 
 @media only screen and (max-width: 1024px) {
 

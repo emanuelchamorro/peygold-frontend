@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-12">
           <ng-select placeholder="Importe"
-            class="custom-select mb-3 w-100 Export "
+            class="col-xs-12 col-sm-6 custom-select mb-3 w-100 Export "
             bindLabel="label"
             [searchable]="false"
             [items]="transactionTypes"
@@ -30,8 +30,8 @@
           </ng-select>
 
           
-          <div class="input-blue-text" *ngIf="!transaction.type.isMultiPey">
-            <input [required]="!transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+          <div class="input-blue-text d-flex justify-content-center" *ngIf="!transaction.type.isMultiPey">
+            <input [required]="!transaction.type.isMultiPey" type="text" placeholder="$0" class="col-xs-12 col-sm-6 form-control InputAmount"
                    [prefix]="transaction.type.coin | translate" mask="separator.2" thousandSeparator="."
                    [min]="transaction.type.minAmount"
                    name="amount" [(ngModel)]="transaction.amount" #amount="ngModel" />
@@ -42,8 +42,8 @@
               <div >El valor mínimo para la transaccion es {{ transaction.type.minAmount }}</div>
             </div>
           </div>
-          <div class="input-blue-text" *ngIf="transaction.type.isMultiPey">
-            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+          <div class="input-blue-text d-flex justify-content-center" *ngIf="transaction.type.isMultiPey">
+            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="col-xs-12 col-sm-6  form-control InputAmount"
                    [prefix]="transaction.multiPey[0].type.coin | translate" mask="separator.2" thousandSeparator="."
                    [min]="transaction.multiPey[0].minAmount"
                    name="fiatAmount" [(ngModel)]="transaction.multiPey[0].amount" #fiatAmount="ngModel" />
@@ -53,7 +53,7 @@
             <div *ngIf="transaction.multiPey[0].amount < transaction.multiPey[0].type.minAmount && formAddAmount.submitted" class="invalid-feedback text-left">
               <div >El valor mínimo para la transaccion es {{ transaction.multiPey[1].type.minAmount }}</div>
             </div>
-            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="form-control InputAmount"
+            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="col-xs-12 col-sm-6 form-control InputAmount"
                    [prefix]="transaction.multiPey[1].type.coin | translate" mask="separator.2" thousandSeparator="."
                    [min]="transaction.multiPey[1].type.minAmount"
                    name="peygoldAmount" [(ngModel)]="transaction.multiPey[1].amount" #peygoldAmount="ngModel" />
