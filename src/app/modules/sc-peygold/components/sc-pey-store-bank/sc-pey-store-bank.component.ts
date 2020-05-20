@@ -138,6 +138,9 @@ export class ScPeyStoreBankComponent extends BaseComponent implements OnInit {
             this.spinnerService.hide();
             this.setError("Ha ocurrido un error. No es posible mostrar el detalle del banco.");
           });
+        }else{
+          this.bank = bank;
+          this.spinnerService.hide();
         }
       }else{
         this.spinnerService.hide();

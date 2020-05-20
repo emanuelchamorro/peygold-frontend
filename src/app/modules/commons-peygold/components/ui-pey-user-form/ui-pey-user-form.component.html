@@ -5,8 +5,7 @@
 <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert" [innerHtml]="success"></div>
 
 <form name="form" (ngSubmit)="save()" #storeUser="ngForm" novalidate>
-<div class="grey-box user-box w-100">
-
+  <div class="grey-box user-box w-100">
     <!---side menu--->
     <div class="user-column d-flex flex-column p-4">
       <div class="mi-usuario m-3">
@@ -19,16 +18,19 @@
       <div class="user-sidebar">
         <ul>
           <li>
-            <a (click)="activeView = 'personalData'" [ngClass]="{'active': !activeView || activeView=='personalData'}"><span>Datos personales</span></a>
+            <a (click)="activeView = 'personalData'"
+              [ngClass]="{'active': !activeView || activeView=='personalData'}"><span>Datos personales</span></a>
           </li>
           <li>
             <a (click)="activeView = 'address'" [ngClass]="{'active': activeView=='address'}"><span>Dirección</span></a>
           </li>
-          <li *ngIf="!useSameAddress" >
-            <a (click)="activeView = 'billingAddress'" [ngClass]="{'active': activeView=='billingAddress'}"><span>Dirección de facturación</span></a>
+          <li *ngIf="!useSameAddress">
+            <a (click)="activeView = 'billingAddress'"
+              [ngClass]="{'active': activeView=='billingAddress'}"><span>Dirección de facturación</span></a>
           </li>
           <li>
-            <a (click)="activeView = 'password'" [ngClass]="{'active': activeView=='password'}"><span>Cambiar contraseña</span></a>
+            <a (click)="activeView = 'password'" [ngClass]="{'active': activeView=='password'}"><span>Cambiar
+                contraseña</span></a>
           </li>
         </ul>
       </div>
@@ -36,48 +38,58 @@
     <!---side menu--->
 
     <!-- PersonalData -->
-    <div class="flex-column w-100 align-items-center p-3" [ngClass]="{'d-flex':!activeView || activeView=='personalData', 'd-none': activeView && activeView !='personalData'}">
+    <div class="flex-column w-100 align-items-center p-3"
+      [ngClass]="{'d-flex':!activeView || activeView=='personalData', 'd-none': activeView && activeView !='personalData'}">
       <div class="usuario-form mt-4 mb-4">
-        <div class="input-field">
+        <div class="input-field" [hidden]="editableUser.idUserType!=1">
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Nombres" class="form-control w-100"
-                   [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && name.errors}"
-                   name="name" [(ngModel)]="editableUser.name" #name="ngModel" required readonly/>
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && name.errors}" name="name"
+              [(ngModel)]="editableUser.name" #name="ngModel" required readonly />
             <span>Nombres</span>
-            <div *ngIf="(!name.pristine && name.invalid) || storeUser.submitted && name.errors" class="invalid-feedback">
+            <div *ngIf="(!name.pristine && name.invalid) || storeUser.submitted && name.errors"
+              class="invalid-feedback">
               <div *ngIf="name.errors.required">Campo es requerido</div>
             </div>
           </label>
         </div>
 
-        <div class="input-field">
+        <div class="input-field" [hidden]="editableUser.idUserType!=1">
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Apellido" class="form-control w-100"
-                   [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && lastName.errors}"
-                   name="lastName" [(ngModel)]="editableUser.lastName" #lastName="ngModel" required readonly/>
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && lastName.errors}" name="lastName"
+              [(ngModel)]="editableUser.lastName" #lastName="ngModel" required readonly />
             <span>Apellido</span>
-            <div *ngIf="!lastName.pristine && lastName.invalid || storeUser.submitted && lastName.errors" class="invalid-feedback">
+            <div *ngIf="!lastName.pristine && lastName.invalid || storeUser.submitted && lastName.errors"
+              class="invalid-feedback">
               <div *ngIf="lastName.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div> 
+        <div class="input-field" [hidden]="editableUser.idUserType==1">
+          <label class="has-float-label mb-0 w-100">
+            <input type="text" placeholder="Razón social" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && bussinessName.errors}" name="bussinessName"
+              [(ngModel)]="editableUser.bussinessName" #bussinessName="ngModel" required readonly/>
+            <span>Razón social</span>
+            <div *ngIf="!bussinessName.pristine && bussinessName.invalid || storeUser.submitted && bussinessName.errors"
+              class="invalid-feedback">
+              <div *ngIf="bussinessName.errors.required">Campo es requerido</div>
             </div>
           </label>
         </div>
 
-        <div class="row">
+        <div class="row" [hidden]="editableUser.idUserType!=1">
           <div class="col-6 input-field">
             <label class="has-float-label mb-0">
-              <ng-select placeholder="Tipo de documento"
-                         class="custom-select mb-0 w-100"
-                         bindLabel="label"
-                         [searchable]="false"
-                         [items]="documentTypes"
-                         [addTag]="false"
-                         name="documentType"
-                         [(ngModel)]="editableUser.documentType"
-                         [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentType.errors}"
-                         #documentType="ngModel"
-                         required disabled>
+              <ng-select placeholder="Tipo de documento" class="custom-select mb-0 w-100" bindLabel="label"
+                [searchable]="false" [items]="documentTypes" [addTag]="false" name="documentType"
+                [(ngModel)]="editableUser.documentType"
+                [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentType.errors}" #documentType="ngModel"
+                required disabled>
               </ng-select>
-              <div *ngIf="!documentType.pristine && documentType.invalid || storeUser.submitted && documentType.errors" class="invalid-feedback">
+              <div *ngIf="!documentType.pristine && documentType.invalid || storeUser.submitted && documentType.errors"
+                class="invalid-feedback">
                 <div *ngIf="documentType.errors.required">Campo es requerido</div>
               </div>
             </label>
@@ -85,25 +97,41 @@
           <div class="col-6 input-field">
             <label class="has-float-label mb-0">
               <input type="text" placeholder="Número" class="form-control w-100"
-                     [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentNumber.errors}"
-                     name="documentNumber" [(ngModel)]="editableUser.documentNumber" #documentNumber="ngModel" required readonly/>
+                [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentNumber.errors}" name="documentNumber"
+                [(ngModel)]="editableUser.documentNumber" #documentNumber="ngModel" required readonly />
               <span>Número</span>
-              <div *ngIf="!documentNumber.pristine && documentNumber.invalid || storeUser.submitted && documentNumber.errors" class="invalid-feedback">
+              <div
+                *ngIf="!documentNumber.pristine && documentNumber.invalid || storeUser.submitted && documentNumber.errors"
+                class="invalid-feedback">
                 <div *ngIf="documentNumber.errors.required">Campo es requerido</div>
               </div>
             </label>
           </div>
         </div>
 
+        <div class="mb-4" [hidden]="editableUser.idUserType==1">
+          <label class="has-float-label mb-4 w-100">
+            <input type="text" placeholder="CUIT" class="form-control w-100"
+                   [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && cuit.errors}"
+                   name="cuit" [(ngModel)]="editableUser.cuit" #cuit="ngModel" required readonly/>
+            <span>CUIT</span>
+
+            <div *ngIf="!cuit.pristine && cuit.invalid || storeUser.submitted && cuit.errors" class="invalid-feedback">
+              <div *ngIf="cuit.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+
 
         <div class="input-field">
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Teléfono" class="form-control w-100"
-                   [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && phone.errors}"
-                   name="phone" [(ngModel)]="editableUser.phone" #phone="ngModel" required/>
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && phone.errors}" name="phone"
+              [(ngModel)]="editableUser.phone" #phone="ngModel" required />
             <span>Teléfono</span>
 
-            <div *ngIf="!phone.pristine && phone.invalid || storeUser.submitted && phone.errors" class="invalid-feedback">
+            <div *ngIf="!phone.pristine && phone.invalid || storeUser.submitted && phone.errors"
+              class="invalid-feedback">
               <div *ngIf="phone.errors.required">Campo es requerido</div>
             </div>
           </label>
@@ -111,20 +139,15 @@
 
         <div class="input-field">
           <label class="has-float-label mb-4 w-100">
-            <ng-select
-              placeholder="Institución a beneficiar"
-              class="custom-select  mb-0 w-100"
-              bindLabel="label"
-              [searchable]="false"
-              [items]="institutions"
-              [addTag]="false"
-              name="profitInstitution"
+            <ng-select placeholder="Institución a beneficiar" class="custom-select  mb-0 w-100" bindLabel="label"
+              [searchable]="false" [items]="institutions" [addTag]="false" name="profitInstitution"
               [(ngModel)]="editableUser.profitInstitution"
               [ngClass]="{'ng-dirty ng-invalid' :  storeUser.submitted && profitInstitution.errors}"
-              #profitInstitution="ngModel"
-              required>
+              #profitInstitution="ngModel" required>
             </ng-select>
-            <div *ngIf="!profitInstitution.pristine && profitInstitution.invalid ||  storeUser.submitted && profitInstitution.errors" class="invalid-feedback">
+            <div
+              *ngIf="!profitInstitution.pristine && profitInstitution.invalid ||  storeUser.submitted && profitInstitution.errors"
+              class="invalid-feedback">
               <div *ngIf="profitInstitution.errors.required">Campo es requerido</div>
             </div>
           </label>
@@ -137,44 +160,51 @@
     <!-- End PersonalData -->
 
     <!-- Address -->
-    <div class="flex-column w-100 align-items-center p-3" [ngClass]="{'d-flex':activeView=='address', 'd-none': activeView !='address'}">
-        <div class="usuario-form mt-4 mb-4">
-          <app-ui-pey-address-form #addressComponent [address]="editableUser.address" (onChange)="setAddress($event)" (onSubmit)="saveAddress($event)"></app-ui-pey-address-form>
-
-          <div class="d-flex align-items-start flex-row mb-3">
-            <input  [(ngModel)]="useSameAddress" name="sameAddress" type="checkbox" class="d-flex mr-3">
-            <span class="fs-13 text-left w-75">Deseo que este sea mi domicilio de facturación</span>
-          </div>
-
-          <div class="d-flex justify-content-center">
-            <button #saveAddressButton type="button" class="solid-blue-button w-auto" (click)="addressComponent.submit() && save()">Guardar cambios</button>
-          </div>
-        </div>
-    </div>
-
-    <div class="flex-column w-100 align-items-center p-3" [ngClass]="{'d-flex':activeView=='billingAddress', 'd-none': activeView !='billingAddress'}">
+    <div class="flex-column w-100 align-items-center p-3"
+      [ngClass]="{'d-flex':activeView=='address', 'd-none': activeView !='address'}">
       <div class="usuario-form mt-4 mb-4">
-        <app-ui-pey-address-form #billingAddressComponent [address]="editableUser.billingAddress"  (onChange)="setBillingAddress($event)" (onSubmit)="saveBillingAddress($event)"></app-ui-pey-address-form>
+        <app-ui-pey-address-form #addressComponent [address]="editableUser.address" (onChange)="setAddress($event)"
+          (onSubmit)="saveAddress($event)"></app-ui-pey-address-form>
+
+        <div class="d-flex align-items-start flex-row mb-3">
+          <input [(ngModel)]="useSameAddress" name="sameAddress" type="checkbox" class="d-flex mr-3">
+          <span class="fs-13 text-left w-75">Deseo que este sea mi domicilio de facturación</span>
+        </div>
 
         <div class="d-flex justify-content-center">
-          <button #saveBillingAddressButton type="button" class="solid-blue-button w-auto" (click)="billingAddressComponent.submit() && save()">Guardar cambios</button>
+          <button #saveAddressButton type="button" class="solid-blue-button w-auto"
+            (click)="addressComponent.submit() && save()">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-column w-100 align-items-center p-3"
+      [ngClass]="{'d-flex':activeView=='billingAddress', 'd-none': activeView !='billingAddress'}">
+      <div class="usuario-form mt-4 mb-4">
+        <app-ui-pey-address-form #billingAddressComponent [address]="editableUser.billingAddress"
+          (onChange)="setBillingAddress($event)" (onSubmit)="saveBillingAddress($event)"></app-ui-pey-address-form>
+
+        <div class="d-flex justify-content-center">
+          <button #saveBillingAddressButton type="button" class="solid-blue-button w-auto"
+            (click)="billingAddressComponent.submit() && save()">Guardar cambios</button>
         </div>
       </div>
     </div>
     <!-- End Address -->
 
     <!-- Passwords -->
-    <div class="flex-column w-100 align-items-center p-3" [ngClass]="{'d-flex':activeView=='password', 'd-none': activeView !='password'}">
+    <div class="flex-column w-100 align-items-center p-3"
+      [ngClass]="{'d-flex':activeView=='password', 'd-none': activeView !='password'}">
       <div class="usuario-form mt-4 mb-4">
         <div class="input-field">
           <label class="has-float-label mb-4 w-100">
             <input type="password" placeholder="Contraseña" class="form-control w-100"
-                   [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && password.errors}"
-                   [required]="editableUser.password"
-                   name="password" [(ngModel)]="editableUser.password" #password="ngModel"
-                   [pattern]="environment.form.password.validations.pattern"/>
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && password.errors}"
+              [required]="editableUser.password" name="password" [(ngModel)]="editableUser.password" #password="ngModel"
+              [pattern]="environment.form.password.validations.pattern" />
             <span>Contraseña</span>
-            <div *ngIf="!password.pristine && password.invalid || storeUser.submitted && password.errors" class="invalid-feedback">
+            <div *ngIf="!password.pristine && password.invalid || storeUser.submitted && password.errors"
+              class="invalid-feedback">
               <div *ngIf="password.errors.pattern">
                 La contraseña debe tener al menos una letra en mayuscula, una minúscula, un número, un simbolo
                 (@#$%^.+=) y al menos ocho carácteres
@@ -185,13 +215,14 @@
 
         <div class="input-field">
           <label class="has-float-label mb-4 w-100">
-            <input type="password" placeholder="Confrimar contraseña" class="form-control w-100"
-                   [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && repeatPassword.errors}"
-                   [required]="editableUser.password"
-                   name="repeatPassword" [(ngModel)]="editableUser.repeatPassword" #repeatPassword="ngModel"
-                   pattern="{{ password.value }}"/>
-            <span>Confrimar contraseña</span>
-            <div *ngIf="!repeatPassword.pristine && repeatPassword.invalid || storeUser.submitted && repeatPassword.errors" class="invalid-feedback">
+            <input type="password" placeholder="Confirmar contraseña" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && repeatPassword.errors}"
+              [required]="editableUser.password" name="repeatPassword" [(ngModel)]="editableUser.repeatPassword"
+              #repeatPassword="ngModel" pattern="{{ password.value }}" />
+            <span>Confirmar contraseña</span>
+            <div
+              *ngIf="!repeatPassword.pristine && repeatPassword.invalid || storeUser.submitted && repeatPassword.errors"
+              class="invalid-feedback">
               <div *ngIf="repeatPassword.errors.pattern">
                 Las contraseñas no coinciden
               </div>
@@ -206,5 +237,5 @@
     </div>
     <!-- End Passwords -->
 
-</div>
+  </div>
 </form>

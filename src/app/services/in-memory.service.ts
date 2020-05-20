@@ -72,8 +72,8 @@ export class InMemoryService extends BaseService {
 
     return[
       new SelectOption('1','Rescatar a 60 dias del vencimiento'),
-      new SelectOption('2','Alianza comercial'),
-      new SelectOption('3','Canjear a 60 días del vencimiento por P$G'),
+      new SelectOption('3','Alianza comercial'),
+      new SelectOption('2','Canjear a 60 días del vencimiento por P$G'),
       new SelectOption('4','Cancelación anticipada')
     ]
   }

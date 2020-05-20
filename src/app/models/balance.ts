@@ -8,6 +8,7 @@ import {Currency} from './currency';
 export class Balance extends Model {
 
   static TYPE_FIAT      = 'Pesos';
+  static TYPE_POINTS      = 'Points';
   static TYPE_CREDIT    = 'CreditPoints';
 
   public currency: Currency;
@@ -50,6 +51,15 @@ export class Balance extends Model {
    */
   get isFiat(): boolean {
     return this.currency && this.currency.label === Balance.TYPE_FIAT;
+  }
+
+
+  /**
+   * return true is the balance is a points balance
+   * @return boolean
+   */
+  get isPoints(): boolean {
+    return this.currency && this.currency.label === Balance.TYPE_POINTS;
   }
 
   /**

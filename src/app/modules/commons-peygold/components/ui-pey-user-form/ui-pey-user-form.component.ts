@@ -54,7 +54,9 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
       });
 
       let intitutionUser = this.institutions.filter(x => x.value == this.user.profitInstitution.value)[0];
-      this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+      if(intitutionUser){
+        this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+      }      
       
     });
 
@@ -92,9 +94,9 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   /**
    *
    */
-  private save(): void {
+  public save(): void {
     // Manual validation to present error message for each section
-
+    console.log('entra')
     if (this.validatePersonalData(this.editableUser)) {
       this.activeView = 'personalData';
       this.savePersonalDataButton.nativeElement.click();
@@ -186,13 +188,22 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
    * @return boolean
    */
   private validatePersonalData(user: User): boolean {
-    return !user.name
+    if(user.idUserType == 1){
+      return !user.name
       || !user.lastName
       || !user.documentType
       || !user.documentNumber
       || !user.phone
       || !user.profitInstitution
       || !user.profitInstitution.value;
+    }else{
+      return !user.bussinessName
+      || !user.cuit
+      || !user.phone
+      || !user.profitInstitution
+      || !user.profitInstitution.value;
+    }
+
   }
 
   /**

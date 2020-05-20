@@ -115,7 +115,7 @@
                                     </div>
                                     <span
                                         class="file-label">{{loanDetail.policyFile.name  ? loanDetail.policyFile.name:'Subir póliza'}}</span>
-                                    <input name="policyFile" [(ngModel)]="pFile" #policyFile
+                                    <input name="policyFile" [(ngModel)]="pFile" #policyFile="ngModel"
                                         style="visibility: hidden; width: 0px; height:0px;" #file1 type="file"
                                         accept="*/*" (change)="uploadImage($event)" required>
                                 </div>

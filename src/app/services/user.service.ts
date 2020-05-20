@@ -123,6 +123,7 @@ export class UserService extends HttpService {
     mUser.dateRegistered = user.dateRegistered;
     mUser.fullName = user.fullName;
     mUser.idUserType = user.idUserType;
+    mUser.active = user.active;
     return mUser;
   }
 

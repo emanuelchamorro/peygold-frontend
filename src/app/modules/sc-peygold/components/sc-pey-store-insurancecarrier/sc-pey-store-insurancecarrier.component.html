@@ -48,7 +48,7 @@
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="CUIT" class="form-control w-100" name="cuit"
                                     [(ngModel)]="insurancecarrier.cuit" #cuit="ngModel"
-                                    pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" />
+                                    pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" required/>
                                 <span>CUIT</span>
                             </label>
                             <div *ngIf="(!cuit.pristine && cuit.invalid) || submited && cuit.errors"
@@ -63,7 +63,7 @@
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Teléfono" class="form-control w-100" name="phone"
                                     [(ngModel)]="insurancecarrier.contactUser.phone" #phone="ngModel"
-                                    pattern="^[0-9]*$" />
+                                    pattern="^[0-9]*$" required/>
                                 <span>Teléfono</span>
                             </label>
                             <div *ngIf="(!phone.pristine && phone.invalid) || submited && phone.errors"
@@ -78,13 +78,13 @@
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Correo Electrónico" class="form-control w-100"
                                     name="email" [(ngModel)]="insurancecarrier.contactUser.email" #email="ngModel"
-                                    email="true" />
+                                    email="true" required/>
                                 <span>Correo Electrónico</span>
                             </label>
                             <div *ngIf="(!email.pristine && email.invalid) || submited && email.errors"
                                 class="invalid-feedback">
                                 <div *ngIf="email.errors.required">Campo es requerido</div>
-                                <div *ngIf="email.errors.email">correo inválido</div>
+                                <div *ngIf="email.errors.email">Correo inválido</div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="CBU" class="form-control w-100" name="cbu"
-                                    [(ngModel)]="insurancecarrier.cbu" #cbu="ngModel" pattern="^[0-9]*$" />
+                                    [(ngModel)]="insurancecarrier.cbu" #cbu="ngModel" pattern="^[0-9]*$" required />
                                 <span>CBU</span>
                             </label>
                             <div *ngIf="(!cbu.pristine && cbu.invalid) || submited && cbu.errors"
@@ -172,7 +172,7 @@
                         <div class="col mb-2">
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Calle" class="form-control w-100" name="street"
-                                    [(ngModel)]="insurancecarrier.address.street" #street="ngModel" />
+                                    [(ngModel)]="insurancecarrier.address.street" #street="ngModel" required/>
                                 <span>Calle</span>
                             </label>
                             <div *ngIf="(!street.pristine && street.invalid) || submited && street.errors"
@@ -185,7 +185,7 @@
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Nº de calle" class="form-control w-100"
                                     name="houseNumber" [(ngModel)]="insurancecarrier.address.houseNumber"
-                                    #houseNumber="ngModel" />
+                                    #houseNumber="ngModel" required/>
                                 <span>Nº de calle</span>
                             </label>
                             <div *ngIf="(!houseNumber.pristine && houseNumber.invalid) || submited && houseNumber.errors"
@@ -201,7 +201,7 @@
 
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Piso / Depto" class="form-control w-100" name="floor"
-                                    [(ngModel)]="insurancecarrier.address.floor" #floor="ngModel" />
+                                    [(ngModel)]="insurancecarrier.address.floor" #floor="ngModel" required/>
                                 <span>Piso / Depto</span>
                             </label>
                             <div *ngIf="(!floor.pristine && floor.invalid) || submited && floor.errors"
@@ -215,13 +215,12 @@
                             <label class="has-float-label mb-0 w-100">
                                 <input type="text" placeholder="Código postal" class="form-control w-100"
                                     name="postalCode" [(ngModel)]="insurancecarrier.address.zipCode"
-                                    #postalCode="ngModel" />
+                                    #postalCode="ngModel" required/>
                                 <span>Código postal</span>
                             </label>
                             <div *ngIf="(!postalCode.pristine && postalCode.invalid) || submited && postalCode.errors"
                                 class="invalid-feedback">
-                                <div *ngIf="postalCode.errors.required">Campo es
-                                    requerido</div>
+                                <div *ngIf="postalCode.errors.required">Campo es requerido</div>
                             </div>
                         </div>
                     </div>
