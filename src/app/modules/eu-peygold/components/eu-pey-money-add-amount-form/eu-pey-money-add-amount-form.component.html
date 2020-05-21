@@ -42,8 +42,8 @@
               <div >El valor mínimo para la transaccion es {{ transaction.type.minAmount }}</div>
             </div>
           </div>
-          <div class="input-blue-text d-flex justify-content-center" *ngIf="transaction.type.isMultiPey">
-            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="col-xs-12 col-sm-6  form-control InputAmount"
+          <div class="input-blue-text d-flex justify-content-center flex-column align-items-center" *ngIf="transaction.type.isMultiPey">
+            <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0" class="col-xs-12 col-sm-6 mb-3 form-control InputAmount"
                    [prefix]="transaction.multiPey[0].type.coin | translate" mask="separator.2" thousandSeparator="."
                    [min]="transaction.multiPey[0].minAmount"
                    name="fiatAmount" [(ngModel)]="transaction.multiPey[0].amount" #fiatAmount="ngModel" />
