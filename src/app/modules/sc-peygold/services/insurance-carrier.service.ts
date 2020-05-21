@@ -152,9 +152,9 @@ export class InsuranceCarrierService extends HttpService {
    * get all insurance
    */
   all():Promise<Array<SelectOption>>{
-    if (this.insurancesCarriers) {
+   /* if (this.insurancesCarriers) {
       return this.resolveWith(this.insurancesCarriers);
-    }
+    }*/
     return this.get('/insurancecarriers').toPromise().then(
       (response:any)=>{
         this.insurancesCarriers = new Array();

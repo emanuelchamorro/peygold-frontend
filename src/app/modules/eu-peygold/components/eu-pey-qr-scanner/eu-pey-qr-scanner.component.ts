@@ -97,13 +97,14 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
   }
 
   preview(files) {
+
     if (files.length === 0) {
       return;
     }
 
     const mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      alert('QR invalido.');
+      this.setError("El código QR no es válido.");
       return;
     }
 
@@ -121,7 +122,6 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
 
   readQR(e) {    
     console.log('step ',this.step);
-    
     if (this._isValidQR(JSON.parse(e.result))) { 
       this.decode = JSON.parse(e.result);
 

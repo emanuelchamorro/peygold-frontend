@@ -64,7 +64,7 @@
       </li>
       <li>
         <span>{{selectedTransaction.receiver.completeName}}</span>
-        <span>-{{selectedTransaction.amount}}</span>
+        <span>-{{selectedTransaction.symbol}} {{selectedTransaction.amount}}</span>
       </li>
     </ul>
     <div *ngIf="error" class="invalid-feedback text-center">
