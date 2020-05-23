@@ -28,6 +28,7 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
   step: number = 1;
   public decode: any;
   private user: User;
+  private callReaderQR:boolean;
   
 
   constructor(private renderer: Renderer2,
@@ -111,23 +112,40 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (event) => {
-      this.value = reader.result;
-      this.validQR = true;
-      console.log('value en preview',this.value)
-     /* setTimeout(()=>{
-        this.value=undefined;        
-      },5000);*/
+      try{
+        this.callReaderQR = false;
+        this.value = reader.result;
+        this.validQR = true;
+        console.log('value en preview',this.value)
+       setTimeout(()=>{
+         if(!this.callReaderQR){
+          this.value=null; 
+          let element: Element = this.renderer.createElement('h5');  
+          element.innerHTML = "El código QR no es válido.";
+          element.className = "invalid-feedback text-center";
+          this.renderElement(element);
+         }
+                 
+        },500);
+      }catch(error){
+        console.log('error',error);
+      }
+
+
     };
   }
 
   readQR(e) {    
-    console.log('step ',this.step);
+    this.callReaderQR = true;
     if (this._isValidQR(JSON.parse(e.result))) { 
       this.decode = JSON.parse(e.result);
 
       const button1 = this.renderer.createElement('button');
+      button1.className = "solid-blue-button";
       const buttonText1 = this.renderer.createText('Continuar');
+
       const button2 = this.renderer.createElement('button');
+      button2.className = "white-button-border mr-4";
       const buttonText2 = this.renderer.createText('Cancelar');
       for (let node of this.resultElement.nativeElement.childNodes) {  
         this.renderer.removeChild(this.resultElement.nativeElement, node);  
@@ -139,8 +157,9 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
       this.renderer.listen(button2, 'click', () => this.cancel());
       this.renderer.listen(button1, 'click', () => this.nextStep());        
     }else{
-      let element: Element = this.renderer.createElement('h1');  
+      let element: Element = this.renderer.createElement('h5');  
       element.innerHTML = "El código QR no es válido.";
+      element.className = "invalid-feedback text-center";
       this.renderElement(element);
     }
 
@@ -163,10 +182,12 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
   }
 
   cancel(){
+    this.callReaderQR = false;
     window.location.reload();
   }
 
   nextStep(){
+    this.callReaderQR = false;
     let firstDiv:HTMLElement = this.step1.nativeElement;
     firstDiv.style.removeProperty("visibility");
     firstDiv.style.setProperty('display','none');

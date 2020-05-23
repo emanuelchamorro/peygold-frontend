@@ -75,7 +75,6 @@ export class ScPeyReportRetentionsComponent extends BaseComponent implements OnI
         this.setError("Ha ocurrido un error. No es posible cargar las retenciones.");
       }
     );
-
   }
 
   /**

@@ -3,6 +3,9 @@ import { BaseComponent } from '../base.component';
 import { PaginationResponse } from '../../../../modules/commons-peygold/entities/pagination-response';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
+import { Retention } from '../../../../models/retention';
+import { ReportsService } from '../../services/reports.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sc-pey-report-retention-detail',
@@ -11,79 +14,46 @@ import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 })
 export class ScPeyReportRetentionDetailComponent extends BaseComponent implements OnInit {
 
-  private details: PaginationResponse;
+  private retentions: Array<Retention>;
   public totalItems: number;
   public page: number;
   public previousPage: number;
   public showPagination: boolean;
   private exportAsConfig: ExportAsConfig;
+  public monthArray = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+  public year:number;
+  public monthNumber:number;
 
 
   constructor(private spinnerService: NgxSpinnerService,
-              private exportAsService: ExportAsService) {
+              private exportAsService: ExportAsService,
+              private reportsService:ReportsService,
+              private route: ActivatedRoute) {
     super();
+    this.monthNumber = Number(this.route.snapshot.paramMap.get('month'))
+    this.year =  Number(this.route.snapshot.paramMap.get('year'));
   }
 
   ngOnInit() {
-  /*  this.spinnerService.show();
-    this.insuranceCarrierService.search(1, environment.paginator.per_page, undefined).then((response: PaginationResponse) => {
-      this.insurancecarriers = response;
-      if (this.insurancecarriers.data.length > 0) {
-        this.page = response.page;
-        this.previousPage = 1;
-        this.totalItems = response.count;
-        this.showPagination = true;
-      } else {
-        this.page = 1;
-        this.previousPage = 1;
-        this.totalItems = 0;
-        this.showPagination = false;
-      }
+    this.spinnerService.show();
 
-      this.spinnerService.hide();
-    }).catch(
-      (erro) => {
-        this.page = 1;
-        this.previousPage = 1;
-        this.totalItems = 0;
-        this.showPagination = false;
-        this.spinnerService.hide();
-        this.setError("Ha ocurrido un error. No es posible cargar las aseguradoras.");
-      }
-    );*/
-  }
+     this.reportsService.loadDetail(this.monthNumber, this.year).then((response: Array<Retention>) => {
+       this.retentions = response;
+       if (this.retentions && this.retentions.length > 0) {
+         this.showPagination = true;
 
-  loadPage(page: number) {
-  //  let word = (this.filter && this.filter != '') ? this.filter : undefined;
-    this.previousPage = page - 1;
-   /* this.spinnerService.show();
-    this.insuranceCarrierService.search(page, environment.paginator.per_page, word).then((response: PaginationResponse) => {
-      console.log('creditos', response)
-      this.insurancecarriers = response;
-
-      if (this.insurancecarriers.data.length > 0) {
-        this.page = response.page;
-        this.previousPage = 1;
-        this.totalItems = response.count;
-        this.showPagination = true;
-      } else {
-        this.page = 1;
-        this.previousPage = 1;
-        this.totalItems = 0;
-        this.showPagination = false;
-      }
-      this.spinnerService.hide();
-    }).catch(
-      (erro) => {
-        this.page = 1;
-        this.previousPage = 1;
-        this.totalItems = 0;
-        this.showPagination = false;
-        this.spinnerService.hide();
-        this.setError("Ha ocurrido un error. No es posible cargar las aseguradoras.");
-      }
-    );*/
-
+       }else{
+         this.showPagination = false;
+       }   
+       this.spinnerService.hide();
+     }).catch(
+       (erro) => {
+         this.showPagination = false;
+         this.spinnerService.hide();
+         this.setError("Ha ocurrido un error. No es posible cargar el detalle de retenciones.");
+       }
+     );
   }
 
     /**
@@ -103,6 +73,10 @@ export class ScPeyReportRetentionDetailComponent extends BaseComponent implement
         this.setError("Ha ocurrido un error. No es posible exportar el reporte en el formato seleccionado.");
       }
     );
+  }
+
+  public get month():string {
+    return this.monthArray[this.monthNumber -1];
   }
 
 }

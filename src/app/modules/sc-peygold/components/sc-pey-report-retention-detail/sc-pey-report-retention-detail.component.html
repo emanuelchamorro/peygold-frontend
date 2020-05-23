@@ -6,7 +6,7 @@
     <div class="row ">
         <div class="col">
             <h2 ><span class="icon-reportes"></span> Reportes: Detalles de retencion</h2>
-            <p>Período Diciembre 2019, Provincia de Buenos Aires</p>
+            <p>Período {{month}} {{year}}</p>
         </div>
     </div>
     <div class="row">
@@ -33,39 +33,37 @@
 </div>
 <div class="mb-2">
     <div class="tablaDatos tablaReportes">
-        <table id="tableDetails" class="table responsive" *ngIf="details && details.data">
+        <table id="tableDetails" class="table responsive" *ngIf="retentions">
             <thead>
                 <tr>
                     <th scope="col" class="text-center">Fecha</th>
                     <th scope="col" class="text-center">Nº de operación</th>
-                    <th scope="col" class="text-center">Operación relacionada</th>
-                    <th scope="col" class="text-center">Importe cobrado</th>
                     <th scope="col" class="text-center">Comisión</th>
                     <th scope="col" class="text-center">IVA 5%</th>
                     <th scope="col" class="text-center">Retención del IVA</th>
+                    <th scope="col" class="text-center">IIBB</th>
                     <th scope="col" class="text-center">Retención de IIBB</th>
                     <th scope="col" class="text-center">Total Recibido</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let detail of details.data;">
-                    <td class="text-center">10/06/2018</td>
-                    <td class="text-center">123456789</td>
-                    <td class="text-center">2156487231</td>
-                    <td class="text-center">300</td>
-                    <td class="text-center">300</td>
-                    <td class="text-center">00</td>
-                    <td class="text-center">00</td>
-                    <td class="text-center">00</td>
-                    <td class="text-center">300</td>
+                <tr *ngFor="let retention of retentions;">
+                    <td class="text-center">No lo provee el servicio</td>
+                    <td class="text-center" [innerHtml]="retention.idTransactionHistory"></td>
+                    <td class="text-center" [innerHtml]="retention.comision "></td>
+                    <td class="text-center" [innerHtml]="retention.iva "></td>
+                    <td class="text-center" [innerHtml]="retention.retencionIVA "></td>
+                    <td class="text-center" [innerHtml]="retention.iibb"></td>
+                    <td class="text-center" [innerHtml]="retention.retencionIIBB"></td>
+                    <td class="text-center" [innerHtml]="retention.amount"></td>
                 </tr>
             </tbody>
         </table>
         <p *ngIf="!showPagination" class="text-center p-end">
-            No hay aseguradoras para mostrar.
+            No hay detalles de retenciones para mostrar.
         </p>
     </div>
-    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+ <!--  <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
         (pageChange)="loadPage($event)">
-    </ngb-pagination>
+    </ngb-pagination> --> 
 </div>

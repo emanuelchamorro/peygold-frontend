@@ -69,7 +69,7 @@ export const routes = {
     index: {route: 'reportretentions', href: homeRoute + '/reportretentions'},
   },
   reportretentionsdetails : {
-    index: {route: 'reportretentionsdetails', href: homeRoute + '/reportretentionsdetails'},
+    index: {route: 'reportretentionsdetails/:month/:year', href: homeRoute + '/reportretentionsdetails'},
   },
   
 };

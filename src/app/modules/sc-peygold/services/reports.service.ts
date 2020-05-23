@@ -119,8 +119,7 @@ export class ReportsService extends HttpService {
         retentions = resp.map((item:any)=>{
           let retention = new Retention();
           retention.monthNumber = item.mes;
-          retention.tax = new GeneralChargeCredit(item.tipoImpuesto, item.tipoMovimiento);
-          retention.amount = item.totalMes;
+          retention.amount = Intl.NumberFormat("es-AR").format(item.totalMes.replace(',','')) ;
           return retention;
 
         });
@@ -132,6 +131,35 @@ export class ReportsService extends HttpService {
         return null;
       }
     )
+  }
+
+  loadDetail(month:number,year:number):Promise<Array<Retention>>{
+    let retentions:Array<Retention>;
+    return this.get(`/peygoldbalances/reporteretencionesdetails/${month}/${year}`).toPromise().then(
+
+      (resp)=>{
+        retentions = resp.map((item:any)=>{
+          let retention = new Retention();
+          retention.idPeyGoldBalance = item.idPeyGoldBalance;
+          retention.idTransactionHistory = item.idTransactionHistory;
+          retention.comision = Intl.NumberFormat("es-AR").format(item.comision) ;
+          retention.iva = Intl.NumberFormat("es-AR").format(item.iva);
+          retention.retencionIVA = Intl.NumberFormat("es-AR").format(item.retencionIVA) ;
+          retention.iibb = Intl.NumberFormat("es-AR").format(item.iibb);
+          retention.retencionIIBB = Intl.NumberFormat("es-AR").format(item.retencionIIBB) ;
+          retention.amount = Intl.NumberFormat("es-AR").format(item.comision + item.iva + item.retencionIVA + item.iibb + item.retencionIIBB) ; 
+          return retention;
+
+        });
+        return retentions;
+      }
+
+    ).catch(
+      (error)=>{
+        return null;
+      }
+    ) 
+
   }
 
 }
