@@ -2,7 +2,7 @@
   <p style="font-size: 20px; color: white">Procesando...</p>
 </ngx-spinner>
 <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
-<div #step1  [ngStyle]="{'visibility': step==1 ? 'visible' : 'hidden'}">
+<div #step1  [ngStyle]="{'display': step==1 ? 'block' : 'none'}">
   <div class="heading d-flex align-items-center">
     <span class="icon-Iconos-06 fs-22"></span>
     <h2>QR: Pagar con QR</h2>
