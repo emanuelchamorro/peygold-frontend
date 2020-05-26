@@ -30,7 +30,7 @@
                 <tr>
                     <th scope="col" class="text-center">Mes</th>
                     <th scope="col" class="text-center">Monto total</th>
-                    <th scope="col" class="text-center"></th>
+                    <th scope="col" width="180" class="text-center"></th>
                 </tr>
             </thead>
             <tbody>
@@ -40,12 +40,12 @@
                     </td>
                     <td class="text-center" [innerHtml]="retention.amount"></td>
                     <td class="text-center">
-                        <div class="DropOptions toggleOptions ">
-                            <span class="options slide-toggle"></span>
-                            <div class="OptionsDrop text-left slide-toggle-content">
+                       
+                          
+                            <div class="text-right pr-4">
                                 <a [routerLink]="[routes.reportretentionsdetails.index.href, retention.monthNumber, year ]">Ver detalle</a>
                             </div>
-                        </div>
+                        
                     </td>
                 </tr>
             </tbody>
