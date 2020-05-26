@@ -17,9 +17,12 @@
   .top {
     .btn-blue-border {
       width: 136px;
-      height: 26px;
-      margin-right: 10px;
-      line-height: 20px;
+      height: 27px;
+      line-height: 0!important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
     }
     .FiltrarOrdenar {
       margin-right: 10px;
@@ -169,7 +172,7 @@ h2 {
   }
  }   
 .btn-blue-border {
-  border: 2px solid $p-blue;
+  border: 1px solid $p-blue;
   background: transparent;
   width: 178px;
   height: 41px;
@@ -179,7 +182,8 @@ h2 {
   line-height: 35px;
   font-size: 13px;
   &:hover {
-    color: $p-blue;
+    background-color: $p-blue;
+    color: white!important;
   }
 }
 .icon-reportes {

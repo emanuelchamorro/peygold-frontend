@@ -350,14 +350,16 @@
   vertical-align: top;
   margin-right: 0px;
 }
+
 .white-container-wrapper h2{
-  margin:0px;
+  margin:0px 0px 10px 0px;
   span{
     color:$p-blue;
     font-size:20px;
     font-weight:400;
   }
 }
+.heading > h2 {margin-bottom: 0!important;}
 /*estado*/
 .tablaDatos{
   display: block;

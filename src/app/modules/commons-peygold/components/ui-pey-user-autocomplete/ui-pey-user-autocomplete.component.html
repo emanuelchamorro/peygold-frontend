@@ -14,8 +14,8 @@
   </ng-autocomplete>
   <ng-template #itemTemplateStatic let-item>
     <div class="item d-flex p-2">
-      <img [src]="item.avatarURL" (error)="this.src = 'assets/images/Isologotipo.svg'">
-      <div class="d-flex flex-column w-100">
+      <img [src]="item.avatarURL" height="40" width="40" (error)="this.src = 'assets/images/Isologotipo.svg'">
+      <div class="d-flex flex-column pl-2 w-100">
        <span [innerHTML]="item.fullName"></span>
        <small>{{item.email}}</small>
       </div>

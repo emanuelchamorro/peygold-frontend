@@ -267,7 +267,7 @@ align-items: center;
   margin-left: 5px;
  
 }
-.faq-container a:hover span {
+.help-item.active > a > span:first-of-type {
   color:  #3575BA!important;
  
 }
@@ -275,7 +275,10 @@ align-items: center;
 .faq-container a > i:before {
   color: #333333!important;
 }
+.faq-container > a:hover > span {
 
+  color:  #3575BA!important;
+}
 .faq-container a:hover > i:before {
   color:  #3575BA!important;
 }
@@ -291,8 +294,9 @@ align-items: center;
   color: #3575BA;
 }
 
-.help-item.active span {
-  color: #3575BA!important; 
+.help-item-content ul {
+  padding-inline-start: 20px;
+  margin-top: 10px;
 }
 
 .help-item-content > p,
@@ -303,7 +307,11 @@ align-items: center;
   margin-left: 25px;
 }
 
+.help-item-content > div > span {
+  color: #4F4F4F;
+  margin-bottom: 10px;
 
+}
 .footer-help {
   box-shadow: 0 0px 3px 0 rgba(32,33,36,.38);
   font-size: 12px;

@@ -7,12 +7,14 @@ import { BaseComponent } from '../base.component';
   styleUrls: ['./frequent-questions.component.scss']
 })
 export class FrequentQuestionsComponent extends BaseComponent implements OnInit {
-
+ 
+  
+ 
   constructor() {
     super();
    }
 
   ngOnInit() {
   }
-
+ 
 }
