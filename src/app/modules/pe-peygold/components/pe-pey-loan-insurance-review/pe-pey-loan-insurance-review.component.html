@@ -109,12 +109,15 @@
 
 
                                 </div>
-                                <div class="upload-file">
-                                    <div class="adjuntar-poliza" (click)="file1.click()">
+                                <div class="upload-file ">
+                                    <div class="adjuntar-poliza flex-column align-items-start" (click)="file1.click()">
+                                       <div class="d-flex align-items-center">
                                         <img src="/assets/images/adjuntar.svg"> <span>Póliza</span>
+                                       </div> 
+                                       <span
+                                       class="file-label">{{loanDetail.policyFile.name  ? loanDetail.policyFile.name:'Subir póliza'}}</span>
                                     </div>
-                                    <span
-                                        class="file-label">{{loanDetail.policyFile.name  ? loanDetail.policyFile.name:'Subir póliza'}}</span>
+                                   
                                     <input name="policyFile" [(ngModel)]="pFile" #policyFile="ngModel"
                                         style="visibility: hidden; width: 0px; height:0px;" #file1 type="file"
                                         accept="*/*" (change)="uploadImage($event)" required>
