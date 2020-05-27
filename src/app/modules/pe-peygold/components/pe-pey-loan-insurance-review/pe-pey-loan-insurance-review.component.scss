@@ -114,16 +114,21 @@ ul.pay-info li span:first-of-type {
     margin-bottom: 10px;
  }
 
- .adjuntar-poliza > img {
+ .adjuntar-poliza img {
 
     height: 35px;
-    margin-right: 12px;
+    margin-right: 9px;
  }
- .adjuntar-poliza >span {
+ .adjuntar-poliza span:first-of-type {
 
     font-weight: 600;
  }
+ 
+ .adjuntar-poliza span:nth-of-type(2) {
 
+   font-weight: 400;
+   font-style: italic;
+}
  .solicitud-null span {
 
    font-size: 22px;
