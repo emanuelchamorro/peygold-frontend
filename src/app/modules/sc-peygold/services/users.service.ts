@@ -74,6 +74,7 @@ export class UsersService extends UserService {
           nUser.cuit = item.cuit;
           nUser.documentNumber = item.dni;
           nUser.systemUserTypeId = item.systemUserTypeId;
+          console.log('tipo de usuario', nUser.idUserType)
           return nUser;
         });
 

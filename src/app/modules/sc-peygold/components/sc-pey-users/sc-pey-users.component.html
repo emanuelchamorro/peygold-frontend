@@ -71,7 +71,7 @@
             <p class="text-center" [innerHtml]="user.completeName"></p>
           </td>
           <td>
-            <p class="text-center" [innerHtml]="user.cuit ? user.cuit : user.documentNumber"></p>
+            <p class="text-center" [innerHtml]="user.isPerson ? user.documentNumber : user.cuit "></p>
           </td>
           <td>
             <p class="text-center" [innerHtml]="user.email"></p>

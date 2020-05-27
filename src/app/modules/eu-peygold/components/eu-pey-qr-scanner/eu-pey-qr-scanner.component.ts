@@ -79,6 +79,7 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
       this.deactivateCamera();
       if (this._isValidQR(JSON.parse(result))) {
         this.decode = JSON.parse(result);
+        this.decode.fullName = atob(this.decode.fullName);
         this.step++;
       }else{
         this.setError("El código QR no es válido.");
@@ -139,7 +140,7 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
     this.callReaderQR = true;
     if (this._isValidQR(JSON.parse(e.result))) { 
       this.decode = JSON.parse(e.result);
-
+      this.decode.fullName = atob(this.decode.fullName);
       const button1 = this.renderer.createElement('button');
       button1.className = "solid-blue-button";
       const buttonText1 = this.renderer.createText('Continuar');

@@ -30,7 +30,7 @@
 
     <ul>
       <li><span class="fw-700">Estado de crédito</span>
-        <span [innerHtml]="loan.insuranceStatus.label"></span>
+        <span [innerHtml]="loan.status.label"></span>
       </li>
       <div class="d-flex justify-content-center">
         <input readonly placeholder="Agregar una nota" [(ngModel)]="loanDetail.comments" type="text" class="d-flex w-75 mt-5 mb-3" id="input-line"/>

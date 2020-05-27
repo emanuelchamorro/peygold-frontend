@@ -15,7 +15,9 @@ export class User extends Model {
   static TYPE_COMPANY     = 'company';
   static TYPE_INSTITUTION = 'institution';
   static ADMIN_IDENTIFIER = 2;
+  static PERSON = 1;
   static COMPANY = 2;
+  static INSTITUTION = 3;
 
   public id: number;
   public avatarURL: string;
@@ -70,7 +72,19 @@ export class User extends Model {
    * @return string the complete name
    */
   get completeName(): string {
-    return this.fullName || this.name + ' ' + this.lastName;
+    if (this.systemUserTypeId == 1) {
+      if (this.cuit) {
+        return this.fullName || this.bussinessName;
+      }else{
+        return this.fullName || this.name + ' ' + this.lastName;
+      }
+
+    }else{
+      return this.fullName || this.name + ' ' + this.lastName;
+    }
+
+
+    
   }
 
   /**
@@ -169,6 +183,16 @@ export class User extends Model {
     return data;
   }
 
+      /**
+   * Get
+   */
+  get isPerson(): boolean {
+    if (! this.idUserType) {
+      return false;
+    }
+
+    return this.idUserType != User.COMPANY && this.idUserType != User.INSTITUTION;
+  }
 
     /**
    * Get
@@ -179,6 +203,18 @@ export class User extends Model {
     }
 
     return this.idUserType === User.COMPANY;
+  }
+
+
+      /**
+   * Get
+   */
+  get isInstitution(): boolean {
+    if (! this.idUserType) {
+      return false;
+    }
+
+    return this.idUserType === User.INSTITUTION;
   }
 }
 

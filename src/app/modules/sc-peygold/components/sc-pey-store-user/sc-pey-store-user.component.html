@@ -4,7 +4,7 @@
 <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
 <ngb-alert type="success" *ngIf="success" [innerHtml]="success"></ngb-alert>
 <div class="top NewUser" *ngIf="user">
-  <form name="form" (ngSubmit)="submited=true; storeUser.form.valid && onSubmit(user)" #storeUser="ngForm" novalidate>
+  <form name="form" (ngSubmit)="storeUser.form.valid && onSubmit(user)" #storeUser="ngForm" novalidate>
     <div class="row ">
       <div class="col">
         <h2 *ngIf="user.id" ><span class="icon-Security"></span> Seguridad: <span>Editar
@@ -20,7 +20,7 @@
       <div class="row d-flex w-100">
         <div class="col-xs-12 col-sm-6">
           <h4>Datos personales</h4>
-          <div *ngIf="user.cuit" class="row">
+          <div *ngIf="!user.isPerson" class="row">
             <div class="col mb-2">
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="Razón social" class="form-control w-100"
@@ -34,7 +34,7 @@
               </label>
             </div>
           </div>
-          <div *ngIf="!user.cuit" class="row">
+          <div *ngIf="user.isPerson" class="row">
             <div class="col mb-2">
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="Nombres" class="form-control w-100"
@@ -47,7 +47,7 @@
               </label>
             </div>
           </div>
-          <div *ngIf="!user.cuit" class="row">
+          <div *ngIf="user.isPerson" class="row">
             <div class="col mb-2">
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="Apellido" class="form-control w-100"
@@ -61,7 +61,7 @@
               </label>
             </div>
           </div>
-          <div *ngIf="!user.cuit" class="row">
+          <div *ngIf="user.isPerson" class="row">
             <div class="col mb-2">
               <label class="has-float-label mb-0">
                 <ng-select placeholder="Tipo de documento" class="custom-select  mb-0 w-100" bindLabel="label"
@@ -88,15 +88,16 @@
               </label>
             </div>
           </div>
-          <div *ngIf="user.cuit" class="row">
+          <div *ngIf="!user.isPerson" class="row">
             <div class="col mb-2">
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="CUIT" class="form-control w-100"
                   [ngClass]="{'ng-dirty ng-invalid' : submited && cuit.errors}" name="cuit" [(ngModel)]="user.cuit"
-                  #cuit="ngModel" required />
+                  #cuit="ngModel" pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" required />
                 <span>CUIT</span>
                 <div *ngIf="!cuit.pristine && cuit.invalid || submited && cuit.errors" class="invalid-feedback">
                   <div *ngIf="cuit.errors.required">Campo es requerido</div>
+                  <div *ngIf="cuit.errors.pattern">CUIT inválido</div>
                 </div>
               </label>
             </div>
@@ -106,11 +107,12 @@
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="Teléfono" class="form-control w-100"
                   [ngClass]="{'ng-dirty ng-invalid' : submited && phone.errors}" name="phone" [(ngModel)]="user.phone"
-                  #phone="ngModel" required />
+                  #phone="ngModel" pattern="^[0-9]*$" required />
                 <span>Teléfono</span>
 
                 <div *ngIf="!phone.pristine && phone.invalid || submited && phone.errors" class="invalid-feedback">
                   <div *ngIf="phone.errors.required">Campo es requerido</div>
+                  <div *ngIf="phone.errors.pattern">Campo es numérico</div>
                 </div>
               </label>
             </div>
@@ -219,10 +221,10 @@
           <div class="row">
             <div class="col mb-2">
               <label class="has-float-label mb-0">
-                <input type="text" placeholder="Piso/Depto" class="form-control w-100"
+                <input type="text" placeholder="Piso/Depto/Casa" class="form-control w-100"
                   [ngClass]="{'ng-dirty ng-invalid' : submited && buildingFloor.errors}" name="buildingFloor"
                   [(ngModel)]="user.address.buildingFloor" #buildingFloor="ngModel" required />
-                <span>Piso/Depto</span>
+                <span>Piso/Depto/Casa</span>
 
                 <div *ngIf="!buildingFloor.pristine && buildingFloor.invalid || submited && buildingFloor.errors"
                   class="invalid-feedback">

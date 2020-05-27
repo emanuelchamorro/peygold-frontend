@@ -44,7 +44,7 @@ export class ScPeyUsersComponent extends BaseComponent implements OnInit {
     this.spinnerService.show();
     this.usersService.searchAll('@', 1, environment.paginator.per_page).then((response: PaginationResponse) => {
       this.users = response;
-
+      console.log('users',this.users.data )
       if (this.users.data.length > 0) {
         this.page = response.page;
         this.previousPage = 1;

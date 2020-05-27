@@ -188,7 +188,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
    * @return boolean
    */
   private validatePersonalData(user: User): boolean {
-    if(user.idUserType == 1){
+    if(user.isPerson){
       return !user.name
       || !user.lastName
       || !user.documentType

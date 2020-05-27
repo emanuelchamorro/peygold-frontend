@@ -94,12 +94,12 @@
     <div class="row">
       <div class="col-6 input-field">
         <label class="has-float-label mb-0">
-          <input type="text" placeholder="Piso/Depto" class="form-control w-100"
+          <input type="text" placeholder="Piso/Depto/Casa" class="form-control w-100"
                  (change)="emitAddress($event)"
                  [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && buildingFloor.errors}"
                  name="buildingFloor" [(ngModel)]="editAddress.buildingFloor" #buildingFloor="ngModel"
                  required/>
-          <span>Piso/Depto</span>
+          <span>Piso/Depto/Casa</span>
 
           <div *ngIf="!buildingFloor.pristine && buildingFloor.invalid || addressForm.submitted && buildingFloor.errors" class="invalid-feedback">
             <div *ngIf="buildingFloor.errors.required">Campo es requerido</div>

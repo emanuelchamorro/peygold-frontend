@@ -86,8 +86,8 @@ export class Transaction extends Model {
     return '{' +
       '"payments": ' + this.paymentsToQR +
       ',' +
-      `"fullName": "${this.receiver.completeName}",` +
-      `"email": "${this.receiver.email}",` +
+      `"fullName": "${btoa(this.receiver.completeName.trim())}",` +
+      `"email": "${this.receiver.email.replace(/ /g, "")}",` +
       `"avatarURL": "${this.receiver.avatarURL}"` +
     '}';
   }

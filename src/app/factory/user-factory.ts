@@ -66,6 +66,7 @@ export class UserFactory {
                 return {
                     IdUser: user.id,
                     socialReason: user.bussinessName,
+                    FirstName: user.bussinessName,
                     Phone: user.phone,
                     Email: user.email,
                     cuit: user.cuit,

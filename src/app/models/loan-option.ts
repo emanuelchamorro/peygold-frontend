@@ -39,7 +39,7 @@ export class LoanOption extends Model {
         "day": dueDate.getDate(),
       };
 
-      check.bank = new Bank();
+      //check.bank = new Bank();
       check.address = new Address();
       check.onwer = new User();
       check.amount = duesAmount;

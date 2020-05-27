@@ -41,7 +41,7 @@
     <div class="flex-column w-100 align-items-center p-3"
       [ngClass]="{'d-flex':!activeView || activeView=='personalData', 'd-none': activeView && activeView !='personalData'}">
       <div class="usuario-form mt-4 mb-4">
-        <div class="input-field" [hidden]="editableUser.idUserType!=1">
+        <div class="input-field" [hidden]="!editableUser.isPerson">
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Nombres" class="form-control w-100"
               [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && name.errors}" name="name"
@@ -54,7 +54,7 @@
           </label>
         </div>
 
-        <div class="input-field" [hidden]="editableUser.idUserType!=1">
+        <div class="input-field" [hidden]="!editableUser.isPerson">
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Apellido" class="form-control w-100"
               [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && lastName.errors}" name="lastName"
@@ -66,7 +66,7 @@
             </div>
           </label>
         </div> 
-        <div class="input-field" [hidden]="editableUser.idUserType==1">
+        <div class="input-field" [hidden]="editableUser.isPerson">
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Razón social" class="form-control w-100"
               [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && bussinessName.errors}" name="bussinessName"
@@ -79,7 +79,7 @@
           </label>
         </div>
 
-        <div class="row" [hidden]="editableUser.idUserType!=1">
+        <div class="row" [hidden]="!editableUser.isPerson">
           <div class="col-6 input-field">
             <label class="has-float-label mb-0">
               <ng-select placeholder="Tipo de documento" class="custom-select mb-0 w-100" bindLabel="label"
@@ -109,7 +109,7 @@
           </div>
         </div>
 
-        <div class="mb-4" [hidden]="editableUser.idUserType==1">
+        <div class="mb-4" [hidden]="editableUser.isPerson">
           <label class="has-float-label mb-4 w-100">
             <input type="text" placeholder="CUIT" class="form-control w-100"
                    [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && cuit.errors}"
@@ -127,17 +127,18 @@
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Teléfono" class="form-control w-100"
               [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && phone.errors}" name="phone"
-              [(ngModel)]="editableUser.phone" #phone="ngModel" required />
+              [(ngModel)]="editableUser.phone" #phone="ngModel" pattern="^[0-9]*$" required />
             <span>Teléfono</span>
 
             <div *ngIf="!phone.pristine && phone.invalid || storeUser.submitted && phone.errors"
               class="invalid-feedback">
               <div *ngIf="phone.errors.required">Campo es requerido</div>
+              <div *ngIf="phone.errors.pattern">Campo es numerico</div>
             </div>
           </label>
         </div>
 
-        <div class="input-field" [hidden]="editableUser.idUserType==3">
+        <div class="input-field" [hidden]="editableUser.isInstitution">
           <label class="has-float-label mb-4 w-100">
             <ng-select placeholder="Institución a beneficiar" class="custom-select  mb-0 w-100" bindLabel="label"
               [searchable]="false" [items]="institutions" [addTag]="false" name="profitInstitution"
@@ -153,7 +154,7 @@
           </label>
         </div>
 
-        <div class="input-field" [hidden]="editableUser.idUserType!=3">
+        <div class="input-field" [hidden]="!editableUser.isInstitution">
             <label class="has-float-label mb-0 w-100">
               <input type="text" placeholder="Página Web" class="form-control w-100"
                 [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && website.errors}" name="website"
