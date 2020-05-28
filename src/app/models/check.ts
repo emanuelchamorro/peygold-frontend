@@ -64,6 +64,14 @@ export class Check extends Model {
 
   }
 
+  get isValidCheck(): boolean{
+    let regexpNumber = new RegExp('^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$');
+    this.isValid = regexpNumber.test(this.onwer.cuit);
+    return regexpNumber.test(this.onwer.cuit)
+
+
+  }
+
   checkCopy(check:Check):void{
     this.accountNumber = check.accountNumber;
     this.number = check.number;

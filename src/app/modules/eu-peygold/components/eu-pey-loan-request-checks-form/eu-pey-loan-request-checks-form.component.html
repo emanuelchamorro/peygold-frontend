@@ -60,26 +60,24 @@
           <div class="col text-left">
             <span class="fs-14 fw-700 ">Datos del cheque</span>
             <div class="input-field mt-2">
-              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta" pattern="^[0-9]*$"
+              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta" mask="0*"
                 name="accountNumber-{{y}}" [(ngModel)]="currentCheck.accountNumber" #accountNumber="ngModel"
                 maxlength="8" minlength="8">
               <div
                 *ngIf="!accountNumber.pristine && accountNumber.invalid || checksForm.submitted && accountNumber.errors"
                 class="invalid-feedback">
                 <div *ngIf="accountNumber.errors.required">Campo es requerido</div>
-                <div *ngIf="accountNumber.errors.pattern">Campo es numerico</div>
                 <div *ngIf="accountNumber.errors.minlength || accountNumber.errors.maxlength">Campo debe tener 8 dígitos</div>
               </div>
 
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="N° de cheque" pattern="^[0-9]*$" name="number-{{y}}"
+              <input type="text" class="d-block w-100" placeholder="N° de cheque" mask="0*" name="number-{{y}}"
                 [(ngModel)]="currentCheck.number" #number="ngModel"
                 maxlength="8" minlength="8">
               <div *ngIf="!number.pristine && number.invalid || checksForm.submitted && number.errors"
                 class="invalid-feedback">
                 <div *ngIf="number.errors.required">Campo es requerido</div>
-                <div *ngIf="number.errors.pattern">Campo es numerico</div>
                 <div *ngIf="number.errors.minlength || number.errors.maxlength">Campo debe tener 8 dígitos</div>
               </div>
             </div>
@@ -150,12 +148,11 @@
               </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Teléfono" name="checkPhone-{{y}}" pattern="^[0-9]*$"
+              <input type="text" class="d-block w-100" placeholder="Teléfono" name="checkPhone-{{y}}" mask="0*"
                 [(ngModel)]="currentCheck.address.phone" #checkPhone="ngModel">
               <div *ngIf="!checkPhone.pristine && checkPhone.invalid || checksForm.submitted && checkPhone.errors"
                 class="invalid-feedback">
                 <div *ngIf="checkPhone.errors.required">Campo es requerido</div>
-                <div *ngIf="checkPhone.errors.pattern">Campo es numerico</div>
               </div>
             </div>
           </div>
@@ -196,13 +193,12 @@
               </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="DNI" name="documentNumber-{{y}}" pattern="^[0-9]*$"
+              <input type="text" class="d-block w-100" placeholder="DNI" name="documentNumber-{{y}}" mask="0*"
                 [(ngModel)]="currentCheck.onwer.documentNumber" #documentNumber="ngModel">
               <div
                 *ngIf="!documentNumber.pristine && documentNumber.invalid || checksForm.submitted && documentNumber.errors"
                 class="invalid-feedback">
                 <div *ngIf="documentNumber.errors.required">Campo es requerido</div>
-                <div *ngIf="documentNumber.errors.pattern">Campo es numerico</div>
               </div>
             </div>
             <div *ngIf="currentCheck.gender==1" class="input-field">
@@ -224,7 +220,7 @@
                 </div>
             </div>
             <div class="input-field">
-              <input type="text" class="d-block w-100" placeholder="Teléfono" name="phone-{{y}}" pattern="^[0-9]*$"
+              <input type="text" class="d-block w-100" placeholder="Teléfono" name="phone-{{y}}" mask="0*"
                 [(ngModel)]="currentCheck.onwer.phone" #phone="ngModel">
               <div *ngIf="!phone.pristine && phone.invalid || checksForm.submitted && phone.errors"
                 class="invalid-feedback">

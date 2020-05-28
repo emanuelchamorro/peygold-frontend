@@ -18,6 +18,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   @ViewChild('savePersonalDataButton',  { static: false }) savePersonalDataButton: any;
   @ViewChild('saveAddressButton',  { static: false }) saveAddressButton: any;
   @ViewChild('saveBillingAddressButton',  { static: false }) saveBillingAddressButton: any;
+  
 
   @Input()
   protected user: User;

@@ -97,8 +97,7 @@
           <input type="text" placeholder="Piso/Depto/Casa" class="form-control w-100"
                  (change)="emitAddress($event)"
                  [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && buildingFloor.errors}"
-                 name="buildingFloor" [(ngModel)]="editAddress.buildingFloor" #buildingFloor="ngModel"
-                 required/>
+                 name="buildingFloor" [(ngModel)]="editAddress.buildingFloor" #buildingFloor="ngModel" mask="0*" required/>
           <span>Piso/Depto/Casa</span>
 
           <div *ngIf="!buildingFloor.pristine && buildingFloor.invalid || addressForm.submitted && buildingFloor.errors" class="invalid-feedback">
@@ -111,7 +110,7 @@
           <input type="text" placeholder="Código postal" class="form-control w-100"
                  (change)="emitAddress($event)"
                  [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && zipCode.errors}"
-                 name="zipCode" [(ngModel)]="editAddress.zipCode" #zipCode="ngModel" required/>
+                 name="zipCode" [(ngModel)]="editAddress.zipCode" mask="0*" #zipCode="ngModel" required/>
           <span>Código postal</span>
 
           <div *ngIf="!zipCode.pristine && zipCode.invalid || addressForm.submitted && zipCode.errors" class="invalid-feedback">

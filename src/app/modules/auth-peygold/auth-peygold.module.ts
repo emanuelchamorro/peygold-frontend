@@ -14,6 +14,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MustMatchDirective } from './directive/must-match.directive';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PeyVerifyEmailComponent } from './components/pey-verify-email/pey-verify-email.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgMaskConfig } from 'src/app/config';
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import { PeyVerifyEmailComponent } from './components/pey-verify-email/pey-verif
     NgSelectModule,
     NgbAlertModule,
     NgxSpinnerModule,
+    NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

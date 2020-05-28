@@ -62,7 +62,7 @@ export class AuthService extends HttpService {
    * Register a new person in the platform
    * @param person The new user
    */
-  signUpPerson(person: Person): Promise<boolean> {
+  signUpPerson(person: Person): Promise<any> {
     const userInfo = {
       ... this.buildPersonInfo(person),
       ... this.buildAddresses(person.address),
@@ -81,7 +81,7 @@ export class AuthService extends HttpService {
           resolve(true);
         },
         (error)=>{
-          reject(false);
+          reject(error);
         }
       )
     });
@@ -113,14 +113,13 @@ export class AuthService extends HttpService {
       )
     });
 
-    return this.post('/commerces', userInfo).toPromise();
   }
 
   /**
    * Register a new person in the platform
    * @param institution The new user
    */
-  signUpInstitution(institution: Institution): Promise<boolean> {
+  signUpInstitution(institution: Institution): Promise<any> {
     const userInfo = {
       ... this.buildInstitutionInfo(institution),
       ... this.buildAddresses(institution.address),
@@ -130,7 +129,18 @@ export class AuthService extends HttpService {
 
     console.log(userInfo);
 
-    return this.post('/institutions', userInfo).toPromise();
+    return new Promise((resolve, reject) => {
+
+      this.post('/institutions', userInfo).subscribe(
+        (resp)=>{
+          resolve(true);
+        },
+        (error)=>{
+          reject(error);
+        }
+      )
+    });
+
   }
 
   /**

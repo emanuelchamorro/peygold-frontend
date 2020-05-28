@@ -117,8 +117,12 @@ export class EuPeyLoanRequestChecksFormComponent extends BaseComponent implement
   saveContinue(check:Check,index:number):boolean{
     let isValid:boolean;
     if(check.isComplete){
+      if(check.isValidCheck){
         console.log('check',check);
         isValid = true;
+      }else{
+        isValid = false;
+      }
     }else{
         console.log('check','not');
         isValid = false;

@@ -45,21 +45,20 @@
                     <span class="fw-700 mb-3">Datos del cheque</span>
 
                     <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="w-100 mb-4" placeholder="N° de cuenta" pattern="^[0-9]*$"
+                        <input type="text" class="w-100 mb-4" placeholder="N° de cuenta" mask="0*"
                             name="accountNumber" [(ngModel)]="check.accountNumber" #accountNumber="ngModel"
                             maxlength="8" minlength="8" required>
                         <span>N° de cuenta</span>
                         <div *ngIf="!accountNumber.pristine && accountNumber.invalid || checksForm.submitted && accountNumber.errors"
                             class="invalid-feedback">
                             <div *ngIf="accountNumber.errors.required">Campo es requerido</div>
-                            <div *ngIf="accountNumber.errors.pattern">Campo es numerico</div>
                             <div *ngIf="accountNumber.errors.minlength || accountNumber.errors.maxlength">Campo debe
                                 tener 8 dígitos</div>
                         </div>
                     </div>
 
                     <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="w-100 mb-4" placeholder="N° de cheque" pattern="^[0-9]*$"
+                        <input type="text" class="w-100 mb-4" placeholder="N° de cheque" mask="0*"
                             name="number" [(ngModel)]="check.number" #number="ngModel" maxlength="8" minlength="8"
                             required>
                         <span>N° de cheque</span>
@@ -67,7 +66,6 @@
                         <div *ngIf="!number.pristine && number.invalid || checksForm.submitted && number.errors"
                             class="invalid-feedback">
                             <div *ngIf="number.errors.required">Campo es requerido</div>
-                            <div *ngIf="number.errors.pattern">Campo es numerico</div>
                             <div *ngIf="number.errors.minlength || number.errors.maxlength">Campo debe tener 8 dígitos
                             </div>
                         </div>
@@ -167,13 +165,12 @@
 
                     <div class="has-float-label mb-0 w-100">
                         <input type="text" class="d-block mb-4 w-100" placeholder="Teléfono" name="checkPhone"
-                            pattern="^[0-9]*$" [(ngModel)]="check.address.phone" #checkPhone="ngModel" required>
+                        mask="0*" [(ngModel)]="check.address.phone" #checkPhone="ngModel" required>
                         <span>Teléfono</span>
 
                         <div *ngIf="!checkPhone.pristine && checkPhone.invalid || checksForm.submitted && checkPhone.errors"
                             class="invalid-feedback">
                             <div *ngIf="checkPhone.errors.required">Campo es requerido</div>
-                            <div *ngIf="checkPhone.errors.pattern">Campo es numerico</div>
                         </div>
                     </div>
 
@@ -231,14 +228,13 @@
                     </div>
                     <div class="has-float-label mb-0 w-100">
                         <input type="text" class="d-block mb-4 w-100" placeholder="DNI" name="documentNumber"
-                            pattern="^[0-9]*$" [(ngModel)]="check.onwer.documentNumber" #documentNumber="ngModel"
+                          mask="0*" [(ngModel)]="check.onwer.documentNumber" #documentNumber="ngModel"
                             required>
                         <span>DNI</span>
 
                         <div *ngIf="!documentNumber.pristine && documentNumber.invalid || checksForm.submitted && documentNumber.errors"
                             class="invalid-feedback">
                             <div *ngIf="documentNumber.errors.required">Campo es requerido</div>
-                            <div *ngIf="documentNumber.errors.pattern">Campo es numerico</div>
                         </div>
                     </div>
 
@@ -268,13 +264,12 @@
                     </div>
                     <div class="has-float-label mb-0 w-100">
                         <input type="text" class="d-block mb-4 w-100" placeholder="Teléfono" name="phone"
-                            pattern="^[0-9]*$" [(ngModel)]="check.onwer.phone" #phone="ngModel"  required>
+                            mask="0*" [(ngModel)]="check.onwer.phone" #phone="ngModel"  required>
                         <span>Teléfono</span>
 
                         <div *ngIf="!phone.pristine && phone.invalid || checksForm.submitted && phone.errors"
                             class="invalid-feedback">
                             <div *ngIf="phone.errors.required">Campo es requerido</div>
-                            <div *ngIf="phone.errors.pattern">Campo es numérico</div>
                         </div>
                     </div>
 
