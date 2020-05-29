@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-peygold-questions',
@@ -8,8 +9,11 @@ import { BaseComponent } from '../base.component';
 })
 export class PeygoldQuestionsComponent extends BaseComponent implements OnInit {
 
-  constructor() { 
+  public contentId:number;
+
+  constructor(private route:ActivatedRoute) { 
     super();
+    this.contentId = Number(this.route.snapshot.paramMap.get('contentId'));
   }
 
   ngOnInit() {

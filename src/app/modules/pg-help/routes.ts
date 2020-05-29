@@ -4,5 +4,5 @@ export const routes = {
   index: {route: 'help', href: indexRoute},
   cantactus: {route: 'cantactus', href: indexRoute + '/cantactus'},
   frequentquestions: {route: 'frequentquestions', href: indexRoute + '/frequentquestions'},
-  peygoldquestions: {route: 'peygoldquestions', href: indexRoute + '/peygoldquestions'},
+  peygoldquestions: {route: 'peygoldquestions/:contentId', href: indexRoute + '/peygoldquestions'},
 };
