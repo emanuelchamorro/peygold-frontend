@@ -77,7 +77,7 @@
                                     <li *ngIf="loan.adminStatus.value=='2' && loan.insuranceStatus.value!='2'"><button
                                             type="button" class="ViewDetails" (click)="setLoan(loan)"> Ver
                                             detalle</button>
-                                    <li *ngIf="loan.adminStatus.value=='2' && (loan.insuranceStatus.value=='1' || loan.insuranceStatus.value=='3')"><button
+                                    <li *ngIf="loan.adminStatus.value=='2' && (loan.status.value=='1')"><button
                                             type="button" (click)="deleteLoan(loan)">Eliminar solicitud de
                                             Aseguradora</button></li>
                                     <li *ngIf="loan.adminStatus.value=='1' && loan.insuranceStatus.value=='1'"><a
