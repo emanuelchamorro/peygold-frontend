@@ -12,15 +12,15 @@
             </div>
 
 
-            <div class="w-100 d-flex justify-content-start">
-                <span class="p-3">Frente del cheque</span>
-            </div>
+           
             <div id="carouselCheque" class="carousel slide" data-ride="carousel" data-interval="false">
                 <div class="carousel-inner">
                     <div class="carousel-item text-center active">
+                        <p class="p-3 text-left">Frente del cheque</p>
                         <img [src]="check.frontImage" class="mw-100 h-auto" width="500" height="222">
                     </div>
                     <div class="carousel-item text-center">
+                        <p class="p-3 text-left">Dorso del cheque</p>
                         <img [src]="check.backImage" class="mw-100 h-auto" width="500" height="222">
                     </div>
                 </div>
@@ -44,8 +44,8 @@
                 <div class="col d-flex flex-column align-items-start">
                     <span class="fw-700 mb-3">Datos del cheque</span>
 
-                    <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="w-100 mb-4" placeholder="N° de cuenta" mask="0*"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="w-100 " placeholder="N° de cuenta" mask="0*"
                             name="accountNumber" [(ngModel)]="check.accountNumber" #accountNumber="ngModel"
                             maxlength="8" minlength="8" required>
                         <span>N° de cuenta</span>
@@ -57,8 +57,8 @@
                         </div>
                     </div>
 
-                    <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="w-100 mb-4" placeholder="N° de cheque" mask="0*"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="w-100" placeholder="N° de cheque" mask="0*"
                             name="number" [(ngModel)]="check.number" #number="ngModel" maxlength="8" minlength="8"
                             required>
                         <span>N° de cheque</span>
@@ -71,8 +71,8 @@
                         </div>
                     </div>
 
-                    <div class="has-float-label date-picker mb-0 w-100">
-                        <input class="form-control mb-4" readonly placeholder="Fecha de emisión" name="issuanceDate"
+                    <div class="has-float-label date-picker loan-check-field mb-4 w-100">
+                        <input class="form-control" readonly placeholder="Fecha de emisión" name="issuanceDate"
                             [(ngModel)]="check.issuanceDate" ngbDatepicker #issuanceDate="ngModel"
                             #issuanceDateD="ngbDatepicker" (click)="issuanceDateD.toggle()" required>
                         <span>Fecha de emisión</span>
@@ -83,8 +83,8 @@
                         </div>
                     </div>
 
-                    <div class="has-float-label date-picker mb-0 w-100">
-                        <input class="form-control mb-4" readonly placeholder="Fecha de vencimiento" name="expirationDate"
+                    <div class="has-float-label date-picker loan-check-field mb-4 w-100">
+                        <input class="form-control" readonly placeholder="Fecha de vencimiento" name="expirationDate"
                             [(ngModel)]="check.expirationDate" ngbDatepicker #expirationDate="ngModel"
                             #expirationDateD="ngbDatepicker" (click)="expirationDateD.toggle()">
                         <span>Fecha de vencimiento</span>
@@ -109,8 +109,8 @@
                     <!---Columna 2--->
                     <span class="fw-700 mb-3">Datos del banco</span>
 
-                    <div class="has-float-label mb-0 w-100">
-                        <ng-select placeholder="Banco" class="custom-select mb-4 w-100" bindLabel="label"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <ng-select placeholder="Banco" class="custom-select w-100" bindLabel="label"
                             [searchable]="false" [items]="banks" [addTag]="false" name="bank" [(ngModel)]="check.bank"
                             [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && bank.errors}" #bank="ngModel"
                             required>
@@ -122,8 +122,8 @@
                         </div>
                     </div>
 
-                    <div class="has-float-label mb-0 w-100">
-                        <ng-select placeholder="Provincia" (change)="getCities($event)" class="custom-select mb-4 w-100"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <ng-select placeholder="Provincia" (change)="getCities($event)" class="custom-select w-100"
                             bindLabel="label" [searchable]="false" [items]="states" [addTag]="false" name="state"
                             [(ngModel)]="check.address.state"
                             [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && state.errors}" #state="ngModel"
@@ -137,8 +137,8 @@
                         </div>
                     </div>
 
-                    <div class="has-float-label mb-0 w-100">
-                        <ng-select placeholder="Ciudad/Barrio" class="custom-select mb-4 w-100" bindLabel="label"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <ng-select placeholder="Ciudad/Barrio" class="custom-select w-100" bindLabel="label"
                             [searchable]="false" [items]="cities" [addTag]="false" name="city"
                             [(ngModel)]="check.address.city"
                             [ngClass]="{'ng-dirty ng-invalid' : checksForm.submitted && city.errors}" #city="ngModel"
@@ -152,8 +152,8 @@
                         </div>
                     </div>
 
-                    <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="Dirección" name="address"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block w-100" placeholder="Dirección" name="address"
                             [(ngModel)]="check.address.addressFull" #address="ngModel" required>
                         <span>Dirección</span>
 
@@ -163,8 +163,8 @@
                         </div>
                     </div>
 
-                    <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="Teléfono" name="checkPhone"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block w-100" placeholder="Teléfono" name="checkPhone"
                         mask="0*" [(ngModel)]="check.address.phone" #checkPhone="ngModel" required>
                         <span>Teléfono</span>
 
@@ -184,8 +184,8 @@
 
                     <span class="fw-700 mb-3">{{check.gender==1?'Datos del firmante':'Datos del endosante'}}</span>
 
-                    <div *ngIf="check.gender==2" class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block w-100 mb-4" placeholder="Razón Social" name="bussinessName"
+                    <div *ngIf="check.gender==2" class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block w-100 " placeholder="Razón Social" name="bussinessName"
                             [(ngModel)]="check.onwer.bussinessName" #bussinessName="ngModel" required>
                         <span>Razón Social</span>
                         <div *ngIf="!bussinessName.pristine && bussinessName.invalid || checksForm.submitted && bussinessName.errors"
@@ -193,8 +193,8 @@
                             <div *ngIf="bussinessName.errors.required">Campo es requerido</div>
                         </div>
                     </div>
-                    <div *ngIf="check.gender==2" class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="Cuit" name="cuit"
+                    <div *ngIf="check.gender==2" class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block  w-100" placeholder="Cuit" name="cuit"
                             [(ngModel)]="check.onwer.cuit" #cuit="ngModel"
                             pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" required>
                         <span>CUIT</span>
@@ -206,8 +206,8 @@
                         </div>
                     </div>
 
-                    <div *ngIf="check.gender==1" class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="Nombre y Apellido" name="fullName"
+                    <div *ngIf="check.gender==1" class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block w-100" placeholder="Nombre y Apellido" name="fullName"
                             [(ngModel)]="check.onwer.fullName" #fullName="ngModel" required>
                         <span>Nombre y apellido</span>
 
@@ -216,8 +216,8 @@
                             <div *ngIf="fullName.errors.required">Campo es requerido</div>
                         </div>
                     </div>
-                    <div *ngIf="check.gender==2" class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="Nombre y Apellido" name="fullName"
+                    <div *ngIf="check.gender==2" class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block  w-100" placeholder="Nombre y Apellido" name="fullName"
                             [(ngModel)]="check.onwer.fullName" #fullName="ngModel" required>
                         <span>Nombre y apellido</span>
 
@@ -226,8 +226,8 @@
                             <div *ngIf="fullName.errors.required">Campo es requerido</div>
                         </div>
                     </div>
-                    <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="DNI" name="documentNumber"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block  w-100" placeholder="DNI" name="documentNumber"
                           mask="0*" [(ngModel)]="check.onwer.documentNumber" #documentNumber="ngModel"
                             required>
                         <span>DNI</span>
@@ -239,8 +239,8 @@
                     </div>
 
 
-                    <div *ngIf="check.gender==1" class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="Cuit" name="cuit"
+                    <div *ngIf="check.gender==1" class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block w-100" placeholder="Cuit" name="cuit"
                             [(ngModel)]="check.onwer.cuit" #cuit="ngModel"
                             pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" required>
                         <span>CUIT</span>
@@ -252,9 +252,9 @@
                         </div>
                     </div>
 
-                    <div *ngIf="check.gender==1" class="has-float-label mb-0 w-100">
+                    <div *ngIf="check.gender==1" class="has-float-label loan-check-field mb-4 w-100">
                         <span>Correo electrónico</span>
-                        <input type="email" class="d-block mb-4 w-100" placeholder="Correo electrónico" name="email"
+                        <input type="email" class="d-block  w-100" placeholder="Correo electrónico" name="email"
                             [(ngModel)]="check.onwer.email" #email="ngModel" email="true" required>
                         <div *ngIf="!email.pristine && email.invalid || checksForm.submitted && email.errors"
                             class="invalid-feedback">
@@ -262,8 +262,8 @@
                             <div *ngIf="email.errors.email">correo inválido</div>
                         </div>
                     </div>
-                    <div class="has-float-label mb-0 w-100">
-                        <input type="text" class="d-block mb-4 w-100" placeholder="Teléfono" name="phone"
+                    <div class="has-float-label loan-check-field mb-4 w-100">
+                        <input type="text" class="d-block  w-100" placeholder="Teléfono" name="phone"
                             mask="0*" [(ngModel)]="check.onwer.phone" #phone="ngModel"  required>
                         <span>Teléfono</span>
 
