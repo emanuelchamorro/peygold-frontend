@@ -66,6 +66,7 @@ export class User extends Model {
   public canChargePeygold: boolean;
   public rememberMe: boolean;
   public active: boolean;
+  public deviceIsValid: boolean;
 
   /**
    * Get the user complete Name

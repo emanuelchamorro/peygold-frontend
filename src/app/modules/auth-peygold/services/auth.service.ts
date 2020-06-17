@@ -49,12 +49,20 @@ export class AuthService extends HttpService {
       rememberMe
     }).toPromise().then((response: ApiResponse) => {
       const value: any = response.value;
-      this.setToken(value.token);
-      console.log(response);
-      return this.userService.one(value.idUser).then((user: User) => {
-        this.setUser(user);
-        return user;
-      });
+      if(value.deviceIsValid){
+        this.setToken(value.token);
+        console.log(response);
+        return this.userService.one(value.idUser).then((user: User) => {
+          this.setUser(user);
+          return user;
+        });
+      }else{
+        //TODO:SAVE TEMP TOKEN AND USER
+        this.setTokenTemp(value.token);
+        this.setUserId(value.idUser);
+        return null;
+      }
+
     });
   }
 
@@ -319,6 +327,22 @@ export class AuthService extends HttpService {
    */
   private setToken(token: string) {
     localStorage.setItem(environment.localStorage.access_token_var_name, token);
+  }
+
+    /**
+   * Set the token value temp in the local storage
+   * @param token The token value
+   */
+  private setTokenTemp(token: string) {
+    localStorage.setItem(environment.localStorage.access_token_temp_var_name, token);
+  }
+
+      /**
+   * Set the token value temp in the local storage
+   * @param token The token value
+   */
+  private setUserId(id: string) {
+    localStorage.setItem(environment.localStorage.access_token_temp_var_name, id);
   }
 
   buildBankAccount(person: Person): any {

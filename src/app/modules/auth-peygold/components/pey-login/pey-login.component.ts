@@ -51,9 +51,13 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
     const userAccount = this._userAccountMapper(this.user);
     this.authService.login(this.user.email, this.user.password, this.user.rememberMe).then((user: User) => {
       this.spinnerService.hide();
-      localStorage.setItem("hsu",btoa(JSON.stringify(userAccount)));
-      this.unbusy();
-      this.goToDashboard(user);
+      if(user){
+        localStorage.setItem("hsu",btoa(JSON.stringify(userAccount)));
+        this.unbusy();
+        this.goToDashboard(user);
+      }else{
+        console.log('redirect')
+      }
     }).catch((e) => {
       this.spinnerService.hide();
       //const errorThrown = new Error(JSON.parse(e.message));
