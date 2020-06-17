@@ -275,3 +275,4 @@ $(document).on("click", function (event) {
   /* fin carousel cheques*/
 
 });
+
