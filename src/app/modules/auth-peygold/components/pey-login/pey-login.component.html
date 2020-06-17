@@ -59,13 +59,17 @@
                  <span class="">Correo eléctronico</span>
                 </label>
        
-     
-              <label class="has-float-label mb-4 w-100">
-                <input type="password" placeholder="Contraseña"required class="w-100"
+             
+              <label class="has-float-label mb-4 w-100" id="show_hide_password">
+                <input type="password" placeholder="Contraseña" required class="w-100"
                        [ngClass]="{'ng-dirty ng-invalid' : submited && password.errors}"
                        name="password" [(ngModel)]="user.password" #password="ngModel" required password
                         />
                 <span class="">Contraseña</span>
+                <div class="input-group-addon">
+                  <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                  <a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
+                </div>
                 <div *ngIf="error" class="invalid-feedback text-left">
                   <div [innerHtml]="error"></div>
                 </div>
