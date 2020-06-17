@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {User} from '../../../../models';
 import {BaseComponent} from '../../components/base.component';
 import {AuthService} from '../../services/auth.service';
@@ -15,6 +15,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./pey-login.component.scss']
 })
 export class PeyLoginComponent extends BaseComponent implements OnInit {
+
+  @ViewChild('inputPass',{static:false, read: ElementRef }) private inputPass: ElementRef;
   /**
    * PeyLoginComponent
    * @param authService Provider
@@ -27,13 +29,14 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
   ) {
     super();
   }
-
+  public visible:boolean;
   private user: User = new User();
 
   /**
    * On init implementation
    */
   ngOnInit() {
+    this.visible=true;
     const serializedUser = localStorage.getItem(environment.localStorage.user_var_name);
     if (serializedUser) {
       const user: User = new User().fromString(serializedUser);
@@ -92,5 +95,16 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
       rememberMe:user.rememberMe
     }
     return userAccount;
+  }
+
+  showPass(){
+    let inputPassElem:HTMLElement = this.inputPass.nativeElement;
+    if(inputPassElem.getAttribute('type')==='password'){
+      this.visible=false;
+      inputPassElem.setAttribute('type','text');
+    }else{
+      this.visible=true;
+      inputPassElem.setAttribute('type','password');
+    }
   }
 }
