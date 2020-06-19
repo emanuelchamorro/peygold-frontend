@@ -16,4 +16,8 @@ export const routes = {
     success: {route: 'reset-password/success', href: homeRoute +  'reset-password/success'},
   },
   verify_email : {route: 'verify-email', href: homeRoute + 'verify-email'},
+
+  verify_security_code : {
+    index: {route: 'verify-security-code', href: homeRoute + 'verify-security-code'}
+  },
 };

@@ -58,8 +58,8 @@ export class AuthService extends HttpService {
         });
       }else{
         //TODO:SAVE TEMP TOKEN AND USER
-        this.setTokenTemp(value.token);
-        this.setUserId(value.idUser);
+        this.setTokenTemp(JSON.stringify(value));
+
         return null;
       }
 
@@ -252,6 +252,15 @@ export class AuthService extends HttpService {
     return this.post('/users/SendTokenRecovery', {email}).toPromise();
   }
 
+    /**
+   * Send the token to start the password recovery.
+   * @param email The user email
+   * @param TipoEnvioToken The shipping type
+   */
+  sendToken(email: string,TipoEnvioToken:number): Promise<any> {
+    return this.post('/users/SecurityToken', {email,TipoEnvioToken}).toPromise();
+  }
+
   /**
    * Validate the token and user email match to able to change the password.
    * @param email The user email
@@ -334,15 +343,7 @@ export class AuthService extends HttpService {
    * @param token The token value
    */
   private setTokenTemp(token: string) {
-    localStorage.setItem(environment.localStorage.access_token_temp_var_name, token);
-  }
-
-      /**
-   * Set the token value temp in the local storage
-   * @param token The token value
-   */
-  private setUserId(id: string) {
-    localStorage.setItem(environment.localStorage.access_token_temp_var_name, id);
+    localStorage.setItem(environment.localStorage.access_token_temp_var_name, btoa(token) );
   }
 
   buildBankAccount(person: Person): any {
@@ -376,4 +377,22 @@ export class AuthService extends HttpService {
       }
     );
   }
+
+  getUserTemp():User{
+    let user = new User();
+    const value = JSON.parse(atob(localStorage.getItem(environment.localStorage.access_token_temp_var_name)));
+    user.id = value.idUser;
+    user.email = value.email;
+    user.accessToken = value.token;
+    return user;
+  }
+
+  addDevice(email:string, token:string): Promise<any>{
+    return this.post('/users/AddNewDevice',{email, token}).toPromise();
+  }
+
+  checkEmail(email:string): Promise<any>{
+    return this.get(`/users/CheckEmail/${email}`).toPromise();
+  }
+
 }

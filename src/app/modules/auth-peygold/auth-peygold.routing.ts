@@ -7,6 +7,7 @@ import {PeySuccessComponent} from './components/pey-success/pey-success.componen
 import {PeyResetPasswordComponent} from './components/pey-reset-password/pey-reset-password.component';
 import {LogoutService} from './services/logout.service';
 import { PeyVerifyEmailComponent } from './components/pey-verify-email/pey-verify-email.component';
+import { PeyVerifySecurityCodeComponent } from './components/pey-verify-security-code/pey-verify-security-code.component';
 
 export const config: Routes = [
   {
@@ -79,6 +80,10 @@ export const config: Routes = [
   {
     path: routes.verify_email.route,
     component: PeyVerifyEmailComponent,
+  },
+  {
+    path: routes.verify_security_code.index.route,
+    component: PeyVerifySecurityCodeComponent,
   },
   // { path: '**', component: P404Component }
 ];

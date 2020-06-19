@@ -1,0 +1,27 @@
+<ngb-alert type="danger" *ngIf="error" (close)="cleanErrors()" [innerHtml]="error"></ngb-alert>
+<nav class="navbar-gradient shadow ">
+    <!-- Barra de navegacion superior -->
+    <ul class="top-nav">
+        <li>
+            <a [routerLink]="routes.home.href">
+                <img src="assets/images/Isologotipo.svg" alt="" />
+            </a>
+        </li>
+        <div>
+            <li class="fs-12 ml-4">
+                <a [routerLink]="routes.login.href">¿Ya tienes una cuenta?</a>
+            </li>
+            <li class="fs-12 ml-4">
+                <a [routerLink]="routes.login.href" class="btn-white">Iniciar sesión</a>
+            </li>
+        </div>
+    </ul>
+</nav>
+<article *ngIf="step == 1" class="authentication-two-steps">
+    <app-ui-pey-verify-security-code [user]="user" [title]="title" [message]="message" [sendType]="sendType" (onContinue)="continue($event)">
+    </app-ui-pey-verify-security-code>
+</article>
+
+<article *ngIf="step == 2">
+    <app-ui-pey-message-success [title]="title" [message]="message" [routeTo]="routeTo" [buttonLabel]="buttonLabel"></app-ui-pey-message-success>
+</article>

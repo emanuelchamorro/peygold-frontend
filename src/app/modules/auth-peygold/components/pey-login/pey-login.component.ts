@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
 import {routes as scRoutes} from '../../../sc-peygold/routes';
 import {routes as euRoutes} from '../../../eu-peygold/routes';
+import {routes as authRoutes} from '../../routes';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -53,13 +54,21 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
     this.busy();
     const userAccount = this._userAccountMapper(this.user);
     this.authService.login(this.user.email, this.user.password, this.user.rememberMe).then((user: User) => {
-      this.spinnerService.hide();
+      
       if(user){
+        this.spinnerService.hide();
         localStorage.setItem("hsu",btoa(JSON.stringify(userAccount)));
         this.unbusy();
         this.goToDashboard(user);
       }else{
-        console.log('redirect')
+        this.spinnerService.hide();
+        this.authService.sendToken(this.user.email,0).then((resp)=>{
+          if(resp.success){
+            this.goTo(authRoutes.verify_security_code.index.route);
+          }else{
+            this.setError('Ha ocurrido un error enviando código de seguridad. No es posible completar la autenticación de 2 pasos.');
+          }
+        });
       }
     }).catch((e) => {
       this.spinnerService.hide();
@@ -106,5 +115,9 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
       this.visible=true;
       inputPassElem.setAttribute('type','password');
     }
+  }
+
+  goTo(route:string){
+    this.router.navigateByUrl(route);
   }
 }

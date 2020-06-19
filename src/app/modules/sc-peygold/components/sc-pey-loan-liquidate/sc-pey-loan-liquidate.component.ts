@@ -28,6 +28,7 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
   public title: string;
   public message: string;
   public routeTo: string;
+  public buttonLabel:string;
 
   constructor(private route: ActivatedRoute,
     private loansService: LoansService,
@@ -116,6 +117,7 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
             ' Ya no verás esta opción en la lista';
         }
         this.routeTo = this.routes.loansettlements.index.href;
+        this.buttonLabel = "Volver a inicio";
         this.step = 2;
       }
     ).catch(

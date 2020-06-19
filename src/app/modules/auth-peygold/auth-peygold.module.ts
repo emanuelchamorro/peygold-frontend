@@ -16,6 +16,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { PeyVerifyEmailComponent } from './components/pey-verify-email/pey-verify-email.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgMaskConfig } from 'src/app/config';
+import { PeyVerifySecurityCodeComponent } from './components/pey-verify-security-code/pey-verify-security-code.component';
+import { CommonsPeyGoldModule } from '../commons-peygold/commons-peygold.module';
+import { EmailMatchDirective } from './directive/email-match.directive';
 
 
 @NgModule({
@@ -25,9 +28,13 @@ import { NgMaskConfig } from 'src/app/config';
     PeySuccessComponent,
     PeyResetPasswordComponent,
     MustMatchDirective,
-    PeyVerifyEmailComponent],
-  imports: [
+    PeyVerifyEmailComponent,
+    PeyVerifySecurityCodeComponent,
+    EmailMatchDirective],
+
+    imports: [
     CommonModule,
+    CommonsPeyGoldModule,
     AuthPeyGoldRouting,
     FormsModule,
     ReactiveFormsModule,

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {User} from '../../../../models';
 import {environment} from '../../../../../environments/environment';
 import {BaseComponent} from '../../components/base.component';
@@ -14,10 +14,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
 
+
+   
   private user: User;
+  private title:string;
+  private message:string;
+  private sendType:number = 0;
   private step: number;
   private environment = environment;
   private tryNextStep = false;
+ 
 
   constructor(
     private authService: AuthService,
@@ -58,23 +64,58 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
     return valid;
   }
 
-  /**
-   * Retrieve the token for the user email.
-   */
-  retrieveEmailToken(validators: Array<NgModel>) {
-    const valid = this.validateModels(validators);
 
+
+    /**
+   * Check the email
+   */
+  checkEmail(validators: Array<NgModel>){
+    const valid = this.validateModels(validators);
     if (!valid) {
       return;
     }
     this.spinnerService.show();
-    this.authService.retrieveResetPasswordTokenByEmail(this.user.email).then((response) => {
+    this.authService.checkEmail(this.user.email).then((response) => {
       this.spinnerService.hide();
-      this.nextStep();
+      if(response.exists){
+        this.user.phone = "xxxxxxxxx"
+        this.nextStep();
+      }else{
+        this.addError('El correo eléctronico no se encuentra registrado en nuestra plataforma');
+      }
     }).catch(() => {
       this.spinnerService.hide();
       this.addError('El correo eléctronico no se encuentra registrado en nuestra plataforma');
     });
+  }
+
+    /**
+   * Retrieve the token for the user email.
+   */
+  sendToken() {
+    this.spinnerService.show();
+    console.log('sendTokenType', this.sendType);
+    this.authService.sendToken(this.user.email,this.sendType).then((response) => {
+      this.spinnerService.hide();
+      this.title = "¡Codigo de seguridad enviado!";
+      if(this.sendType == 0){
+        this.message = "Te hemos enviado un correo electrónico con un código de seguridad, revisa tu casilla de mensajes. Puede que demore unos minutos en llegarte.";
+      }else{
+        this.message = "Te hemos enviado un sms con un código de seguridad, revisa tu casilla de mensajes. Puede que demore unos minutos en llegarte.";
+      }
+      
+      this.nextStep();
+    }).catch((error) => {
+      this.spinnerService.hide();
+      console.log(error);
+      this.setError(error.message);
+    });
+  }
+
+  continue(resp:any){
+    if(resp.result){
+      this.nextStep();
+    }
   }
 
   /**
@@ -119,4 +160,7 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
       this.addError('Ha ocurrido un error al cambiar la contraseña');
     });
   }
+
+
+  
 }

@@ -37,6 +37,7 @@ export class User extends Model {
   public newsLetter: boolean;
   public peygoldCommission: number;
   public token: string;
+  public accessToken: string;
   public bussinessName: string;
   public cuit: string;
   public website: string;

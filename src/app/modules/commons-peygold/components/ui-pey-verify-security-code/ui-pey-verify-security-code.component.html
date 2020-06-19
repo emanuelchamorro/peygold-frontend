@@ -1,0 +1,40 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<section class="min-vh-100">
+    <div class="container-fluid">
+     <div class="d-flex align-items-center flex-column justify-content-center mt-5 ">
+      <div class="grey-box w-50 bg-white p-4 mt-5 mb-5">
+      <div class="d-flex flex-column align-items-center justify-content-center">
+          <span class="fs-22 fw-700 mt-3 mb-3" [innerHtml]="title"></span>
+          <p class="w-75 mb-4" [innerHtml]="message"></p>
+                          <form class="account-authentication w-75" name="formResetPasswordToken" (ngSubmit)="validateToken([token])"
+                          #formResetPasswordToken="ngForm" novalidate>
+                       
+                          <div class="form-group">
+                             <!-- <input type="text" class="form-control text-center token mb-2 reset-pass" name="token" placeholder="0000"/> -->
+                              <input type="text" class="form-control text-center token mb-2" name="token" placeholder="0000"
+                              [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && token.errors}" name="token" [(ngModel)]="user.token"
+                              #token="ngModel" required />
+                              <div *ngIf="!token.pristine && token.invalid || tryNextStep && token.errors"
+                              class="invalid-feedback text-left">
+                              <div *ngIf="token.errors.required">Campo es requerido</div>
+                            </div>
+                            <div *ngIf="error" class="invalid-feedback text-left">
+                              <div [innerHtml]="error"></div>
+                            </div>                              
+                          </div>
+                          <div class="form-group">
+                              <button type="submit" class="solid-blue-button">Continuar</button>
+                          </div>
+                        <div class="d-flex w-100 justify-content-center">
+                          <span>¿No lo recibiste? </span><a (click)="sendToken()"> Volver a enviar</a>
+                        </div>
+                      </form>
+          
+     </div>  
+    </div> 
+ </div>
+</div> 
+
+</section>	
