@@ -107,12 +107,11 @@
               <label class="has-float-label mb-0 w-100">
                 <input type="text" placeholder="Teléfono" class="form-control w-100"
                   [ngClass]="{'ng-dirty ng-invalid' : submited && phone.errors}" name="phone" [(ngModel)]="user.phone"
-                  #phone="ngModel" pattern="^[0-9]*$" required />
+                  #phone="ngModel" required />
                 <span>Teléfono</span>
 
                 <div *ngIf="!phone.pristine && phone.invalid || submited && phone.errors" class="invalid-feedback">
                   <div *ngIf="phone.errors.required">Campo es requerido</div>
-                  <div *ngIf="phone.errors.pattern">Campo es numérico</div>
                 </div>
               </label>
             </div>

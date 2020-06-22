@@ -66,6 +66,7 @@ export class UiPeyVerifySecurityCodeComponent extends BaseComponent implements O
 
   sendToken(): void{
     this.spinnerService.show();
+    this.user.token = '';
     this.authService.sendToken(this.user.email,this.sendType).then((resp)=>{
       this.spinnerService.hide();
       if(!resp.success){

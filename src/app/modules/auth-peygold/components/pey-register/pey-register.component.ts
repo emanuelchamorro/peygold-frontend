@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {City, Company, Country, DocumentType, Institution, Occupation, Person, ProfitInstitution, State, User} from '../../../../models';
+import {City, Company, Country, DocumentType, Institution, Occupation, Person, ProfitInstitution, State, User, Nationality, Contact} from '../../../../models';
 import {LocationService, InstitutionService, OccupationService, InMemoryService} from '../../../../services';
 import {AuthService} from '../../services/auth.service';
 import {environment} from '../../../../../environments/environment';
@@ -9,6 +9,9 @@ import {BaseComponent} from '../../components/base.component';;
 import {ErrorResponse} from '../../../commons-peygold/entities/error-response';
 import {OK} from 'http-status-codes';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { IvaCondition } from '../../../../models/iva-condition';
+import { IIBBCondition } from '../../../../models/iibb-condition';
+import { ServiceCategory } from '../../../../models/service-category';
 
 @Component({
   selector: 'app-pey-register',
@@ -40,7 +43,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
     super();
   }
 
-  private type: string;
+  public type: string;
   private user: User = new User();
   private step: number;
   private countries: Array<Country>;
@@ -52,6 +55,10 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
   private environment = environment;
   private tryNextStep = false;
   private trySubmit = false;
+  private nationalities: Array<Nationality>;
+  private ivaConditions : Array<IvaCondition>;
+  private iibbConditions : Array<IIBBCondition>;
+  private serviceCategories : Array<ServiceCategory>;
 
   /**
    * On init implementation
@@ -59,6 +66,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
   ngOnInit() {
     this.step = 1;
     this.type = this.route.snapshot.data[`type`];
+    console.log('type',this.type);
     // Get the countries.
     this.locationService.getCountries().then((countries: Array<Country>) => {
       this.countries = countries;
@@ -70,21 +78,32 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
         return institution.toProfitInstitution();
       });
     });
-
+    this.documentTypes = this.inMemoryService.documentTypes;
     switch (this.type) {
       case User.TYPE_PERSON:
+      //TODO: REMPLAZAR POR CONSULTAR CATEGORIAS
         this.user = new Person();
         this.occupationService.all().then((occupations: Array<Occupation>) => {
           this.occupations = occupations;
         });
-        this.documentTypes = this.inMemoryService.documentTypes;
 
+        this.nationalities = new Array<Nationality>();
+        this.nationalities.push(new Nationality('1','Argentina'));
         break;
       case User.TYPE_COMPANY:
+      //TODO:CONSULTAR LAS LISTAS DESPLEGABLES
         this.user = new Company();
+        this.user.contact = new Contact();
+        this.ivaConditions = new Array<IvaCondition>();
+        this.ivaConditions.push(new IvaCondition('1','Activo'));
+        this.iibbConditions = new Array<IIBBCondition>();
+        this.iibbConditions.push(new IIBBCondition('1','Régimen simplificado'));
+        this.serviceCategories = new Array<ServiceCategory>();
+        this.serviceCategories.push(new ServiceCategory('1','Comida y bebida'));
         break;
       case User.TYPE_INSTITUTION:
         this.user = new Institution();
+        this.user.contact = new Contact();
         break;
       default:
         this.user = null;

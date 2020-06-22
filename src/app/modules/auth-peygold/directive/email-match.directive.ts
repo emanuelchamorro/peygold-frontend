@@ -31,13 +31,13 @@ function EmailMatch(controlName: string, matchingControlName: string) {
     }
 
     // return null if another validator has already found an error on the matchingControl
-    if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+    if (matchingControl.errors && !matchingControl.errors.emailMatch) {
       return null;
     }
 
     // set error on matchingControl if validation fails
     if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({ mustMatch: true });
+      matchingControl.setErrors({ emailMatch: true });
     } else {
       matchingControl.setErrors(null);
     }

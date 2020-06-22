@@ -78,7 +78,7 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
     this.authService.checkEmail(this.user.email).then((response) => {
       this.spinnerService.hide();
       if(response.exists){
-        this.user.phone = "xxxxxxxxx"
+        this.user.phone = response.phoneNumber.substr(-4);
         this.nextStep();
       }else{
         this.addError('El correo eléctronico no se encuentra registrado en nuestra plataforma');
@@ -107,8 +107,12 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
       this.nextStep();
     }).catch((error) => {
       this.spinnerService.hide();
-      console.log(error);
-      this.setError(error.message);
+      if(this.sendType == 1){
+        this.setError("El formato del número de celular registrado es inválido.");
+      }else{
+        this.setError(error.message);
+      }
+      
     });
   }
 

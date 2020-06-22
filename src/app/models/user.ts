@@ -6,6 +6,9 @@ import {Nationality} from './nationality';
 import {ProfitInstitution} from './profit-institution';
 import {Contact} from './contact';
 import {Role} from './role';
+import { IvaCondition } from './iva-condition';
+import { IIBBCondition } from './iibb-condition';
+import { ServiceCategory } from './service-category';
 
 /**
  * User model
@@ -29,6 +32,7 @@ export class User extends Model {
   public documentNumber: string;
   public phone: string;
   public email: string;
+  public confirmEmail:string;
   public password: string;
   public idUserType: number;
   public idAspNetUser: string;
@@ -68,6 +72,14 @@ export class User extends Model {
   public rememberMe: boolean;
   public active: boolean;
   public deviceIsValid: boolean;
+  public alias:string;
+  public activity:string;
+  public ivaCondition: IvaCondition;
+  public iibbCondition: IIBBCondition;
+  public serviceCategory:ServiceCategory;
+  public iibbNumber:string;
+  public mision:string;
+
 
   /**
    * Get the user complete Name
