@@ -68,17 +68,21 @@
           </div>
         </div>
         <form name="form" (ngSubmit)="registerForm.form.valid && onSubmit()" #registerForm="ngForm"
-          [mustMatch]="['password', 'repeatPassword']" [emailMatch]="['email', 'confirmEmail']" novalidate>
+          [mustMatch]="['password', 'repeatPassword']" [emailMatch]="['email', 'confirmEmail']" class="register-form" novalidate>
           <div class="col-12" *ngIf="type && step == 1">
-            <div class="d-flex flex-column mt-5">
-              <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
-              <p>Completa los datos para continuar con tu registro</p>
+            <div class="d-flex flex-column align-items-center row mt-5">      
+              <div class="col-xs-12 col-sm-8">
+              <h2 class="mt-5 mb-2">¡Registrarse es totalmente gratis! </h2>
+              <p>Completa los datos de usuario para continuar</p>
+              </div>
             </div>
-            <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
+          
+            <div class="d-flex flex-column mt-3 align-items-center justify-content-center row">
+              <div class="col-xs-12 col-sm-8">
               <h4>Datos de usuario</h4>
-              <div class="container-form-login mt-4">
+              <div class="mt-4">
                 <div [hidden]="type!='person'">
-                  <div class="mb-4">
+                  <div class="input-group">
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Nombre completo*" class="form-control w-100"
                         [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && name.errors}" name="name"
@@ -91,7 +95,7 @@
                     </label>
                   </div>
 
-                  <div class="mb-4">
+                  <div class="input-group">
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Apellido*" class="form-control w-100"
                         [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && lastName.errors}" name="lastName"
@@ -107,7 +111,7 @@
                 </div>
 
                 <div [hidden]="type=='person'">
-                  <div class="mb-4">
+                  <div class="input-group">
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Nombre de fantasia*" class="form-control w-100"
                         [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && alias.errors}" name="alias"
@@ -121,7 +125,7 @@
                   </div>
                 </div>
 
-                <div class="mb-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Correo electrónico*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && email.errors}" name="email"
@@ -135,7 +139,7 @@
                     </div>
                   </label>
                 </div>
-                <div class="mb-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Confirmar correo*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && confirmEmail.errors}" name="confirmEmail"
@@ -149,7 +153,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="password" placeholder="Contraseña*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && password.errors}" name="password"
@@ -167,7 +171,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="password" placeholder="Confirmar contraseña*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && repeatPassword.errors}" name="repeatPassword"
@@ -185,7 +189,7 @@
                   </label>
                 </div>
 
-                <div class="d-flex justify-content-between w-100">
+                <div class="d-flex justify-content-end row-buttons w-100">
                   <a [routerLink]="routes.register.index.href" class="white-button-border mr-4">Volver</a>
 
                   <button class="solid-blue-button" *ngIf="type=='person'"
@@ -202,23 +206,26 @@
 
                 </div>
               </div>
-
+            </div>
             </div>
           </div>
           <div class="col-12" *ngIf="type && step==2">
-            <div class="d-flex flex-column mt-5">
-              <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
-              <p>Bienvenido/a, completa los datos para continuar continuar con tu registro</p>
+            <div class="d-flex flex-column align-items-center row mt-5">      
+              <div class="col-xs-12 col-sm-8">
+               <h2 class="mt-5 mb-2">¡Registrarse es totalmente gratis! </h2>
+               <p>Completa tus datos para continuar</p>
+             </div>
             </div>
             <ngb-alert type="danger" *ngIf="error" (close)="cleanErrors()" [innerHtml]="error"></ngb-alert>
-            <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
-              <h4 *ngIf="type == 'person'">Datos personales</h4>
-              <h4 *ngIf="type == 'company'">Datos de la empresa</h4>
-              <h4 *ngIf="type == 'institution'">Datos de la institucion</h4>
-              <div class="container-form-login mt-4">
-
+            <div class="d-flex flex-column mt-3 align-items-center justify-content-center row">
+              <div class="col-xs-12 col-sm-8">
+               <h4 *ngIf="type == 'person'">Datos personales</h4>
+               <h4 *ngIf="type == 'company'">Datos de la empresa</h4>
+               <h4 *ngIf="type == 'institution'">Datos de la institucion</h4>
+               <div class="mt-4">
+ 
                 <div [hidden]="type=='person'">
-                  <div class="mb-4">
+                  <div class="input-group">
                     <label class="has-float-label mb-4 w-100">
                       <input type="text" placeholder="Razón social*" class="form-control w-100"
                         [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && bussinessName.errors}" name="bussinessName"
@@ -261,7 +268,7 @@
 
                 </div>
 
-                <div class="mb-4" [hidden]="type != 'person'">
+                <div class="input-group" [hidden]="type != 'person'">
                   <label class="has-float-label mb-4 w-100">
                     <ng-select placeholder="Nacionalidad*" class="custom-select  mb-0 w-100" bindLabel="label"
                       [searchable]="false" [items]="nationalities" [addTag]="false" name="nationality"
@@ -275,7 +282,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4" [hidden]="type == 'person'">
+                <div class="input-group" [hidden]="type == 'person'">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="CUIT" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && cuit.errors}" name="cuit" [(ngModel)]="user.cuit"
@@ -289,7 +296,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4" [hidden]="type != 'company'">
+                <div class="input-group" [hidden]="type != 'company'">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Actividad*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && activity.errors}" name="activity"
@@ -303,7 +310,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4" [hidden]="type != 'company'">
+                <div class="input-group" [hidden]="type != 'company'">
                   <label class="has-float-label mb-4 w-100">
                     <ng-select placeholder="Condición IVA*" class="custom-select  mb-0 w-100" bindLabel="label"
                       [searchable]="false" [items]="ivaConditions" [addTag]="false" name="ivaCondition"
@@ -344,7 +351,7 @@
 
                 </div>
 
-                <div class="mb-4" [hidden]="type != 'company'">
+                <div class="input-group" [hidden]="type != 'company'">
                   <label class="has-float-label mb-4 w-100">
                     <ng-select placeholder="Categoria de servicio*" class="custom-select  mb-0 w-100" bindLabel="label"
                       [searchable]="false" [items]="serviceCategories" [addTag]="false" name="serviceCategory"
@@ -361,8 +368,8 @@
 
 
 
-                <div class="mb-4" [hidden]="type != 'person'">
-                  <label class="has-float-label mb-0">
+                <div class="input-group" [hidden]="type != 'person'">
+                  <label class="has-float-label w-100 mb-0">
                     <ng-select name="countries" placeholder="País" class="custom-select mb-0 w-100"
                       (change)="getStates()" bindLabel="label" [searchable]="false" [items]="countries" [addTag]="false"
                       name="country" [(ngModel)]="user.address.country"
@@ -452,7 +459,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4" [hidden]="type != 'person'">
+                <div class="input-group" [hidden]="type != 'person'">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Teléfono móvil" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phone.errors}" name="phone"
@@ -465,7 +472,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4" [hidden]="type == 'institution'">
+                <div class="input-group" [hidden]="type == 'institution'">
                   <label class="has-float-label mb-4 w-100">
                     <ng-select placeholder="Institución a beneficiar*" class="custom-select mb-0 w-100"
                       bindLabel="label" [searchable]="false" [items]="institutions" [addTag]="false"
@@ -481,7 +488,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4" [hidden]="type != 'institution'">
+                <div class="input-group" [hidden]="type != 'institution'">
                   <label class="has-float-label mb-4 w-100"
                     [ngClass]="{'mb-0': type != 'institution', 'mb-4': type == 'institution'}">
                     <input type="text" placeholder="Página Web*" class="form-control w-100"
@@ -500,7 +507,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4" [hidden]="type != 'institution'">
+                <div class="input-group" [hidden]="type != 'institution'">
                   <label class="has-float-label mb-4 w-100">
                     <textarea class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && mision.errors}" name="mision"
@@ -519,7 +526,7 @@
                   </label>
                 </div>
 
-                <div [hidden]="type != 'person'">
+                <div [hidden]="type != 'person'" class="mb-3">
                   <input type="checkbox" class="checkbox-normal" name="condiciones" id="condiciones"
                     [ngClass]="{'ng-dirty ng-invalid' : trySubmit && terms.errors}" ngModel name="terms" required
                     #terms="ngModel" />
@@ -527,7 +534,7 @@
                     que he leído y acepto los términos y condiciones</label>
                 </div>
 
-                <div class="d-flex justify-content-between w-100">
+                <div class="d-flex justify-content-end row-buttons w-100">
                   <button (click)="previoustStep()" class="white-button-border mr-4">Volver</button>
                   <button *ngIf="type=='person'"
                     [ngClass]="{'button-disable': ! isValidFormModels([nationality,phone,documentType,documentNumber,country,state,city,street,houseNumber,buildingFloor,zipCode,profitInstitution,terms])}"
@@ -548,22 +555,25 @@
                   </button>
                 </div>
               </div>
-
+             </div>
             </div>
           </div>
+
           <div class="col-12" *ngIf="type && step==3">
-            <div class="d-flex flex-column mt-5">
+            <div class="d-flex flex-column align-items-center row mt-5"> 
+              <div class="col-xs-12 col-sm-8">
               <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
-              <p>Bienvenido/a, completa los datos para continuar continuar con tu registro</p>
+              <p>Completa la dirección para continuar</p>
             </div>
+          </div>
             <ngb-alert type="danger" *ngIf="error" (close)="cleanErrors()" [innerHtml]="error"></ngb-alert>
-            <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
+            <div class="d-flex flex-column mt-3 align-items-center justify-content-center row">
+              <div class="col-xs-12 col-sm-8">
               <h4 *ngIf="type == 'company'">Dirección de la empresa</h4>
               <h4 *ngIf="type == 'institution'">Dirección de la institucion</h4>
-              <div class="container-form-login mt-4">
-
-                <div class="mb-4">
-                  <label class="has-float-label mb-0">
+ 
+                <div class="input-group">
+                  <label class="has-float-label w-100 mb-0">
                     <ng-select name="countries" placeholder="País" class="custom-select mb-0 w-100"
                       (change)="getStates()" bindLabel="label" [searchable]="false" [items]="countries" [addTag]="false"
                       name="country" [(ngModel)]="user.address.country"
@@ -653,7 +663,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Teléfono móvil" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phone.errors}" name="phone"
@@ -667,7 +677,7 @@
                 </div>
 
 
-                <div class="d-flex justify-content-between w-100">
+                <div class="d-flex justify-content-end row-buttons w-100">
                   <button (click)="previoustStep()" class="white-button-border mr-4">Volver</button>
                   <button *ngIf="type=='company'"
                     [ngClass]="{'button-disable': ! isValidFormModels([country,state,city,street,houseNumber,buildingFloor,zipCode,phone])}"
@@ -683,21 +693,23 @@
                   </button>
                 </div>
               </div>
-
             </div>
-
-          </div>
+            </div>
+         
+          
           <div class="col-12" *ngIf="type && step==4">
-            <div class="d-flex flex-column mt-5">
+            <div class="d-flex flex-column align-items-center row mt-5">
+              <div class="col-xs-12 col-sm-8">
               <h2 class="mt-5">¡Registrarse es totalmente gratis! </h2>
-              <p>Bienvenido/a, completa los datos para continuar continuar con tu registro</p>
+              <p>Completa los datos de contacto para continuar</p>
+            </div>
             </div>
             <ngb-alert type="danger" *ngIf="error" (close)="cleanErrors()" [innerHtml]="error"></ngb-alert>
-            <div class="d-flex flex-column mt-3 align-items-center justify-content-center">
+            <div class="d-flex flex-column mt-3 align-items-center justify-content-center row">
+              <div class="col-xs-12 col-sm-8">
               <h4>Datos de contacto</h4>
-              <div class="container-form-login mt-4">
-
-                <div class="mb-4">
+              <div class="mt-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Nombre completo*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && nameContact.errors}" name="nameContact"
@@ -710,7 +722,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Apellido*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && lastNameContact.errors}" name="lastNameContact"
@@ -749,7 +761,7 @@
                   </label>
                 </div>
 
-                <div class="mb-4">
+                <div class="input-group">
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Teléfono móvil" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phoneContact.errors}" name="phoneContact"
@@ -770,7 +782,7 @@
                     que he leído y acepto los términos y condiciones</label>
                 </div>
 
-                <div class="d-flex justify-content-between w-100">
+                <div class="d-flex justify-content-end row-buttons w-100">
                   <button (click)="previoustStep()" class="white-button-border mr-4">Volver</button>
                   <button *ngIf="type=='company'"
                     [ngClass]="{'button-disable': ! isValidFormModels([nameContact,lastNameContact,documentTypeContact,documentNumberContact,phoneContact,terms])}"
@@ -785,7 +797,7 @@
                   </button>
                 </div>
               </div>
-
+            </div>
             </div>
           </div>
 
