@@ -18,3 +18,16 @@
   .ErrorWhite {
     box-shadow: 0px 0px 11px #bb010191;
     border-radius: 50px; }
+
+  .illustration-container {
+      display: flex;
+      padding-top: 80px;
+      width: 100%;
+      justify-content: center;
+  }
+  
+  .illustration-container img {
+  
+      display: flex;
+      max-width: 100%;
+  }
