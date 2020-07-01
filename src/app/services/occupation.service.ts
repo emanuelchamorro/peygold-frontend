@@ -9,7 +9,7 @@ import {HttpService} from './http.service';
 })
 export class OccupationService extends HttpService {
 
-  public occupations: Array<Country>;
+  public occupations: Array<Occupation>;
 
   /**
    * Get the list of Occupations models

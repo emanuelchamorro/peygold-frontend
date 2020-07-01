@@ -31,6 +31,7 @@ export class User extends Model {
   public documentType: DocumentType;
   public documentNumber: string;
   public phone: string;
+  public prefixPhone:string;
   public email: string;
   public confirmEmail:string;
   public password: string;
@@ -79,6 +80,7 @@ export class User extends Model {
   public serviceCategory:ServiceCategory;
   public iibbNumber:string;
   public mision:string;
+  public phoneNumberConfirmed:boolean;
 
 
   /**
@@ -149,10 +151,27 @@ export class User extends Model {
   get dataForUpdate(): object {
     const data: any = {};
 
-    data.dni = this.documentNumber;
-    data.firstName = this.name;
-    data.lastName = this.lastName;
-    data.phone = this.phone;
+    
+    if(this.isPerson){
+      data.IdNacionalidad = parseInt(this.nationality.id);
+    }
+
+    data.phone = this.prefixPhone+''+this.phone;
+
+    if(this.isCompany){
+      data.AliasInstitucion = this.alias;
+      data.IdCategoriaComercio = parseInt(this.serviceCategory.id);
+      data.IdCondicionIB = parseInt(this.iibbCondition.id);
+      data.IdCondicionIva = parseInt(this.ivaCondition.id);
+      data.Actividad = this.activity;
+      data.NumeroIB =this.iibbNumber;
+    }
+
+    if(this.isInstitution){
+      data.InstitutionWebSite = this.website;
+     data.AliasInstitucion = this.alias; 
+      data.MisionInstitucion = this.mision;
+    }
   
     if (this.profitInstitution) {
       data.idInstitution = parseInt(this.profitInstitution.value);
@@ -160,8 +179,7 @@ export class User extends Model {
 
     data.facebook = this.facebook;
     data.instagram = this.instagram;
-    data.linkedin = this.linkedIn;
-    data.phone = this.phone;
+    data.linkedin = this.linkedIn;   
     data.twitter = this.twitter;
     data.youtube = this.youtube;
 
@@ -183,6 +201,17 @@ export class User extends Model {
       billingHouseNumber: this.billingAddress.houseNumber,
       billingPostalCode: this.billingAddress.zipCode,
       billingStreet: this.billingAddress.street,
+    }
+
+    if(!this.isPerson){
+      data.contactPerson = {
+        ContactName: this.contact.name,
+        ContactLastName: this.contact.lastName,
+        ContactTipoDocumento: this.contact.documentType.id,
+        ContactNumeroDocumento: this.contact.documentNumber,
+        ContactPhone: this.contact.phone,
+        ContactEmail: this.contact.email
+      }
     }
 
     if (this.password) {

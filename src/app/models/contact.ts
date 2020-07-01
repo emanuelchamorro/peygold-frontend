@@ -1,4 +1,5 @@
 import {Model} from './model';
+import {DocumentType} from './document-type';
 
 /**
  * Contact model

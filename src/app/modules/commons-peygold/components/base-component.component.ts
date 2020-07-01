@@ -21,6 +21,8 @@ export class BaseComponent {
     success: [],
   };
 
+  private fieldError:string;
+
   /**
    * Clean the list of error messages.
    * @param delay Milliseconds to clean the error list
@@ -74,6 +76,19 @@ export class BaseComponent {
     return this;
   }
 
+    /**
+   * Clean the error message and add just one error message
+   * @param message Message to add to error list
+   */
+  protected setInputError(message: string, clean = true): BaseComponent {
+    this.fieldError = message;
+
+    if (clean) {
+      setTimeout(() => this.fieldError = '', 1000);
+    }
+    return this;
+  }
+
   /**
    * Clean the success message and add just one success message
    * @param message Message to add to success list
@@ -113,6 +128,13 @@ export class BaseComponent {
    */
   get success(): string {
     return this.messages.success[0] || '';
+  }
+
+    /**
+   * Return the current error to be displayed.
+   */
+  get inputError(): string {
+    return this.fieldError;
   }
 
   /**

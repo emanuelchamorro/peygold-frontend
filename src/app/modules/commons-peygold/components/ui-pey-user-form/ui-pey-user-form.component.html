@@ -18,8 +18,12 @@
       <div class="user-sidebar">
         <ul>
           <li>
-            <a (click)="activeView = 'personalData'"
-              [ngClass]="{'active': !activeView || activeView=='personalData'}"><span>Datos personales</span></a>
+            <a (click)="activeView = 'personalData'" [ngClass]="{'active': !activeView || activeView=='personalData'}"
+              *ngIf="editableUser.isPerson"><span>Datos personales</span></a>
+            <a (click)="activeView = 'personalData'" [ngClass]="{'active': !activeView || activeView=='personalData'}"
+              *ngIf="editableUser.isCompany"><span>Datos de la empresa</span></a>
+            <a (click)="activeView = 'personalData'" [ngClass]="{'active': !activeView || activeView=='personalData'}"
+              *ngIf="editableUser.isInstitution"><span>Datos de la institución</span></a>
           </li>
           <li>
             <a (click)="activeView = 'address'" [ngClass]="{'active': activeView=='address'}"><span>Dirección</span></a>
@@ -28,9 +32,17 @@
             <a (click)="activeView = 'billingAddress'"
               [ngClass]="{'active': activeView=='billingAddress'}"><span>Dirección de facturación</span></a>
           </li>
+          <li *ngIf="!editableUser.isPerson">
+            <a (click)="activeView = 'contactInfo'" [ngClass]="{'active': activeView=='contactInfo'}"><span>Datos de
+                contacto</span></a>
+          </li>
           <li>
             <a (click)="activeView = 'password'" [ngClass]="{'active': activeView=='password'}"><span>Cambiar
                 contraseña</span></a>
+          </li>
+          <li>
+            <a (click)="activeView = 'validateAccount'"
+              [ngClass]="{'active': activeView=='validateAccount'}"><span>Verificar cuenta</span></a>
           </li>
         </ul>
       </div>
@@ -43,10 +55,10 @@
       <div class="usuario-form mt-4 mb-4">
         <div class="input-field" [hidden]="!editableUser.isPerson">
           <label class="has-float-label mb-0 w-100">
-            <input type="text" placeholder="Nombre" class="form-control w-100"
+            <input type="text" placeholder="Nombre completo*" class="form-control w-100"
               [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && name.errors}" name="name"
               [(ngModel)]="editableUser.name" #name="ngModel" required readonly />
-            <span>Nombres</span>
+            <span>Nombre completo*</span>
             <div *ngIf="(!name.pristine && name.invalid) || storeUser.submitted && name.errors"
               class="invalid-feedback">
               <div *ngIf="name.errors.required">Campo es requerido</div>
@@ -65,12 +77,26 @@
               <div *ngIf="lastName.errors.required">Campo es requerido</div>
             </div>
           </label>
-        </div> 
+        </div>
+
+        <div class="input-field" [hidden]="editableUser.isPerson">
+          <label class="has-float-label mb-0 w-100">
+            <input type="text" placeholder="Nombre de fantasia*" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && alias.errors}" name="alias"
+              [(ngModel)]="editableUser.alias" #alias="ngModel" required />
+            <span>Nombre de fantasia*</span>
+            <div *ngIf="!alias.pristine && alias.invalid || storeUser.submitted && alias.errors"
+              class="invalid-feedback">
+              <div *ngIf="alias.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+
         <div class="input-field" [hidden]="editableUser.isPerson">
           <label class="has-float-label mb-0 w-100">
             <input type="text" placeholder="Razón social" class="form-control w-100"
               [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && bussinessName.errors}" name="bussinessName"
-              [(ngModel)]="editableUser.bussinessName" #bussinessName="ngModel" required readonly/>
+              [(ngModel)]="editableUser.bussinessName" #bussinessName="ngModel" required readonly />
             <span>Razón social</span>
             <div *ngIf="!bussinessName.pristine && bussinessName.invalid || storeUser.submitted && bussinessName.errors"
               class="invalid-feedback">
@@ -109,11 +135,25 @@
           </div>
         </div>
 
+        <div class="input-field" [hidden]="!editableUser.isPerson">
+          <label class="has-float-label mb-4 w-100">
+            <ng-select placeholder="Nacionalidad*" class="custom-select  mb-0 w-100" bindLabel="label"
+              [searchable]="false" [items]="nationalities" [addTag]="false" name="nationality"
+              [(ngModel)]="editableUser.nationality" #nationality="ngModel"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && nationality.errors}" required>
+            </ng-select>
+            <div *ngIf="!nationality.pristine && nationality.invalid || storeUser.submitted && nationality.errors"
+              class="invalid-feedback">
+              <div *ngIf="nationality.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+
         <div class="mb-4" [hidden]="editableUser.isPerson">
           <label class="has-float-label mb-4 w-100">
             <input type="text" placeholder="CUIT" class="form-control w-100"
-                   [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && cuit.errors}"
-                   name="cuit" [(ngModel)]="editableUser.cuit" #cuit="ngModel" required readonly/>
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && cuit.errors}" name="cuit"
+              [(ngModel)]="editableUser.cuit" #cuit="ngModel" required readonly />
             <span>CUIT</span>
 
             <div *ngIf="!cuit.pristine && cuit.invalid || storeUser.submitted && cuit.errors" class="invalid-feedback">
@@ -123,16 +163,80 @@
         </div>
 
 
-        <div class="input-field">
-          <label class="has-float-label mb-0 w-100">
-            <input type="text" placeholder="Teléfono" class="form-control w-100"
-              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && phone.errors}" name="phone"
-              [(ngModel)]="editableUser.phone" #phone="ngModel" mask="0*"  required  />
-            <span>Teléfono</span>
+        <div class="mb-4" [hidden]="!editableUser.isCompany">
+          <label class="has-float-label mb-4 w-100">
+            <input type="text" placeholder="Actividad*" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && activity.errors}" name="activity"
+              [(ngModel)]="editableUser.activity" #activity="ngModel" maxlength="255" required />
+            <span>Actividad*</span>
 
-            <div *ngIf="!phone.pristine && phone.invalid || storeUser.submitted && phone.errors"
+            <div *ngIf="!activity.pristine && activity.invalid || storeUser.submitted && activity.errors"
               class="invalid-feedback">
-              <div *ngIf="phone.errors.required">Campo es requerido</div>
+              <div *ngIf="activity.errors.required">Campo es requerido</div>
+              <div *ngIf="activity.errors.maxlength">Campo debe tener máximo 255 caracteres</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="input-field" [hidden]="!editableUser.isCompany">
+          <label class="has-float-label mb-4 w-100">
+            <ng-select placeholder="Condición IVA*" class="custom-select  mb-0 w-100" bindLabel="label"
+              [searchable]="false" [items]="ivaConditions" [addTag]="false" name="ivaCondition"
+              [(ngModel)]="editableUser.ivaCondition" #ivaCondition="ngModel"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && ivaCondition.errors}" required>
+            </ng-select>
+            <div *ngIf="!ivaCondition.pristine && ivaCondition.invalid || storeUser.submitted && ivaCondition.errors"
+              class="invalid-feedback">
+              <div *ngIf="ivaCondition.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="row" [hidden]="!editableUser.isCompany">
+          <div class="col-6 input-field">
+            <label class="has-float-label mb-4">
+              <ng-select placeholder="Condición IIBB*" class="custom-select  mb-0 w-100" bindLabel="label"
+                [searchable]="false" [items]="iibbConditions" [addTag]="false" name="iibbCondition"
+                [(ngModel)]="editableUser.iibbCondition"
+                [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentType.errors}"
+                #iibbCondition="ngModel" required>
+              </ng-select>
+              <div
+                *ngIf="!iibbCondition.pristine && iibbCondition.invalid || storeUser.submitted && iibbCondition.errors"
+                class="invalid-feedback">
+                <div *ngIf="iibbCondition.errors.required">Campo es requerido</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="col-6 input-field">
+            <label class="has-float-label mb-4">
+              <input type="text" placeholder="Número IIBB*" class="form-control w-100"
+                [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && iibbNumber.errors}" name="iibbNumber"
+                [(ngModel)]="editableUser.iibbNumber" #iibbNumber="ngModel" mask="0*" minlength="11" maxlength="11" required />
+              <span>Número IIBB*</span>
+              <div *ngIf="!iibbNumber.pristine && iibbNumber.invalid || storeUser.submitted && iibbNumber.errors"
+                class="invalid-feedback">
+                <div *ngIf="iibbNumber.errors.required">Campo es requerido</div>
+                <div *ngIf="iibbNumber.errors.minlength || iibbNumber.errors.maxlength">Campo debe tener 11 dígitos</div>
+              </div>
+            </label>
+          </div>
+
+
+        </div>
+
+        <div class="input-field" [hidden]="!editableUser.isCompany">
+          <label class="has-float-label mb-4 w-100">
+            <ng-select placeholder="Categoria de servicio*" class="custom-select  mb-0 w-100" bindLabel="label"
+              [searchable]="false" [items]="serviceCategories" [addTag]="false" name="serviceCategory"
+              [(ngModel)]="editableUser.serviceCategory" #serviceCategory="ngModel"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && serviceCategory.errors}" required>
+            </ng-select>
+            <div
+              *ngIf="!serviceCategory.pristine && serviceCategory.invalid || storeUser.submitted && serviceCategory.errors"
+              class="invalid-feedback">
+              <div *ngIf="serviceCategory.errors.required">Campo es requerido</div>
             </div>
           </label>
         </div>
@@ -154,18 +258,33 @@
         </div>
 
         <div class="input-field" [hidden]="!editableUser.isInstitution">
-            <label class="has-float-label mb-0 w-100">
-              <input type="text" placeholder="Página Web" class="form-control w-100"
-                [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && website.errors}" name="website"
-                [(ngModel)]="editableUser.website" #website="ngModel" required />
-              <span>Página Web</span>
-  
-              <div *ngIf="!website.pristine && website.invalid || storeUser.submitted && website.errors"
-                class="invalid-feedback">
-                <div *ngIf="website.errors.required">Campo es requerido</div>
-              </div>
-            </label>
-          </div> 
+          <label class="has-float-label mb-0 w-100">
+            <input type="text" placeholder="Página Web" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && website.errors}" name="website"
+              [(ngModel)]="editableUser.website" #website="ngModel" required />
+            <span>Página Web</span>
+
+            <div *ngIf="!website.pristine && website.invalid || storeUser.submitted && website.errors"
+              class="invalid-feedback">
+              <div *ngIf="website.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="input-field" [hidden]="!editableUser.isInstitution">
+          <label class="has-float-label mb-4 w-100">
+            <textarea class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && mision.errors}" name="mision"
+              [(ngModel)]="editableUser.mision" #mision="ngModel" maxlength="500" required></textarea>
+            <span>Misión / Función social*</span>
+            <div *ngIf="!mision.pristine && mision.invalid || storeUser.submitted && mision.errors"
+              class="invalid-feedback">
+              <div *ngIf="mision.errors.required">Campo es requerido</div>
+              <div *ngIf="mision.errors.maxlength">Campo debe tener máximo 500 caracteres</div>
+            </div>
+          </label>
+        </div>
+
         <div class="d-flex justify-content-center">
           <button #savePersonalDataButton type="submit" class="solid-blue-button w-auto">Guardar cambios</button>
         </div>
@@ -178,7 +297,8 @@
       [ngClass]="{'d-flex':activeView=='address', 'd-none': activeView !='address'}">
       <div class="usuario-form mt-4 mb-4">
         <app-ui-pey-address-form #addressComponent [address]="editableUser.address" (onChange)="setAddress($event)"
-          (onSubmit)="saveAddress($event)"></app-ui-pey-address-form>
+          (onSubmit)="saveAddress($event)" [editableUser]="editableUser" [isBillingAddress]="false">
+        </app-ui-pey-address-form>
 
         <div class="d-flex align-items-start flex-row mb-3">
           <input [(ngModel)]="useSameAddress" name="sameAddress" type="checkbox" class="d-flex mr-3">
@@ -196,7 +316,8 @@
       [ngClass]="{'d-flex':activeView=='billingAddress', 'd-none': activeView !='billingAddress'}">
       <div class="usuario-form mt-4 mb-4">
         <app-ui-pey-address-form #billingAddressComponent [address]="editableUser.billingAddress"
-          (onChange)="setBillingAddress($event)" (onSubmit)="saveBillingAddress($event)"></app-ui-pey-address-form>
+          (onChange)="setBillingAddress($event)" (onSubmit)="saveBillingAddress($event)" [isBillingAddress]="true">
+        </app-ui-pey-address-form>
 
         <div class="d-flex justify-content-center">
           <button #saveBillingAddressButton type="button" class="solid-blue-button w-auto"
@@ -205,6 +326,91 @@
       </div>
     </div>
     <!-- End Address -->
+
+    <!-- Contact person -->
+    <div class="flex-column w-100 align-items-center p-3"
+      [ngClass]="{'d-flex':activeView=='contactInfo', 'd-none': activeView !='contactInfo'}">
+      <div class="usuario-form mt-4 mb-4">
+
+        <div class="input-field">
+          <label class="has-float-label mb-4 w-100">
+            <input type="text" placeholder="Nombre completo*" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && nameContact.errors}" name="nameContact"
+              [(ngModel)]="editableUser.contact.name" #nameContact="ngModel" required />
+            <span>Nombre completo*</span>
+            <div *ngIf="(!nameContact.pristine && nameContact.invalid) || storeUser.submitted && nameContact.errors"
+              class="invalid-feedback">
+              <div *ngIf="nameContact.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="input-field">
+          <label class="has-float-label mb-4 w-100">
+            <input type="text" placeholder="Apellido*" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && lastNameContact.errors}" name="lastNameContact"
+              [(ngModel)]="editableUser.contact.lastName" #lastNameContact="ngModel" required />
+            <span>Apellido*</span>
+            <div
+              *ngIf="!lastNameContact.pristine && lastNameContact.invalid || storeUser.submitted && lastNameContact.errors"
+              class="invalid-feedback">
+              <div *ngIf="lastNameContact.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+        <div class="row">
+          <div class="col-6 input-field">
+            <label class="has-float-label mb-4">
+              <ng-select placeholder="Tipo de documento*" class="custom-select  mb-0 w-100" bindLabel="label"
+                [searchable]="false" [items]="documentTypes" [addTag]="false" name="documentTypeContact"
+                [(ngModel)]="editableUser.contact.documentType"
+                [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentTypeContact.errors}"
+                #documentTypeContact="ngModel" required>
+              </ng-select>
+              <div
+                *ngIf="!documentTypeContact.pristine && documentTypeContact.invalid || storeUser.submitted && documentTypeContact.errors"
+                class="invalid-feedback">
+                <div *ngIf="documentTypeContact.errors.required">Campo es requerido</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="col-6 input-field">
+            <label class="has-float-label mb-4">
+              <input type="text" placeholder="Número*" class="form-control w-100"
+                [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && documentNumberContact.errors}"
+                name="documentNumberContact" [(ngModel)]="editableUser.contact.documentNumber"
+                #documentNumberContact="ngModel" mask="0*" required />
+              <span>Número*</span>
+              <div
+                *ngIf="!documentNumberContact.pristine && documentNumberContact.invalid || storeUser.submitted && documentNumberContact.errors"
+                class="invalid-feedback">
+                <div *ngIf="documentNumberContact.errors.required">Campo es requerido</div>
+              </div>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="input-field">
+          <label class="has-float-label mb-4 w-100">
+            <input type="text" placeholder="Teléfono móvil" class="form-control w-100"
+              [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && phoneContact.errors}" name="phoneContact"
+              [(ngModel)]="editableUser.contact.phone" #phoneContact="ngModel" required />
+            <span>Teléfono</span>
+
+            <div *ngIf="!phoneContact.pristine && phoneContact.invalid || storeUser.submitted && phoneContact.errors"
+              class="invalid-feedback">
+              <div *ngIf="phoneContact.errors.required">Campo es requerido</div>
+            </div>
+          </label>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button #saveContactInfoButton type="submit" class="solid-blue-button w-auto">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+    <!-- End Contact person -->
 
     <!-- Passwords -->
     <div class="flex-column w-100 align-items-center p-3"
@@ -251,5 +457,116 @@
     </div>
     <!-- End Passwords -->
 
+    <!-- Validate account -->
+    <div class="flex-column w-100 align-items-center p-3"
+      [ngClass]="{'d-flex':activeView=='validateAccount', 'd-none': activeView !='validateAccount'}">
+      <div class="usuario-form mt-4 mb-4">
+        <ul class="pl-0">
+
+          <li class="d-flex justify-content-between pt-3 pb-3">
+            <a (click)="phoneVerify=true;identityVerify=false;step=step+1;">Verifica tu teléfono </a>
+            <span>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                xml:space="preserve" class="chevron-right">
+                <g>
+                  <g>
+                    <path
+                      d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <i>
+              <img src="/assets/images/pendiente.svg" width="25" height="25">
+            </i>
+            <i class="d-none">
+              <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
+            </i>
+          </li>
+          <li class="d-flex justify-content-between pt-3 pb-3">
+            <a (click)="identityVerify=true;phoneVerify=false;step=0;">Verifica tu identidad </a>
+            <span>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                xml:space="preserve" class="chevron-right">
+                <g>
+                  <g>
+                    <path
+                      d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <i>
+              <img src="/assets/images/pendiente.svg" width="25" height="25">
+            </i>
+            <i class="d-none">
+              <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
+            </i>
+          </li>
+        </ul>
+
+        <app-ui-pey-sidebar *ngIf="phoneVerify" (onClose)="phoneVerify=false;step=0" [closed]="!phoneVerify"
+          title="Verificación de teléfono ">
+          <div *ngIf="step==1" class="verificacion-content pl-5 pr-5 pt-2">
+            <div *ngIf="inputError" class="alert alert-danger alert-dismissible fade show" role="alert"
+              [innerHtml]="error"></div>
+            <span>Confirma tu número de teléfono móvil para que podamos estar siempre en contacto </span>
+            <form>
+              <div class="form-row mt-4 justify-content-between">
+                <label>Teléfono Móvil *</label>
+                <div class="form-group col-md-3 d-flex align-items-center">
+                  <input class="w-100" [value]="editableUser.prefixPhone" readonly />
+                </div>
+                <div class="form-group col-md-9 d-flex align-items-center">
+                  <input class="w-100" [value]="editableUser.phone" readonly />
+                </div>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button (click)="sendToken()" class="solid-blue-button">Enviar código</button>
+              </div>
+            </form>
+
+          </div>
+          <div *ngIf="step==2" class="verificacion-content pl-5 pr-5 pt-2">
+            <span>Te enviamos un código de verificación. Ingrésalo para continuar</span>
+            <form name="formResetPasswordToken" (ngSubmit)="validateToken([token])" #formResetPasswordToken="ngForm"
+              novalidate class="d-flex w-100 justify-content-center flex-column mt-4">
+              <div class="form-group d-flex justify-content-center">
+                <input class="code-authentication" type="text" placeholder="0000" name="token" placeholder="0000"
+                  [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && token.errors}" [(ngModel)]="editableUser.token"
+                  #token="ngModel" required />
+                <div *ngIf="!token.pristine && token.invalid || tryNextStep && token.errors"
+                  class="invalid-feedback text-left">
+                  <div *ngIf="token.errors.required">Campo es requerido</div>
+                </div>
+                <div *ngIf="inputError" class="invalid-feedback text-left">
+                  <div [innerHtml]="inputError"></div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="solid-blue-button">Verificar</button>
+              </div>
+            </form>
+          </div>
+          <app-ui-pey-message-success *ngIf="step==3" [title]="title" [message]="message"
+            [showImageBottom]="showImageBottom" (onContinue)="phoneVerify=false;step=0"
+            [buttonLabel]="buttonLabel"></app-ui-pey-message-success>
+
+        </app-ui-pey-sidebar>
+
+        <app-ui-pey-sidebar *ngIf="identityVerify" (onClose)="identityVerify=false;" [closed]="!identityVerify"
+          title="Verificación de identidad ">
+            Verifica tu identidad
+        </app-ui-pey-sidebar>
+
+      </div>
+    </div>
+    <!-- End validate account -->
   </div>
 </form>

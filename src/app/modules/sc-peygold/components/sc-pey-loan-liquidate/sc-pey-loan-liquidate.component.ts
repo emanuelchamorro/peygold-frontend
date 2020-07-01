@@ -27,6 +27,7 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
   public step: number;
   public title: string;
   public message: string;
+  public showImageBottom:boolean;
   public routeTo: string;
   public buttonLabel:string;
 
@@ -116,6 +117,7 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
           this.message = 'La liquidación de los P$G para la empresa ' + this.loanDetail.applicant.bussinessName + ' fué rechazada.' +
             ' Ya no verás esta opción en la lista';
         }
+        this.showImageBottom = false;
         this.routeTo = this.routes.loansettlements.index.href;
         this.buttonLabel = "Volver a inicio";
         this.step = 2;

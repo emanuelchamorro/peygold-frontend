@@ -104,7 +104,8 @@ export class AuthService extends HttpService {
       ... this.buildCompanyInfo(company),
       ... this.buildAddresses(company.address),
       ... this.buildUserSignIn(company),
-      ... this.buildProfilePhoto(company)
+      ... this.buildProfilePhoto(company),
+      ... this.buildCompanyContactPersonInfo(company)
     };
 
     console.log(userInfo);
@@ -123,6 +124,8 @@ export class AuthService extends HttpService {
 
   }
 
+
+
   /**
    * Register a new person in the platform
    * @param institution The new user
@@ -133,6 +136,7 @@ export class AuthService extends HttpService {
       ... this.buildAddresses(institution.address),
       ... this.buildUserSignIn(institution),
       ... this.buildProfilePhoto(institution),
+      ... this.buildInstitutionContactPersonInfo(institution)
     };
 
     console.log(userInfo);
@@ -162,12 +166,12 @@ export class AuthService extends HttpService {
         LastName: person.lastName,
         email: person.email,
         confirmEmail: person.email,
-        phone: person.phone,
+        phone: person.prefixPhone+""+person.phone,
         tac: false,
         newsLetter: false,
         dni: person.documentNumber,
         CardId: person.documentType.id,
-        idOccupation: parseInt(person.occupation.id),
+        IdNacionalidad: parseInt(person.nationality.id),
         idInstitution: parseInt(person.profitInstitution.id)
       }
     };
@@ -183,9 +187,15 @@ export class AuthService extends HttpService {
         CUIT: company.cuit,
         email: company.email,
         confirmEmail: company.email,
-        phone: company.phone,
+        phone: company.prefixPhone+""+company.phone,
         idInstitution: parseInt(company.profitInstitution.id),
-        TAC: true
+        TAC: true,
+        IdCategoriaComercio: parseInt(company.serviceCategory.id),
+        IdCondicionIB: parseInt(company.iibbCondition.id),
+        IdCondicionIva: parseInt(company.ivaCondition.id),
+        Actividad: company.activity,
+        AliasInstitucion:company.alias,
+        NumeroIB:company.iibbNumber
       }
     };
   }
@@ -200,8 +210,10 @@ export class AuthService extends HttpService {
         CUIT: institution.cuit,
         email: institution.email,
         confirmEmail: institution.email,
-        phone: institution.phone,
-        InstitutionWebSite: institution.website
+        phone: institution.prefixPhone+""+institution.phone,
+        InstitutionWebSite: institution.website,
+        AliasInstitucion:institution.alias,
+        MisionInstitucion: institution.mision
       }
     };
   }
@@ -244,6 +256,39 @@ export class AuthService extends HttpService {
     };
   }
 
+
+
+    /**
+   * Build the constact person info to be sent to the register user.
+   */
+  buildInstitutionContactPersonInfo(institution: Institution): any {
+    return {
+      contactPerson: {
+        ContactName: institution.contact.name,
+        ContactLastName: institution.contact.lastName,
+        ContactTipoDocumento: institution.contact.documentType.id,
+        ContactNumeroDocumento: institution.contact.documentNumber,
+        ContactPhone: institution.contact.phone,
+        ContactEmail: institution.contact.email
+      }
+    };
+  }
+
+      /**
+   * Build the constact person info to be sent to the register user.
+   */
+  buildCompanyContactPersonInfo(company: Company): any {
+    return {
+      contactPerson: {
+        ContactName: company.contact.name,
+        ContactLastName: company.contact.lastName,
+        ContactTipoDocumento: company.contact.documentType.id,
+        ContactNumeroDocumento: company.contact.documentNumber,
+        ContactPhone: company.contact.phone,
+        ContactEmail: company.contact.email
+      }
+    };
+  }
   /**
    * Retrieve the token to start the password recovery.
    * @param email The user email
@@ -386,13 +431,31 @@ export class AuthService extends HttpService {
     user.accessToken = value.token;
     return user;
   }
-
+ /**
+  * Register new device
+  * @param email 
+  * @param token 
+  */
   addDevice(email:string, token:string): Promise<any>{
     return this.post('/users/AddNewDevice',{email, token}).toPromise();
   }
 
+
+/**
+ * Check email 
+ * @param email 
+ */
   checkEmail(email:string): Promise<any>{
     return this.get(`/users/CheckEmail/${email}`).toPromise();
+  }
+
+  /**
+   * Verify phone number
+   * @param phone 
+   * @param token 
+   */
+  phoneNumberVerify(PhoneNumber:string,token:string):Promise<any>{
+    return this.post('/users/VerifyPhoneNumber',{PhoneNumber,token}).toPromise();
   }
 
 }

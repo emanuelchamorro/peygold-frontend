@@ -28,7 +28,7 @@ export class LocationService extends HttpService {
       }
 
       response.value.map((country: any) => {
-        this.countries.push(new Country(country.idCountry, country.name));
+        this.countries.push(new Country(country.idCountry, country.name, country.numericPrefix, country.idCountry +'-'+country.numericPrefix ));
       });
       console.log('country',this.countries);
       return this.countries;

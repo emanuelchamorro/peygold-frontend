@@ -12,6 +12,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { IvaCondition } from '../../../../models/iva-condition';
 import { IIBBCondition } from '../../../../models/iibb-condition';
 import { ServiceCategory } from '../../../../models/service-category';
+import {IibbConditionService} from '../../../../services/iibb-condition.service';
+import {IvaConditionService} from '../../../../services/iva-condition.service';
+import {ServiceCategoryService} from '../../../../services/service-category.service';
 
 @Component({
   selector: 'app-pey-register',
@@ -38,7 +41,10 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
     private authService: AuthService,
     private inMemoryService: InMemoryService,
     protected router: Router,
-    private spinnerService:NgxSpinnerService
+    private spinnerService:NgxSpinnerService,
+    private iibbConditionService:IibbConditionService,
+    private ivaConditionService: IvaConditionService,
+    private serviceCategoryService:ServiceCategoryService
   ) {
     super();
   }
@@ -70,6 +76,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
     // Get the countries.
     this.locationService.getCountries().then((countries: Array<Country>) => {
       this.countries = countries;
+      this.nationalities = countries;
     });
 
     // Get the list of institutions
@@ -83,23 +90,23 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
       case User.TYPE_PERSON:
       //TODO: REMPLAZAR POR CONSULTAR CATEGORIAS
         this.user = new Person();
-        this.occupationService.all().then((occupations: Array<Occupation>) => {
-          this.occupations = occupations;
-        });
-
-        this.nationalities = new Array<Nationality>();
-        this.nationalities.push(new Nationality('1','Argentina'));
         break;
       case User.TYPE_COMPANY:
       //TODO:CONSULTAR LAS LISTAS DESPLEGABLES
         this.user = new Company();
         this.user.contact = new Contact();
-        this.ivaConditions = new Array<IvaCondition>();
-        this.ivaConditions.push(new IvaCondition('1','Activo'));
-        this.iibbConditions = new Array<IIBBCondition>();
-        this.iibbConditions.push(new IIBBCondition('1','Régimen simplificado'));
-        this.serviceCategories = new Array<ServiceCategory>();
-        this.serviceCategories.push(new ServiceCategory('1','Comida y bebida'));
+
+        this.iibbConditionService.all().then((items: Array<IIBBCondition>) => {
+          this.iibbConditions = items;
+        });
+
+        this.ivaConditionService.all().then((items: Array<IvaCondition>) => {
+          this.ivaConditions = items;
+        });
+
+        this.serviceCategoryService.all().then((items: Array<ServiceCategory>) => {
+          this.serviceCategories = items;
+        });
         break;
       case User.TYPE_INSTITUTION:
         this.user = new Institution();
@@ -143,6 +150,7 @@ export class PeyRegisterComponent extends BaseComponent implements OnInit, OnDes
     this.cleanState();
     this.cleanCity();
     if (this.user.address.country) {
+      this.user.prefixPhone = this.user.address.country.numericPrefix;
       this.locationService.getStates(this.user.address.country).then((states: Array<State>) => {
         this.states = states;
       });

@@ -1,0 +1,86 @@
+.usuario-verificar {
+	>ul {
+		>li {
+			border-bottom: 1px solid #0000001c;
+			&:first-of-type {
+				border-top: 1px solid #0000001c;
+			}
+			>span {
+				color: #828282;
+				font-size: 14px;
+			}
+		}
+	}
+	button {
+		cursor: pointer;
+		font-size: 14px;
+	}
+}
+.verificacion-content {
+	span {
+		font-size: 14px;
+		font-weight: 600;
+		font-weight: 400;
+		margin-right: 10px;
+	}
+	input[type="number"] {
+		font-size: 14px;
+		font-style: normal;
+		letter-spacing: 1px;
+	}
+	ul {
+		padding-left: 0;
+		list-style: none;
+	}
+	label {
+		font-size: 11px;
+		display: block;
+		width: 100%;
+		margin-bottom: 15px;
+		color: #828282;
+	}
+	input.code-authentication {
+		text-align: center;
+		font-size: 24px;
+		letter-spacing: 1em;
+	}
+}
+.verificar-identidad {
+	li {
+		border-bottom: 1px solid #0000001c;
+		a {
+			padding-top: 15px;
+			padding-bottom: 15px;
+			cursor: pointer;
+			img {
+				margin-right: 10px;
+			}
+			span {
+				&:first-of-type {
+					font-size: 14px;
+					font-weight: 500;
+				}
+			}
+			p {
+				color: #828282;
+				font-size: 12px;
+				font-weight: 500;
+				margin-left: 45px;
+			}
+		}
+	}
+}
+@media screen and (max-width: 640px) {
+	.usuario-form {
+		width: 100% !important;
+	}
+	.user-box {
+		flex-direction: column !important;
+	}
+	.user-column {
+		border: none;
+	}
+	.user-sidebar {
+		text-align: center;
+	}
+}
