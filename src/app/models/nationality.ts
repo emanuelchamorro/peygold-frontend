@@ -1,6 +1,6 @@
-import { SelectOption } from './select-option';
+import { Country } from './country';
 
 /**
  * Nationality model
  */
-export class Nationality extends SelectOption {}
+export class Nationality extends Country {}

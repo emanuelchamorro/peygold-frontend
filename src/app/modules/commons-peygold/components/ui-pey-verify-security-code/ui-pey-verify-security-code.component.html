@@ -14,7 +14,7 @@
                           <div class="form-group">
                              <!-- <input type="text" class="form-control text-center token mb-2 reset-pass" name="token" placeholder="0000"/> -->
                               <input type="text" class="form-control text-center token mb-2" name="token" placeholder="0000"
-                              [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && token.errors}" name="token" [(ngModel)]="user.token"
+                              [ngClass]="{'ng-dirty ng-invalid' : tryNextStep && token.errors}" [(ngModel)]="user.token"
                               #token="ngModel" required />
                               <div *ngIf="!token.pristine && token.invalid || tryNextStep && token.errors"
                               class="invalid-feedback text-left">

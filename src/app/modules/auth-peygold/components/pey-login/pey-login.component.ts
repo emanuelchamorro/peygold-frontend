@@ -68,7 +68,16 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
           }else{
             this.setError('Ha ocurrido un error enviando código de seguridad. No es posible completar la autenticación de 2 pasos.');
           }
-        });
+        }).catch(
+          (error)=>{
+            this.spinnerService.hide();
+            if(error.message.includes('is not a valid phone number')){
+              this.setError('Ha ocurrido un error enviando código de seguridad. No es posible completar la autenticación de 2 pasos.');
+            }else{
+              this.setError('Ha ocurrido un error enviando código de seguridad. No es posible completar la autenticación de 2 pasos.');
+            }
+          }
+        );
       }
     }).catch((e) => {
       this.spinnerService.hide();

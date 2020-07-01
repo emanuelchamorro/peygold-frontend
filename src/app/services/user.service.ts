@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import {Address, City, Contact, Country, ProfitInstitution, State, User} from '../models';
+import {Address, City, Contact, Country, ProfitInstitution, State, User, Nationality, DocumentType} from '../models';
 import {HttpService} from './http.service';
 import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {InMemoryService} from './in-memory.service';
+import { config } from 'rxjs';
+import { IIBBCondition } from '../models/iibb-condition';
+import { IvaCondition } from '../models/iva-condition';
+import { ServiceCategory } from '../models/service-category';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +39,17 @@ export class UserService extends HttpService {
       user.name = response.firstName;
       user.lastName = response.lastName;
       user.fullName = response.fullName;
-      user.phone = response.phone;
+
+      if(response.phone.includes('+')){
+        user.prefixPhone = response.phone.substr(0,3);
+        user.phone = response.phone.replace(user.prefixPhone,'');
+      }else{
+        user.phone = response.phone;
+      }
+
+
+
+
       user.email = response.email;
       user.idUserType = response.idUserType;
       user.cuit = response.cuit;
@@ -87,9 +101,39 @@ export class UserService extends HttpService {
       const contact = new Contact();
       contact.email = response.contactEmail;
       contact.name = response.contactName;
+      contact.lastName = response.contactLastName;
       contact.phone = response.contactPhone;
+      if(response.contactTipoDocumento){
+        contact.documentType = new DocumentType(response.contactTipoDocumento,response.contactTipoDocumento);
+      }     
+      contact.documentNumber = response.contactNumeroDocumento;
+
 
       user.contact = contact;
+
+      if(response.nacionalidad){
+        user.nationality = new Nationality(response.nacionalidad.idNacionalidad,response.nacionalidad.nombreNacionalidad, response.nacionalidad.prefijoTelefonico);
+      }
+
+      user.alias = response.aliasInstitucion;
+      user.mision = response.misionInstitucion;
+
+      user.activity = response.actividad;
+      user.iibbNumber = response.numeroIB;
+      if(response.idCondicionIB){
+        user.iibbCondition = new IIBBCondition(response.idCondicionIB,response.nombreCondicionIB);
+      }
+
+      if(response.idCondicionIva){
+        user.ivaCondition = new IvaCondition(response.idCondicionIva, response.nombreCondicionIva);
+      }
+     
+      if(response.idCategoriaComercio){
+        user.serviceCategory = new ServiceCategory(response.idCategoriaComercio, response.nombreCategoriaComercio); 
+      }
+      
+
+    
       return user;
     });
   }

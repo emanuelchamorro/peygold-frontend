@@ -9,6 +9,12 @@ import {BaseComponent} from '../../components/base.component';
 })
 export class PeySuccessComponent extends BaseComponent implements OnInit {
 
+  private title:string;
+  private message:string;
+  private showImageBottom:boolean;
+  private routeTo: string;
+  private buttonLabel:string;
+
   constructor(
     private route: ActivatedRoute,
     protected router: Router
@@ -20,15 +26,15 @@ export class PeySuccessComponent extends BaseComponent implements OnInit {
     }
   }
 
-  private title: string;
-  private message: string;
-
   /**
    * On init implementation
    */
   ngOnInit() {
     this.title = this.route.snapshot.data[`title`];
     this.message = this.route.snapshot.data[`message`];
+    this.showImageBottom = true;
+    this.buttonLabel = "Iniciar sesión";
+    this.routeTo = this.routes.login.href;
   }
 
 }

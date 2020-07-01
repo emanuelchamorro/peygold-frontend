@@ -17,6 +17,7 @@ export class PeyVerifySecurityCodeComponent  extends BaseComponent implements On
 
   private title:string;
   private message:string;
+  private showImageBottom:boolean;
   private sendType:number;
   private routeTo: string;
   private buttonLabel:string;
@@ -41,6 +42,7 @@ export class PeyVerifySecurityCodeComponent  extends BaseComponent implements On
         (resp)=>{
           this.title = "¡PIN Correcto!";
           this.message = "Tu cuenta ha sido autenticada. Ya puedes iniciar sesión ";
+          this.showImageBottom = false;
           this.buttonLabel = "Iniciar sesión";
           this.routeTo = this.routes.login.href;
           this.step++;

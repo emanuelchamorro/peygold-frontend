@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Address, City, Country, State, Transaction} from '../../../../models';
+import {Address, City, Country, State, Transaction, User} from '../../../../models';
 import {LocationService} from '../../../../services';
 import {BaseComponent} from '../base-component.component';
 
@@ -21,6 +21,12 @@ export class UIPeyAddressFormComponent extends BaseComponent implements OnInit {
   @Input()
   public address: Address;
 
+  @Input()
+  public isBillingAddress: boolean;
+
+  @Input()
+  public editableUser: User;
+
   private editAddress: Address;
 
   protected countries: Array<Country> = [];
@@ -38,7 +44,7 @@ export class UIPeyAddressFormComponent extends BaseComponent implements OnInit {
    */
   ngOnInit() {
     this.editAddress = this.address;
-
+    console.log('editableUser', this.editableUser);
     // Get the Countries
     this.locationService.getCountries().then((countries: Array<Country>) => {
       this.countries = countries;
@@ -79,6 +85,10 @@ export class UIPeyAddressFormComponent extends BaseComponent implements OnInit {
     if (!country) {
       return;
     }
+    if(!this.isBillingAddress){
+      this.editableUser.prefixPhone = country.numericPrefix;
+    }
+
     this.requestStates(country);
   }
 

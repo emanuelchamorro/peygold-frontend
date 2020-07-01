@@ -72,7 +72,16 @@ export class UiPeyVerifySecurityCodeComponent extends BaseComponent implements O
       if(!resp.success){
         this.setError('Ha ocurrido un error enviando código de seguridad.');
       }
-    });
+    }).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        if(error.message.includes('is not a valid phone number')){
+          this.setError('Ha ocurrido un error enviando código de seguridad.');
+        }else{
+          this.setError('Ha ocurrido un error enviando código de seguridad.');
+        }
+      }
+    );
   }
 
 }

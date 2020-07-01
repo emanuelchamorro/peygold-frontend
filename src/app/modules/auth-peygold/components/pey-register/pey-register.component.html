@@ -67,7 +67,7 @@
             </div>
           </div>
         </div>
-        <form name="form" (ngSubmit)="registerForm.form.valid && onSubmit()" #registerForm="ngForm"
+        <form name="form" (ngSubmit)="registerForm.form.valid" #registerForm="ngForm"
           [mustMatch]="['password', 'repeatPassword']" [emailMatch]="['email', 'confirmEmail']" class="register-form" novalidate>
           <div class="col-12" *ngIf="type && step == 1">
             <div class="d-flex flex-column align-items-center row mt-5">      
@@ -300,12 +300,13 @@
                   <label class="has-float-label mb-4 w-100">
                     <input type="text" placeholder="Actividad*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && activity.errors}" name="activity"
-                      [(ngModel)]="user.activity" #activity="ngModel" required />
+                      [(ngModel)]="user.activity" #activity="ngModel" maxlength="255" required />
                     <span>Actividad*</span>
 
                     <div *ngIf="!activity.pristine && activity.invalid || trySubmit && activity.errors"
                       class="invalid-feedback">
                       <div *ngIf="activity.errors.required">Campo es requerido</div>
+                      <div *ngIf="activity.errors.maxlength">Campo debe tener máximo 255 caracteres</div>
                     </div>
                   </label>
                 </div>
@@ -341,11 +342,12 @@
                   <label class="has-float-label mb-4">
                     <input type="text" placeholder="Número IIBB*" class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && iibbNumber.errors}" name="iibbNumber"
-                      [(ngModel)]="user.iibbNumber" #iibbNumber="ngModel" mask="0*" required />
+                      [(ngModel)]="user.iibbNumber" #iibbNumber="ngModel" mask="0*" minlength="11" maxlength="11" required />
                     <span>Número IIBB*</span>
                     <div *ngIf="!iibbNumber.pristine && iibbNumber.invalid || trySubmit && iibbNumber.errors"
                       class="invalid-feedback">
                       <div *ngIf="iibbNumber.errors.required">Campo es requerido</div>
+                      <div *ngIf="iibbNumber.errors.minlength || iibbNumber.errors.maxlength">Campo debe tener 11 dígitos</div>
                     </div>
                   </label>
 
@@ -459,18 +461,24 @@
                   </label>
                 </div>
 
-                <div class="input-group" [hidden]="type != 'person'">
-                  <label class="has-float-label mb-4 w-100">
-                    <input type="text" placeholder="Teléfono móvil" class="form-control w-100"
-                      [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phone.errors}" name="phone"
-                      [(ngModel)]="user.phone" #phone="ngModel" required />
-                    <span>Teléfono</span>
-
-                    <div *ngIf="!phone.pristine && phone.invalid || trySubmit && phone.errors" class="invalid-feedback">
-                      <div *ngIf="phone.errors.required">Campo es requerido</div>
-                    </div>
-                  </label>
-                </div>
+                <div class="input-group-column" [hidden]="type != 'person'">
+                    <label class="has-float-label mb-4">
+                      <input type="text" placeholder="Prefijo" class="form-control w-100"
+                        [ngClass]="{'ng-dirty ng-invalid' : trySubmit && prefixPhone.errors}" name="prefixPhone"
+                        [(ngModel)]="user.prefixPhone" #prefixPhone="ngModel" readonly />
+                      <span>Prefijo</span>
+                    </label>
+                    <label class="has-float-label mb-4">
+                        <input type="text" placeholder="Teléfono móvil*" class="form-control w-100"
+                          [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phone.errors}" name="phone"
+                          [(ngModel)]="user.phone" #phone="ngModel" required />
+                        <span>Teléfono móvil*</span>
+    
+                        <div *ngIf="!phone.pristine && phone.invalid || trySubmit && phone.errors" class="invalid-feedback">
+                          <div *ngIf="phone.errors.required">Campo es requerido</div>
+                        </div>
+                      </label>
+                  </div>
 
                 <div class="input-group" [hidden]="type == 'institution'">
                   <label class="has-float-label mb-4 w-100">
@@ -511,17 +519,12 @@
                   <label class="has-float-label mb-4 w-100">
                     <textarea class="form-control w-100"
                       [ngClass]="{'ng-dirty ng-invalid' : trySubmit && mision.errors}" name="mision"
-                      [(ngModel)]="user.mision" #mision="ngModel" required></textarea>
+                      [(ngModel)]="user.mision" #mision="ngModel" maxlength="500" required></textarea>
                     <span>Misión / Función social*</span>
-
-                    <!-- <input type="text" placeholder="Misión / Función social*" class="form-control w-100"
-                          [ngClass]="{'ng-dirty ng-invalid' : trySubmit && mision.errors}" name="mision"
-                          [(ngModel)]="user.mision" #mision="ngModel" required /> -->
-
-
                     <div *ngIf="!mision.pristine && mision.invalid || trySubmit && mision.errors"
                       class="invalid-feedback">
                       <div *ngIf="mision.errors.required">Campo es requerido</div>
+                      <div *ngIf="mision.errors.maxlength">Campo debe tener máximo 500 caracteres</div>
                     </div>
                   </label>
                 </div>
@@ -663,18 +666,24 @@
                   </label>
                 </div>
 
-                <div class="input-group">
-                  <label class="has-float-label mb-4 w-100">
-                    <input type="text" placeholder="Teléfono móvil" class="form-control w-100"
-                      [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phone.errors}" name="phone"
-                      [(ngModel)]="user.phone" #phone="ngModel" required />
-                    <span>Teléfono</span>
-
-                    <div *ngIf="!phone.pristine && phone.invalid || trySubmit && phone.errors" class="invalid-feedback">
-                      <div *ngIf="phone.errors.required">Campo es requerido</div>
-                    </div>
-                  </label>
-                </div>
+                <div class="input-group-column">
+                    <label class="has-float-label mb-4">
+                      <input type="text" placeholder="Prefijo" class="form-control w-100"
+                        [ngClass]="{'ng-dirty ng-invalid' : trySubmit && prefixPhone.errors}" name="prefixPhone"
+                        [(ngModel)]="user.prefixPhone" #prefixPhone="ngModel" readonly />
+                      <span>Prefijo</span>
+                    </label>
+                    <label class="has-float-label mb-4">
+                        <input type="text" placeholder="Teléfono móvil" class="form-control w-100"
+                          [ngClass]="{'ng-dirty ng-invalid' : trySubmit && phone.errors}" name="phone"
+                          [(ngModel)]="user.phone" #phone="ngModel" required />
+                        <span>Teléfono</span>
+    
+                        <div *ngIf="!phone.pristine && phone.invalid || trySubmit && phone.errors" class="invalid-feedback">
+                          <div *ngIf="phone.errors.required">Campo es requerido</div>
+                        </div>
+                      </label>
+                  </div>
 
 
                 <div class="d-flex justify-content-end row-buttons w-100">

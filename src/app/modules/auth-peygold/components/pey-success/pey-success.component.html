@@ -17,19 +17,5 @@
   </ul>
 </nav>
 <article>
-  <section class="bg-exito">
-    <div class="pey-success container-fluid">
-        <div class="grey-box  col-xs-12 col-sm-6 col-md-6 alertSuccesError p-4 mt-5">
-          <div class="alert-container">
-            <img src="assets/images/confirmacion-blanco.svg" width="100" height="100" class="SuccessWhite mb-2 mt-2">
-            <h2 class="fs-22 fw-700 mb-3" *ngIf="title" [innerHtml]="title"></h2>
-            <p class="w-75" *ngIf="message" [innerHtml]="message"></p>
-            <a [routerLink]="routes.login.href" class="white-button-border">Iniciar sesión</a>
-          </div>
-        </div>
-      </div>
-      <div class="illustration-container">
-       <img src="../../../../../assets/images/ilustracion-personas.svg">
-     </div>
-  </section>
+    <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom" [routeTo]="routeTo" [buttonLabel]="buttonLabel"></app-ui-pey-message-success>
 </article>
