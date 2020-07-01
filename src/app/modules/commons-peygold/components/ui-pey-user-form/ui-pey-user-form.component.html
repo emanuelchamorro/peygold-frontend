@@ -43,7 +43,7 @@
       <div class="usuario-form mt-4 mb-4">
         <div class="input-field" [hidden]="!editableUser.isPerson">
           <label class="has-float-label mb-0 w-100">
-            <input type="text" placeholder="Nombres" class="form-control w-100"
+            <input type="text" placeholder="Nombre" class="form-control w-100"
               [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && name.errors}" name="name"
               [(ngModel)]="editableUser.name" #name="ngModel" required readonly />
             <span>Nombres</span>
