@@ -23,6 +23,7 @@ import { UIPeyUserFormComponent } from './components/ui-pey-user-form/ui-pey-use
 import { UIPeyAddressFormComponent } from './components/ui-pey-address-form/ui-pey-address-form.component';
 import { UiPePeyLayoutComponent } from './layout/ui-pe-pey-layout/ui-pe-pey-layout.component';
 import { UiPeyMessageSuccessComponent } from './components/ui-pey-message-success/ui-pey-message-success.component';
+import { UiPeyMessageSuccessModalComponent } from './components/ui-pey-message-success-modal/ui-pey-message-success-modal.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UiPeyHelpLayoutComponent } from './layout/ui-pey-help-layout/ui-pey-help-layout.component';
 import { UiPeyVerifySecurityCodeComponent } from './components/ui-pey-verify-security-code/ui-pey-verify-security-code.component';
@@ -44,6 +45,7 @@ import { UiPeyVerifySecurityCodeComponent } from './components/ui-pey-verify-sec
     UIPeyAddressFormComponent,
     UiPePeyLayoutComponent,
     UiPeyMessageSuccessComponent,
+    UiPeyMessageSuccessModalComponent,
     UiPeyHelpLayoutComponent,
     UiPeyVerifySecurityCodeComponent,
 

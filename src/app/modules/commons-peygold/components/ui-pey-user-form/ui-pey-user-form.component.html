@@ -460,11 +460,12 @@
     <!-- Validate account -->
     <div class="flex-column w-100 align-items-center p-3"
       [ngClass]="{'d-flex':activeView=='validateAccount', 'd-none': activeView !='validateAccount'}">
-      <div class="usuario-form mt-4 mb-4">
+      <div class="usuario-verificar w-100 pl-3 pr-3 mt-4 mb-4">
         <ul class="pl-0">
 
           <li class="d-flex justify-content-between pt-3 pb-3">
-            <a (click)="phoneVerify=true;identityVerify=false;step=step+1;">Verifica tu teléfono </a>
+            <a (click)="phoneVerify=true;identityVerify=false;step=step+1;" class="d-flex justify-content-between w-100">
+            <span>Verifica tu teléfono</span>
             <span>
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                 y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
@@ -485,9 +486,11 @@
             <i class="d-none">
               <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
             </i>
+          </a>
           </li>
           <li class="d-flex justify-content-between pt-3 pb-3">
-            <a (click)="identityVerify=true;phoneVerify=false;step=0;">Verifica tu identidad </a>
+            <a (click)="identityVerify=true;phoneVerify=false;step=0;" class="d-flex justify-content-between w-100"> 
+           <span>Verifica tu identidad</span>
             <span>
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
                 y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
@@ -508,6 +511,7 @@
             <i class="d-none">
               <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
             </i>
+          </a>
           </li>
         </ul>
 
@@ -521,10 +525,10 @@
               <div class="form-row mt-4 justify-content-between">
                 <label>Teléfono Móvil *</label>
                 <div class="form-group col-md-3 d-flex align-items-center">
-                  <input class="w-100" [value]="editableUser.prefixPhone" readonly />
+                  <input class="w-100" type="text" [value]="editableUser.prefixPhone" readonly />
                 </div>
                 <div class="form-group col-md-9 d-flex align-items-center">
-                  <input class="w-100" [value]="editableUser.phone" readonly />
+                  <input class="w-100" type="text" [value]="editableUser.phone" readonly />
                 </div>
               </div>
               <div class="d-flex justify-content-center">
@@ -554,9 +558,9 @@
               </div>
             </form>
           </div>
-          <app-ui-pey-message-success *ngIf="step==3" [title]="title" [message]="message"
+          <app-ui-pey-message-success-modal *ngIf="step==3" [title]="title" [message]="message"
             [showImageBottom]="showImageBottom" (onContinue)="phoneVerify=false;step=0"
-            [buttonLabel]="buttonLabel"></app-ui-pey-message-success>
+            [buttonLabel]="buttonLabel"></app-ui-pey-message-success-modal>
 
         </app-ui-pey-sidebar>
 
