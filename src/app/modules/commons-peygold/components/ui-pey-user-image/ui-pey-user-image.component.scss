@@ -1,20 +1,30 @@
 @import "~src/assets/scss/colors";
 
 .editable-icon {
-  position: absolute;
-  font-size: 35px;
-  cursor: pointer;
-  margin-top: 46px;
-  margin-left: -22px;
+  background: white;
+  height: 40px;
+  top: 40px;
+  box-shadow: 0px 0px 5px 1px #00000033;
+  right: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  border-radius: 100%;
+}
 
   .fa-camera {
-    color: $p-dark-grey
+    color: $p-dark-grey;
+    font-size: 22px;
+    position: absolute;
+    cursor: pointer;
   }
 
   input{
     display: none;
   }
-}
+
 
 .circle-user {
   height: 90px;
