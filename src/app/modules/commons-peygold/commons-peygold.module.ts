@@ -27,6 +27,7 @@ import { UiPeyMessageSuccessModalComponent } from './components/ui-pey-message-s
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UiPeyHelpLayoutComponent } from './layout/ui-pey-help-layout/ui-pey-help-layout.component';
 import { UiPeyVerifySecurityCodeComponent } from './components/ui-pey-verify-security-code/ui-pey-verify-security-code.component';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -59,6 +60,7 @@ import { UiPeyVerifySecurityCodeComponent } from './components/ui-pey-verify-sec
     NgSelectModule,
     AutocompleteLibModule,
     NgxSpinnerModule,
+    NgbAlertModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {

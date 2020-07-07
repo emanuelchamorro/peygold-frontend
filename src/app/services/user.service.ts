@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import {Address, City, Contact, Country, ProfitInstitution, State, User, Nationality, DocumentType} from '../models';
-import {HttpService} from './http.service';
-import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {InMemoryService} from './in-memory.service';
+import { Address, City, Contact, Country, ProfitInstitution, State, User, Nationality, DocumentType } from '../models';
+import { HttpService } from './http.service';
+import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { InMemoryService } from './in-memory.service';
 import { config } from 'rxjs';
 import { IIBBCondition } from '../models/iibb-condition';
 import { IvaCondition } from '../models/iva-condition';
 import { ServiceCategory } from '../models/service-category';
+import { VerifyStatus } from '../models/verify-status';
+import { Document } from '../models/document';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +31,7 @@ export class UserService extends HttpService {
   one(id: number): Promise<User> {
     const resourceUrl = '/users/' + id;
     console.log(resourceUrl);
-    return this.get(resourceUrl).toPromise().then((response: any)  => {
+    return this.get(resourceUrl).toPromise().then((response: any) => {
       console.log(response);
       const user = new User();
       user.id = response.idUser;
@@ -40,20 +42,17 @@ export class UserService extends HttpService {
       user.lastName = response.lastName;
       user.fullName = response.fullName;
 
-      if(response.phone.includes('+')){
-        user.prefixPhone = response.phone.substr(0,3);
-        user.phone = response.phone.replace(user.prefixPhone,'');
-      }else{
+      if (response.phone.includes('+')) {
+        user.prefixPhone = response.phone.substr(0, 3);
+        user.phone = response.phone.replace(user.prefixPhone, '');
+      } else {
         user.phone = response.phone;
       }
-
-
-
 
       user.email = response.email;
       user.idUserType = response.idUserType;
       user.cuit = response.cuit;
-      user.documentType = this.inMemoryService.documentTypeByValue(response.cardId?response.cardId:'DNI');
+      user.documentType = this.inMemoryService.documentTypeByValue(response.cardId ? response.cardId : 'DNI');
       user.documentNumber = response.dni;
       user.bussinessName = response.socialReason;
       user.profitInstitution = new ProfitInstitution(response.idInstitution);
@@ -67,7 +66,7 @@ export class UserService extends HttpService {
       user.linkedIn = response.linkedIn;
       user.twitter = response.twitter;
       user.facebook = response.facebook;
-      user.systemUserTypeId = response.systemUserTypeId; 
+      user.systemUserTypeId = response.systemUserTypeId;
       if (response.roles) {
         response.roles.map((role: any) => {
           user.addRole(role);
@@ -75,7 +74,85 @@ export class UserService extends HttpService {
       }
 
       user.primaryActivityName = response.primaryActivityName;
-      user.documents = response.documents;
+      user.isLoadAlldocuemnts = false;
+
+      //response.documents = null;
+
+      if (response.documents && response.documents.length > 0) {
+        user.documents = response.documents.map((item: any) => {
+          const document = new Document();
+          document.idDocument = item.idDocument;
+          document.name = item.documentoPath.split("/")[3];
+          document.documentoPath = environment.api.avatarUrl + item.documentoPath;
+          document.documentType = new DocumentType(item.idTipoDocumento);
+           
+          if (user.isPerson) {
+
+            switch (item.idTipoDocumento) {
+              case 1:
+                document.spanLabel = "Imagen del frente del DNI";
+                break;
+              case 2:
+                document.spanLabel = "Imagen del dorso del DNI";
+                break;
+              case 3:
+                document.spanLabel = "Selfie con tu DNI";
+                break;
+            }
+          } else if (user.isCompany) {
+
+            switch (item.idTipoDocumento) {
+              case 4:
+                document.spanLabel = "Constancia de CUIT";
+                break;
+              case 5:
+                document.spanLabel = "Constancia de Ingresos Brutos";
+                break;
+              case 6:
+                document.spanLabel = "Acta de designación de autoridades o poder del firmante";
+                break;
+            }
+          } else if (user.isInstitution) {
+            switch (item.idTipoDocumento) {
+              case 4:
+                document.spanLabel = "Constancia de CUIT";
+                break;
+              case 7:
+                document.spanLabel = "Estatuto de la institucion";
+                break;
+            }
+          }
+          return document;
+        });
+
+        if (user.isPerson || user.isCompany) {
+          if (user.documents.length == 3) {
+            user.isLoadAlldocuemnts = true;
+          }
+        }else{
+          if (user.documents.length == 2) {
+            user.isLoadAlldocuemnts = true;
+          }
+        }
+
+
+      } else {
+        user.documents = new Array<Document>();
+        if (user.isPerson) {
+          user.documents.push(new Document(new DocumentType('1'), "Imagen del frente del DNI"));
+          user.documents.push(new Document(new DocumentType('2'), "Imagen del dorso del DNI"));
+          user.documents.push(new Document(new DocumentType('3'), "Selfie con tu DNI"));
+        } else if (user.isCompany) {
+          user.documents.push(new Document(new DocumentType('4'), "Constancia de CUIT"));
+          user.documents.push(new Document(new DocumentType('5'), "Constancia de Ingresos Brutos"));
+          user.documents.push(new Document(new DocumentType('6'), "Acta de designación de autoridades o poder del firmante"));
+        } else if (user.isInstitution) {
+          user.documents.push(new Document(new DocumentType('4'), "Constancia de CUIT"));
+          user.documents.push(new Document(new DocumentType('7'), "Estatuto de la institucion"));
+        }
+
+      }
+
       user.locals = response.locals;
 
       const address = new Address();
@@ -103,16 +180,16 @@ export class UserService extends HttpService {
       contact.name = response.contactName;
       contact.lastName = response.contactLastName;
       contact.phone = response.contactPhone;
-      if(response.contactTipoDocumento){
-        contact.documentType = new DocumentType(response.contactTipoDocumento,response.contactTipoDocumento);
-      }     
+      if (response.contactTipoDocumento) {
+        contact.documentType = new DocumentType(response.contactTipoDocumento, response.contactTipoDocumento);
+      }
       contact.documentNumber = response.contactNumeroDocumento;
 
 
       user.contact = contact;
 
-      if(response.nacionalidad){
-        user.nationality = new Nationality(response.nacionalidad.idNacionalidad,response.nacionalidad.nombreNacionalidad, response.nacionalidad.prefijoTelefonico);
+      if (response.nacionalidad) {
+        user.nationality = new Nationality(response.nacionalidad.idNacionalidad, response.nacionalidad.nombreNacionalidad, response.nacionalidad.prefijoTelefonico);
       }
 
       user.alias = response.aliasInstitucion;
@@ -120,20 +197,22 @@ export class UserService extends HttpService {
 
       user.activity = response.actividad;
       user.iibbNumber = response.numeroIB;
-      if(response.idCondicionIB){
-        user.iibbCondition = new IIBBCondition(response.idCondicionIB,response.nombreCondicionIB);
+      if (response.idCondicionIB) {
+        user.iibbCondition = new IIBBCondition(response.idCondicionIB, response.nombreCondicionIB);
       }
 
-      if(response.idCondicionIva){
+      if (response.idCondicionIva) {
         user.ivaCondition = new IvaCondition(response.idCondicionIva, response.nombreCondicionIva);
       }
-     
-      if(response.idCategoriaComercio){
-        user.serviceCategory = new ServiceCategory(response.idCategoriaComercio, response.nombreCategoriaComercio); 
-      }
-      
 
-    
+      if (response.idCategoriaComercio) {
+        user.serviceCategory = new ServiceCategory(response.idCategoriaComercio, response.nombreCategoriaComercio);
+      }
+
+      user.phoneNumberConfirmedStatus = new VerifyStatus(response.phoneNumberConfirmed);
+      user.identityVerified = new VerifyStatus(response.identityVerified);
+
+
       return user;
     });
   }
@@ -186,9 +265,9 @@ export class UserService extends HttpService {
         name
       },
       userId: user.id
-    },{
-      responseType : 'text'
-    }).toPromise();
+    }, {
+        responseType: 'text'
+      }).toPromise();
   }
 
   /**
@@ -197,5 +276,13 @@ export class UserService extends HttpService {
    */
   public update(user: User): Promise<any> {
     return this.put(`/users/${user.id}`, user.dataForUpdate).toPromise();
+  }
+
+  /**
+   * Adjustment document identity.
+   * @param documents 
+   */
+  public addDocuments(documents: Array<any>): Promise<any> {
+    return this.post('/users/AddDocuments', { Documents: documents }).toPromise();
   }
 }

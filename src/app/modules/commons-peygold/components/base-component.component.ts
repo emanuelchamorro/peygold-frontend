@@ -23,6 +23,10 @@ export class BaseComponent {
 
   private fieldError:string;
 
+  private labelError:string;
+
+  private labelSuccess:string;
+
   /**
    * Clean the list of error messages.
    * @param delay Milliseconds to clean the error list
@@ -89,6 +93,19 @@ export class BaseComponent {
     return this;
   }
 
+      /**
+   * Clean the error message and add just one error message
+   * @param message Message to add to error list
+   */
+  protected setModalError(message: string, clean = true): BaseComponent {
+    this.labelError = message;
+
+    if (clean) {
+      setTimeout(() => this.labelError = '', 1600);
+    }
+    return this;
+  }
+
   /**
    * Clean the success message and add just one success message
    * @param message Message to add to success list
@@ -98,6 +115,19 @@ export class BaseComponent {
     this.addSuccess(message);
     if (clean) {
       this.waitAndCleanSuccess();
+    }
+    return this;
+  }
+
+        /**
+   * Clean the error message and add just one error message
+   * @param message Message to add to error list
+   */
+  protected setModalSuccess(message: string, clean = true): BaseComponent {
+    this.labelSuccess = message;
+
+    if (clean) {
+      setTimeout(() => this.labelSuccess = '', 1600);
     }
     return this;
   }
@@ -135,6 +165,20 @@ export class BaseComponent {
    */
   get inputError(): string {
     return this.fieldError;
+  }
+
+      /**
+   * Return the current error to be displayed.
+   */
+  get modalError(): string {
+    return this.labelError;
+  }
+
+        /**
+   * Return the current error to be displayed.
+   */
+  get modalSuccess(): string {
+    return this.labelSuccess;
   }
 
   /**

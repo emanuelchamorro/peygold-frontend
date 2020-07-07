@@ -9,6 +9,8 @@ import {Role} from './role';
 import { IvaCondition } from './iva-condition';
 import { IIBBCondition } from './iibb-condition';
 import { ServiceCategory } from './service-category';
+import {VerifyStatus} from './verify-status';
+import {Document} from './document';
 
 /**
  * User model
@@ -59,7 +61,7 @@ export class User extends Model {
   public roles: Array<Role>;
   public rolesTemp: Array<Role>;
   public primaryActivityName: string;
-  public documents: Array<any>;
+  public documents: Array<Document>;
   public locals: Array<any>;
   public contact: Contact;
   public profitInstitution: ProfitInstitution;
@@ -80,7 +82,9 @@ export class User extends Model {
   public serviceCategory:ServiceCategory;
   public iibbNumber:string;
   public mision:string;
-  public phoneNumberConfirmed:boolean;
+  public phoneNumberConfirmedStatus:VerifyStatus;
+  public identityVerified:VerifyStatus;
+  public isLoadAlldocuemnts:boolean;
 
 
   /**

@@ -10,7 +10,8 @@
     <div class="user-column d-flex flex-column p-4">
       <div class="mi-usuario m-3">
         <div class="mb-2">
-          <app-ui-pey-user-image [user]="user" [editable]="true" (update)="updateImage($event)" class="d-flex"></app-ui-pey-user-image>
+          <app-ui-pey-user-image [user]="user" [editable]="true" (update)="updateImage($event)" class="d-flex">
+          </app-ui-pey-user-image>
         </div>
         <span [innerHtml]="completeName"></span>
         <span [innerHtml]="editableUser.email"></span>
@@ -213,12 +214,14 @@
             <label class="has-float-label mb-4">
               <input type="text" placeholder="Número IIBB*" class="form-control w-100"
                 [ngClass]="{'ng-dirty ng-invalid' : storeUser.submitted && iibbNumber.errors}" name="iibbNumber"
-                [(ngModel)]="editableUser.iibbNumber" #iibbNumber="ngModel" mask="0*" minlength="11" maxlength="11" required />
+                [(ngModel)]="editableUser.iibbNumber" #iibbNumber="ngModel" mask="0*" minlength="11" maxlength="11"
+                required />
               <span>Número IIBB*</span>
               <div *ngIf="!iibbNumber.pristine && iibbNumber.invalid || storeUser.submitted && iibbNumber.errors"
                 class="invalid-feedback">
                 <div *ngIf="iibbNumber.errors.required">Campo es requerido</div>
-                <div *ngIf="iibbNumber.errors.minlength || iibbNumber.errors.maxlength">Campo debe tener 11 dígitos</div>
+                <div *ngIf="iibbNumber.errors.minlength || iibbNumber.errors.maxlength">Campo debe tener 11 dígitos
+                </div>
               </div>
             </label>
           </div>
@@ -464,58 +467,56 @@
         <ul class="pl-0">
 
           <li class="d-flex justify-content-between pt-3 pb-3">
-            <a (click)="phoneVerify=true;identityVerify=false;step=step+1;" class="d-flex justify-content-between w-100">
-            <span>Verifica tu teléfono</span>
-            <div class="d-flex position-relative">
-            <span>
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
-                xml:space="preserve" class="chevron-right">
-                <g>
-                  <g>
-                    <path
-                      d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+            <a (click)="phoneVerify=true;identityVerify=false;step=step+1;"
+              class="d-flex justify-content-between w-100">
+              <span>Verifica tu teléfono</span>
+              <div class="d-flex position-relative">
+                <span *ngIf="!editableUser.phoneNumberConfirmedStatus.verified">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px" y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                    xml:space="preserve" class="chevron-right">
+                    <g>
+                      <g>
+                        <path
+                          d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
                                 l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
                                 c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
-                  </g>
-                </g>
-              </svg>
-            </span>
-            <i>
-              <img src="/assets/images/pendiente.svg" width="25" height="25">
-            </i>
-            <i>
-              <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
-            </i>
-          </div>
-          </a>
+                      </g>
+                    </g>
+                  </svg>
+                </span>
+                <i *ngIf="editableUser.phoneNumberConfirmedStatus.verified">
+                  <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
+                </i>
+              </div>
+            </a>
           </li>
           <li class="d-flex justify-content-between pt-3 pb-3">
-            <a (click)="identityVerify=true;phoneVerify=false;step=0;" class="d-flex justify-content-between w-100"> 
-           <span>Verifica tu identidad</span>
-           <div class="d-flex position-relative">
-            <span>
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
-                xml:space="preserve" class="chevron-right">
-                <g>
-                  <g>
-                    <path
-                      d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+            <a (click)="identityVerify=true;phoneVerify=false;step=0;" class="d-flex justify-content-between w-100">
+              <span>Verifica tu identidad</span>
+              <div class="d-flex position-relative">
+                <span *ngIf="!editableUser.identityVerified.verified && !editableUser.isLoadAlldocuemnts">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px" y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                    xml:space="preserve" class="chevron-right">
+                    <g>
+                      <g>
+                        <path
+                          d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
                                 l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
                                 c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
-                  </g>
-                </g>
-              </svg>
-            </span>
-            <i>
-              <img src="/assets/images/pendiente.svg" width="25" height="25">
-            </i>
-            <i>
-              <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
-            </i>
-          </div>
-          </a>
+                      </g>
+                    </g>
+                  </svg>
+                </span>
+                <i *ngIf="!editableUser.identityVerified.verified && editableUser.isLoadAlldocuemnts">
+                  <img src="/assets/images/pendiente.svg" width="25" height="25">
+                </i>
+                <i *ngIf="editableUser.identityVerified.verified">
+                  <img src="/assets/images/confirmacion-verde.svg" width="25" height="25">
+                </i>
+              </div>
+            </a>
           </li>
         </ul>
 
@@ -563,14 +564,113 @@
             </form>
           </div>
           <app-ui-pey-message-success-modal *ngIf="step==3" [title]="title" [message]="message"
-            [showImageBottom]="showImageBottom" (onContinue)="phoneVerify=false;step=0"
-            [buttonLabel]="buttonLabel"></app-ui-pey-message-success-modal>
+            [showImageBottom]="showImageBottom" (onContinue)="phoneVerify=false;step=0" [buttonLabel]="buttonLabel">
+          </app-ui-pey-message-success-modal>
 
         </app-ui-pey-sidebar>
 
         <app-ui-pey-sidebar *ngIf="identityVerify" (onClose)="identityVerify=false;" [closed]="!identityVerify"
           title="Verificación de identidad ">
-            Verifica tu identidad
+          <div *ngIf="editableUser.isPerson" class="verificacion-content pl-5 pr-5 pt-2">
+            <span>Sube las fotos de tu documento para validar tu identidad. Revisa que todas las fotos sean claras, con
+              los datos legibles. </span>
+            <ngb-alert type="danger" *ngIf="modalError" [innerHtml]="modalError"></ngb-alert>
+            <ngb-alert type="success" *ngIf="modalSuccess" [innerHtml]="modalSuccess"></ngb-alert>
+            <ul class="verificar-identidad">
+              <li class="pt-3 pb-3" *ngFor="let doc of editableUser.documents; let i = index">
+                <a *ngIf="!doc.idDocument && !doc.data">
+                  <img src="/assets/images/adjuntar.svg" height="30" (click)="clickedThis(i)" />
+                  <span [innerHtml]="doc.spanLabel" (click)="clickedThis(i)"></span>
+                  <p *ngIf="!doc.documentType.value=='3'">*Captura una selfie en la que se te vea en primer plano
+                    sosteniendo tu DNI y una nota que diga
+                    "Verificación Peygold"</p>
+                  <input id="doc-{{i}}" style="visibility: hidden; width: 0px; height:0px;" #inputFile type="file"
+                    accept="image/*" (change)="uploadImage($event,doc)">
+                </a>
+                <a *ngIf="doc.idDocument || doc.data">
+                  <!-- Nuevo -->
+                  <div class="d-flex img-uploaded">
+                    <div class="img-id">
+                      <img [src]="doc.documentoPath" height="140" />
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                      <span [innerHtml]="doc.spanLabel"></span>
+                      <span [innerHtml]="doc.name"></span>
+                    </div>
+                  </div>
+                  <!-- Nuevo -->
+                </a>
+              </li>
+            </ul>
+            <div *ngIf="!editableUser.isLoadAlldocuemnts" class="d-flex justify-content-center">
+              <a class="solid-blue-button" (click)="sendDocument()">Verificar</a>
+            </div>
+          </div>
+
+          <div *ngIf="editableUser.isCompany" class="verificacion-content pl-5 pr-5 pt-2">
+            <span>Sube los archivos requeridos para validar la identidad de tu empresa.
+              Revisa que todos los documentos esten actualizados.</span>
+            <ngb-alert type="danger" *ngIf="modalError" [innerHtml]="modalError"></ngb-alert>
+            <ngb-alert type="success" *ngIf="modalSuccess" [innerHtml]="modalSuccess"></ngb-alert>
+            <ul class="verificar-identidad">
+              <li class="pt-3 pb-3" *ngFor="let doc of editableUser.documents; let i = index">
+                <a *ngIf="!doc.idDocument && !doc.data">
+                  <img src="/assets/images/adjuntar.svg" height="30" (click)="clickedThis(i)" />
+                  <span [innerHtml]="doc.spanLabel" (click)="clickedThis(i)"></span>
+                  <input id="doc-{{i}}" style="visibility: hidden; width: 0px; height:0px;" #inputFile type="file"
+                    accept="application/pdf" (change)="uploadImage($event,doc)">
+                </a>
+                <a *ngIf="doc.idDocument || doc.data">
+                  <!-- Nuevo -->
+                  <div class="d-flex img-uploaded">
+                    <div class="img-id">
+                      <img src="/assets/images/images.png" height="60" />
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                      <span [innerHtml]="doc.spanLabel"></span>
+                      <span [innerHtml]="doc.name"></span>
+                    </div>
+                  </div>
+                  <!-- Nuevo -->
+                </a>
+              </li>
+            </ul>
+            <div *ngIf="!editableUser.isLoadAlldocuemnts" class="d-flex justify-content-center">
+              <a class="solid-blue-button" (click)="sendDocument()">Verificar</a>
+            </div>
+          </div>
+          <div *ngIf="editableUser.isInstitution" class="verificacion-content pl-5 pr-5 pt-2">
+            <span>Sube los archivos requeridos para validar la identidad de tu institucion.
+              Revisa que todos los documentos esten actualizados.</span>
+            <ngb-alert type="danger" *ngIf="modalError" [innerHtml]="modalError"></ngb-alert>
+            <ngb-alert type="success" *ngIf="modalSuccess" [innerHtml]="modalSuccess"></ngb-alert>
+            <ul class="verificar-identidad">
+              <li class="pt-3 pb-3" *ngFor="let doc of editableUser.documents; let i = index">
+                <a *ngIf="!doc.idDocument && !doc.data">
+                  <img src="/assets/images/adjuntar.svg" height="30" (click)="clickedThis(i)" />
+                  <span [innerHtml]="doc.spanLabel" (click)="clickedThis(i)"></span>
+                  <input id="doc-{{i}}" style="visibility: hidden; width: 0px; height:0px;" #inputFile type="file"
+                    accept="application/pdf" (change)="uploadImage($event,doc)">
+                </a>
+                <a *ngIf="doc.idDocument || doc.data">
+                  <!-- Nuevo -->
+                  <div class="d-flex img-uploaded">
+                    <div class="img-id">
+                      <img src="/assets/images/images.png" height="60" />
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                      <span [innerHtml]="doc.spanLabel"></span>
+                      <span [innerHtml]="doc.name"></span>
+                    </div>
+                  </div>
+                  <!-- Nuevo -->
+                </a>
+              </li>
+            </ul>
+            <div *ngIf="!editableUser.isLoadAlldocuemnts" class="d-flex justify-content-center">
+              <a class="solid-blue-button" (click)="sendDocument()">Verificar</a>
+            </div>
+          </div>
         </app-ui-pey-sidebar>
 
       </div>

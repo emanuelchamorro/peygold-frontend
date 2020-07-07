@@ -85,3 +85,50 @@
 		text-align: center;
 	}
 }
+
+.verificar-identidad {
+	.img-id {
+		display: flex;
+		height: 60px;
+		overflow: hidden;
+		border-radius: 100%;
+		width: 60px;
+		position: relative;
+		margin-right: 15px;
+	}
+	li {
+		a {
+			.img-uploaded {
+				span {
+					&:first-of-type {
+						font-size: 11px;
+						color: #828282;
+					}
+					&:nth-of-type(2) {
+						font-size: 14px;
+					}
+				}
+			}
+		}
+	}
+}
+.img-id {
+	img {
+		position: absolute;
+	}
+}
+@media screen and (max-width: 640px) {
+	.usuario-form {
+		width: 100% !important;
+	}
+	.user-box {
+		flex-direction: column !important;
+	}
+	.user-column {
+		border: none;
+	}
+	.user-sidebar {
+		text-align: center;
+	}
+}
+

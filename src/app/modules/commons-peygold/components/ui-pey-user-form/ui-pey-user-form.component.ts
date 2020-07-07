@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewChildren, QueryList, ElementRef} from '@angular/core';
 import {Address, City, Country, DocumentType, Institution, ProfitInstitution, State, User, Nationality} from '../../../../models';
 import {AuthService} from '../../../auth-peygold/services/auth.service';
 import {UserService} from '../../../../services/user.service';
@@ -16,6 +16,7 @@ import { IibbConditionService } from '../../../../services/iibb-condition.servic
 import { concat } from 'rxjs';
 import { NgModel } from '@angular/forms';
 import {routes} from '../../../eu-peygold/routes';
+import {Document} from '../../../../models/document';
 
 @Component({
   selector: 'app-ui-pey-user-form',
@@ -28,6 +29,8 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   @ViewChild('saveAddressButton',  { static: false }) saveAddressButton: any;
   @ViewChild('saveBillingAddressButton',  { static: false }) saveBillingAddressButton: any;
   @ViewChild('saveContactInfoButton',  { static: false }) saveContactInfoButton: any;
+
+  @ViewChildren('inputFile') inputFile: QueryList<ElementRef>;
   
   public routes = routes;
   @Input()
@@ -59,6 +62,8 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   private routeTo: string;
   private buttonLabel:string;
 
+  private identityDocuments: Array<any>;
+
   constructor(
     private inMemoryService: InMemoryService,
     private authService: AuthService,
@@ -76,6 +81,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     console.log(this.user);
     this.editableUser = this.user;
+    this.identityDocuments = new Array<any>();
     // Get the list of institutions
     this.institutionService.all().then((institutions: Array<Institution>) => {
       this.institutions = institutions.map((institution: Institution) => {
@@ -372,12 +378,121 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
     //TODO: DESCOMNETAR    
    /* this.spinnerService.show();
     this.authService.phoneNumberVerify(this.editableUser.prefixPhone+''+this.editableUser.phone, this.editableUser.token).then((response) => {
-      this.spinnerService.hide();
+        setTimeout(()=>{
+          this.authService.reloadUser().then( (user: User) =>{ 
+            console.log('reload user',user);
+            this.spinnerService.hide();
+            this.editableUser = user
+            let intitutionUser = this.institutions.filter(x => x.value == user.profitInstitution.value)[0];
+            this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+            
+          })
+        },500)
       
     }).catch(() => {
       this.spinnerService.hide();
       this.setInputError('Código inválido. Vuelve a intentarlo');      
     });*/
+  }
+
+  /**
+   * Clicked this for try eevent click
+   * @param i 
+   */
+
+  clickedThis(i:number):void{
+    let inputFieldArray = this.inputFile.filter((element,index) => element.nativeElement.id == 'doc-'+i );
+    let inputElement = inputFieldArray[0];
+    inputElement.nativeElement.click();
+  }
+
+  /**
+   * Upload identity document
+   */
+  uploadImage($event:any, document:Document):void{
+    let file:File =  $event.target[`files`][0];
+    if(file){
+      if(this.editableUser.isPerson){
+        if(file.type != "image/jpeg"){
+          this.setModalError("Debe adjuntar archivos con extensión 'jpeg', 'jpg' o 'png'.");
+          file = null;
+          return;
+        }
+
+      }else{
+        if(file.type != "application/pdf"){
+          this.setModalError("Debe adjuntar archivos con extensión 'pdf'.");
+          file = null;
+          return;
+        }
+
+      }     
+      
+    }
+
+    
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const result: string = reader.result as string;
+ 
+      if (result.includes(',')) {
+        document.name = file.name;
+        document.documentoPath = file.name;
+        document.data = result.split(',')[1] || '';        
+        document.mimeType = "image/jpeg";
+        this.identityDocuments.push({
+          name:document.name,
+          data:document.data,
+          mimeType:document.mimeType,
+          IdTipoDocumento:parseInt(document.documentType.value)
+        });
+      }
+    };
+    reader.onerror = (error) => {
+      console.log(error);
+    }; 
+  }
+
+  sendDocument():void{
+    if(this.editableUser.isPerson || this.editableUser.isCompany){
+      if(!this.identityDocuments || this.identityDocuments.length < 3){
+        this.setModalError("Debe adjuntar todos los documentos solicitados para continuar con el proceso de verificacón de identidad.");
+        return;
+      }
+    }else{
+      if(!this.identityDocuments || this.identityDocuments.length < 2){
+        this.setModalError("Debe adjuntar todos los documentos solicitados para continuar con el proceso de verificacón de identidad.");
+        return;
+      }
+    }
+    console.log(this.identityDocuments);
+
+    this.spinnerService.show();
+    this.userService.addDocuments(this.identityDocuments).then(
+      (resp)=>{
+        
+        console.log(resp);
+        this.setModalSuccess("Los documentos de identidad se han enviado satisfactoriamente.");
+
+        setTimeout(()=>{
+          this.authService.reloadUser().then( (user: User) =>{ 
+            console.log('reload user',user);
+            this.spinnerService.hide();
+            this.editableUser = user
+            let intitutionUser = this.institutions.filter(x => x.value == user.profitInstitution.value)[0];
+            this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+            
+          })
+        },500)
+      }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        console.log(error);
+        this.setModalError("Ha ocurrido un error enviando los documentos de identidad.");
+      }
+    )
   }
 
 }

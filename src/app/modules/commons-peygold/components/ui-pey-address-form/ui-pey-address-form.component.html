@@ -100,8 +100,11 @@
       <label class="has-float-label mb-4">
         <input type="text" placeholder="Prefijo" class="form-control w-100" (change)="emitAddress($event)"
           [ngClass]="{'ng-dirty ng-invalid' : addressForm.submitted && prefixPhone.errors}" name="prefixPhone"
-          [(ngModel)]="editableUser.prefixPhone" #prefixPhone="ngModel" readonly />
+          [(ngModel)]="editableUser.prefixPhone" #prefixPhone="ngModel" readonly required />
         <span>Prefijo</span>
+        <div *ngIf="!prefixPhone.pristine && prefixPhone.invalid || addressForm.submitted && prefixPhone.errors" class="invalid-feedback">
+          <div *ngIf="prefixPhone.errors.required">Campo es requerido</div>
+        </div>
       </label>
       <label class="has-float-label mb-4">
         <input type="text" placeholder="Teléfono móvil*" class="form-control w-100" (change)="emitAddress($event)"
