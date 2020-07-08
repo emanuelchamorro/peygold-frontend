@@ -578,7 +578,8 @@
             <ngb-alert type="success" *ngIf="modalSuccess" [innerHtml]="modalSuccess"></ngb-alert>
             <ul class="verificar-identidad">
               <li class="pt-3 pb-3" *ngFor="let doc of editableUser.documents; let i = index">
-                <a *ngIf="!doc.idDocument && !doc.data">
+                <a *ngIf="!doc.idDocument && !doc.data" class="d-flex w-100 justify-content-between">
+                 <div>
                   <img src="/assets/images/adjuntar.svg" height="30" (click)="clickedThis(i)" />
                   <span [innerHtml]="doc.spanLabel" (click)="clickedThis(i)"></span>
                   <p *ngIf="!doc.documentType.value=='3'">*Captura una selfie en la que se te vea en primer plano
@@ -586,6 +587,11 @@
                     "Verificación Peygold"</p>
                   <input id="doc-{{i}}" style="visibility: hidden; width: 0px; height:0px;" #inputFile type="file"
                     accept="image/*" (change)="uploadImage($event,doc)">
+                  </div>
+
+                    <span><svg _ngcontent-nhg-c8="" xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" class="chevron-right" style="enable-background:new 0 0 238.003 238.003;" version="1.1" viewBox="0 0 238.003 238.003" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><g _ngcontent-nhg-c8=""><g _ngcontent-nhg-c8=""><path _ngcontent-nhg-c8="" d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                      l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                      c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z"></path></g></g></svg></span>
                 </a>
                 <a *ngIf="doc.idDocument || doc.data">
                   <!-- Nuevo -->
@@ -593,7 +599,7 @@
                     <div class="img-id">
                       <img [src]="doc.documentoPath" height="140" />
                     </div>
-                    <div class="d-flex flex-column justify-content-center">
+                    <div class="d-flex flex-column justify-content-center overflow-hidden">
                       <span [innerHtml]="doc.spanLabel"></span>
                       <span [innerHtml]="doc.name"></span>
                     </div>
