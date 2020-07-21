@@ -11,6 +11,8 @@ import { IIBBCondition } from './iibb-condition';
 import { ServiceCategory } from './service-category';
 import {VerifyStatus} from './verify-status';
 import {Document} from './document';
+import {Card} from './card';
+import { Status } from './status';
 
 /**
  * User model
@@ -85,6 +87,7 @@ export class User extends Model {
   public phoneNumberConfirmedStatus:VerifyStatus;
   public identityVerified:VerifyStatus;
   public isLoadAlldocuemnts:boolean;
+  public cards: Array<Card>;
 
 
   /**
@@ -262,6 +265,25 @@ export class User extends Model {
     }
 
     return this.idUserType === User.INSTITUTION;
+  }
+
+  /**
+   * get veirfied account user
+   */
+  get isVerifiedAccount(): boolean{
+    return this.phoneNumberConfirmedStatus.verified && this.identityVerified.verified;
+  }
+
+  get currentCard():Card{
+    const card =  new Card();
+    card.id = 1;
+    card.number = '3456 0987 7564 0009'
+    card.status = new Status('2','Activa');
+    card.dueDate = '01/2040'
+    card.amount = 5600;
+    card.pin = '4321'
+    return card;
+    //return null;
   }
 }
 

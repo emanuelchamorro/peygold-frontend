@@ -19,7 +19,7 @@ export class Transaction extends Model {
   public sender: User;
   public messages: string;
   public reason: string;
-  public type: TransactionType;
+  public type: TransactionType; //(tipo de moneda: Pesos, Puntos y CreditPoints)
   public commissionPercentaje: number;
   public commissionAmmount: number;
   public idOriginRecharge: number;

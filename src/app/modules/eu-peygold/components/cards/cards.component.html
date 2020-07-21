@@ -1,0 +1,1025 @@
+<!--VISTA CUENTA DE PEYGOLD NO VERIFICADA-->
+<div *ngIf="!user.isVerifiedAccount" class="col-lg-11 white-container-wrapper bg-gradient">
+    <h2 class="text-white d-flex align-items-center mb-5"><span class="icon-tarjeta fs-22"></span>Tarjeta prepaga</h2>
+    <div class="content-center">
+
+        <div class="wallet-prepaga position-relative mb-4" id="prepaga-wallet">
+            <div class="inactive-card">
+                <span class="text-center text-white">Pronto tendrás disponible este producto</span>
+            </div>
+            <div class="prepaga-data p-3">
+                <span class="prepaga-number">xxxx xxxx xxxx 3456</span>
+                <div class="prepaga-fecha mb-1 mt-1 d-flex flex-column">
+                    <span>hasta thru</span>
+                    <span>12/23</span>
+                </div>
+                <span class="prepaga-name" [innerHtml]="user.completeName"></span>
+            </div>
+        </div>
+        <div class="prepaga-heading col-md-8 mb-4 text-center">
+            <h2>Tarjeta Prepaga Peygold</h2>
+            <p class="mb-5">
+                Para acceder a este producto es necesario que verifiques tu cuenta primero
+            </p>
+            <a [routerLink]="[routes.me.index.href,'validateAccount']" class="solid-blue-button mt-4">Verificar
+                cuenta</a>
+        </div>
+    </div>
+</div>
+
+<!--VISTA PARA SOLICITUD DE TARJETA-->
+<div *ngIf="user.isVerifiedAccount && !user.currentCard" class="col-lg-11 white-container-wrapper bg-gradient">
+    <h2 class="text-white d-flex align-items-center mb-5"><span class="icon-tarjeta fs-22"></span>Tarjeta prepaga
+    </h2>
+    <div class="content-center">
+
+        <div class="wallet-prepaga mb-4" id="prepaga-wallet">
+            <div class="prepaga-data p-3">
+                <span class="prepaga-number">xxxx xxxx xxxx 3456</span>
+                <div class="prepaga-fecha mb-1 mt-1 d-flex flex-column">
+                    <span>hasta thru</span>
+                    <span>12/23</span>
+                </div>
+                <span class="prepaga-name" [innerHtml]="user.completeName"></span>
+            </div>
+        </div>
+
+
+        <div class="prepaga-heading col-md-8 mb-4 text-center">
+            <h2>¡Obtenela totalmente gratis !</h2>
+            <p>
+                Completa los datos para recibir la Tarjeta Prepaga Peygold en tu
+                domicilio y comenzar a utilizar tu dinero de forma práctica y segura
+            </p>
+        </div>
+
+        <div class="row prepaga-datos w-100">
+            <div class="col-xs-12 col-sm-8">
+                <div class="grey-box p-3 d-flex flex-column">
+                    <span>Datos del titular</span>
+                    <span class="mb-2">Se utilizan los datos verificados para emitir su tarjeta</span>
+                    <ul>
+                        <li [hidden]="user.isPerson">
+                            <span>Empresa:</span>
+                            <span [innerHtml]="user.completeName"></span>
+                        </li>
+                        <li [hidden]="!user.isPerson">
+                            <span>Nombre/s:</span>
+                            <span [innerHtml]="user.name"></span>
+                        </li>
+                        <li [hidden]="!user.isPerson">
+                            <span>Apellido/s:</span>
+                            <span [innerHtml]="user.lastName">Navarro</span>
+                        </li>
+                        <li [hidden]="user.isPerson">
+                            <span>CUIT:</span>
+                            <span [innerHtml]="user.cuit"></span>
+                        </li>
+                        <li [hidden]="!user.isPerson">
+                            <span>DNI:</span>
+                            <span [innerHtml]="user.documentNumber"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="grey-box p-3 d-flex flex-column">
+                    <span>Solicitud 100% bonificada</span>
+
+                    <ul>
+                        <li>
+                            <span>Emisión:</span>
+                            <span>$ 0,00</span>
+                        </li>
+                        <li>
+                            <span>Costo de envio:</span>
+                            <span>$ 0,00</span>
+                        </li>
+                        <li>
+                            <span>Recarga inicial:</span>
+                            <span>$ 0,00</span>
+                        </li>
+                        <li>
+                            <span>Total:</span>
+                            <span>$ 0,00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <form name="formSendCardRequest" (ngSubmit)="formSendCardRequest.form.valid && preSendCardRequest()"
+                #formSendCardRequest="ngForm" novalidate>
+
+                <div class="col-xs-12 col-sm-12">
+
+                    <div class="grey-box d-flex position-relative flex-column p-3">
+                        <span>Datos de envio</span>
+                        <div class="form-check text-left">
+                            <input (click)="activeView='true'" class="form-check-input current-address" type="radio"
+                                name="exampleRadios" id="exampleRadios1" value="0" #exampleRadios="ngModel"
+                                [(ngModel)]="sendTypeAddress" checked />
+                            <label class="form-check-label" for="exampleRadios1" [innerHtml]="user.address.street">
+                            </label>
+                        </div>
+                        <ul *ngIf="activeView=='true'" class="list-current-address">
+                            <li>
+                                <span>Provincia: </span>
+                                <span [innerHtml]="user.address.state.label"></span>
+                            </li>
+                            <li>
+                                <span>Ciudad/Barrio: </span>
+                                <span [innerHtml]="user.address.city.label"></span>
+                            </li>
+                            <li>
+                                <span>Calle y número: </span>
+                                <span [innerHtml]="user.address.houseNumber"></span>
+                            </li>
+                            <li>
+                                <span>Código Postal: </span>
+                                <span [innerHtml]="user.address.zipCode">1880</span>
+                            </li>
+                        </ul>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="form-check w-100 text-left">
+                                <input (click)="activeView='false'" class="form-check-input new-address" type="radio"
+                                    name="exampleRadios" id="exampleRadios2" value="1" #exampleRadios="ngModel"
+                                    [(ngModel)]="sendTypeAddress">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Entregar en otra dirección
+                                </label>
+                            </div>
+                        </div>
+                        <div *ngIf="activeView=='false'" class="prepaga-new-direction mt-4">
+                            <div class="form-group">
+                                <ng-select placeholder="Provincia" (change)="getCities($event)"
+                                    class="custom-select  mb-0 w-100" bindLabel="label" [searchable]="false"
+                                    [items]="states" [addTag]="false" name="state" [(ngModel)]="address.state"
+                                    [ngClass]="{'ng-dirty ng-invalid' : formSendCardRequest.submitted && state.errors}"
+                                    #state="ngModel" required>
+                                </ng-select>
+                                <div *ngIf="!state.pristine && state.invalid || formSendCardRequest.submitted && state.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="state.errors.required">Campo es requerido</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <ng-select placeholder="Ciudad/Barrio" class="custom-select mb-0 w-100"
+                                    bindLabel="label" [searchable]="false" [items]="cities" [addTag]="false" name="city"
+                                    [(ngModel)]="address.city"
+                                    [ngClass]="{'ng-dirty ng-invalid' : formSendCardRequest.submitted && city.errors}"
+                                    #city="ngModel" required>
+                                </ng-select>
+                                <div *ngIf="!city.pristine && city.invalid || formSendCardRequest.submitted && city.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="city.errors.required">Campo es requerido</div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="has-float-label w-100">
+                                        <input type="text" placeholder="Calle" class="form-control w-100"
+                                            [ngClass]="{'ng-dirty ng-invalid' : formSendCardRequest.submitted && street.errors}"
+                                            name="street" [(ngModel)]="address.street" #street="ngModel" required />
+                                        <span>Calle</span>
+
+                                        <div *ngIf="!street.pristine && street.invalid || formSendCardRequest.submitted && street.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="street.errors.required">Campo es requerido</div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="has-float-label w-100">
+                                        <input type="text" placeholder="N° de calle" class="form-control w-100"
+                                            [ngClass]="{'ng-dirty ng-invalid' : formSendCardRequest.submitted && houseNumber.errors}"
+                                            name="houseNumber" [(ngModel)]="address.houseNumber" #houseNumber="ngModel"
+                                            required />
+                                        <span>N° de calle</span>
+
+                                        <div *ngIf="!houseNumber.pristine && houseNumber.invalid || formSendCardRequest.submitted && houseNumber.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="houseNumber.errors.required">Campo es requerido</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="has-float-label w-100">
+                                        <input type="text" placeholder="Piso/Depto/Casa" class="form-control w-100"
+                                            [ngClass]="{'ng-dirty ng-invalid' : formSendCardRequest.submitted && buildingFloor.errors}"
+                                            name="buildingFloor" [(ngModel)]="address.buildingFloor"
+                                            #buildingFloor="ngModel" mask="0*" required />
+                                        <span>Piso/Depto/Casa</span>
+
+                                        <div *ngIf="!buildingFloor.pristine && buildingFloor.invalid || formSendCardRequest.submitted && buildingFloor.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="buildingFloor.errors.required">Campo es requerido</div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="has-float-label w-100">
+                                        <input type="text" placeholder="Código postal" class="form-control w-100"
+                                            [ngClass]="{'ng-dirty ng-invalid' : formSendCardRequest.submitted && zipCode.errors}"
+                                            name="zipCode" [(ngModel)]="address.zipCode" mask="0*" #zipCode="ngModel"
+                                            required />
+                                        <span>Código postal</span>
+
+                                        <div *ngIf="!zipCode.pristine && zipCode.invalid || formSendCardRequest.submitted && zipCode.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="zipCode.errors.required">Campo es requerido</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end w-100">
+                    <button type="submit" class="solid-blue-button">Continuar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--MODAL CONFIRMAR SOLICITUD DE TARJETA-->
+<app-ui-pey-sidebar *ngIf="confirmCardRequest" (onClose)="confirmCardRequest=false;stepConfirmCardRequest=0"
+    [closed]="!confirmCardRequest" title="Detalle de la operación">
+    <div *ngIf="stepConfirmCardRequest==0" class="modal-content pl-4 pr-4 pt-2">
+        <ul class="operation-date">
+            <li><span>Fecha de solicitud</span>
+                <span [innerHtml]="currentDate | date:medium"></span>
+            </li>
+        </ul>
+
+        <ul class="user-info-modal">
+            <li>
+                <span>Información del titular</span>
+            </li>
+            <li [hidden]="!user.isPerson">
+                <span>Nombre y Apellido</span>
+                <span [innerHtml]="user.completeName"></span>
+            </li>
+            <li [hidden]="!user.isPerson">
+                <span>DNI</span>
+                <span [innerHtml]="user.documentNumber"></span>
+            </li>
+            <li [hidden]="user.isPerson">
+                <span>Empresa</span>
+                <span [innerHtml]="user.completeName"></span>
+            </li>
+            <li [hidden]="user.isPerson">
+                <span>CUIT</span>
+                <span [innerHtml]="user.cuit"></span>
+            </li>
+
+        </ul>
+
+        <ul class="envio-info-modal">
+            <li>
+                <span>Información de envio</span>
+            </li>
+            <li>
+                <span>Domicilio de envio</span>
+                <span *ngIf="sendTypeAddress=='0'" [innerHtml]="user.address.street"></span>
+                <span *ngIf="sendTypeAddress=='1' && address" [innerHtml]="address.street"></span>
+            </li>
+        </ul>
+
+        <ul class="pago-detail">
+            <li>
+                <span>Información de pago</span>
+            </li>
+            <li>
+                <span>Costo de emisión</span>
+                <span>$ 0,00</span>
+            </li>
+            <li>
+                <span>Costo de envio</span>
+                <span>$ 0,00</span>
+            </li>
+            <li>
+                <span>Recarga inicial</span>
+                <span>$ 0,00</span>
+            </li>
+        </ul>
+
+        <ul class="total-amount-detail">
+            <li class="pb-0">
+                <span>Total a pagar</span>
+                <span>$ 0,00</span>
+            </li>
+        </ul>
+
+
+        <div class="d-flex justify-content-center mt-3">
+            <button (click)="sendCardRequest()" class="solid-blue-button mr-2">Solicitar tarjeta</button>
+
+        </div>
+    </div>
+    <app-ui-pey-message-success-modal *ngIf="stepConfirmCardRequest==1" [title]="title" [message]="message"
+        [showImageBottom]="showImageBottom" (onContinue)="confirmCardRequest=false;stepConfirmCardRequest=0"
+        [buttonLabel]="buttonLabel">
+    </app-ui-pey-message-success-modal>
+</app-ui-pey-sidebar>
+
+<!--VISTA TARJETA HOME-->
+<div *ngIf="user.isVerifiedAccount && user.currentCard && !activityView && !rechargeView"
+    class="col-lg-11 white-container-wrapper bg-gradient">
+
+    <h2 class="text-white d-flex align-items-center mb-5"><span class="icon-tarjeta fs-22"></span>Tarjeta prepaga
+    </h2>
+    <div class="content-center">
+
+        <div class="wallet-prepaga position-relative mb-4" id="prepaga-wallet">
+            <div *ngIf="user.currentCard.status.value==3" class="canceled-card">
+                <span class="text-center text-white">Tu tarjeta está suspendida para operar</span>
+            </div>
+            <div class="prepaga-data p-3">
+                <span class="prepaga-number" [innerHtml]="'xxxx xxxx xxxx '+user.currentCard.number.substr(-4)"></span>
+                <div class="prepaga-fecha mb-1 mt-1 d-flex flex-column">
+                    <span>hasta thru</span>
+                    <span [innerHtml]="user.currentCard.dueDate"></span>
+                </div>
+                <span class="prepaga-name" [innerHtml]="user.completeName"></span>
+            </div>
+        </div>
+        <div class="row prepaga-tarjeta w-100">
+            <div class="col-xs-12 col-sm-12">
+                <div class="grey-box d-flex position-relative flex-column p-3">
+                    <div class="prepaga-saldo d-flex justify-content-center flex-column align-items-center">
+                        <span>Saldo disponible:</span>
+                        <span>${{user.currentCard.amount | number:'1.0'}}</span>
+                    </div>
+                    <div class="prepaga-cuenta mb-4">
+                        <h4 class="text-left mb-3">Cuenta</h4>
+                        <a *ngIf="user.currentCard.status.value==1"
+                            class="prepaga-actividad d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-column text-left w-100">
+                                <span class="text-secondary">Ver actividad</span>
+                                <span class="text-secondary">Controla toda la actividad de la cuenta</span>
+                            </div>
+                            <span>
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                                    xml:space="preserve" class="chevron-right">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                            l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                            c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                        <a *ngIf="user.currentCard.status.value!=1" (click)="activityView=true;rechargeView=false"
+                            class="prepaga-actividad d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-column text-left w-100">
+                                <span>Ver actividad</span>
+                                <span>Controla toda la actividad de la cuenta</span>
+                            </div>
+                            <span>
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                                    xml:space="preserve" class="chevron-right">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                               l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                               c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                        <a *ngIf="user.currentCard.status.value!=2"
+                            class="prepaga-recargar d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-column text-left w-100">
+                                <span class="text-secondary">Recargar tarjeta</span>
+                                <span class="text-secondary">Transfiere dinero desde tu Billetera Pesos para recargar tu
+                                    Mastercard</span>
+                            </div>
+                            <span>
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                                    xml:space="preserve" class="chevron-right text-secondary">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                            l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                            c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                        <a *ngIf="user.currentCard.status.value==2" (click)="activityView=false;rechargeView=true"
+                            class="prepaga-recargar d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-column text-left w-100">
+                                <span>Recargar tarjeta</span>
+                                <span>Transfiere dinero desde tu Billetera Pesos para recargar tu Mastercard</span>
+                            </div>
+                            <span>
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                                    xml:space="preserve" class="chevron-right text-secondary">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                               l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                               c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="prepaga-seguridad mb-4">
+                        <h4 class="text-left mb-3">Seguridad</h4>
+
+                        <a *ngIf="user.currentCard.status.value!=2"
+                            class="prepaga-pin d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-column text-left w-100">
+                                <span class="text-secondary">PIN Cajero</span>
+                                <span class="text-secondary">Actualiza tu PIN para poder utilizar tu tarjeta en las
+                                    redes de cajeros automáticos</span>
+                            </div>
+                            <span>
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                                    xml:space="preserve" class="chevron-right text-secondary">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                          l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                          c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+
+                        <button *ngIf="user.currentCard.status.value==2" (click)="pinUpdate=true;stepPinUpdate=0"
+                            type="button" id="viewModal1"
+                            class="prepaga-pin d-flex justify-content-between align-items-center  w-100">
+                            <div class="d-flex flex-column text-left w-100">
+                                <span>PIN Cajero</span>
+                                <span>Actualiza tu PIN para poder utilizar tu tarjeta en las redes de cajeros
+                                    automáticos</span>
+                            </div>
+                            <span>
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                                    xml:space="preserve" class="chevron-right text-secondary">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                           l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                           c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <button *ngIf="user.currentCard.status.value==2" (click)="cardSuspend=true;stepCardSuspend=0"
+                            type="button" id="viewModal4"
+                            class="prepaga-suspender d-flex justify-content-between align-items center  w-100">
+                            <div class="d-flex flex-column text-left w-100">
+                                <span class=Suspender>tarjeta</span>
+                                <span>Suspendela para evitar que realicen consumos sin tu consentimiento</span>
+                            </div>
+                            <span>
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                                    xml:space="preserve" class="chevron-right text-secondary">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                           l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                           c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                        </button>
+                        <a *ngIf="user.currentCard.status.value==1"
+                            class="row prepaga-suspender d-flex justify-content-between align-items center">
+                            <div class="col-sm-9 d-flex flex-column text-left w-100">
+                                <span>Activar tarjeta</span>
+                                <span>¿La tarjeta ya llegó? Activala</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <button (click)="activateCard=true" type="button" class="solid-blue-button">Activar
+                                    tarjeta</button>
+                            </div>
+                        </a>
+                        <a *ngIf="user.currentCard.status.value==3" class="row prepaga-suspender d-flex justify-content-between align-items center">
+                                <div class="col-sm-9 d-flex flex-column text-left w-100">
+                                <span>Solicitar nueva tarjeta</span>
+                                <span>Solicita una nueva tarjeta y disfruta los beneficios de formar parte de Peygold</span>
+                                </div>
+                               <div class="col-sm-3">
+                                <button type="button" class="solid-blue-button" id="viewModal1" >Solicitar tarjeta</button>
+                              </div>
+                            </a>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL ACTIVAR TARJETA-->
+<app-ui-pey-sidebar *ngIf="activateCard" (onClose)="activateCard=false;stepactivateCard=0" [closed]="!activateCard"
+    title="Activar Tarjeta">
+    <div *ngIf="stepactivateCard==0" class="pl-4 pr-4 pt-2">
+        <span>Activa los datos para activar tu tarjeta</span>
+        <form name="activateCardForm" #activateCardForm="ngForm"
+            (ngSubmit)="activateCardForm.form.valid && activateCardUser()" class="mt-4" novalidate
+            [mustMatch]="['pin', 'repeatPin']">
+            <div class="form-group mb-4">
+                <label class="has-float-label mb-0 w-100">
+                    <input type="text" name="cardNumber" #cardNumber="ngModel" [(ngModel)]="cardToActive.number"
+                        [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && cardNumber.errors}"
+                        placeholder="Número de tarjeta*" class="w-100" minlength="16" maxlength="16" mask="0*"
+                        required />
+                    <span>Número de tarjeta*</span>
+                    <div *ngIf="!cardNumber.pristine && cardNumber.invalid || activateCardForm.submitted && cardNumber.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="cardNumber.errors.required">Campo es requerido</div>
+                        <div *ngIf="cardNumber.errors.minlength || cardNumber.errors.maxlength">Campo debe tener 16
+                            dígitos</div>
+
+                    </div>
+                </label>
+
+            </div>
+            <div class="form-group mb-4">
+                <label class="has-float-label mb-0 w-100">
+                    <input type="text" name="pin" #pin="ngModel" [(ngModel)]="cardToActive.pin"
+                        [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && pin.errors}"
+                        placeholder="Nuevo PIN de 4 dígitos*" class="w-100" minlength="4" maxlength="4" mask="0*"
+                        required />
+                    <span>Nuevo Pin de 4 dígitos*</span>
+                    <div *ngIf="!pin.pristine && pin.invalid || activateCardForm.submitted && pin.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="pin.errors.required">Campo es requerido</div>
+                        <div *ngIf="pin.errors.minlength || pin.errors.maxlength">Campo debe tener 4 dígitos</div>
+                    </div>
+                </label>
+            </div>
+            <div class="form-group mb-4">
+                <label class="has-float-label mb-0 w-100">
+                    <input type="text" name="repeatPin" #repeatPin="ngModel" [(ngModel)]="cardToActive.repeatPin"
+                        [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && repeatPin.errors}"
+                        placeholder="Confirma el nuevo PIN*" class="w-100" mask="0*" required />
+                    <span>Nuevo Pin de 4 dígitos*</span>
+                    <div *ngIf="!repeatPin.pristine && repeatPin.invalid || activateCardForm.submitted && repeatPin.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="repeatPin.errors.required">Campo es requerido</div>
+                        <div *ngIf="repeatPin.errors.mustMatch">
+                            Los pin's no coinciden
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input  d-flex" type="checkbox" value="" id="defaultCheck1" ngModel
+                    name="terms1" #terms1="ngModel" required>
+                <label class="form-check-label" for="defaultCheck1">
+                    Acepto las politicas de privacidad y las Cookies*
+                </label>
+                <div *ngIf="!terms1.pristine && terms1.invalid || activateCardForm.submitted && terms1.errors"
+                    class="invalid-feedback">
+                    <div *ngIf="terms1.errors.required">Campo es requerido</div>
+                </div>
+
+            </div>
+            <div class="form-check">
+                <input class="form-check-input  d-flex" type="checkbox" value="" id="defaultCheck2" ngModel
+                    name="terms2" #terms2="ngModel" required>
+                <label class="form-check-label" for="defaultCheck2">
+                    Estoy de acuerdo con los Términos y Condiciones*
+                </label>
+                <div *ngIf="!terms2.pristine && terms2.invalid || activateCardForm.submitted && terms2.errors"
+                    class="invalid-feedback">
+                    <div *ngIf="terms2.errors.required">Campo es requerido</div>
+                </div>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input d-flex" type="checkbox" value="" id="defaultCheck3" ngModel name="terms3"
+                    #terms3="ngModel" required>
+                <label class="form-check-label" for="defaultCheck3">
+                    Acepto los precios y Tarifas*
+                </label>
+                <div *ngIf="!terms3.pristine && terms3.invalid || activateCardForm.submitted && terms3.errors"
+                    class="invalid-feedback">
+                    <div *ngIf="terms3.errors.required">Campo es requerido</div>
+                </div>
+            </div>
+            <div class="d-flex w-100 justify-content-center mt-4">
+                <button type="submit" class="solid-blue-button">Activar tarjeta</button>
+            </div>
+        </form>
+    </div>
+    <app-ui-pey-message-success-modal *ngIf="stepactivateCard==1" [title]="title" [message]="message"
+        [showImageBottom]="showImageBottom" (onContinue)="activateCard=false;stepactivateCard=0"
+        [buttonLabel]="buttonLabel">
+    </app-ui-pey-message-success-modal>
+</app-ui-pey-sidebar>
+
+<!--MODAL ACTUALIZAR PIN-->
+<app-ui-pey-sidebar *ngIf="pinUpdate" (onClose)="pinUpdate=false;stepPinUpdate=0" [closed]="!pinUpdate"
+    title="Actualizar PIN">
+    <div *ngIf="stepPinUpdate==0" class="modal-content pl-4 pr-4 pt-2">
+        <div class="pin-number-modal">
+            <span>Tu numero de PIN para operar en cajeros automáticos es:</span>
+            <form>
+                <div class="form-group mt-4">
+                    <input type="text" [value]="user.currentCard.pin" disabled>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button (click)="stepPinUpdate=stepPinUpdate+1" type="button" id="viewModal2"
+                        class="solid-blue-button">Actualizar PIN</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div *ngIf="stepPinUpdate==1" class="modal-content pl-4 pr-4 pt-2">
+        <div class="nuevoPIN-modal">
+            <span>Ingresa tu contraseña de Peygold para continuar:</span>
+            <form name="passwordValidate" #passwordValidate="ngForm"
+                (ngSubmit)="passwordValidate.form.valid && validatePassword()" novalidate>
+                <div class="form-group mt-4">
+                    <label class="has-float-label w-100">
+                        <input type="password" name="password" #password="ngModel" ngModel placeholder="Contraseña*"
+                            value="" class=" w-100" required />
+                        <span>Contraseña*</span>
+                        <div *ngIf="!password.pristine && password.invalid || passwordValidate.submitted && password.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="password.errors.required">Campo es requerido</div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="solid-blue-button">Continuar</button>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+    <div *ngIf="stepPinUpdate==2" class="modal-content pl-4 pr-4 pt-2">
+        <div class="pin-number-modal">
+            <span>Ingresa tu nuevo PIN para poder operar en cajeros automaticos:</span>
+            <form name="updatePin" #updatePin="ngForm" (ngSubmit)="updatePin.form.valid && sendUpdatePin()" novalidate>
+                <div class="form-group mt-4">
+                    <input type="text" name="newPin" #newPin="ngModel" ngModel placeholder="0000" minlength="4"
+                        maxlength="4" mask="0*" required>
+                    <div *ngIf="!newPin.pristine && newPin.invalid || updatePin.submitted && newPin.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="newPin.errors.required">Campo es requerido</div>
+                        <div *ngIf="newPin.errors.minlength || newPin.errors.maxlength">Campo debe tener 4 dígitos</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="solid-blue-button">Actualizar PIN</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <app-ui-pey-message-success-modal *ngIf="stepPinUpdate==3" [title]="title" [message]="message"
+        [showImageBottom]="showImageBottom" (onContinue)="pinUpdate=false;stepPinUpdate=0" [buttonLabel]="buttonLabel">
+    </app-ui-pey-message-success-modal>
+</app-ui-pey-sidebar>
+
+<!--NODAL SUSPENDER TARJETA-->
+<app-ui-pey-sidebar *ngIf="cardSuspend" (onClose)="cardSuspend=false;stepCardSuspend=0" [closed]="!cardSuspend"
+    title="Suspender tarjeta">
+    <div *ngIf="stepCardSuspend==0" class="modal-content pl-4 pr-4 pt-2">
+        <div class="tarjeta-suspender-modal p-3">
+            <span>Suspende tu tarjeta en caso de perdida, robo o hurto y
+                evita que se realicen consumos sin consentimiento. Podrás
+                solicitar un cambio de tarjeta acercandote a una sucursal Pago24
+            </span>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button (click)="stepCardSuspend = stepCardSuspend+1" class="btn-text" id="viewModal5">Suspender
+                    Tarjeta</button>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="stepCardSuspend==1" class="modal-content pl-4 pr-4 pt-2">
+        <div class="tarjeta-suspender-modal p-3">
+            <span class="d-flex">Estás suspendiendo la tarjeta, ya no podrás seguir utilizándola.
+                Esta acción no puede revertirse. ¿Seguro que deseas continuar?
+            </span>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button (click)="sendSuspendCard()" class="solid-blue-button">Suspender Tarjeta</button>
+            </div>
+
+        </div>
+    </div>
+    <app-ui-pey-message-success-modal *ngIf="stepCardSuspend==2" [title]="title" [message]="message"
+        [showImageBottom]="showImageBottom" (onContinue)="cardSuspend=false;stepCardSuspend=0"
+        [buttonLabel]="buttonLabel">
+    </app-ui-pey-message-success-modal>
+</app-ui-pey-sidebar>
+
+<!--VISTA DE ACTIVIDADES-->
+<div *ngIf="user.isVerifiedAccount && user.currentCard && activityView" class="col-lg-11 white-container-wrapper">
+    <h2><span class="icon-tarjeta recargar"></span> Actividad: Tarjeta Prepaga</h2>
+    <div class="content-center">
+
+        <div class="filtros w-100">
+            <div class="d-flex justify-content-between">
+                <div class="left">
+                    <button class="btn btn-sm filtrarOrdenar">
+                        Filtrar/Ordenar
+                    </button>
+                </div>
+                <div class="right">
+                    <form action="?" name="buscarFiltro">
+                        <input type="text" class="input-buscar" name="buscar" placeholder="Buscar" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="content-center">
+            <div class="grey-box d-flex flex-column w-100">
+                <div class="DownFilters">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <div class="boxSelect">
+                                <a class="btn-dropDown stateDrop">Todas las operaciones <i
+                                        class="fa fa-chevron-right"></i></a>
+                                <div class="downFecha stateDown">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="optionDate">Todas las operaciones</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="optionDate">Cobros</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="optionDate">Envios de dinero</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="optionDate">Solicitudes recibidas</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="optionDate">Ingreso de dinero</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="optionDate">Remates</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="optionDate">Creditos</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div>
+                                <div class="boxSelect">
+                                    <a class="btn-dropDown stateDrop">Fecha <i class="fa fa-chevron-right"></i></a>
+                                    <div class="downFecha stateDown">
+                                        <ul>
+                                            <li><a href="#" class="optionDate">Hoy</a></li>
+                                            <li><a href="#" class="optionDate">Ayer</a></li>
+                                            <li>
+                                                <a href="#" class="optionDate">Mes Pasado</a>
+                                            </li>
+                                            <div class="dropdown-divider"></div>
+                                            <li>
+                                                <a href="#" class="btn">Desde 05/08/2019</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="btn">Desde 05/08/2019</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="btn btn-sm">Aceptar</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <table class="table tarjeta-actividad">
+
+                    <tbody class="list">
+
+                        <tr class="d-flex justify-content-between align-items-center">
+                            <td class="col-4 d-flex align-items-center"><img class="circle"
+                                    src="/assets/images/new-icons/solicitud-dinero.svg">Recargaste tu Tarjeta Prepaga
+                            </td>
+                            <td class="col-4"><span class="text-success status">Acreditado</span></td>
+                            <td class="col-4 d-flex flex-row justify-content-end align-items-center">
+                                <div class="d-flex flex-column mr-3">
+                                    <span class="fs-16 text-secondary text-right">$ - &nbsp;1.000</span>
+                                    <span class="fs-11 text-secondary">26 feb. 2020</span>
+                                </div>
+                                <div class="detallePopup">
+                                    <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                                    <div class="details slide-toggle-content">
+                                        <ul>
+                                            <li><button type="button"> Ver detalle</button>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="d-flex justify-content-between align-items-center">
+                            <td class="col-4 d-flex align-items-center"><img class="circle"
+                                    src="/assets/images/new-icons/tarjeta.svg">PrestashopAddon</td>
+                            <td class="col-4"><span class="text-success status">Acreditado</span></td>
+                            <td class="col-4 d-flex flex-row justify-content-end align-items-center">
+                                <div class="d-flex flex-column mr-3">
+                                    <span class="fs-16 text-right">$5.000</span>
+                                    <span class="fs-11">26 feb. 2020</span>
+                                </div>
+                                <div class="detallePopup">
+                                    <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                                    <div class="details slide-toggle-content">
+                                        <ul>
+                                            <li><button type="button"> Ver detalle</button>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="d-flex justify-content-between align-items-center">
+                            <td class="col-4 d-flex align-items-center"><i class="circle">AC</i>Extracción de dinero
+                            </td>
+                            <td class="col-4"><span class="text-success status">Acreditado</span></td>
+                            <td class="col-4 d-flex flex-row justify-content-end align-items-center">
+                                <div class="d-flex flex-column mr-3">
+                                    <span class="fs-16 text-secondary text-right">$ - &nbsp;1.000</span>
+                                    <span class="fs-11 text-secondary">26 feb. 2020</span>
+                                </div>
+                                <div class="detallePopup">
+                                    <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                                    <div class="details slide-toggle-content ">
+                                        <ul>
+                                            <li><button type="button"> Ver detalle</button>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="row-buttons justify-content-end mt-3">
+                <button type="button" (click)="activityView=false;rechargeView=false"
+                    class="white-button-border">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--VISTA PARA RECARGA DE TARJETA-->
+<div *ngIf="user.isVerifiedAccount && user.currentCard && rechargeView" class="col-lg-11 white-container-wrapper">
+
+
+    <div class="top">
+        <div class="row">
+            <div class="heading d-flex align-items-center">
+                <h2><span class="icon-tarjeta recargar"></span>Tarjeta prepaga > Recargar</h2>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <p>Indica cual es el importe que deseas recargar</p>
+        </div>
+    </div>
+
+    <form name="formAddAmount" (ngSubmit)="formAddAmount.valid && sendRecharge()" #formAddAmount="ngForm" novalidate>
+        <div class="wallet-conteiner mb-2">
+            <div class="col-xs-12 col-sm-9">
+                <div class="ingresarDinero">
+                    <div class="row">
+                        <div class="col-12">
+                            <ng-select placeholder="Importe" class="col-xs-12 col-sm-6 custom-select mb-3 w-100 Export "
+                                bindLabel="label" [searchable]="false" [items]="transactionTypes" [addTag]="false"
+                                name="type" [clearable]="false" [(ngModel)]="transaction.type" #type="ngModel" required>
+                            </ng-select>
+
+
+                            <div class="input-blue-text d-flex justify-content-center"
+                                *ngIf="!transaction.type.isMultiPey">
+                                <input [required]="!transaction.type.isMultiPey" type="text" placeholder="$0"
+                                    class="col-xs-12 col-sm-6 form-control InputAmount"
+                                    [prefix]="transaction.type.coin | translate" mask="separator.2"
+                                    thousandSeparator="." [min]="transaction.type.minAmount" name="amount"
+                                    [(ngModel)]="transaction.amount" #amount="ngModel" />
+                                <div *ngIf="!amount.pristine && amount.invalid && formAddAmount.submitted"
+                                    class="invalid-feedback text-left">
+                                    <div *ngIf="amount.errors.required">Campo es requerido</div>
+                                </div>
+                            </div>
+                            <div class="input-blue-text d-flex justify-content-center flex-column align-items-center"
+                                *ngIf="transaction.type.isMultiPey">
+                                <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0"
+                                    class="col-xs-12 col-sm-6 mb-3 form-control InputAmount"
+                                    [prefix]="transaction.multiPey[0].type.coin | translate" mask="separator.2"
+                                    thousandSeparator="." [min]="transaction.multiPey[0].minAmount" name="fiatAmount"
+                                    [(ngModel)]="transaction.multiPey[0].amount" #fiatAmount="ngModel" />
+
+                                <div *ngIf="!fiatAmount.pristine && fiatAmount.invalid && formAddAmount.submitted"
+                                    class="invalid-feedback text-left">
+                                    <div *ngIf="fiatAmount.errors.required">Campo es requerido</div>
+                                </div>
+                                <input [required]="transaction.type.isMultiPey" type="text" placeholder="$0"
+                                    class="col-xs-12 col-sm-6 form-control InputAmount"
+                                    [prefix]="transaction.multiPey[1].type.coin | translate" mask="separator.2"
+                                    thousandSeparator="." [min]="transaction.multiPey[1].type.minAmount"
+                                    name="peygoldAmount" [(ngModel)]="transaction.multiPey[1].amount"
+                                    #peygoldAmount="ngModel" />
+                                <div *ngIf="!peygoldAmount.pristine && peygoldAmount.invalid && formAddAmount.submitted"
+                                    class="invalid-feedback text-left">
+                                    <div *ngIf="peygoldAmount.errors.required">Campo es requerido</div>
+                                </div>
+                            </div>
+                            <span class="cuenta-destino d-flex justify-content-center w-100">Cuenta destino: Tarjeta
+                                Prepaga
+                                Mastercard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-buttons justify-content-end mt-3">
+                    <button type="button" (click)="activityView=false;rechargeView=false"
+                        class="white-button-border">Cancelar</button>
+                    <button type="submit" class="solid-blue-button">Recargar tarjeta</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+    <!--  <form>
+        <div class="wallet-conteiner mb-2">
+            <div class="col-xs-12 col-sm-9">
+                <div class="ingresarDinero">
+
+                    <div class="form-group">
+
+                        <select class="form-control Export text-center">
+                            <option selected>Billetera pesos($8.566,22)</option>
+                            <option>Billetera Peygold($4.689)</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="InputAmount" placeholder="$0">
+                        <span class="cuenta-destino d-flex justify-content-center w-100">Cuenta destino: Tarjeta Prepaga
+                            Mastercard</span>
+                    </div>
+                </div>
+                <div class="row-buttons justify-content-end mt-3">
+                    <button type="button" (click)="activityView=false;rechargeView=false"
+                        class="white-button-border">Volver</button>
+                    <button type="submit" class="white-button-border">Cancelar</button>
+                    <button type="submit" class="solid-blue-button">Recargar tarjeta</button>
+                </div>
+            </div>
+        </div>
+
+    </form> -->
+
+</div>

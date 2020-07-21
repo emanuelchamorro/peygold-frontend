@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {BaseComponent} from '../base.component';
-import {AuthService} from '../../../auth-peygold/services/auth.service';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { BaseComponent } from '../base.component';
+import { AuthService } from '../../../auth-peygold/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-eu-pey-user',
@@ -9,14 +10,19 @@ import {AuthService} from '../../../auth-peygold/services/auth.service';
 })
 export class EuPeyUserComponent extends BaseComponent implements OnInit {
 
+  public activeView: string;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute
   ) {
     super();
+    this.activeView = this.activatedRoute.snapshot.paramMap.get('activeView');
+    console.log(this.activeView)
   }
 
   ngOnInit() {
   }
+
 
 }

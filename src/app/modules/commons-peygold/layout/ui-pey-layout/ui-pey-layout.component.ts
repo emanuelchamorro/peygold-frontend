@@ -7,12 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UIPeyLayoutComponent implements OnInit {
 
+  public thereAreNotifications:boolean;
+  public display:boolean;
+
   constructor() { }
 
   /**
    * On init implementation
    */
   ngOnInit() {
+    this.thereAreNotifications = true;
+  }
+
+  displayNotifications():void{
+    
+    this.display = !this.display;
+
   }
 
 }

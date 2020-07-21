@@ -109,7 +109,7 @@ export class ScPeyInsurancecarriersComponent extends BaseComponent implements On
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableInsurancecarriers', // the id of html/table element
+      elementIdOrContent: 'tableInsurancecarriers', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Aseguradoras').subscribe(
       () => { },// save started

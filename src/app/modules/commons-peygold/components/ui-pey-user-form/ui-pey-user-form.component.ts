@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild, ViewChildren, QueryList, ElementRef} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewChildren, QueryList, ElementRef, SimpleChanges} from '@angular/core';
 import {Address, City, Country, DocumentType, Institution, ProfitInstitution, State, User, Nationality} from '../../../../models';
 import {AuthService} from '../../../auth-peygold/services/auth.service';
 import {UserService} from '../../../../services/user.service';
@@ -35,6 +35,8 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   public routes = routes;
   @Input()
   protected user: User;
+  @Input()
+  public aView:string;
 
   public editableUser: User;
 
@@ -79,7 +81,15 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.user);
+
+    if(this.aView){
+      this.activeView = this.aView;
+    }
+
+    console.log('aView',this.aView);
+    console.log('activeView',this.activeView);
+
+
     this.editableUser = this.user;
     this.identityDocuments = new Array<any>();
     // Get the list of institutions

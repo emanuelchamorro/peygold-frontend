@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {BaseService} from './base.service';
 import {DocumentType} from '../models/document-type';
-import {TransactionType, SelectOption, LoanStatus} from '../models';
+import {TransactionType, SelectOption, LoanStatus, TransactionStatus} from '../models';
 import {TransactionTypeEnum} from '../enums';
 import {LoanOption} from '../models/loan-option';
 import { SelectOptionQuestion } from '../models/select-option-question';
 import { EffectType } from '../models/effect-type';
 import { EffectApplicationType } from '../models/effect-application-type';
+import { OriginTransactionType } from '../models/origin-transaction-type';
 
 
 @Injectable({
@@ -44,11 +45,15 @@ export class InMemoryService extends BaseService {
   /**
    * Get the list of transaction type
    */
-  transactionTypes(multipey = false): Array<TransactionType> {
+  transactionTypes(multipey = false, creditPoints = false): Array<TransactionType> {
     const types = new Array<TransactionType>(
-      new TransactionType(TransactionTypeEnum.Fiat, 'Pesos'),
-      new TransactionType(TransactionTypeEnum.Points, 'Peygold debito'),
+      new TransactionType(TransactionTypeEnum.Fiat, 'Pesos($)'),
+      new TransactionType(TransactionTypeEnum.Points, 'Peygold(P$G)'),
     );
+
+    if (creditPoints) {
+      types.push(new TransactionType(TransactionTypeEnum.CreditPoints, 'Peygold créditos(P$G)'));
+    } 
 
     if (multipey) {
       types.push(new TransactionType(TransactionTypeEnum.MultyPey, 'MultyPey'));
@@ -134,6 +139,36 @@ export class InMemoryService extends BaseService {
       years.push(new SelectOption(String(i),String(i)));
     }
     return years;
+  }
+
+  get loadOriginRecharge():Array<OriginTransactionType>{
+    const originTransactionTypes = new Array<OriginTransactionType>();
+
+    originTransactionTypes.push(new OriginTransactionType('6','Cobros'));
+    originTransactionTypes.push(new OriginTransactionType('1','Envios de dinero'));
+    originTransactionTypes.push(new OriginTransactionType('10','Solicitudes recibidas'));
+    originTransactionTypes.push(new OriginTransactionType('5','Ingreso de dinero'));
+    originTransactionTypes.push(new OriginTransactionType('2','Remates'));
+    originTransactionTypes.push(new OriginTransactionType('4','Créditos'));
+
+
+    return originTransactionTypes
+
+  }
+
+
+  get loadTransactionStatus():Array<TransactionStatus>{
+    const transactionStatus = new Array<TransactionStatus>();
+
+    transactionStatus.push(new TransactionStatus('2','Aprobados'));
+    transactionStatus.push(new TransactionStatus('1','Pendientes'));
+    transactionStatus.push(new TransactionStatus('3','Rechazados'));
+    transactionStatus.push(new TransactionStatus('4','Cancelados'));
+    transactionStatus.push(new TransactionStatus('5','Devueltos'));
+
+
+    return transactionStatus
+
   }
 
 }

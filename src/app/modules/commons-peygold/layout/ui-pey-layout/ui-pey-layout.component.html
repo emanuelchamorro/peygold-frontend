@@ -11,10 +11,46 @@
           </button>
         </li>
         <li class="ml-4">
-          <button>
-            <img src="assets/images/notification-active.svg" class="topbar-notis" alt="">
+          <button class="notificationes-btn" (click)="displayNotifications()" [ngClass]="{'green-badge': thereAreNotifications}">
+            <img src="/assets/images/notification-bell.svg" class="topbar-notis" alt="">
           </button>
         </li>
+        <div class="notificaciones-tooltip" [ngClass]="{'active': display}"> 
+            <span class="p-3">Notificaciones</span>
+            <ul>
+             <li >
+               <a class="d-flex p-3">
+                <img class="notificaciones-img" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg">
+                <div class= "content d-flex flex-column"> 
+                 <span>Rechazaron tu solicitud de dinero</span>
+                 <span>Martin Goldberg rechazo tu solicitud de pago</span>
+                 <span class="last-date">25 de febrero</span>
+                </div>
+              </a>
+             </li>
+             <li >
+              <a class="d-flex p-3">
+               <img class="notificaciones-img" src="https://wingman.mediumra.re/assets/img/avatar-female-1.jpg" >
+               <div class= "content d-flex flex-column"> 
+                <span>Te pagaron</span>
+                <span>Lucia Chiesa acepto tu solicitud de pago</span>
+                <span>10 de febrero</span>
+               </div>
+             </a>
+            </li>
+            <li >
+              <a class="d-flex p-3">
+               <img class="notificaciones-img " src="/assets/images/new-icons/check-01.svg">
+               <div class= "content d-flex flex-column"> 
+                <span>¡Bienvenido!</span>
+                <span>Te registraste exitosamente en la plataforma</span>
+                <span>9 de febrero</span>
+               </div>
+             </a>
+            </li>
+            </ul>
+            <a class="d-flex p-3"> Ver todas las notificaciones</a>
+          </div>
       </div>
       <div>
         <li class="country-nav-item">Argentina <img src="assets/images/flag-arg.svg" alt=""></li>
@@ -22,7 +58,7 @@
           <a routerLink="/logout" class="no-underline">
             <div>
               <svg id="Capa_1" class="sidebar-icon" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"
-                   viewBox="0 0 15.49 15.74">
+                viewBox="0 0 15.49 15.74">
                 <defs>
                   <style>
                     .cls-1 {
@@ -32,9 +68,9 @@
                 </defs>
                 <title>admin peygold</title>
                 <path class="cls-1"
-                      d="M12.25,1.69a7.75,7.75,0,1,1-9,0,.76.76,0,0,1,1.1.24l.49.88a.75.75,0,0,1-.21,1,5.26,5.26,0,1,0,6.25,0,.75.75,0,0,1-.21-1l.5-.88a.75.75,0,0,1,1.09-.24ZM9,8.25V.75A.75.75,0,0,0,8.25,0h-1A.74.74,0,0,0,6.5.75v7.5A.75.75,0,0,0,7.25,9h1A.76.76,0,0,0,9,8.25Z" />
+                  d="M12.25,1.69a7.75,7.75,0,1,1-9,0,.76.76,0,0,1,1.1.24l.49.88a.75.75,0,0,1-.21,1,5.26,5.26,0,1,0,6.25,0,.75.75,0,0,1-.21-1l.5-.88a.75.75,0,0,1,1.09-.24ZM9,8.25V.75A.75.75,0,0,0,8.25,0h-1A.74.74,0,0,0,6.5.75v7.5A.75.75,0,0,0,7.25,9h1A.76.76,0,0,0,9,8.25Z" />
               </svg>
-              
+
             </div>
           </a>
         </li>
@@ -52,7 +88,7 @@
     <app-ui-pey-main-menu></app-ui-pey-main-menu>
 
     <!-- MAIN CONTENT -->
-     <div class="col" id="main-div">
+    <div class="col" id="main-div">
       <div class="row">
         <div class="col-lg-11 white-container-wrapper">
           <router-outlet></router-outlet>
@@ -61,4 +97,3 @@
     </div>
   </div>
 </div>
-

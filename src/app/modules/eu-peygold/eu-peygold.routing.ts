@@ -24,6 +24,7 @@ import {EuPeyLoanRequestComponent} from './components/eu-pey-loan-request/eu-pey
 import {EuPeyQrGeneratorComponent} from './components/eu-pey-qr-generator/eu-pey-qr-generator.component';
 import {EuPeyQrScannerComponent} from './components/eu-pey-qr-scanner/eu-pey-qr-scanner.component';
 import { EuPeyQrScannerConfirmComponent } from './components/eu-pey-qr-scanner-confirm/eu-pey-qr-scanner-confirm.component';
+import { CardsComponent } from './components/cards/cards.component';
 
 export const config: Routes = [
   {
@@ -105,6 +106,10 @@ export const config: Routes = [
       {
         path: routes.me.index.route,
         component: EuPeyUserComponent,
+      },
+      {
+        path: routes.card.index.route,
+        component: CardsComponent,
       },
       // END USER
     ]

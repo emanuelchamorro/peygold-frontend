@@ -128,10 +128,11 @@ $(document).on("click", function (event) {
   $(document).on('click','.filtrarOrdenar',function(){
     $('#inputSelectFilter').val('');
     $('#inputFilter').val('');
-    var firstOption = $('.stateDown ul li').first().text();
-    $('.boxSelect').find('span').text(firstOption);
-    $(this).toggleClass("activefilter");		
-    $(".DownFilters").slideToggle(300);	
+    $('.stateDown').each(function(index){
+      $(this).parents('.boxSelect').find('span').text($(this).find('ul li').first().text())
+  })
+  $(this).toggleClass("activefilter");		
+  $(".DownFilters").slideToggle(300);	
   });
 
   $(document).on('click','.FiltrarOrdenar',function(){
@@ -143,7 +144,15 @@ $(document).on("click", function (event) {
     $(".DownFiltrarOrdenar").slideToggle();
   });
 
+  $(document).on('click','.filtrarOrdenarMult',function(){
 
+    $('#inputFilter').val('');
+    $('.stateDown').each(function(index){
+        $(this).parents('.boxSelect').find('span').text($(this).find('ul li').first().text())
+    })
+    $(this).toggleClass("activefilter");		
+    $(".DownFilters").slideToggle(300);
+  });
 
  
   /*Fin de filtrar ordenar*/

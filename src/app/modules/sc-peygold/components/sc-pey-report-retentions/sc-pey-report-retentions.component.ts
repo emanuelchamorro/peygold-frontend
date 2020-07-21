@@ -86,7 +86,7 @@ export class ScPeyReportRetentionsComponent extends BaseComponent implements OnI
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableRetentions', // the id of html/table element
+      elementIdOrContent: 'tableRetentions', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Retenciones').subscribe(
       () => { },// save started

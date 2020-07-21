@@ -79,7 +79,7 @@ export class ScPeyUsersComponent extends BaseComponent implements OnInit {
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableUsers', // the id of html/table element
+      elementIdOrContent: 'tableUsers', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Usuarios').subscribe(
       () => {},// save started

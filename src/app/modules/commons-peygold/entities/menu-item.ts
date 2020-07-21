@@ -11,6 +11,7 @@ export class MenuItem extends Model {
   public displayed: boolean;
   public isSeparator: boolean;
   public icon: string;
+  public param:string;
 
   /**
    * Get the url for the routerlink

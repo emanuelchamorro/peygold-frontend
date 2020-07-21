@@ -107,7 +107,7 @@ export class ScPeyBanksComponent extends BaseComponent implements OnInit {
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableBanks', // the id of html/table element
+      elementIdOrContent: 'tableBanks', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Bancos').subscribe(
       () => {},// save started

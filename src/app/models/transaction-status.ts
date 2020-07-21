@@ -1,5 +1,5 @@
 import { SelectOption } from './select-option';
-import {TransactionStatusEnum} from '../enums';
+import { TransactionStatusEnum } from '../enums';
 
 
 /**
@@ -15,13 +15,19 @@ export class TransactionStatus extends SelectOption {
 
     switch (this.value) {
       case TransactionStatusEnum.Approved:
-        this.label = 'Aprobada';
+        this.label = this.label ? this.label : 'Aprobada';
         break;
       case TransactionStatusEnum.Pending:
-        this.label = 'Pendiente';
+        this.label = this.label ? this.label : 'Pendiente';
         break;
       case TransactionStatusEnum.Rejected:
-        this.label = 'Rechazada';
+        this.label = this.label ? this.label : 'Rechazada';
+        break;
+      case TransactionStatusEnum.Cancel:
+        this.label = this.label ? this.label : 'Cancelada';
+        break;
+      case TransactionStatusEnum.Rejected:
+        this.label = this.label ? this.label : 'Devuelta';
         break;
     }
   }

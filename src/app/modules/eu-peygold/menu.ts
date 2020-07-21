@@ -19,6 +19,7 @@ export const menu: Array<MenuItem> = [
     new MenuItem().fromJSON({label: 'Cobrar / Generar QR', href: routes.qr.generator.href}),
     new MenuItem().fromJSON({label: 'Pagar / Escanear QR', href: routes.qr.scanner.href}),
   ]}),
+  new MenuItem().fromJSON({label: 'Tarjeta', href: routes.card.index.href, icon: 'icon-Iconos-07'}),
 //  new MenuItem().fromJSON({label: 'Remates', icon: 'icon-Iconos-13', childs: [
 //      new MenuItem().fromJSON({label: 'Rematar mis puntos', href: routes.home.href}),
 //      new MenuItem().fromJSON({label: 'Mis remates', href: routes.home.href}),
@@ -34,7 +35,7 @@ export const menu: Array<MenuItem> = [
   ]}),
 //  new MenuItem().fromJSON({label: 'Comercios Adheridos', icon: 'icon-Iconos-08', href: routes.ecommerces.index.href}),
   new MenuSeparator(),
-  new MenuItem().fromJSON({label: 'Mi Usuario', icon: 'icon-Iconos-09', href: routes.me.index.href}),
+  new MenuItem().fromJSON({label: 'Mi Usuario', icon: 'icon-Iconos-09', href: routes.me.index.href, param:'personalData'}),
   new MenuItem().fromJSON({label: 'Ayuda', icon: 'icon-Iconos-07',  href: hRoutes.index.href}),
   // new MenuItem().fromJSON({label: 'Ir A Tienda', icon: 'icon-Iconos-10',   href: routes.home.href}),
 ];

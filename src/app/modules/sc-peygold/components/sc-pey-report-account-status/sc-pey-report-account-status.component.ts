@@ -116,7 +116,7 @@ export class ScPeyReportAccountStatusComponent extends BaseComponent implements 
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableTransactions', // the id of html/table element
+      elementIdOrContent: 'tableTransactions', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Estado_de_cuenta').subscribe(
       () => { },// save started

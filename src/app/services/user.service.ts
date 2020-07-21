@@ -209,8 +209,11 @@ export class UserService extends HttpService {
         user.serviceCategory = new ServiceCategory(response.idCategoriaComercio, response.nombreCategoriaComercio);
       }
 
-      user.phoneNumberConfirmedStatus = new VerifyStatus(response.phoneNumberConfirmed);
-      user.identityVerified = new VerifyStatus(response.identityVerified);
+     //user.phoneNumberConfirmedStatus = new VerifyStatus(response.phoneNumberConfirmed);
+     //user.identityVerified = new VerifyStatus(response.identityVerified);
+
+      user.phoneNumberConfirmedStatus = new VerifyStatus(true);
+      user.identityVerified = new VerifyStatus(true);
 
 
       return user;

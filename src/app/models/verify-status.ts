@@ -13,7 +13,7 @@ export class VerifyStatus extends SelectOption {
     public label?: string,
   ) {
     super(value);
-
+    this.verified = verified;
     if(this.verified){
       this.label = 'Verificado';
       this.imgIcon = "assets/images/confirmacion-verde.svg"

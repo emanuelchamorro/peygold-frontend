@@ -5,7 +5,7 @@ export const routes = {
   home: {route: 'home', href: indexRoute + '/home'},
   help: {route: 'help', href: indexRoute + '/help'},
   me : {
-    index: {route: 'me', href: indexRoute + '/me'},
+    index: {route: 'me/:activeView', href: indexRoute + '/me'},
   },
   transactions : {
     index: {route: 'transactions', href: indexRoute + '/transactions'},
@@ -27,6 +27,9 @@ export const routes = {
     scanner: {route: 'qr/scanner', href: indexRoute + '/qr/scanner'},
     generator: {route: 'qr/generator', href: indexRoute + '/qr/generator'},
     confirm: {route: 'qr/confirm', href: indexRoute + '/qr/confirm'},
+  },
+  card : {
+    index: {route: 'card', href: indexRoute + '/card'},
   },
   reports : {
     account_status: {route: 'reports/account_status', href: indexRoute + '/reports/account_status'},

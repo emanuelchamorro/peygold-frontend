@@ -41,7 +41,8 @@ import {NgbDatepickerModule, NgbPaginationModule, NgbPaginationConfig, NgbAlertM
 import { EuPeyLoanHelpComponent } from './components/eu-pey-loan-help/eu-pey-loan-help.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { EuPeyQrScannerConfirmComponent } from './components/eu-pey-qr-scanner-confirm/eu-pey-qr-scanner-confirm.component';
-
+import { CardsComponent } from './components/cards/cards.component';
+import {MustMatchDirective} from './directive/must-match.directive';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,9 @@ import { EuPeyQrScannerConfirmComponent } from './components/eu-pey-qr-scanner-c
     EuPeyQrGeneratorComponent,
     EuPeyQrScannerComponent,
     EuPeyLoanHelpComponent,
-    EuPeyQrScannerConfirmComponent,    
+    EuPeyQrScannerConfirmComponent,
+    MustMatchDirective,
+    CardsComponent,    
   ],
   imports: [
     CommonModule,

@@ -110,7 +110,7 @@ export class ScPeyRescueChecksComponent extends BaseComponent implements OnInit 
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableRescueChecks', // the id of html/table element
+      elementIdOrContent: 'tableRescueChecks', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Rescate de cheques').subscribe(
       () => { },// save started

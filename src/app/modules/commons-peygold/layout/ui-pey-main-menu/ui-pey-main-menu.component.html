@@ -29,50 +29,55 @@
 
       <li class="nav-item" *ngFor="let item of items; let i = index">
         <div *ngIf="item.isSeparator" class="mt-3 mb-3 border-top-white"></div>
-        <a *ngIf="! item.hasChilds && !item.isSeparator"
-           class="nav-link sidebar-link justify-content-between slide-toggle"
-           routerLinkActive=""
-           [routerLink]="item.routerLink"
-           [attr.data-el-target]="'#menu' + i">
+        <a *ngIf="!item.hasChilds && !item.isSeparator && !item.param"
+          class="nav-link sidebar-link justify-content-between slide-toggle" routerLinkActive=""
+          [routerLink]="item.routerLink" [attr.data-el-target]="'#menu' + i">
+          <div class="d-flex">
+            <span [class]="item.icon"></span>
+            <span [innerHtml]="item.label"></span>
+          </div>
+        </a>
+        <a *ngIf="!item.hasChilds && !item.isSeparator && item.param"
+          class="nav-link sidebar-link justify-content-between slide-toggle" routerLinkActive=""
+          [routerLink]="[item.routerLink,item.param]" [attr.data-el-target]="'#menu' + i">
           <div class="d-flex">
             <span [class]="item.icon"></span>
             <span [innerHtml]="item.label"></span>
           </div>
         </a>
         <a *ngIf="item.hasChilds && !item.isSeparator"
-           class="nav-link sidebar-link justify-content-between slide-toggle sub_menu_item"
-           [routerLink]="item.routerLink"
-           [attr.data-el-target]="'#menu' + i">
+          class="nav-link sidebar-link justify-content-between slide-toggle sub_menu_item"
+          [routerLink]="item.routerLink" [attr.data-el-target]="'#menu' + i">
           <div class="d-flex">
             <span [class]="item.icon"></span>
             <span [innerHtml]="item.label"></span>
           </div>
           <svg *ngIf="item.hasChilds" version="1.1" id="pay-chevron-sidebar" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003"
-                    style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="sidebar-icon chevron-right">
-                    <g>
-                      <g>
-                        <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003"
+            style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="sidebar-icon chevron-right">
+            <g>
+              <g>
+                <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
                               l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
                               c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
-                      </g>
-                    </g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                    <g></g>
-                  </svg>
+              </g>
+            </g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+          </svg>
 
         </a>
         <div *ngIf="!item.isSeparator && item.hasChilds" class="mnu-hide-panel-sidebar" [id]="'menu' + i">
@@ -89,4 +94,4 @@
       <!-- Item -->
     </ul>
   </div>
-</div>  <!-- Sidebar end -->
+</div> <!-- Sidebar end -->

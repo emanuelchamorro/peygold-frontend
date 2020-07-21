@@ -105,7 +105,7 @@ export class ScPeyProvinceChargesCreditsComponent extends BaseComponent implemen
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableGeneralChargeCredit', // the id of html/table element
+      elementIdOrContent: 'tableGeneralChargeCredit', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Bancos').subscribe(
       () => {},// save started

@@ -1,0 +1,101 @@
+/* notificaciones*/
+.notificationes-btn.green-badge {
+	&::after {
+		content: "";
+		position: absolute;
+		height: 13px;
+		width: 13px;
+		display: flex;
+		background-color: #079E3E;
+		top: 6px;
+		border: solid 2px #fff;
+		left: 66px;
+		border-radius: 100%;
+	}
+}
+.notificaciones-tooltip {
+	display: none;
+	ul {
+		list-style: none;
+		padding-left: 0;
+		li {
+			a {
+				border-top: solid 1px #eaeaea;
+				cursor: pointer;
+				&:hover {
+					background-color: #E1EAF5;
+				}
+				.content {
+					span {
+						&:nth-of-type(3) {
+							color: #c2c2c2;
+							font-size: 12px;
+						}
+					}
+				}
+			}
+			&:first-of-type {
+				a {
+					.content {
+						span {
+							&:nth-of-type(3) {
+								color: #3575BA;
+								font-size: 12px;
+								list-style-type: disc;
+								display: list-item;
+								margin-left: 16px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	span {
+		font-size: 14px;
+	}
+	>span {
+		&:first-of-type {
+			font-size: 16px;
+			font-weight: 600;
+		}
+	}
+	>a {
+		&:first-of-type {
+			color: #3575BA;
+			cursor: pointer;
+			justify-content: center;
+			border-top: solid 1px #eaeaea;
+			&:hover {
+				color: #3575BA;
+			}
+		}
+	}
+	.content {
+		span {
+			&:first-of-type {
+				font-weight: 600;
+			}
+			&:nth-of-type(2) {
+				color: #828282;
+				max-width: 240px;
+			}
+		}
+	}
+}
+.notificaciones-tooltip.active {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	top: 45px;
+	left: 45px;
+	background-color: #fff;
+	border-radius: .6rem;
+	box-shadow: 0 4px 6px -1px rgba(0,0,0,.2),0 2px 4px -1px rgba(0,0,0,.06) !important;
+}
+.notificaciones-img {
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	margin-right: 15px;
+}

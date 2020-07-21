@@ -8,6 +8,8 @@
                         height="100">
                     <span class="fs-22 fw-700 mb-3" [innerHtml]="title"></span>
                     <p class="w-100 pl-2 p3-2 text-center mb-3" [innerHtml]="message"></p>
+                    <button *ngIf="routeTo" [routerLink]="routeTo" class="white-button-border" [innerHtml]="buttonLabel"></button>
+                    <button *ngIf="!routeTo" (click)="continue()" class="white-button-border" [innerHtml]="buttonLabel"></button>
                 </div>
 
             </div>

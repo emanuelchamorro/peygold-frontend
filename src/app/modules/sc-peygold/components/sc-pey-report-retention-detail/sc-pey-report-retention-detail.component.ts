@@ -65,7 +65,7 @@ export class ScPeyReportRetentionDetailComponent extends BaseComponent implement
     console.log(typeExport);
     this.exportAsConfig = {
       type: typeExport, // the type you want to download
-      elementId: 'tableDetails', // the id of html/table element
+      elementIdOrContent: 'tableDetails', // the id of html/table element
     }
     this.exportAsService.save(this.exportAsConfig, 'Detalles_retenciones').subscribe(
       () => { },// save started

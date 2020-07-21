@@ -81,7 +81,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
     UIPeyUserFormComponent,
     UIPeyAddressFormComponent,
     UiPeyMessageSuccessComponent,
-    UiPeyVerifySecurityCodeComponent
+    UiPeyVerifySecurityCodeComponent,
+    UiPeyMessageSuccessModalComponent
  
   ]
 })

@@ -1,0 +1,491 @@
+.white-container-wrapper.bg-gradient {
+	background: rgb(108,161,218);
+	background-image: url(/assets/images/fondo-lineas-04.svg), linear-gradient(180deg, rgba(108,161,218,1) 0%, rgba(255,255,255,1) 350px);
+	background-repeat: no-repeat;
+	background-position: top;
+	background-position-y: top;
+}
+#prepaga-wallet {
+	display: flex;
+	align-items: flex-end;
+	background-image: url(/assets/images/tarjeta-prepaga.svg);
+	background-size: auto;
+	background-repeat: no-repeat;
+	width: 375px;
+	height: 238px;
+	border-radius: .8rem;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+	-webkit-transition-property: transform;
+	transition-property: transform;
+	-webkit-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+	text-align: left;
+	&:hover {
+		box-shadow: 0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05) !important;
+		transform: translateY(-8px);
+		-webkit-transition-duration: 0.3s;
+		transition-duration: 0.3s;
+		-webkit-transition-property: transform;
+		transition-property: transform;
+		-webkit-transition-timing-function: ease-out;
+		transition-timing-function: ease-out;
+	}
+}
+h2 {
+	>.icon-tarjeta {
+		&:before {
+			font-size: 19px;
+			color: #fff;
+		}
+	}
+}
+.recargar.icon-tarjeta {
+	&:before {
+		color: #3675bb;
+	}
+}
+.prepaga-data {
+	span {
+		color: white;
+		letter-spacing: 0.10rem;
+		text-align: left;
+	}
+	>span {
+		&:first-of-type {
+			font-size: 16px;
+		}
+		&:last-of-type {
+			font-size: 16px;
+		}
+	}
+}
+.prepaga-fecha {
+	span {
+		&:first-of-type {
+			font-size: 8px;
+			text-transform: uppercase;
+		}
+		&:last-of-type {
+			font-size: 14px;
+		}
+	}
+}
+.prepaga-heading {
+	h2 {
+		font-size: 32px !important;
+	}
+}
+.prepaga-datos {
+	>div {
+		&:first-of-type {
+			>div {
+				>span {
+					&:first-of-type {
+						font-weight: 700;
+						margin-bottom: 15px;
+					}
+				}
+			}
+			ul {
+				li {
+					span {
+						&:nth-of-type(2) {
+							font-weight: 600;
+						}
+					}
+				}
+			}
+		}
+		&:nth-of-type(2) {
+			>div {
+				>span {
+					&:first-of-type {
+						font-weight: 700;
+						margin-bottom: 15px;
+					}
+				}
+			}
+			ul {
+				li {
+					&:last-of-type {
+						span {
+							font-weight: 600;
+						}
+					}
+				}
+			}
+		}
+		&:nth-of-type(3) {
+			>div {
+				>span {
+					&:first-of-type {
+						font-weight: 700;
+						margin-bottom: 15px;
+						margin-bottom: 15px;
+					}
+				}
+			}
+			ul {
+				li {
+					span {
+						&:nth-of-type(2) {
+							font-weight: 600;
+						}
+					}
+				}
+			}
+		}
+	}
+	ul {
+		text-align: left;
+		list-style: none;
+		padding: 0;
+	}
+	ul.list-current-address {
+		padding-left: 20px !important;
+		margin-top: 10px;
+	}
+	span {
+		text-align: left;
+	}
+	.form-check {
+		label {
+			color: #3575BA;
+			font-size: 16px;
+		}
+	}
+}
+.check-data-prepaga {
+	position: absolute;
+	right: 70px;
+	top: 70px;
+}
+.BoxDetails.Actividad {
+	.modal-content {
+		display: flex;
+		flex-direction: column;
+		font-size: 14px;
+		border-radius: 0;
+		border: none;
+		ul {
+			list-style: none;
+			text-decoration: none;
+			padding-left: 0;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			border-bottom: solid 1px #80808063;
+			margin-bottom: 0;
+			li {
+				padding-bottom: 0.9rem;
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+				align-items: center;
+			}
+		}
+		ul.operation-date {
+			li {
+				span {
+					color: #3575BA;
+					font-size: 13px;
+				}
+			}
+		}
+	}
+}
+ul.user-info-modal {
+	li {
+		span {
+			font-size: 13px;
+			&:nth-of-type(2) {
+				font-weight: 600;
+			}
+		}
+		&:first-of-type {
+			span {
+				font-weight: 600;
+			}
+		}
+	}
+}
+ul.envio-info-modal {
+	li {
+		span {
+			font-size: 13px;
+			&:nth-of-type(2) {
+				font-weight: 600;
+			}
+		}
+		&:first-of-type {
+			span {
+				font-weight: 600;
+			}
+		}
+	}
+}
+ul.pago-detail {
+	li {
+		span {
+			font-size: 13px;
+			&:nth-of-type(2) {
+				font-weight: 600;
+			}
+		}
+		&:first-of-type {
+			span {
+				font-weight: 600;
+			}
+		}
+	}
+}
+ul.total-amount-detail {
+	li {
+		span {
+			font-size: 13px;
+			&:first-of-type {
+				font-weight: 600;
+			}
+			&:nth-of-type(2) {
+				font-weight: 700;
+				color: #3575BA;
+				font-size: 26px;
+			}
+		}
+	}
+}
+.prepaga-new-direction {
+	border-top: solid 1px #a5a5a591;
+	padding-top: 20px;
+}
+.prepaga-new-direction.active {
+	display: flex;
+	justify-content: left;
+}
+.prepaga-actividad {
+	span {
+		&:first-of-type {
+			font-weight: 600;
+			color: #3575BA;
+			font-size: 14px;
+		}
+		&:nth-of-type(2) {
+			color: #6c757d;
+		}
+	}
+	border-bottom: solid 1px #a5a5a591;
+	border-top: solid 1px #a5a5a591;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.prepaga-recargar {
+	span {
+		&:first-of-type {
+			font-weight: 600;
+			color: #3575BA;
+			font-size: 14px;
+		}
+		&:nth-of-type(2) {
+			color: #6c757d;
+		}
+	}
+	border-bottom: solid 1px #a5a5a591;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.prepaga-pin {
+	span {
+		&:first-of-type {
+			font-weight: 600;
+			color: #3575BA;
+			font-size: 14px;
+		}
+		&:nth-of-type(2) {
+			color: #6c757d;
+		}
+	}
+	border-bottom: solid 1px #a5a5a591;
+	border-top: solid 1px #a5a5a591;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.prepaga-suspender {
+	span {
+		&:first-of-type {
+			font-weight: 600;
+			color: #3575BA;
+			font-size: 14px;
+		}
+		&:nth-of-type(2) {
+			color: #6c757d;
+		}
+	}
+	border-bottom: solid 1px #a5a5a591;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.prepaga-cuenta {
+	button {
+		color: white !important;
+		text-align: center;
+		margin-top: 15px;
+		margin-bottom: 15px;
+		font-size: 13px;
+		font-weight: 500;
+		padding: 0.34rem 0.34rem;
+		border-radius: 2em;
+		background-color: #3575BA;
+		min-width: 135px;
+		height: fit-content;
+	}
+	a {
+		cursor: pointer;
+	}
+}
+.prepaga-seguridad {
+	a {
+		cursor: pointer;
+	}
+}
+.prepaga-saldo {
+	margin-top: 35px;
+	margin-bottom: 35px;
+	span {
+		&:first-of-type {
+			color: #6c757d;
+			font-size: 24px;
+		}
+		&:nth-of-type(2) {
+			color: #3575BA;
+			font-size: 24px;
+			font-weight: 700;
+		}
+	}
+}
+span.cuenta-destino {
+	color: #6c757d;
+}
+.pin-number-modal {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	span {
+		&:nth-of-type(2) {
+			color: #3575BA;
+			font-size: 24px;
+			font-weight: 700;
+		}
+	}
+	input {
+		font-size: 24px;
+		letter-spacing: 20px;
+		text-align: center;
+		font-weight: 600;
+		color: #3575BA;
+	}
+}
+.prepaga-tarjeta {
+	h4 {
+		font-size: 16px;
+	}
+	.solid-blue-button {
+		padding: 0.64rem 2rem 0.64rem 2rem;
+	}
+}
+.BoxDetails.Tarjeta {
+	.form-check {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	input[type="checkbox"] {
+		+ {
+			label {
+				display: initial;
+				padding-left: 0;
+			}
+		}
+	}
+	>div {
+		&:nth-of-type(2) {
+			>span {
+				font-size: 14px;
+			}
+		}
+	}
+}
+table.tarjeta-actividad {
+	tr {
+		border-top: 1px solid #a5a5a591;
+		&:first-of-type {
+			border-top: 0;
+		}
+	}
+	td {
+		border: 0;
+		img.circle {
+			height: 40px;
+			width: 40px;
+			border-radius: 100%;
+			display: flex;
+			margin-right: 15px;
+		}
+		i.circle {
+			height: 40px;
+			width: 40px;
+			border-radius: 100%;
+			display: flex;
+			margin-right: 15px;
+			background: linear-gradient(to right, #4852a0 0%, #3575ba 52%, #4398d4 100%);
+			align-items: center;
+			justify-content: center;
+			font-size: 16px;
+			border-radius: 100%;
+			font-style: normal;
+			color: #fff;
+		}
+		span.status {
+			display: list-item;
+			list-style-type: disc;
+			font-size: 14px;
+		}
+	}
+}
+.tarjeta-suspender-modal {
+	.btn-text {
+		color: #3575BA;
+		font-weight: 500;
+	}
+}
+.wallet-prepaga {
+	.canceled-card {
+		width: 100%;
+		position: absolute;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		top: 100px;
+		text-align: center;
+		overflow-x: hidden;
+		background-color: red;
+	}
+	.inactive-card {
+		width: 100%;
+		position: absolute;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		top: 100px;
+		text-align: center;
+		overflow-x: hidden;
+		background-color: #4853a0;
+	}
+}
+@media screen and (max-width: 1024px) {
+	.button-prepaga {
+		width: 100%;
+		display: flex;
+		justify-content: start;
+	}
+}

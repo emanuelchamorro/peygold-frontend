@@ -150,3 +150,15 @@ ng-select {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+
+.sin-movimientos {
+	span {
+		&:first-of-type {
+			font-size: 19px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+	}
+}
+
