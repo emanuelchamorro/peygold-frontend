@@ -89,14 +89,15 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
           this.transactions = transactions;
           console.log(this.transactions);
           this.spinnerService.hide();
+          this.originTransactionTypes = this.inMemoryService.loadOriginRecharge;
+          this.transactionStatus = this.inMemoryService.loadTransactionStatus;
+          this.transactionTypes = this.inMemoryService.transactionTypes(false, true);
           if (transactions && transactions.length>0) {
             this.page = 1;
             this.previousPage = 1;
             this.totalItems = (this.page * 10) + 1;
             this.showPagination = true;
-            this.originTransactionTypes = this.inMemoryService.loadOriginRecharge;
-            this.transactionStatus = this.inMemoryService.loadTransactionStatus;
-            this.transactionTypes = this.inMemoryService.transactionTypes(false, true);
+
           } else {
             this.page = 1;
             this.previousPage = 1;
