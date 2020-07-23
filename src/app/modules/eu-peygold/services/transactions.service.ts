@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpService} from '../../../services/http.service';
-import {Transaction, TransactionStatus, TransactionType, User} from '../../../models';
-import {map} from 'rxjs/operators';
+import { HttpService } from '../../../services/http.service';
+import { Transaction, TransactionStatus, TransactionType, User } from '../../../models';
+import { map } from 'rxjs/operators';
 import { Constants } from '../../utils/constants';
+import { OriginTransactionType } from 'src/app/models/origin-transaction-type';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class TransactionsService extends HttpService {
    * Search transactions.
    * @return Promise<Array<Transaction>> the list of transaction
    */
-  search(page:number,perPage:number): Promise<Array<Transaction>> {
+  search(page: number, perPage: number): Promise<Array<Transaction>> {
     return this.get(`/transactions/search/@/0/${page}/${perPage}`)
       .pipe(
         map((response) => {
@@ -26,7 +28,6 @@ export class TransactionsService extends HttpService {
             transaction.sender = new User();
 
             transaction.sender.email = item.emailSender;
-            transaction.sender.fullName = item.fullNameSender;
             transaction.sender.fullName = item.fullNameSender;
 
             if (item.receiver) {
@@ -49,12 +50,119 @@ export class TransactionsService extends HttpService {
             transaction.commissionAmmount = item.commissionAmmount;
             transaction.idOriginRecharge = item.idOriginRecharge;
             transaction.originRechargeName = item.originRechargeName;
-            transaction.symbol = Constants.symbolsArray[item.idTransactionType-1];
+            transaction.symbol = Constants.symbolsArray[item.idTransactionType - 1];
 
             return transaction;
           });
-      }
-      )).toPromise();
+        }
+        )).toPromise();
+  }
+
+
+  /**
+ * Search generic transactions.
+ * @return Promise<Array<Transaction>> the list of transaction
+ */
+  searchGenericTransaction(params: any): Promise<Array<Transaction>> {
+    return this.post('/transactions/GetGenericsTransactions', params)
+      .pipe(
+        map((response) => {
+          return response.value.map((item: any) => {
+            const transaction = new Transaction();
+
+            transaction.id = item.idTransactionHistory;
+            transaction.createdAt = item.dateAndTime;
+            transaction.amount = item.amount || item.ammount;
+
+            //Sender
+            transaction.sender = new User();
+            transaction.sender.id = item.idSender;
+            transaction.sender.email = item.emailSender;
+            transaction.sender.fullName = item.fullNameSender;
+
+
+            if (item.receiver) {
+              transaction.receiver = new User();
+              transaction.receiver.id = item.receiver.idUser;
+              transaction.receiver.idAspNetUser = item.receiver.idAspNetUser;
+              transaction.receiver.name = item.receiver.firstName;
+              transaction.receiver.lastName = item.receiver.lastName;
+              transaction.receiver.email = item.receiver.email;
+              transaction.receiver.phone = item.receiver.phone;
+              transaction.receiver.avatarURL = item.receiver.avatarURL;
+              transaction.receiver.fullName = item.receiver.fullName;
+              transaction.receiver.idUserType = item.receiver.idUserType;
+              transaction.receiver.active = item.receiver.active;
+              transaction.receiver.documentNumber = item.receiver.dni;
+              transaction.receiver.cuit = item.receiver.cuit;
+              transaction.receiver.systemUserTypeId = item.receiver.systemUserTypeId;
+            }
+
+            transaction.messages = item.message;
+            transaction.reason = item.reason;
+            transaction.type = new TransactionType(item.idTransactionType);
+            transaction.commissionPercentaje = item.commissionPercentaje;
+            transaction.commissionAmmount = item.commissionAmmount;
+            transaction.originRecharge = new OriginTransactionType(item.idOriginRecharge, item.originRechargeName);
+            transaction.symbol = Constants.symbolsArray[item.idTransactionType - 1];
+            transaction.status = new TransactionStatus(item.status);
+
+            switch (item.idOriginRecharge) { //1,3,6,7,8,9
+              case (1): //Envio de pago
+                if (item.idUser != item.receiver.idUser) {//usuario logueado envia pago
+                  transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+                  transaction.description = "Enviaste dinero a " + item.receiver.fullName;
+
+                } else {
+                  //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+                  transaction.description = item.fullNameSender + " te envió dinero";
+
+                }
+                break;
+              case (2): //Solicitud de pago
+                if (item.idUser != item.receiver.idUser) {//usuario logueado envia solicitud
+                  transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
+                  transaction.description = item.receiver.fullName + " te solicitó dinero";
+                } else {
+                  //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+                  transaction.description = "Cobraste a " + item.fullNameSender;
+
+                }
+                break;
+              case (3): //Ingreso con Tarjeta
+                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+                transaction.description = "Ingresaste dinero";
+                break;
+              case (6):// Cobros
+                if (item.idUser != item.receiver.idUser) {
+                  transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
+                  transaction.description = item.receiver.fullName + " te solicitó dinero";
+                } else { // Usuario logueado envia solicitud de pago
+                  //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+                  transaction.description = "Cobraste a " + item.fullNameSender;
+
+
+                }
+                break;
+              case (7):// Ingreso con Efectivo
+                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+                transaction.description = "Ingresaste dinero";
+                break;
+              case (8):// Ingreso con Deposito
+                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+                transaction.description = "Ingresaste dinero";
+                break;
+              case (9):// Ingreso con Transferencia
+                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+                transaction.description = "Ingresaste dinero";
+                break;
+            }
+
+            return transaction;
+
+          });
+        }
+        )).toPromise();
   }
 
   /**
@@ -71,10 +179,10 @@ export class TransactionsService extends HttpService {
     }).toPromise();
   }
 
-  sendPayment(paymentType:number,transaction: Transaction){
-    let url:string;
+  sendPayment(paymentType: number, transaction: Transaction) {
+    let url: string;
     let payment;
-    if(paymentType!=3){
+    if (paymentType != 3) {
       url = '/transactions';
       payment = {
         ammount: transaction.amount,
@@ -83,37 +191,37 @@ export class TransactionsService extends HttpService {
         message: transaction.reason,
         idtransactiontype: transaction.type.value
       }
-    }else{
+    } else {
       url = '/transactions/CreateMultiPay';
-      const payment1={
-        Idtransactiontype:transaction.multiPey[0].type.value,
-        Ammount:transaction.multiPey[0].amount
+      const payment1 = {
+        Idtransactiontype: transaction.multiPey[0].type.value,
+        Ammount: transaction.multiPey[0].amount
       }
-      const payment2={
-        Idtransactiontype:transaction.multiPey[1].type.value,
-        Ammount:transaction.multiPey[1].amount
+      const payment2 = {
+        Idtransactiontype: transaction.multiPey[1].type.value,
+        Ammount: transaction.multiPey[1].amount
       }
       payment = {
         Receiver: transaction.receiver.email,
-        Message:transaction.reason,
-        PayDTOs:[payment1,payment2]
+        Message: transaction.reason,
+        PayDTOs: [payment1, payment2]
       }
     }
-    console.log('payment en el servicio',payment)
-    return this.post(url,payment).toPromise();
+    console.log('payment en el servicio', payment)
+    return this.post(url, payment).toPromise();
   }
 
-    /**
-   * Start a Send money transaction
-   * @return Promise
-   */
+  /**
+ * Start a Send money transaction
+ * @return Promise
+ */
   createExternal(transaction: Transaction) {
     return this.post('/transactions/CreateExternalTransaction', {
       Ammount: transaction.amount,
       IdTransactionType: parseInt(transaction.type.value),
       IdOriginRecharge: parseInt(transaction.originRecharge.value),
       PayerData: "No.REF: 0125452848145 Rapid Pago"
-     
+
     }).toPromise();
   }
 }

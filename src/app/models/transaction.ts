@@ -33,6 +33,9 @@ export class Transaction extends Model {
   public paymentCode:string;
   public detailsTransaction: Array<DetailTransaction>;
   public totalAmount; //monto neto
+  public iconImg:string;
+  public description:string;
+  public sign:string; //signo de la transaccion
   
 
   /**

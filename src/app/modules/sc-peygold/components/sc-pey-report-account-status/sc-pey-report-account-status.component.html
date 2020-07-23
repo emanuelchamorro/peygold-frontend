@@ -66,7 +66,7 @@
                         <li (click)="setFilterRange(30)">Últimos 30 días</li>
                         <li (click)="setFilterRange(60)">Últimos 60 días</li>
                         <div class="dropdown-divider"></div>
-                        <form class="formFiltrarDown" name="form" #rangeForm="ngForm" (ngSubmit)="rangeForm.form.valid && onSubmit()" novalidate>
+                        <form class="formFiltrarDown" name="form" #rangeForm="ngForm" (ngSubmit)="rangeForm.form.valid ? onSubmit() : resetForm(rangeForm)" novalidate>
                             <input id="sDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="sDate" [(ngModel)]="sDateInput" #sDate="ngModel" placeholder="Desde 05/08/2019" required/>
                             <div *ngIf="!sDate.pristine && sDate.invalid || rangeForm.submitted && sDate.errors"
                             class="invalid-feedback">
@@ -123,7 +123,7 @@
             </tbody>
         </table>
         <p *ngIf="!showPagination" class="text-center p-end">
-            No hay aseguradoras para mostrar.
+            No hay registros para mostrar.
         </p>
     </div>
     <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
