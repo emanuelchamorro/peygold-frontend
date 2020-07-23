@@ -217,8 +217,7 @@ $(document).on("click", function (event) {
   $(document).on('click','#btnAccountState',function(){
     $('#inputFilter').val('');
     $('#inputSelectTypeTransaction').val('');
-    $('#sDInput').val('');
-    $('#eDInput').val('');
+
     var firstOption1 = $('.DownFiltrarOrdenar > .f1 ul li').first().text();
     var firstOption2 = $('.DownFiltrarOrdenar > .f2 ul li').first().text();
     console.log('firstOption1',firstOption1)
@@ -226,7 +225,23 @@ $(document).on("click", function (event) {
     
     $('.DownFiltrarOrdenar > .f1').find('a').html(firstOption1+'<span class="ChevronDown"></span>');
     $('.DownFiltrarOrdenar > .f2').find('a').html(firstOption2+'<span class="ChevronDown"></span>');
-    $(this).closest(".Export").find(".range").slideToggle(300);	  
+      if( $('#sDInput').val() && $('#eDInput').val() ){
+      $('#sDInput').val('');
+      $('#eDInput').val('');
+      $(this).closest(".Export").find(".range").slideToggle(300);
+    }
+
+    	  
+  });
+
+  $(document).on('click','#btnSetRange',function(){
+    $('#inputFilter').val('');
+
+    if( $('#sDInput').val() && $('#eDInput').val() ){
+      $('#sDInput').val('');
+      $('#eDInput').val('');
+      $(this).closest(".boxSelect").find(".stateDown").slideToggle(300);  
+    }
   });
 
 

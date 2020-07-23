@@ -6,6 +6,7 @@ import { BaseComponent } from '../base.component';
 import { ReportsService } from '../../services/reports.service';
 import { environment } from '../../../../../environments/environment';
 import { TransactionType } from '../../../../models/transaction-type';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-sc-pey-report-account-status',
@@ -217,6 +218,10 @@ export class ScPeyReportAccountStatusComponent extends BaseComponent implements 
     this.startDate = sDArray[2]+'/'+sDArray[1]+'/'+sDArray[0]+' '+startTime;
     this.endDate = eDArray[2]+'/'+eDArray[1]+'/'+eDArray[0]+' '+endTime;
     this.loadPage(1);
+  }
+
+  resetForm(rangeForm:NgForm){
+    setTimeout(() => rangeForm.resetForm({}), 1200);
   }
 
 }

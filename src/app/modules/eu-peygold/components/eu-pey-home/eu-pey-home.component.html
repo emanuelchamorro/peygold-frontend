@@ -85,22 +85,15 @@
     <div class="filtros w-100">
       <div class="d-flex justify-content-between">
         <div class="left">
-          <button class="btn btn-sm filtrarOrdenar">
+          <button (click)="setFiltersDefault()" class="btn btn-sm filtrarOrdenar">
             Filtrar/Ordenar
           </button>
         </div>
         <div class="right">
-          <form >
-              <input
-                id="inputFilter"
-                type="text"
-                class="input-buscar"
-                name="filter"
-                (keyup)="search($event)"
-                [(ngModel)]="filter"
-                placeholder="Buscar"
-              />
-            </form>
+          <form>
+            <input id="inputFilter" type="text" class="input-buscar" name="filter" (keyup)="search($event)"
+              [(ngModel)]="filter" placeholder="Buscar" />
+          </form>
         </div>
       </div>
     </div>
@@ -114,7 +107,7 @@
                     class="fa fa-chevron-right"></i></a>
                 <div class="downFecha stateDown">
                   <ul>
-                    <li id="allOriginRecharge" (click)="setFilterOriginRecharge('')" class="optionDate">Todas las
+                    <li id="allOriginRecharge" (click)="setFilterOriginRecharge('-1')" class="optionDate">Todas las
                       operaciones</li>
                     <li *ngFor="let originRecharge of originTransactionTypes" id="originRecharge.label"
                       (click)="setFilterOriginRecharge(originRecharge.value)" class="optionDate"
@@ -131,7 +124,7 @@
                       class="fa fa-chevron-right"></i></a>
                   <div class="downFecha stateDown">
                     <ul>
-                      <li id="allTransactionState" (click)="setFilterTransactionState('')" class="optionDate">Todos los
+                      <li id="allTransactionState" (click)="setFilterTransactionState('-1')" class="optionDate">Todos los
                         estados</li>
                       <li *ngFor="let status of transactionStatus" (click)="setFilterTransactionState(status.value)"
                         id="status.label" class="optionDate" [innerHtml]="status.label">
@@ -144,10 +137,11 @@
             <div class="input-group">
               <div>
                 <div class="boxSelect">
-                  <a class="btn-dropDown stateDrop"><span>Todas las monedas</span><i class="fa fa-chevron-right"></i></a>
+                  <a class="btn-dropDown stateDrop"><span>Todas las monedas</span><i
+                      class="fa fa-chevron-right"></i></a>
                   <div class="downFecha stateDown">
                     <ul>
-                      <li id="allTransactionType" (click)="setFilterTransactionType('')" class="optionDate">Todas las
+                      <li id="allTransactionType" (click)="setFilterTransactionType('-1')" class="optionDate">Todas las
                         monedas</li>
                       <li *ngFor="let transactionType of transactionTypes" id="transactionType.label"
                         (click)="setFilterTransactionType(transactionType.value)" class="optionDate"
@@ -161,24 +155,26 @@
             <div class="input-group">
               <div>
                 <div class="boxSelect">
-                  <a class="btn-dropDown stateDrop">Fecha<i class="fa fa-chevron-right"></i></a>
+                  <a class="btn-dropDown stateDrop"><span>Hoy</span><i class="fa fa-chevron-right"></i></a>
                   <div class="downFecha stateDown">
                     <ul>
-                      <li><a href="#" class="optionDate">Hoy</a></li>
-                      <li><a href="#" class="optionDate">Ayer</a></li>
-                      <li>
-                        <a href="#" class="optionDate">Mes Pasado</a>
-                      </li>
-                      <div class="dropdown-divider"></div>
-                      <li>
-                        <a href="#" class="btn">Desde 05/08/2019</a>
-                      </li>
-                      <li>
-                        <a href="#" class="btn">Desde 05/08/2019</a>
-                      </li>
-                      <li>
-                        <a href="#" class="btn btn-sm">Aceptar</a>
-                      </li>
+                        <li (click)="setFilterRange(0)" >Hoy</li>
+                        <li (click)="setFilterRange(1)" >Ayer</li>
+                        <li (click)="setFilterRange(2)">Mes Pasado</li>
+                        <div class="dropdown-divider"></div>
+                        <form class="formFiltrarDown" name="form" #rangeForm="ngForm" (ngSubmit)="rangeForm.form.valid?onSubmit():resetForm(rangeForm)" novalidate>
+                            <input id="sDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="sDate" [(ngModel)]="sDateInput" #sDate="ngModel" placeholder="Desde 05/08/2019" required/>
+                            <div *ngIf="!sDate.pristine && sDate.invalid || rangeForm.submitted && sDate.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="sDate.errors.required">Campo es requerido</div>
+                        </div>
+                            <input id="eDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="eDate" [(ngModel)]="eDateInput" #eDate="ngModel" placeholder="Hasta 05/08/2019" required/>
+                            <div *ngIf="!eDate.pristine && eDate.invalid || rangeForm.submitted && eDate.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="eDate.errors.required">Campo es requerido</div>
+                        </div>
+                            <button id="btnSetRange" type="submit" class="btn-blue">Aceptar</button>
+                        </form>
                     </ul>
                   </div>
                 </div>
@@ -188,18 +184,21 @@
         </div>
 
 
-        <table class="table actividad">
+        <table *ngIf="transactions && transactions.length>0" class="table actividad">
 
           <tbody class="list">
 
-            <tr class="d-flex justify-content-between align-items-center">
-              <td class="d-flex align-items-center"><img class="circle"
-                  src="/assets/images/new-icons/solicitud-dinero.svg">Maria Luisa solicito un pago</td>
-              <td><span class="text-secondary status">Pendiente</span></td>
+            <tr *ngFor="let transaction of transactions;" class="d-flex justify-content-between align-items-center">
+              <td class="d-flex align-items-center">
+                <img *ngIf="transaction.iconImg" class="circle" [src]="transaction.iconImg">
+                <i *ngIf="!transaction.iconImg" class="circle">{{transaction.sender.initials}}</i>  
+                  {{transaction.description}}
+              </td>
+              <td><span class="text-secondary status">{{transaction.status.label}}</span></td>
               <td class="d-flex flex-row align-items-center">
                 <div class="d-flex flex-column mr-3">
-                  <span class="fs-16 text-secondary text-right">$ - &nbsp;1.000</span>
-                  <span class="fs-11 text-secondary">26 feb. 2020</span>
+                  <span class="fs-16 text-secondary text-right">{{transaction.sign}} {{transaction.symbol}} {{transaction.amount | currency:' ':'symbol':'1.0'}}</span>
+                  <span class="fs-11 text-secondary" [innerHtml]="transaction.createdAt | date: medium"></span>
                 </div>
                 <div class="detallePopup">
                   <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
@@ -213,55 +212,16 @@
                 </div>
               </td>
             </tr>
-
-            <tr class="d-flex justify-content-between align-items-center">
-              <td class="d-flex align-items-center"><img class="circle"
-                  src="/assets/images/new-icons/tarjeta.svg">Recargaste tu Tarjeta Prepaga</td>
-              <td><span class="text-success status">Aprobado</span></td>
-              <td class="d-flex flex-row align-items-center">
-                <div class="d-flex flex-column mr-3">
-                  <span class="fs-16 text-right">$5.000</span>
-                  <span class="fs-11">26 feb. 2020</span>
-                </div>
-                <div class="detallePopup">
-                  <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
-                  <div class="details slide-toggle-content">
-                    <ul>
-                      <li><button type="button" id="viewModal4"> Ver detalle</button>
-
-                    </ul>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr class="d-flex justify-content-between align-items-center">
-              <td class="d-flex align-items-center"><i class="circle">AC</i>Cobraste a Andres Calamaro</td>
-              <td><span class="text-danger status">Rechazado</span></td>
-              <td class="d-flex flex-row align-items-center">
-                <div class="d-flex flex-column mr-3">
-                  <span class="fs-16 text-secondary text-right">$ - &nbsp;1.000</span>
-                  <span class="fs-11 text-secondary">26 feb. 2020</span>
-                </div>
-                <div class="detallePopup">
-                  <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
-                  <div class="details slide-toggle-content ">
-                    <ul>
-                      <li><button type="button" id="viewModal5"> Ver detalle</button>
-                    </ul>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
           </tbody>
         </table>
+        <p *ngIf="!showPagination" class="text-center p-end">
+            No hay registros para mostrar.
+        </p>
       </div>
       <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
         (pageChange)="loadPage($event)">
       </ngb-pagination>
     </div>
-
   </div>
 
   <div *ngIf="(!transactions || transactions.length==0)  && !isBusy">

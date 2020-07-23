@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {Balance} from '../../../../models/balance';
-import {UserService} from '../../services/user.service';
-import {Transaction, TransactionStatus, TransactionType} from '../../../../models';
-import {TransactionsService} from '../../services/transactions.service';
-import {BaseComponent} from '../base.component';
+import { Balance } from '../../../../models/balance';
+import { UserService } from '../../services/user.service';
+import { Transaction, TransactionStatus, TransactionType } from '../../../../models';
+import { TransactionsService } from '../../services/transactions.service';
+import { BaseComponent } from '../base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../../environments/environment';
 import { OriginTransactionType } from '../../../../models/origin-transaction-type';
-import {InMemoryService} from '../../../../services/in-memory.service';
+import { InMemoryService } from '../../../../services/in-memory.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-eu-pey-home',
@@ -27,20 +28,30 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   public pontsBalance = new Balance();
   public transactions;
 
-  public originTransactionTypes:Array<OriginTransactionType>;
+  public originTransactionTypes: Array<OriginTransactionType>;
   public transactionStatus: Array<TransactionStatus>;
   public transactionTypes: Array<TransactionType>;
 
-  public filter:string;
-  public selectdFilterOriginRecharge:string;
-  public selectdFilterTransationState:string;
+  public filter: string = null;
   public selectdFilterTransactionType:string;
+
+  protected filtersOriginRechargeDefault: Array<any> = [1, 3, 6, 7, 8, 9];
+  protected filtersTransationStatusDefault: Array<any> = [1, 2, 3];
+
+  protected filtersOriginRecharge: Array<any>;
+  protected filtersTransationStatus: Array<any>;
+
+  public startDate: string;
+  public endDate: string;
+
+  public sDateInput:string;
+  public eDateInput:string;
 
   constructor(
     private userService: UserService,
     private transactionsService: TransactionsService,
-    private spinnerService:NgxSpinnerService,
-    private inMemoryService:InMemoryService
+    private spinnerService: NgxSpinnerService,
+    private inMemoryService: InMemoryService
   ) {
     super();
   }
@@ -52,6 +63,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
     // Get the user balance
     this.busy();
     this.spinnerService.show();
+    this.setFiltersDefault()
     this.userService.balances().then((balances: Array<Balance>) => {
       balances.map((balance: Balance) => {
         if (balance.isFiat) {
@@ -71,125 +83,289 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
       });
 
       // Search the current transactions.
-    
-      this.transactionsService.search(1, environment.paginator.per_page).then(
+
+      this.transactionsService.searchGenericTransaction(this.params("2020-07-01 00:00:01", "2020-07-31 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault,this.filter)).then(
         (transactions: Array<Transaction>) => {
           this.transactions = transactions;
           console.log(this.transactions);
           this.spinnerService.hide();
-          if(transactions){
+          if (transactions && transactions.length>0) {
             this.page = 1;
             this.previousPage = 1;
             this.totalItems = (this.page * 10) + 1;
             this.showPagination = true;
             this.originTransactionTypes = this.inMemoryService.loadOriginRecharge;
             this.transactionStatus = this.inMemoryService.loadTransactionStatus;
-            this.transactionTypes = this.inMemoryService.transactionTypes(false,true);
-          }else{
+            this.transactionTypes = this.inMemoryService.transactionTypes(false, true);
+          } else {
             this.page = 1;
             this.previousPage = 1;
             this.totalItems = 0;
             this.showPagination = false;
           }
           this.unbusy();
-        }).catch(() => {
+        }).catch((error) => {
           this.spinnerService.hide();
-        this.unbusy();
-      });
+          console.log(error);
+          this.unbusy();
+        });
     }).catch(() => {
       this.spinnerService.hide();
+      console.log();
       this.unbusy();
     });
   }
 
 
-    /**
-   * set filter 
-   * @param filter OriginRecharge
-   */
-  setFilterOriginRecharge(filter:string){
-    this.filter = '';
-    this.selectdFilterOriginRecharge = filter;
-    console.log(filter)
+  /**
+ * set filter 
+ * @param filter OriginRecharge
+ */
+  setFilterOriginRecharge(filter: string) {
+    this.filtersOriginRecharge = [];
+    this.filter = null;
+    if (filter) {
+      switch (parseInt(filter)) {
+        case (-1): //todos los estados
+          this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
+          break;
+        case (10):
+          this.filtersOriginRecharge.push(6);
+          break;
+        case (5)://8,7,3,9
+          this.filtersOriginRecharge.push(8, 7, 3, 9);
+          break;
+        case (2)://remates
+          this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
+          break;
+        case (4)://creditos
+          this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
+          break;
+        default:
+          this.filtersOriginRecharge.push(parseInt(filter));
+          break;
+      }
+    } else {
+      this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
+    }
     this.loadPage(1);
   }
 
 
-      /**
-   * set filter 
-   * @param filter TransactionState
-   */
-  setFilterTransactionState(filter:string){
-    this.filter = '';
-    this.selectdFilterTransationState = filter;
-    console.log(filter)
+  /**
+* set filter 
+* @param filter TransactionState
+*/
+  setFilterTransactionState(filter: string) {
+    this.filter = null;
+    this.filtersTransationStatus = [];
+    if (filter) {
+      switch (parseInt(filter)) {
+        case (-1)://todos los estados
+          this.filtersTransationStatus = this.filtersTransationStatusDefault;
+          break;
+        case (4)://Cancelados
+          this.filtersTransationStatus = this.filtersTransationStatusDefault;
+          break;
+        case (5)://Devueltos
+          this.filtersTransationStatus = this.filtersTransationStatusDefault;
+          break;
+        default:
+          this.filtersTransationStatus.push(parseInt(filter));
+          break;
+      }
+    } else { //todos los estados
+      this.filtersTransationStatus = this.filtersTransationStatusDefault;
+    }
     this.loadPage(1);
   }
 
-      /**
-   * set filter 
-   * @param filter TransactionType
-   */
-  setFilterTransactionType(filter:string){
-    this.filter = '';
-    this.selectdFilterTransactionType = filter;
-    console.log(filter)
+  /**
+* set filter 
+* @param filter TransactionType
+*/
+  setFilterTransactionType(filter: string) {
+    this.filter = null;
+    this.selectdFilterTransactionType = filter && filter != '-1' ? filter : null;
     this.loadPage(1);
   }
 
 
-    /**
-   * search loans by word
-   * @param filter 
-   */
-  search(filter:string){
-    console.log('filter',this.filter);
-    //this.selectFilter = '';
-    if(this.filter.length>3){
+  /**
+ * search loans by word
+ * @param filter 
+ */
+  search(filter: string) {
+    this.setFiltersDefault();
+    if (this.filter.length > 3) {
       this.loadPage(1);
-    }else if(this.filter.length == 0){
+    } else if (this.filter.length == 0) {
       this.filter = '';
-    //  this.selectFilter = '';
+      //  this.selectFilter = '';
       this.loadPage(1);
     }
   }
 
-      /**
-   * load page de loans
-   * @param page 
+  setFiltersDefault(){
+    this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
+    this.filtersTransationStatus = this.filtersTransationStatusDefault;
+    this.selectdFilterTransactionType = null;
+    this.startDate = undefined;
+    this.endDate = undefined;
+
+  }
+
+
+    /**
+   * set filter by range dates
+   * @param range 
    */
+  setFilterRange(range: number) {
+
+    let startTime = '00:00:01';
+    let endTime = '11:59:59';
+    let sDate = new Date();
+    let eDate = new Date();
+
+    switch (range) {
+
+      case (0): //hoy        
+        this.startDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;
+        this.endDate = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;
+        console.log(this.startDate);
+        console.log(this.endDate);
+        break;
+
+      case (1): // ayer
+        sDate.setDate(sDate.getDate() - 1);
+        eDate.setDate(eDate.getDate() - 1);
+        this.startDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;
+        this.endDate = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;
+        console.log(this.startDate);
+        console.log(this.endDate);
+        break;
+
+      case (2): //mes pasado
+        sDate.setMonth(sDate.getMonth() - 1);
+        sDate.setDate(1);
+        eDate.setMonth(eDate.getMonth() - 1);
+
+        const d = new Date(eDate.getFullYear(), eDate.getMonth(), 0 );
+        const day = d.getDate()
+
+
+        this.startDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;
+        this.endDate = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;
+        console.log(this.startDate);
+        console.log(this.endDate);
+        break;
+
+      default:
+        this.startDate = undefined;
+        this.endDate = undefined;
+        break;
+
+    }
+    this.loadPage(1);
+
+  }
+
+  /**
+* load page de loans
+* @param page 
+*/
   loadPage(page: number) {
 
-  /*  let word = (this.selectFilter && this.selectFilter!='') ? this.selectFilter : (this.filter && this.filter!='') ? this.filter: '@' ;
-    console.log('word',word);
     this.previousPage = page - 1;
     this.spinnerService.show();
-    this.loansService.search(new TransactionType(), word, page, environment.paginator.per_page).then((response: PaginationResponse) => {
-      console.log('creditos', response)
-      this.loans = response;
-     
-      if(this.loans.data.length){
-        this.page = response.page;
-        this.previousPage = 1;
-        this.totalItems = response.count;
-        console.log('count record', this.totalItems);
-        this.showPagination = true;
-      }else{
-        this.page = 1;
-        this.previousPage = 1;
-        this.totalItems = 0;
-        this.showPagination = false;
-      }
-      this.spinnerService.hide();
-    }).catch(
-      (erro)=>{
+    let params;
+
+    if(this.filter && this.filter!=''){
+      params = this.params(this.startDate, this.endDate, this.selectdFilterTransactionType, page, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault,this.filter)
+    }else{
+      params = this.params(this.startDate, this.endDate, this.selectdFilterTransactionType, page, environment.paginator.per_page, this.filtersTransationStatus, this.filtersOriginRecharge,this.filter);
+    }
+
+    this.transactionsService.searchGenericTransaction(params).then(
+      (transactions: Array<Transaction>) => {
+        this.transactions = transactions;
+        console.log(this.transactions);
+        this.spinnerService.hide();
+        if (transactions && transactions.length>0) {
+          this.page = 1;
+          this.previousPage = 1;
+          this.totalItems = (this.page * 10) + 1;
+          this.showPagination = true;
+        } else {
+          this.page = 1;
+          this.previousPage = 1;
+          this.totalItems = 0;
+          this.showPagination = false;
+        }
+        this.unbusy();
+      }).catch((error) => {
         this.page = 1;
         this.previousPage = 1;
         this.totalItems = 0;
         this.showPagination = false;
         this.spinnerService.hide();
-      }
-    )*/
+        this.unbusy();
+      });
 
   }
+
+
+  paramsDefault(): any{
+    this.params("2020-07-01 00:00:01", "2020-07-31 11:59:59", null, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault,this.filter);
+  }
+  /**
+   * Get params 
+   */
+  params(startDate: string, endDate: string, idTransactionType: string, page: number, perPage: number, statusArray: Array<any>, originRechargeArray: Array<any>, word:string): any {
+    let params: any = {}
+
+    if (startDate && endDate) {
+      params.Desde = startDate;
+      params.Hasta = endDate;
+    } else {
+      let startTime = '00:00:01';
+      let endTime = '11:59:59';
+      let sDate = new Date();
+      let eDate = new Date();
+      params.Desde = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;
+      params.Hasta = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;
+
+    }
+    if (idTransactionType) {
+      params.IdTransactionType = idTransactionType;
+    }
+
+    if (word) {
+      params.Words = word;
+    }
+
+    params.Page = page;
+    params.Size = perPage;
+    params.Status = statusArray;
+    params.OriginRecharge = originRechargeArray;
+    return params;
+
+  }
+
+  onSubmit(){
+    let startTime = '00:00:01';
+    let endTime = '11:59:59';
+    const sDArray = this.sDateInput.split('/');
+    const eDArray = this.eDateInput.split('/');
+    this.startDate = sDArray[2]+'/'+sDArray[1]+'/'+sDArray[0]+' '+startTime;
+    this.endDate = eDArray[2]+'/'+eDArray[1]+'/'+eDArray[0]+' '+endTime;
+    console.log(this.startDate);
+    console.log(this.endDate);
+    this.loadPage(1);
+  }
+
+  resetForm(rangeForm:NgForm){
+    setTimeout(() => rangeForm.resetForm({}), 1200);
+  }
+
 }
