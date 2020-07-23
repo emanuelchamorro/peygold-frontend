@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import {UIPeyMainMenuComponent} from './layout/ui-pey-main-menu/ui-pey-main-menu.component';
 import {UIPeyLayoutComponent} from './layout/ui-pey-layout/ui-pey-layout.component';
+import {UIPeyCardLayoutComponent} from './layout/ui-pey-layout-card/ui-pey-layout-card.component';
 import {UIPeyLayoutDashboardComponent} from './layout/ui-pey-layout-dashboard/ui-pey-layout-dashboard.component';
 import {UIPeySidebarComponent} from './layout/ui-pey-sidebar/ui-pey-sidebar.component';
 import {OnlyNumbersDirective} from './directives/only-numbers.directive';
@@ -36,6 +37,7 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
     UIPeyMainMenuComponent,
     UIPeyLayoutComponent,
     UIPeyLayoutDashboardComponent,
+    UIPeyCardLayoutComponent,
     UIPeySidebarComponent,
     OnlyNumbersDirective,
     UIPeyFeedbackMessageComponent,

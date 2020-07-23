@@ -269,6 +269,35 @@ $(document).on("click", function (event) {
   }
 });
 
+/* Help toggle-menu */
+
+$(document).on('click', '.help-item', function () {
+  $(this).closest(".help-item").toggleClass("active");
+
+});
+
+$(document).on("click", function (event) {
+
+  if ($(event.target).closest(".help-item a").length === 0) {
+    $(".help-item").removeClass("active");
+
+  }
+});
+
+/* TARJETA */
+
+$(document).on('click', '.historial-btn', function () {
+  $(".historial-item").toggleClass("active");
+
+});
+
+$(document).on("click", function (event) {
+
+  if ($(event.target).closest(".historial-btn").length === 2) {
+    $(".historial-item").removeClass("active");
+
+  }
+});
 
 
 

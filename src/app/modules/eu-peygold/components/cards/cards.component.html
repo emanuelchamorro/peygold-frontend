@@ -1,5 +1,5 @@
 <!--VISTA CUENTA DE PEYGOLD NO VERIFICADA-->
-<div *ngIf="!user.isVerifiedAccount" class="col-lg-11 white-container-wrapper bg-gradient">
+<div *ngIf="!user.isVerifiedAccount" class="white-container-wrapper bg-gradient">
     <h2 class="text-white d-flex align-items-center mb-5"><span class="icon-tarjeta fs-22"></span>Tarjeta prepaga</h2>
     <div class="content-center">
 
@@ -28,7 +28,7 @@
 </div>
 
 <!--VISTA PARA SOLICITUD DE TARJETA-->
-<div *ngIf="user.isVerifiedAccount && !user.currentCard" class="col-lg-11 white-container-wrapper bg-gradient">
+<div *ngIf="user.isVerifiedAccount && !user.currentCard" class="white-container-wrapper bg-gradient">
     <h2 class="text-white d-flex align-items-center mb-5"><span class="icon-tarjeta fs-22"></span>Tarjeta prepaga
     </h2>
     <div class="content-center">
@@ -107,12 +107,12 @@
                 </div>
             </div>
             <form name="formSendCardRequest" (ngSubmit)="formSendCardRequest.form.valid && preSendCardRequest()"
-                #formSendCardRequest="ngForm" novalidate>
+                #formSendCardRequest="ngForm" class="mt-4" novalidate>
 
                 <div class="col-xs-12 col-sm-12">
 
                     <div class="grey-box d-flex position-relative flex-column p-3">
-                        <span>Datos de envio</span>
+                        <span class="mb-3">Datos de envio</span>
                         <div class="form-check text-left">
                             <input (click)="activeView='true'" class="form-check-input current-address" type="radio"
                                 name="exampleRadios" id="exampleRadios1" value="0" #exampleRadios="ngModel"
@@ -149,7 +149,8 @@
                                 </label>
                             </div>
                         </div>
-                        <div *ngIf="activeView=='false'" class="prepaga-new-direction mt-4">
+                        <div *ngIf="activeView=='false'" class="prepaga-new-direction row mt-4">
+                           <div class="col-xs-12 col-sm-8 m-auto">
                             <div class="form-group">
                                 <ng-select placeholder="Provincia" (change)="getCities($event)"
                                     class="custom-select  mb-0 w-100" bindLabel="label" [searchable]="false"
@@ -234,6 +235,7 @@
                                 </div>
                             </div>
                         </div>
+                      </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end w-100">
@@ -315,7 +317,7 @@
 
 
         <div class="d-flex justify-content-center mt-3">
-            <button (click)="sendCardRequest()" class="solid-blue-button mr-2">Solicitar tarjeta</button>
+            <button (click)="sendCardRequest()" class="solid-blue-button w-auto mr-2">Solicitar tarjeta</button>
 
         </div>
     </div>
@@ -327,7 +329,7 @@
 
 <!--VISTA TARJETA HOME-->
 <div *ngIf="user.isVerifiedAccount && user.currentCard && !activityView && !rechargeView"
-    class="col-lg-11 white-container-wrapper bg-gradient">
+    class="white-container-wrapper bg-gradient">
 
     <h2 class="text-white d-flex align-items-center mb-5"><span class="icon-tarjeta fs-22"></span>Tarjeta prepaga
     </h2>
@@ -501,7 +503,7 @@
                             type="button" id="viewModal4"
                             class="prepaga-suspender d-flex justify-content-between align-items center  w-100">
                             <div class="d-flex flex-column text-left w-100">
-                                <span class=Suspender>tarjeta</span>
+                                <span class=Suspender>Tarjeta</span>
                                 <span>Suspendela para evitar que realicen consumos sin tu consentimiento</span>
                             </div>
                             <span>
@@ -541,16 +543,84 @@
                               </div>
                             </a>                        
                     </div>
+
+           <!--HISTORIAL DE TARJETAS-->
+                  
+                    <div class="historial-tarjetas mb-4">
+                      <button  class="historial-btn d-flex justify-content-between w-100">
+                        <h4 class="text-left mb-3">Historial de tarjetas</h4>
+                    </button>
+                    <div class="historial-item">
+                       <button type="button" (click)="cardRecord=true;stepCardRecord=0" class="text-left d-flex justify-content-between w-100">
+                         <div class="d-flex">
+                           <i class="icon-card"></i>
+                           <div class="d-flex flex-column">
+                               <span>xxxx xxxx xxxx 2345</span>
+                               <span>Suspendida</span>
+                           </div>
+                        </div>
+                        <span>
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                              viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;"
+                              xml:space="preserve" class="chevron-right text-secondary">
+                              <g>
+                                  <g>
+                                      <path
+                                          d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
+                                     l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
+                                     c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z" />
+                                  </g>
+                              </g>
+                            </svg>
+                          </span>
+                        </button> 
+                    </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!--MODAL HISTORIAL DE TARJETA-->
+<app-ui-pey-sidebar *ngIf="cardRecord" (onClose)="cardRecord=false;stepCardRecord=0" [closed]="!cardRecord"
+    title="Información de Tarjeta" >
+    <div *ngIf="stepCardRecord==0" class="card-record-content pl-4 pr-4 pt-2">
+        <span>Información de la tarjeta</span>
+         <ul class="list-detail">                          
+            <li>
+              <span>Importe cobrado</span>  
+              <span>P$Gc. 1390</span>
+            </li>   
+            <li>
+              <span>Comisión de Peygold</span>  
+              <span>-$100</span>
+            </li> 
+            <li>
+              <span>Impuesto al valor agregado</span>  
+              <span>-$21</span>
+            </li> 
+            <li>
+              <span>Retención del IVA</span>  
+              <span>-$4,41</span>
+            </li> 
+            <li>
+              <span>Retención del IIBB</span>  
+              <span>-$5</span>
+            </li> 
+           </ul>
+    </div>
+
+</app-ui-pey-sidebar>
+
+
 <!--MODAL ACTIVAR TARJETA-->
 <app-ui-pey-sidebar *ngIf="activateCard" (onClose)="activateCard=false;stepactivateCard=0" [closed]="!activateCard"
-    title="Activar Tarjeta">
-    <div *ngIf="stepactivateCard==0" class="pl-4 pr-4 pt-2">
+    title="Activar Tarjeta" >
+    <div *ngIf="stepactivateCard==0" class="activate-card-form-style pl-4 pr-4 pt-2">
         <span>Activa los datos para activar tu tarjeta</span>
         <form name="activateCardForm" #activateCardForm="ngForm"
             (ngSubmit)="activateCardForm.form.valid && activateCardUser()" class="mt-4" novalidate
@@ -658,7 +728,7 @@
                 </div>
                 <div class="d-flex justify-content-center">
                     <button (click)="stepPinUpdate=stepPinUpdate+1" type="button" id="viewModal2"
-                        class="solid-blue-button">Actualizar PIN</button>
+                        class="solid-blue-button w-auto">Actualizar PIN</button>
                 </div>
             </form>
         </div>
@@ -703,7 +773,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="solid-blue-button">Actualizar PIN</button>
+                    <button type="submit" class="solid-blue-button w-auto">Actualizar PIN</button>
                 </div>
             </form>
 
@@ -725,7 +795,7 @@
             </span>
 
             <div class="d-flex justify-content-center mt-3">
-                <button (click)="stepCardSuspend = stepCardSuspend+1" class="btn-text" id="viewModal5">Suspender
+                <button (click)="stepCardSuspend = stepCardSuspend+1" class="btn-text w-auto" id="viewModal5">Suspender
                     Tarjeta</button>
             </div>
 
@@ -738,7 +808,7 @@
             </span>
 
             <div class="d-flex justify-content-center mt-3">
-                <button (click)="sendSuspendCard()" class="solid-blue-button">Suspender Tarjeta</button>
+                <button (click)="sendSuspendCard()" class="solid-blue-button w-auto">Suspender Tarjeta</button>
             </div>
 
         </div>
@@ -750,7 +820,7 @@
 </app-ui-pey-sidebar>
 
 <!--VISTA DE ACTIVIDADES-->
-<div *ngIf="user.isVerifiedAccount && user.currentCard && activityView" class="col-lg-11 white-container-wrapper">
+<div *ngIf="user.isVerifiedAccount && user.currentCard && activityView" class="white-container-wrapper">
     <h2><span class="icon-tarjeta recargar"></span> Actividad: Tarjeta Prepaga</h2>
     <div class="content-center">
 
@@ -912,7 +982,7 @@
     </div>
 </div>
 <!--VISTA PARA RECARGA DE TARJETA-->
-<div *ngIf="user.isVerifiedAccount && user.currentCard && rechargeView" class="col-lg-11 white-container-wrapper">
+<div *ngIf="user.isVerifiedAccount && user.currentCard && rechargeView" class="white-container-wrapper">
 
 
     <div class="top">

@@ -161,6 +161,9 @@ h2 {
 	right: 70px;
 	top: 70px;
 }
+.prepaga-datos form span:first-of-type {
+	font-weight: 700;
+}
 .BoxDetails.Actividad {
 	.modal-content {
 		display: flex;
@@ -392,7 +395,10 @@ span.cuenta-destino {
 		padding: 0.64rem 2rem 0.64rem 2rem;
 	}
 }
-.BoxDetails.Tarjeta {
+.activate-card-form-style {
+	span {
+		font-size: 14px;
+	}
 	.form-check {
 		margin-top: 10px;
 		margin-bottom: 10px;
@@ -482,6 +488,47 @@ table.tarjeta-actividad {
 		background-color: #4853a0;
 	}
 }
+
+.historial-item {
+display: none
+}
+.historial-item.active {
+	display: block
+}
+/* MODAL */
+.card-record-content {
+	font-size: 14px;;
+	}
+
+.card-record-content ul {
+    list-style: none;
+    text-decoration: none;
+    padding-left: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #80808063;
+    margin-bottom: 0;
+}
+.card-record-content ul li {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+	align-items: center;
+	
+}
+.card-record-content ul.list-detail {
+	li {
+		span {
+			margin-top: 6px;
+			margin-bottom: 6px;
+			&:nth-of-type(2) {
+				font-weight: 500;
+			}
+		}
+	}
+}
+
+
 @media screen and (max-width: 1024px) {
 	.button-prepaga {
 		width: 100%;

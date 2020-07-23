@@ -172,6 +172,13 @@ html, body {
   color: #3675bb;
 }
 
+.icon-card:before {
+  content: "\41";
+  color: #3675bb;
+  font-size: 13px;
+}
+
+
 .fa-star {
   color: rgba(52, 114, 182, 0.56);
 }

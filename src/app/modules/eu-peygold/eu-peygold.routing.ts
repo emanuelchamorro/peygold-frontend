@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {GuardAuthService} from './services/guard-auth.service';
 import {UIPeyLayoutComponent} from '../commons-peygold/layout/ui-pey-layout/ui-pey-layout.component';
+import {UIPeyCardLayoutComponent} from '../commons-peygold/layout/ui-pey-layout-card/ui-pey-layout-card.component';
 import {EuPeyHomeComponent} from './components/eu-pey-home/eu-pey-home.component';
 import {routes} from './routes';
 import {EuPeyMoneyAddComponent} from './components/eu-pey-money-add/eu-pey-money-add.component';
@@ -107,6 +108,14 @@ export const config: Routes = [
         path: routes.me.index.route,
         component: EuPeyUserComponent,
       },
+
+    ]
+  },
+  {
+    path: routes.index.route,
+    component: UIPeyCardLayoutComponent,
+    canActivate: [GuardAuthService],
+    children: [
       {
         path: routes.card.index.route,
         component: CardsComponent,
