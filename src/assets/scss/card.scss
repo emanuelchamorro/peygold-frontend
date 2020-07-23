@@ -528,7 +528,13 @@ display: none
 	}
 }
 
+.historial-item span:first-of-type {
+	font-weight: 600;
+}
 
+.historial-item .icon-card:before {
+	font-size: 16px;
+}
 @media screen and (max-width: 1024px) {
 	.button-prepaga {
 		width: 100%;

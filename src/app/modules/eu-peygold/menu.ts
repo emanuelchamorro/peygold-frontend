@@ -19,7 +19,7 @@ export const menu: Array<MenuItem> = [
     new MenuItem().fromJSON({label: 'Cobrar / Generar QR', href: routes.qr.generator.href}),
     new MenuItem().fromJSON({label: 'Pagar / Escanear QR', href: routes.qr.scanner.href}),
   ]}),
-  new MenuItem().fromJSON({label: 'Tarjeta', href: routes.card.index.href, icon: 'icon-Iconos-07'}),
+  new MenuItem().fromJSON({label: 'Tarjeta', href: routes.card.index.href, icon: 'icon-card'}),
 //  new MenuItem().fromJSON({label: 'Remates', icon: 'icon-Iconos-13', childs: [
 //      new MenuItem().fromJSON({label: 'Rematar mis puntos', href: routes.home.href}),
 //      new MenuItem().fromJSON({label: 'Mis remates', href: routes.home.href}),
