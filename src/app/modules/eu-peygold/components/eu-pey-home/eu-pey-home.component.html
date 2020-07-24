@@ -162,7 +162,7 @@
                         <li (click)="setFilterRange(1)" >Ayer</li>
                         <li (click)="setFilterRange(2)">Mes Pasado</li>
                         <div class="dropdown-divider"></div>
-                        <form class="formFiltrarDown" name="form" #rangeForm="ngForm" (ngSubmit)="rangeForm.form.valid?onSubmit():resetForm(rangeForm)" novalidate>
+                        <form class="formFiltrarDown pl-3 pr-3" name="form" #rangeForm="ngForm" (ngSubmit)="rangeForm.form.valid?onSubmit():resetForm(rangeForm)" novalidate>
                             <input id="sDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="sDate" [(ngModel)]="sDateInput" #sDate="ngModel" placeholder="Desde 05/08/2019" required/>
                             <div *ngIf="!sDate.pristine && sDate.invalid || rangeForm.submitted && sDate.errors"
                             class="invalid-feedback">
@@ -173,6 +173,7 @@
                             class="invalid-feedback">
                             <div *ngIf="eDate.errors.required">Campo es requerido</div>
                         </div>
+                        <div class="dropdown-divider"></div>
                             <button id="btnSetRange" type="submit" class="btn-blue">Aceptar</button>
                         </form>
                     </ul>
@@ -214,9 +215,13 @@
             </tr>
           </tbody>
         </table>
-        <p *ngIf="!showPagination" class="text-center p-end">
-            No hay registros para mostrar.
-        </p>
+      
+        <div class="sin-movimientos d-flex justify-content-center align-items-center flex-column p-5">
+          <img class="d-flex mb-3" src="/assets/images/new-icons/movimientos.svg" height="100" width="100">
+          <span *ngIf="!showPagination">No hay registros para mostrar.</span>
+          <span *ngIf="showPagination">No hay actividad</span>
+          <span>Utiliza Peygold y comienza a ver movimientos en tu cuenta</span>
+        </div>
       </div>
       <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
         (pageChange)="loadPage($event)">
@@ -226,13 +231,7 @@
 
   <div *ngIf="(!transactions || transactions.length==0)  && !isBusy">
 
-    <div class="grey-box d-flex flex-column w-100">
-      <div class="sin-movimientos d-flex justify-content-center align-items-center flex-column p-5">
-        <img class="d-flex mb-3" src="/assets/images/new-icons/movimientos.svg" height="100" width="100">
-        <span>No hay actividad</span>
-        <span>Utiliza Peygold y comienza a ver movimientos en tu cuenta</span>
-      </div>
-    </div>
+
   </div>
 
 

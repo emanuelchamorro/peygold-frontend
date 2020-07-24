@@ -325,6 +325,24 @@ label .fa {
   margin-bottom: 25px;
 }
 
+.downFecha form.formFiltrarDown input {
+  width: inherit;
+  margin-top: 6px;
+  height: 42px;
+  margin-bottom: 6px;
+}
+.downFecha form.formFiltrarDown button {
+  background: #3575ba;
+  color: white;
+  width: 110px;
+  align-items: center;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 
 /*Media query*/
 @media only screen and (max-width: 930px) {
