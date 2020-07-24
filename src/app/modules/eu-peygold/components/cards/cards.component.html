@@ -550,7 +550,7 @@
                       <button  class="historial-btn d-flex justify-content-between w-100">
                         <h4 class="text-left mb-3">Historial de tarjetas</h4>
                     </button>
-                    <div *ngFor="let card of user.allCards" class="historial-item">
+                    <div *ngFor="let card of user.allCards" class="historial-item pt-3 pb-3">
                        <button type="button" (click)="cardRecord=true;stepCardRecord=0" class="text-left d-flex justify-content-between w-100">
                          <div class="d-flex">
                            <i class="icon-card"></i>
@@ -590,28 +590,39 @@
     title="Información de Tarjeta" >
     <div *ngIf="stepCardRecord==0" class="card-record-content pl-4 pr-4 pt-2">
         <span>Información de la tarjeta</span>
-         <ul class="list-detail">                          
+         <ul class="list-detail mb-3">                          
             <li>
-              <span>Importe cobrado</span>  
-              <span>P$Gc. 1390</span>
+              <span>Número de tarjeta</span>  
+              <span>xxxx xxxx xxxx 2983</span>
             </li>   
             <li>
-              <span>Comisión de Peygold</span>  
-              <span>-$100</span>
+              <span>Fecha de vencimiento</span>  
+              <span>05/22</span>
             </li> 
             <li>
-              <span>Impuesto al valor agregado</span>  
-              <span>-$21</span>
-            </li> 
-            <li>
-              <span>Retención del IVA</span>  
-              <span>-$4,41</span>
-            </li> 
-            <li>
-              <span>Retención del IIBB</span>  
-              <span>-$5</span>
+              <span>Estado</span>  
+              <span>Suspendida</span>
             </li> 
            </ul>
+           <span>Últimas transacciones</span>
+           <ul class="list-detail mb-3 align-items-center">                          
+              <li>
+                <span>Recargaste tu tarjeta</span>  
+                <div class="d-flex flex-column text-right mt-3 mb-3">
+                 <span>$5000</span>
+                 <span>30 de agosto</span>
+                </div>
+              </li>   
+              <li>
+                <span>PrestashopAddon</span>  
+                <div class="d-flex flex-column text-right mt-3 mb-3">
+                 <span>-$10.177,02</span>
+                 <span>30 de agosto</span>
+                </div>
+              </li> 
+     
+             </ul>
+
     </div>
 
 </app-ui-pey-sidebar>

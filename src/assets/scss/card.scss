@@ -493,12 +493,31 @@ table.tarjeta-actividad {
 display: none
 }
 .historial-item.active {
-	display: block
+	display: block;
+	border-top: solid 1px #a5a5a591;
 }
 /* MODAL */
 .card-record-content {
 	font-size: 14px;;
 	}
+.card-record-content > span {
+	font-weight: 600;
+		}
+.card-record-content > ul > li > div > span {
+ margin-top: 0!important;
+ margin-bottom: 0!important;
+		}
+.card-record-content > ul > li > div > span:nth-of-type(1) {
+		
+	font-weight: 500;
+		}
+				
+.card-record-content > ul > li > div > span:nth-of-type(2) {
+	font-size: 12px;
+	color: #6c757d;
+	font-weight: 400!important;
+}
+
 
 .card-record-content ul {
     list-style: none;
