@@ -546,17 +546,17 @@
 
            <!--HISTORIAL DE TARJETAS-->
                   
-                    <div class="historial-tarjetas mb-4">
+                    <div *ngIf="user.currentCard.status.value==2 && user.allCards.length > 0" class="historial-tarjetas mb-4">
                       <button  class="historial-btn d-flex justify-content-between w-100">
                         <h4 class="text-left mb-3">Historial de tarjetas</h4>
                     </button>
-                    <div class="historial-item">
+                    <div *ngFor="let card of user.allCards" class="historial-item">
                        <button type="button" (click)="cardRecord=true;stepCardRecord=0" class="text-left d-flex justify-content-between w-100">
                          <div class="d-flex">
                            <i class="icon-card"></i>
                            <div class="d-flex flex-column">
-                               <span>xxxx xxxx xxxx 2345</span>
-                               <span>Suspendida</span>
+                               <span [innerHtml]="'xxxx xxxx xxxx '+card.number.substr(-4)"></span>
+                               <span [innerHtml]="card.status.label" >Suspendida</span>
                            </div>
                         </div>
                         <span>

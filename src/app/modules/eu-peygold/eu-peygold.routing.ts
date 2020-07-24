@@ -26,6 +26,10 @@ import {EuPeyQrGeneratorComponent} from './components/eu-pey-qr-generator/eu-pey
 import {EuPeyQrScannerComponent} from './components/eu-pey-qr-scanner/eu-pey-qr-scanner.component';
 import { EuPeyQrScannerConfirmComponent } from './components/eu-pey-qr-scanner-confirm/eu-pey-qr-scanner-confirm.component';
 import { CardsComponent } from './components/cards/cards.component';
+import {EuPeyReportAccountStatusComponent} from './components/eu-pey-report-account-status/eu-pey-report-account-status.component';
+import {EuPeyReportRetentionsComponent} from './components/eu-pey-report-retentions/eu-pey-report-retentions.component';
+import {EuPeyReportRetentionsDetailComponent} from './components/eu-pey-report-retentions-detail/eu-pey-report-retentions-detail.component';
+
 
 export const config: Routes = [
   {
@@ -107,6 +111,27 @@ export const config: Routes = [
       {
         path: routes.me.index.route,
         component: EuPeyUserComponent,
+      },
+      {
+        path: routes.reportaccountstatus.index.route,
+        component: EuPeyReportAccountStatusComponent,
+        data: {
+          title: 'Reportes: Estado de cuenta'
+        },
+      },
+      {
+        path: routes.reportretentions.index.route,
+        component: EuPeyReportRetentionsComponent,
+        data: {
+          title: 'Reportes: Retenciones'
+        },
+      },
+      {
+        path: routes.reportretentionsdetails.index.route,
+        component: EuPeyReportRetentionsDetailComponent,
+        data: {
+          title: 'Reportes: Retenciones - Detalles'
+        },
       },
 
     ]

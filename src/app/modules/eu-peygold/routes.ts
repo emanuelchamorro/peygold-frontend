@@ -42,5 +42,14 @@ export const routes = {
   ecommerces : {
     index: {route: 'ecommerces', href: indexRoute + '/ecommerces'},
   },
+  reportaccountstatus : {
+    index: {route: 'reportaccountstatus', href: indexRoute + '/reportaccountstatus'},
+  },
+  reportretentions : {
+    index: {route: 'reportretentions', href: indexRoute + '/reportretentions'},
+  },
+  reportretentionsdetails : {
+    index: {route: 'reportretentionsdetails/:month/:year', href: indexRoute + '/reportretentionsdetails'},
+  },
 
 };

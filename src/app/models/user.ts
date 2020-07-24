@@ -278,12 +278,48 @@ export class User extends Model {
     const card =  new Card();
     card.id = 1;
     card.number = '3456 0987 7564 0009'
-    card.status = new Status('2','Pendiente');
+    card.status = new Status('2','Activa');
     card.dueDate = '01/2040'
     card.amount = 5600;
     card.pin = '4321'
     return card;
-   // return null;
+   //return null;
+  }
+
+  //TODO:DUMMY GET TARJETAS
+  get allCards():Array<Card>{
+
+    this.cards = new Array<Card>();
+    let card =  new Card();
+    card.id = 1;
+    card.number = '3456 0987 7564 0009'
+    card.status = new Status('3','Suspendida');
+    card.dueDate = '01/2040'
+    card.amount = 5600;
+    card.pin = '4321';
+
+    this.cards.push(card);
+
+    card =  new Card();
+    card.id = 1;
+    card.number = '3456 8888 7564 1234'
+    card.status = new Status('3','Suspendida');
+    card.dueDate = '01/2030'
+    card.amount = 4600;
+    card.pin = '5678';
+    this.cards.push(card);
+
+    card =  new Card();
+    card.id = 1;
+    card.number = '3456 0987 7564 1533'
+    card.status = new Status('3','Suspendida');
+    card.dueDate = '01/2028'
+    card.amount = 3600;
+    card.pin = '9876';
+    this.cards.push(card);
+
+    return this.cards;
+
   }
 }
 

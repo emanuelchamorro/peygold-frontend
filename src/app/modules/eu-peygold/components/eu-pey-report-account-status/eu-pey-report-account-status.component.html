@@ -1,0 +1,194 @@
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<div class="top">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <div class="row mb-3">
+        <div class="col">
+            <h2 class="titleSecurity"><span class="icon-reportes"></span>Reportes: Historial de transacciones</h2>
+        </div>
+    </div>
+    <div class="content-center">
+        <div class="filtros w-100">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                    <div class="left">
+                        <button class="btn btn-sm filtrarOrdenar">
+                            Filtrar/Ordenar
+                        </button>
+                    </div>
+                    <div class="form-group ml-2">
+                        <div class="Export">
+                            <a class="ExportBtn slide-toggle"><span class="ExportIcon"></span>Exportar como<span
+                                    class="ChevronDown"></span></a>
+                            <div class="DownExport slide-toggle-content">
+                                <ul>
+                                    <li><a (click)="export('csv')">.CSV</a></li>
+                                    <li><a (click)="export('xlsx')">.XLSX</a></li>
+                                    <li><a (click)="export('pdf')">.PDF</a></li>
+                                    <li><a (click)="export('txt')">.TXT</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <form action="?" name="buscarFiltro">
+                        <input type="text" class="input-buscar" name="buscar" placeholder="Buscar" />
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-2">
+        <div class="tablaDatos tablaReportes">
+            <div class="DownFilters">
+                <form class="form-inline">
+                    <div class="input-group">
+                        <div class="boxSelect">
+                            <a class="btn-dropDown stateDrop">Todas las operaciones <i
+                                    class="fa fa-chevron-right"></i></a>
+                            <div class="downFecha stateDown">
+                                <ul>
+                                    <li>
+                                        <a href="#" class="optionDate">Todas las operaciones</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="optionDate">Ingresos de dinero</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="optionDate">Pagos y otros egresos</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="optionDate">Cargos de Peygold</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="optionDate">Créditos</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="optionDate">Remates</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div>
+                            <div class="boxSelect">
+                                <a class="btn-dropDown stateDrop">Moneda<i class="fa fa-chevron-right"></i></a>
+                                <div class="downFecha stateDown">
+                                    <ul>
+                                        <li><a href="#" class="optionDate">Peygold PESOS($)</a></li>
+                                        <li><a href="#" class="optionDate">Peygold PUNTOS(P$G)</a></li>
+                                        <li>
+                                            <a href="#" class="optionDate">Todas las monedas</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div>
+                            <div class="boxSelect">
+                                <a class="btn-dropDown stateDrop">Periodo <i class="fa fa-chevron-right"></i></a>
+                                <div class="downFecha stateDown">
+                                    <ul>
+                                        <li><a href="#" class="optionDate">Hoy</a></li>
+                                        <li><a href="#" class="optionDate">Ayer</a></li>
+                                        <li>
+                                            <a href="#" class="optionDate">Mes Pasado</a>
+                                        </li>
+                                        <div class="dropdown-divider"></div>
+                                        <li>
+                                            <a href="#" class="btn">Desde 05/08/2019</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="btn">Desde 05/08/2019</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="btn btn-sm">Aceptar</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <table class="table responsive">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Fecha</th>
+                        <th scope="col" class="text-center">N° de operación</th>
+                        <th scope="col" class="text-center">Tipo de operación</th>
+                        <th scope="col" class="text-center">Importe</th>
+                        <th scope="col" class="text-center">Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p class="text-center">10/12/2019</p>
+                        </td>
+                        <td>
+                            <p class="text-center">0974834</p>
+                        </td>
+                        <td>
+                            <p class="text-center">Pago</p>
+                        </td>
+                        <td>
+                            <p class="text-center text-danger">-P$G1520</p>
+                        </td>
+                        <td>
+                            <p class="text-center">P$G100</p>
+                        </td>
+                        <td class="text-center">
+                            <div class="detallePopup">
+                                <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                                <div class="details slide-toggle-content ">
+                                    <ul>
+                                        <li><button type="button" id="viewModal1">Ver detalle</button>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="text-center">10/12/2019</p>
+                        </td>
+                        <td>
+                            <p class="text-center">0424834</p>
+                        </td>
+                        <td>
+                            <p class="text-center">Cobro</p>
+                        </td>
+                        <td>
+                            <p class="text-center">P$G 1520</p>
+                        </td>
+                        <td>
+                            <p class="text-center">P$G 10</p>
+                        </td>
+                        <td class="text-center">
+                            <div class="detallePopup">
+                                <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                                <div class="details slide-toggle-content ">
+                                    <ul>
+                                        <li><button type="button" id="viewModal2">Ver detalle</button>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
