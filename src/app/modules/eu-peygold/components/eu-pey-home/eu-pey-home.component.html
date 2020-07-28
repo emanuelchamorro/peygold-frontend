@@ -216,7 +216,7 @@
           </tbody>
         </table>
       
-        <div class="sin-movimientos d-flex justify-content-center align-items-center flex-column p-5">
+        <div *ngIf="(!transactions || transactions.length==0)  && !isBusy" class="sin-movimientos d-flex justify-content-center align-items-center flex-column p-5">
           <img class="d-flex mb-3" src="/assets/images/new-icons/movimientos.svg" height="100" width="100">
           <span *ngIf="!showPagination">No hay registros para mostrar.</span>
           <span *ngIf="showPagination">No hay actividad</span>
@@ -228,11 +228,5 @@
       </ngb-pagination>
     </div>
   </div>
-
-  <div *ngIf="(!transactions || transactions.length==0)  && !isBusy">
-
-
-  </div>
-
 
 </div>

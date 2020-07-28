@@ -25,48 +25,49 @@ export class ScPeyReportRetentionsComponent extends BaseComponent implements OnI
   public showPagination: boolean;
   public filter: string;
   private exportAsConfig: ExportAsConfig;
-  private years:Array<SelectOption>;
-  private year:any;
+  private years: Array<SelectOption>;
+  private year: any;
 
   constructor(private spinnerService: NgxSpinnerService,
     private exportAsService: ExportAsService,
-    private reportsService:ReportsService,
-    private inMemoryService:InMemoryService) {
+    private reportsService: ReportsService,
+    private inMemoryService: InMemoryService) {
     super();
   }
 
   ngOnInit() {
-     this.spinnerService.show();
-     this.years = this.inMemoryService.loadYears;
-     console.log('years',this.years);
-     const currentDate = new Date();
-     this.year = currentDate.getFullYear()
-      this.reportsService.searchRetentions(currentDate.getFullYear()).then((response: Array<Retention>) => {
-        this.retentions = response;
-        if (this.retentions && this.retentions.length > 0) {
-          this.showPagination = true;
+    this.spinnerService.show();
+    this.years = this.inMemoryService.loadYears;
+    console.log('years', this.years);
+    const currentDate = new Date();
+    this.year = currentDate.getFullYear()
+    this.reportsService.searchRetentions(currentDate.getFullYear()).then((response: Array<Retention>) => {
+      this.retentions = response;
+      if (this.retentions && this.retentions.length > 0) {
+        this.showPagination = true;
 
-        }else{
-          this.showPagination = false;
-        }   
+      } else {
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.showPagination = false;
         this.spinnerService.hide();
-      }).catch(
-        (erro) => {
-          this.showPagination = false;
-          this.spinnerService.hide();
-          this.setError("Ha ocurrido un error. No es posible cargar las retenciones.");
-        }
-      );
+        this.setError("Ha ocurrido un error. No es posible cargar las retenciones.");
+      }
+    );
   }
 
   loadPage(year: number) {
+    this.spinnerService.show();
     this.reportsService.searchRetentions(year).then((response: Array<Retention>) => {
       this.retentions = response;
-      if (this.retentions && this.retentions.length > 0 ) {
+      if (this.retentions && this.retentions.length > 0) {
         this.showPagination = true;
-      }else{
+      } else {
         this.showPagination = false;
-      }   
+      }
       this.spinnerService.hide();
     }).catch(
       (erro) => {
@@ -96,8 +97,11 @@ export class ScPeyReportRetentionsComponent extends BaseComponent implements OnI
     );
   }
 
-
-  setFilter(year:string){
+  /**
+   * Set year filter
+   * @param year 
+   */
+  setFilter(year: string) {
     this.year = year;
     this.loadPage(Number(year));
   }

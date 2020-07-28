@@ -210,7 +210,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   setFiltersDefault(){
     this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
     this.filtersTransationStatus = this.filtersTransationStatusDefault;
-    this.selectdFilterTransactionType = null;
+    this.selectdFilterTransactionType = "-1";
     this.startDate = undefined;
     this.endDate = undefined;
 

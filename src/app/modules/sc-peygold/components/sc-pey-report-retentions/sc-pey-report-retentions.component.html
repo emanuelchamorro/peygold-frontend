@@ -40,13 +40,16 @@
                     </td>
                     <td class="text-center" [innerHtml]="retention.amount"></td>
                     <td class="text-center">
-                       
-                          
-                            <div class="text-right pr-4">
-                                <a [routerLink]="[routes.reportretentionsdetails.index.href, retention.monthNumber, year ]">Ver detalle</a>
+                            <div class="DropOptions toggleOptions">
+                                <span class="options slide-toggle"></span>
+                                <div class="OptionsDrop text-left slide-toggle-content">
+                                    <form method="get" action="?">
+                                        <button type="button" class="dropdown-item detalleCobro"
+                                        [routerLink]="[routes.reportretentionsdetails.index.href, retention.monthNumber, year ]">Ver detalle</button>
+                                    </form>
+                                </div>
                             </div>
-                        
-                    </td>
+                        </td>
                 </tr>
             </tbody>
         </table>

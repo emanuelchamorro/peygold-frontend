@@ -33,8 +33,9 @@
                     </div>
                 </div>
                 <div class="right">
-                    <form action="?" name="buscarFiltro">
-                        <input type="text" class="input-buscar" name="buscar" placeholder="Buscar" />
+                    <form>
+                        <input id="inputFilter" type="text" class="inputSearch" name="filter" (keyup)="search($event)"
+                            [(ngModel)]="filter" placeholder="Buscar" />
                     </form>
                 </div>
 
@@ -48,28 +49,16 @@
                 <form class="form-inline">
                     <div class="input-group">
                         <div class="boxSelect">
-                            <a class="btn-dropDown stateDrop">Todas las operaciones <i
+                            <a class="btn-dropDown stateDrop"><span>Todas las operaciones</span><i
                                     class="fa fa-chevron-right"></i></a>
                             <div class="downFecha stateDown">
                                 <ul>
-                                    <li>
-                                        <a href="#" class="optionDate">Todas las operaciones</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="optionDate">Ingresos de dinero</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="optionDate">Pagos y otros egresos</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="optionDate">Cargos de Peygold</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="optionDate">Créditos</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="optionDate">Remates</a>
-                                    </li>
+                                    <li id="allOriginRecharge" (click)="setFilterOriginRecharge('-1')"
+                                        class="optionDate">Todas las
+                                        operaciones</li>
+                                    <li *ngFor="let originRecharge of originTransactionTypes" id="originRecharge.label"
+                                        (click)="setFilterOriginRecharge(originRecharge.value)" class="optionDate"
+                                        [innerHtml]="originRecharge.label"></li>
 
                                 </ul>
                             </div>
@@ -79,15 +68,17 @@
                     <div class="input-group">
                         <div>
                             <div class="boxSelect">
-                                <a class="btn-dropDown stateDrop">Moneda<i class="fa fa-chevron-right"></i></a>
+                                <a class="btn-dropDown stateDrop"><span>Todas las monedas</span><i
+                                        class="fa fa-chevron-right"></i></a>
                                 <div class="downFecha stateDown">
                                     <ul>
-                                        <li><a href="#" class="optionDate">Peygold PESOS($)</a></li>
-                                        <li><a href="#" class="optionDate">Peygold PUNTOS(P$G)</a></li>
-                                        <li>
-                                            <a href="#" class="optionDate">Todas las monedas</a>
+                                        <li id="allTransactionType" (click)="setFilterTransactionType('-1')"
+                                            class="optionDate">Todas las
+                                            monedas</li>
+                                        <li *ngFor="let transactionType of transactionTypes" id="transactionType.label"
+                                            (click)="setFilterTransactionType(transactionType.value)" class="optionDate"
+                                            [innerHtml]="transactionType.label">
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -96,24 +87,34 @@
                     <div class="input-group">
                         <div>
                             <div class="boxSelect">
-                                <a class="btn-dropDown stateDrop">Periodo <i class="fa fa-chevron-right"></i></a>
+                                <a class="btn-dropDown stateDrop"><span>Hoy</span> <i
+                                        class="fa fa-chevron-right"></i></a>
                                 <div class="downFecha stateDown">
                                     <ul>
-                                        <li><a href="#" class="optionDate">Hoy</a></li>
-                                        <li><a href="#" class="optionDate">Ayer</a></li>
-                                        <li>
-                                            <a href="#" class="optionDate">Mes Pasado</a>
-                                        </li>
+                                        <li (click)="setFilterRange(0)">Hoy</li>
+                                        <li (click)="setFilterRange(1)">Ayer</li>
+                                        <li (click)="setFilterRange(2)">Mes Pasado</li>
                                         <div class="dropdown-divider"></div>
-                                        <li>
-                                            <a href="#" class="btn">Desde 05/08/2019</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="btn">Desde 05/08/2019</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="btn btn-sm">Aceptar</a>
-                                        </li>
+                                        <form class="formFiltrarDown pl-3 pr-3" name="form" #rangeForm="ngForm"
+                                            (ngSubmit)="rangeForm.form.valid?onSubmit():resetForm(rangeForm)"
+                                            novalidate>
+                                            <input id="sDInput" type="text" mask="00/00/0000"
+                                                [dropSpecialCharacters]="false" name="sDate" [(ngModel)]="sDateInput"
+                                                #sDate="ngModel" placeholder="Desde 05/08/2019" required />
+                                            <div *ngIf="!sDate.pristine && sDate.invalid || rangeForm.submitted && sDate.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="sDate.errors.required">Campo es requerido</div>
+                                            </div>
+                                            <input id="eDInput" type="text" mask="00/00/0000"
+                                                [dropSpecialCharacters]="false" name="eDate" [(ngModel)]="eDateInput"
+                                                #eDate="ngModel" placeholder="Hasta 05/08/2019" required />
+                                            <div *ngIf="!eDate.pristine && eDate.invalid || rangeForm.submitted && eDate.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="eDate.errors.required">Campo es requerido</div>
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <button id="btnSetRange" type="submit" class="btn-blue">Aceptar</button>
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -122,7 +123,7 @@
                 </form>
             </div>
 
-            <table class="table responsive">
+            <table id="tableTransactions" class="table responsive" *ngIf="transactions && transactions.data">
                 <thead>
                     <tr>
                         <th scope="col" class="text-center">Fecha</th>
@@ -133,62 +134,142 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let transaction of transactions.data;">
                         <td>
-                            <p class="text-center">10/12/2019</p>
+                            <p class="text-center" [innerHtml]="transaction.createdAt | date:medium"></p>
                         </td>
                         <td>
-                            <p class="text-center">0974834</p>
+                            <p class="text-center" [innerHtml]="transaction.id"></p>
                         </td>
                         <td>
-                            <p class="text-center">Pago</p>
+                            <p class="text-center" [innerHtml]="transaction.originRecharge.label"></p>
                         </td>
                         <td>
-                            <p class="text-center text-danger">-P$G1520</p>
+                            <p class="text-center text-danger">
+                                {{transaction.type.coin}}&nbsp;{{transaction.amount | number:'1.2'}}</p>
                         </td>
                         <td>
-                            <p class="text-center">P$G100</p>
+                            <p class="text-center">{{transaction.type.coin}}&nbsp;{{transaction.amount | number:'1.2'}}
+                            </p>
                         </td>
                         <td class="text-center">
-                            <div class="detallePopup">
-                                <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
-                                <div class="details slide-toggle-content ">
-                                    <ul>
-                                        <li><button type="button" id="viewModal1">Ver detalle</button>
-                                    </ul>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="text-center">10/12/2019</p>
-                        </td>
-                        <td>
-                            <p class="text-center">0424834</p>
-                        </td>
-                        <td>
-                            <p class="text-center">Cobro</p>
-                        </td>
-                        <td>
-                            <p class="text-center">P$G 1520</p>
-                        </td>
-                        <td>
-                            <p class="text-center">P$G 10</p>
-                        </td>
-                        <td class="text-center">
-                            <div class="detallePopup">
-                                <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
-                                <div class="details slide-toggle-content ">
-                                    <ul>
-                                        <li><button type="button" id="viewModal2">Ver detalle</button>
-                                    </ul>
+                            <div class="DropOptions toggleOptions">
+                                <span class="options slide-toggle"></span>
+                                <div class="OptionsDrop text-left slide-toggle-content">
+                                    <form method="get" action="?">
+                                        <button type="button" class="dropdown-item detalleCobro"
+                                            (click)="showTransaction(transaction)">Ver detalle</button>
+                                    </form>
                                 </div>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <p *ngIf="!showPagination" class="text-center p-end">
+                No hay registros para mostrar.
+            </p>
         </div>
+        <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+        (pageChange)="loadPage($event)">
+    </ngb-pagination>
     </div>
 </div>
+
+<app-ui-pey-sidebar *ngIf="detailedTransaction" (onClose)="detailedTransaction = null" [closed]="!detailedTransaction"
+    title="Detalles de la operación">
+    <div *ngIf="detailedTransaction.originRecharge.value == '1'" class="modal-content pl-4 pr-4 pt-2">
+        <ul class="operation-date">
+            <li>
+                <span [innerHtml]="'Solicitud #' +detailedTransaction.id"></span>
+                <span [innerHtml]="detailedTransaction.createdAt | date:medium"></span>
+            </li>
+        </ul>
+
+        <ul class="amount-detail">
+            <li>
+                <span>Pagaste</span>
+                <span>{{detailedTransaction.type.coin}}&nbsp;{{detailedTransaction.amount | number:'1.2'}}</span>
+            </li>
+        </ul>
+
+        <ul class="user-info-modal">
+            <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+                <p>Medio de pago</p>
+                <i class="img-billetera-puntos"></i>
+                <span>Billetera</span>
+                <span>Peygold Créditos</span>
+            </li>
+        </ul>
+
+        <ul class="user-info-modal">
+            <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+                <p>Contraparte</p>
+                <i class="circle" [innerHtml]="detailedTransaction.receiver.initials"></i>
+                <span [innerHtml]="detailedTransaction.receiver.completeName"></span>
+                <span [innerHtml]="detailedTransaction.receiver.email"></span>
+            </li>
+        </ul>
+        <div class="d-flex justify-content-center">
+            <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" readonly />
+        </div>
+    </div>
+    <div *ngIf="detailedTransaction.originRecharge.value == '6'" class="modal-content pl-4 pr-4 pt-2">
+        <ul class="operation-date">
+            <li>
+                <span [innerHtml]="'Solicitud #' +detailedTransaction.id"></span>
+                <span [innerHtml]="detailedTransaction.createdAt | date:medium"></span>
+            </li>
+        </ul>
+
+        <ul class="list-detail">
+            <li>
+                <span>Importe cobrado</span>
+                <span>{{detailedTransaction.type.coin}}&nbsp;{{detailedTransaction.amount | number:'1.2'}}</span>
+            </li>
+            <li>
+                <span>Comisión de Peygold</span>
+                <span>-$100</span>
+            </li>
+            <li>
+                <span>Impuesto al valor agregado (IVA)</span>
+                <span>-$21</span>
+            </li>
+            <li>
+                <span>Retención del IVA</span>
+                <span>-$4,41</span>
+            </li>
+            <li>
+                <span>Retención del IIBB</span>
+                <span>-$5</span>
+            </li>
+        </ul>
+        <ul class="amount-detail">
+            <li>
+                <span>Total recibido</span>
+                <span>P$G 1.250,55</span>
+            </li>
+        </ul>
+        <ul class="user-info-modal">
+            <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+                <p>Medio de pago</p>
+                <i class="img-tarjeta"></i>
+                <span>Tarjeta de débito</span>
+                <span>MASTERCARD</span>
+            </li>
+        </ul>
+        <ul class="user-info-modal">
+            <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+                <p>Contraparte</p>
+                <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+                <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+                <span [innerHtml]="detailedTransaction.sender.email"></span>
+            </li>
+        </ul>
+        <div class="d-flex justify-content-center">
+            <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5"
+                id="input-line" readonly />
+        </div>
+
+    </div>
+</app-ui-pey-sidebar>

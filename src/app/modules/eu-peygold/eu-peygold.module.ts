@@ -46,6 +46,7 @@ import {MustMatchDirective} from './directive/must-match.directive';
 import { EuPeyReportAccountStatusComponent } from './components/eu-pey-report-account-status/eu-pey-report-account-status.component';
 import { EuPeyReportRetentionsComponent } from './components/eu-pey-report-retentions/eu-pey-report-retentions.component';
 import { EuPeyReportRetentionsDetailComponent } from './components/eu-pey-report-retentions-detail/eu-pey-report-retentions-detail.component';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { EuPeyReportRetentionsDetailComponent } from './components/eu-pey-report
     NgbPaginationModule,
     NgbAlertModule,
     NgxSpinnerModule,
+    PDFExportModule,
     NgxMaskModule.forRoot(NgMaskConfig),
     TranslateModule.forRoot({
       loader: {

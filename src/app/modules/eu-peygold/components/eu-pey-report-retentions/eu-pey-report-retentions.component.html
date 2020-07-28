@@ -1,1 +1,178 @@
-<p>eu-pey-report-retentions works!</p>
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<div class="top">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <div class="row mb-3">
+        <div class="col">
+            <h2 class="titleSecurity"><span class="icon-reportes"></span>Reportes: Retenciones</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-6 form-inline">
+            <div class="form-group">
+                <div class="Export">
+                    <a class="ExportBtn slide-toggle">Año {{year}}<span class="ChevronDown"></span></a>
+                    <div class="DownExport slide-toggle-content">
+                        <ul>
+                            <li *ngFor="let year of years" (click)="setFilter(year.label)" [innerHtml]="year.label">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mb-2">
+    <div class="tablaDatos tablaReportes">
+        <table id="tableRetentions" class="table responsive" *ngIf="retentions">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Mes</th>
+                    <th scope="col" class="text-center">Impuesto</th>
+                    <th scope="col" class="text-center">Certificado</th>
+                    <th scope="col" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let retention of retentions;">
+                    <td>
+                        <p class="text-center" [innerHtml]="retention.month"></p>
+                    </td>
+                    <td>
+                        <p class="text-center">IIBB Buenos Aires</p>
+                    </td>
+                    <td class="text-center"><a (click)="pdf.saveAs('certificado.pdf')" class="color-blue">Descargar</a></td>
+                    <td class="text-center">
+                        <div class="DropOptions toggleOptions">
+                            <span class="options slide-toggle"></span>
+                            <div class="OptionsDrop text-left slide-toggle-content">
+                                <form method="get" action="?">
+                                    <button type="button" class="dropdown-item detalleCobro"
+                                        [routerLink]="[routes.reportretentionsdetails.index.href, retention.monthNumber, year ]">Ver
+                                        detalle</button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="content"  style="position: absolute; left: -1000px; top: 0;">
+    <kendo-pdf-export #pdf >
+            <div class="container">
+                    <div class="Certificado">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-6">
+                            <p>
+                              Régimen de retención del<br />Impuesto sobre Ingresos Brutos
+                            </p>
+                            <p>Provincia de Buenos Aires</p>
+                            <p>Resolución General 19/2019</p>
+                            <p>Certificado de Retención</p>
+                          </div>
+                          <div class="col-6">
+                            <p class="text-right">
+                              <img src="/assets/images/logo-peygold-2.svg" class="logo" />
+                            </p>
+                            <p class="text-right">Certificado 102019146546846501</p>
+                            <p class="text-right">Fecha 30/11/2018</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="boxCertificado">
+                              <p class="text-left">Datos del agente de retención</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row p-2">
+                          <div class="col-6">
+                            <p>PeyGold S.R.L.</p>
+                            <p>Número de inscripción:</p>
+                            <p>CUIT:</p>
+                            <p>Dirección:</p>
+                          </div>
+                          <div class="col-6">
+                            <p>&nbsp;</p>
+                            <p>987654321328</p>
+                            <p>00-0000000-00</p>
+                            <p>Calle 14 0000, piso 2, Berazategui</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="boxCertificado">
+                              <p class="text-left">Datos del sujeto retenido</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row p-2">
+                          <div class="col-6">
+                            <p>Apellidos y Nombres o denominación:</p>
+                            <p>Nº de inscripción:</p>
+                            <p>CUIT/DNI:</p>
+                            <p>Condición frente a IIBB:</p>
+                            <p>Dirección:</p>
+                          </div>
+                          <div class="col-6">
+                            <p>Empresas S.A.</p>
+                            <p>987654321328</p>
+                            <p>00-0000000-00</p>
+                            <p>No Inscripto</p>
+                            <p>Lavalle 2398, Quilmes</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="boxCertificado">
+                              <p class="text-left">Datos de la retención practicada</p>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <table class="p-2 w-100" border="1" cellpadding="10">
+                              <tr>
+                                <td class="boxCertificado">Concepto</td>
+                                <td class="boxCertificado">Monto base</td>
+                                <td class="boxCertificado">Alícuota</td>
+                                <td class="boxCertificado">Retención</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  Retención de ingresos brutos<br />de Provincia de Buenos
+                                  Aires
+                                </td>
+                                <td>$ 719.100,56</td>
+                                <td>1,50%</td>
+                                <td>$11.512,48</td>
+                              </tr>
+                              <tr>
+                                <td class="boxCertificado">
+                                  Total Retenido
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>$11.512,48</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="CertificadoFooter">
+                          <div class="boxFooterCertificado">
+                            <p class="text-center">
+                              <img src="/assets/images/firma.png" />
+                            </p>
+                            <p class="text-center">Firma del agente de retención</p>
+                            <p class="text-center">Apoderado</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    </kendo-pdf-export>
+
+</div>
