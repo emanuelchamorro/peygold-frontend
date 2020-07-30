@@ -54,32 +54,6 @@
     </div>
   </div>
   <h2><span class="icon-Iconos-02 fs-22"></span>Actividad</h2>
-  <!--  <div class="movimientos-container grey-box w-100">
-    <div *ngFor="let transaction of transactions;"
-      class="d-flex p-3 b-bottom-grey b-bottom-line align-items-center justify-content-between">
-
-      <span>
-        {{transaction.originRechargeName}} {{transaction.idOriginRecharge===3?'':'a'}}
-        {{transaction.idOriginRecharge===3?'':transaction.amount >= 0 ? transaction.sender.fullName: transaction.receiver.fullName}}
-
-      </span>
-      <div class="d-flex flex-column align-items-end">
-        <span class="fs-16">{{transaction.symbol}} {{transaction.amount | currency:' ':'symbol':'1.0'}}</span>
-        <span class="fs-11" [innerHtml]="transaction.createdAt | date: medium"></span>
-      </div>
-    </div>
-    <div *ngIf="(!transactions || transactions.length == 0) && !isBusy">
-
-      <div class="grey-box d-flex flex-column w-100">
-        <div class="sin-movimientos d-flex justify-content-center align-items-center flex-column p-5">
-          <img class="d-flex mb-3" src="/assets/images/new-icons/movimientos.svg" height="100" width="100">
-          <span>No hay actividad</span>
-          <span>Utiliza Peygold y comienza a ver movimientos en tu cuenta</span>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <div class="content-center">
 
     <div class="filtros w-100">
@@ -124,7 +98,8 @@
                       class="fa fa-chevron-right"></i></a>
                   <div class="downFecha stateDown">
                     <ul>
-                      <li id="allTransactionState" (click)="setFilterTransactionState('-1')" class="optionDate">Todos los
+                      <li id="allTransactionState" (click)="setFilterTransactionState('-1')" class="optionDate">Todos
+                        los
                         estados</li>
                       <li *ngFor="let status of transactionStatus" (click)="setFilterTransactionState(status.value)"
                         id="status.label" class="optionDate" [innerHtml]="status.label">
@@ -158,24 +133,27 @@
                   <a class="btn-dropDown stateDrop"><span>Hoy</span><i class="fa fa-chevron-right"></i></a>
                   <div class="downFecha stateDown">
                     <ul>
-                        <li (click)="setFilterRange(0)" >Hoy</li>
-                        <li (click)="setFilterRange(1)" >Ayer</li>
-                        <li (click)="setFilterRange(2)">Mes Pasado</li>
-                        <div class="dropdown-divider"></div>
-                        <form class="formFiltrarDown pl-3 pr-3" name="form" #rangeForm="ngForm" (ngSubmit)="rangeForm.form.valid?onSubmit():resetForm(rangeForm)" novalidate>
-                            <input id="sDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="sDate" [(ngModel)]="sDateInput" #sDate="ngModel" placeholder="Desde 05/08/2019" required/>
-                            <div *ngIf="!sDate.pristine && sDate.invalid || rangeForm.submitted && sDate.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="sDate.errors.required">Campo es requerido</div>
+                      <li (click)="setFilterRange(0)">Hoy</li>
+                      <li (click)="setFilterRange(1)">Ayer</li>
+                      <li (click)="setFilterRange(2)">Mes Pasado</li>
+                      <div class="dropdown-divider"></div>
+                      <form class="formFiltrarDown pl-3 pr-3" name="form" #rangeForm="ngForm"
+                        (ngSubmit)="rangeForm.form.valid?onSubmit():resetForm(rangeForm)" novalidate>
+                        <input id="sDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="sDate"
+                          [(ngModel)]="sDateInput" #sDate="ngModel" placeholder="Desde 05/08/2019" required />
+                        <div *ngIf="!sDate.pristine && sDate.invalid || rangeForm.submitted && sDate.errors"
+                          class="invalid-feedback">
+                          <div *ngIf="sDate.errors.required">Campo es requerido</div>
                         </div>
-                            <input id="eDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="eDate" [(ngModel)]="eDateInput" #eDate="ngModel" placeholder="Hasta 05/08/2019" required/>
-                            <div *ngIf="!eDate.pristine && eDate.invalid || rangeForm.submitted && eDate.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="eDate.errors.required">Campo es requerido</div>
+                        <input id="eDInput" type="text" mask="00/00/0000" [dropSpecialCharacters]="false" name="eDate"
+                          [(ngModel)]="eDateInput" #eDate="ngModel" placeholder="Hasta 05/08/2019" required />
+                        <div *ngIf="!eDate.pristine && eDate.invalid || rangeForm.submitted && eDate.errors"
+                          class="invalid-feedback">
+                          <div *ngIf="eDate.errors.required">Campo es requerido</div>
                         </div>
                         <div class="dropdown-divider"></div>
-                            <button id="btnSetRange" type="submit" class="btn-blue">Aceptar</button>
-                        </form>
+                        <button id="btnSetRange" type="submit" class="btn-blue">Aceptar</button>
+                      </form>
                     </ul>
                   </div>
                 </div>
@@ -192,22 +170,39 @@
             <tr *ngFor="let transaction of transactions;" class="d-flex justify-content-between align-items-center">
               <td class="col-4 d-flex align-items-center">
                 <img *ngIf="transaction.iconImg" class="circle" [src]="transaction.iconImg">
-                <i *ngIf="!transaction.iconImg" class="circle">{{transaction.sender.initials}}</i>  
-                  {{transaction.description}}
+                <i *ngIf="!transaction.iconImg" class="circle">{{transaction.sender.initials}}</i>
+                {{transaction.description}}
               </td>
               <td class="col-4"><span class="text-secondary status">{{transaction.status.label}}</span></td>
               <td class="col-4 d-flex flex-row justify-content-end align-items-center">
                 <div class="d-flex flex-column mr-3">
-                  <span class="fs-16 text-secondary text-right">{{transaction.sign}} {{transaction.symbol}} {{transaction.amount | currency:' ':'symbol':'1.0'}}</span>
+                  <span class="fs-16 text-secondary text-right">{{transaction.sign}} {{transaction.symbol}}
+                    {{transaction.amount | currency:' ':'symbol':'1.0'}}</span>
                   <span class="fs-11 text-secondary" [innerHtml]="transaction.createdAt | date: medium"></span>
                 </div>
                 <div class="detallePopup">
                   <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
                   <div class="details slide-toggle-content">
                     <ul>
-                      <li><button type="button" id="viewModal1"> Ver detalle</button>
-                      <li><button type="button" id="viewModal2">Pagar</button></li>
-                      <li><button type="button" id="viewModal3">Rechazar</button></li>
+                      <li><button (click)="modal='detail';setTransaction(transaction)" type="button"> Ver
+                          detalle</button>
+                      <li><button
+                          *ngIf="transaction.originRecharge.value=='6' && user.email==transaction.sender.email && transaction.status.value=='1'"
+                          (click)="modal='pay';setTransaction(transaction)" type="button">Pagar</button></li>
+                      <li><button
+                          *ngIf="transaction.originRecharge.value=='6' && user.email==transaction.sender.email && transaction.status.value=='1'"
+                          (click)="modal='reject';setTransaction(transaction)" type="button">Rechazar</button></li>
+                      <li><button
+                          *ngIf="transaction.originRecharge.value=='6' && user.email==transaction.receiver.email && transaction.status.value=='1'"
+                          (click)="modal='cancel';setTransaction(transaction)" type="button">Cancelar solicitud</button>
+                      </li>
+                      <li><button
+                          *ngIf="transaction.originRecharge.value=='6' && user.email==transaction.receiver.email && transaction.status.value=='2'"
+                          (click)="modal='refundmoney';setTransaction(transaction)" type="button">Reintegrar
+                          dinero</button></li>
+                      <li><button *ngIf="transaction.originRecharge.value=='1'"
+                          (click)="modal='refundmoney';setTransaction(transaction)" type="button">Solicitar
+                          reintegro</button></li>
                     </ul>
                   </div>
                 </div>
@@ -215,8 +210,9 @@
             </tr>
           </tbody>
         </table>
-      
-        <div *ngIf="(!transactions || transactions.length==0)  && !isBusy" class="sin-movimientos d-flex justify-content-center align-items-center flex-column p-5">
+
+        <div *ngIf="(!transactions || transactions.length==0)  && !isBusy"
+          class="sin-movimientos d-flex justify-content-center align-items-center flex-column p-5">
           <img class="d-flex mb-3" src="/assets/images/new-icons/movimientos.svg" height="100" width="100">
           <span *ngIf="!showPagination">No hay registros para mostrar.</span>
           <span *ngIf="showPagination">No hay actividad</span>
@@ -228,5 +224,431 @@
       </ngb-pagination>
     </div>
   </div>
-
 </div>
+<!-- idOriginRecharge = 6 y Alquien envio solicitud de pago-->
+<app-ui-pey-sidebar
+  *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='6' && user.email==detailedTransaction.sender.email"
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+  <!-- Detalle -->
+  <div *ngIf="modal=='detail'" class="modal-content pl-4 pr-4 pt-2">
+    <span>Estas aceptando la siguiente solicitud:</span>
+
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <i class="circle" [innerHtml]="detailedTransaction.receiver.initials"></i>
+        <span [innerHtml]="detailedTransaction.receiver.completeName"></span>
+        <span [innerHtml]="detailedTransaction.receiver.email"></span>
+      </li>
+    </ul>
+
+    <ul class="amount-detail">
+      <li>
+        <span>Te solicita</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+
+
+    <div class="d-flex justify-content-center">
+      <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+    </div>
+
+
+    <div *ngIf="detailedTransaction.status.value=='1'" class="d-flex justify-content-center pay-cancel-buttons">
+      <button (click)="modal='pay';" class="mr-5 ml-5">Pagar</button>
+      <button (click)="modal='reject';" class="mr-5 ml-5">Rechazar</button>
+    </div>
+  </div>
+  <!-- Pagar -->
+  <div *ngIf="modal=='pay'" class="modal-content pl-4 pr-4 pt-2">
+    <span>Estas aceptando la siguiente solicitud:</span>
+
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <i class="circle" [innerHtml]="detailedTransaction.receiver.initials"></i>
+        <span [innerHtml]="detailedTransaction.receiver.completeName"></span>
+        <span [innerHtml]="detailedTransaction.receiver.email"></span>
+      </li>
+    </ul>
+    <ul class="amount-detail">
+      <li>
+        <span>Te solicita</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+
+    <div class="d-flex justify-content-center">
+      <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+    </div>
+    <div class="alert alert-dark text-center mt-4" role="alert">
+      Estas pagando la solicitud a {{detailedTransaction.receiver.completeName}}
+    </div>
+    <div class="d-flex justify-content-center">
+      <button (click)="detailedTransaction = null; modal='detail'" class="solid-blue-button ">Pagar</button>
+    </div>
+  </div>
+  <!-- Rechazar -->
+  <div *ngIf="modal=='reject'" class="modal-content pl-4 pr-4 pt-2">
+    <span>Estas Rechazando la siguiente solicitud:</span>
+
+    <ul class="user-info-modal">
+      <li class=" -flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <i class="circle" [innerHtml]="detailedTransaction.receiver.initials"></i>
+        <span [innerHtml]="detailedTransaction.receiver.completeName"></span>
+        <span [innerHtml]="detailedTransaction.receiver.email"></span>
+      </li>
+    </ul>
+    <ul class="amount-detail">
+      <li>
+        <span>Te solicita</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+    <div class="d-flex justify-content-center">
+      <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+    </div>
+    <div class="alert alert-dark text-center mt-4" role="alert">
+      Estas rechazando la solicitud a {{detailedTransaction.receiver.completeName}}
+    </div>
+    <div class="d-flex justify-content-center">
+      <button (click)="detailedTransaction = null; modal='detail'" class="solid-blue-button ">Rechazar</button>
+    </div>
+  </div>
+
+</app-ui-pey-sidebar>
+
+<!-- idOriginRecharge = 6 y Se envia solicitud de pago-->
+<app-ui-pey-sidebar
+  *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='6' && user.email==detailedTransaction.receiver.email"
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+  <!-- detalle - Solicitud de pago - rechazada-->
+  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='3'" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Cobraste a</p>
+        <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+        <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+        <span [innerHtml]="detailedTransaction.sender.email"></span>
+      </li>
+    </ul>
+    <ul class="amount-detail">
+      <li class="line-trough">
+        <span>Importe total</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+    <div class="d-flex justify-content-center">
+      <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+    </div>
+    <div class="alert alert-danger text-center" role="alert">
+      Se rechazó la solicitud
+    </div>
+  </div>
+  <!-- detalle - Solicitud de pago - pendiente-->
+  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='1'" class="modal-content pl-4 pr-4 pt-2">
+
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Cobraste a</p>
+        <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+        <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+        <span [innerHtml]="detailedTransaction.sender.email"></span>
+      </li>
+    </ul>
+    <ul class="amount-detail">
+      <li>
+        <span>Importe a cobrar</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+    <ul>
+      <div class="d-flex justify-content-center">
+        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+      </div>
+    </ul>
+    <div class="alert alert-dark text-center mt-4" role="alert">
+      Pendiente de pago
+    </div>
+    <div class="d-flex justify-content-center mb-5 blue-link">
+      <button (click)="modal='cancel'">Cancelar solicitud</button>
+    </div>
+  </div>
+  <!-- Solicitud de pago - cancelar-->
+  <div *ngIf="modal=='cancel'" class="modal-content pl-4 pr-4 pt-2">
+
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Cobraste a</p>
+        <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+        <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+        <span [innerHtml]="detailedTransaction.sender.email"></span>
+      </li>
+    </ul>
+
+    <ul class="amount-detail">
+      <li class="line-trough">
+        <span>Importe total</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+
+    <ul>
+      <div class="d-flex justify-content-center">
+        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+      </div>
+    </ul>
+
+    <div class="alert alert-dark text-center mt-4" role="alert">
+      Estas cancelando la solicitud. {{detailedTransaction.sender.completeName}} ya no podrá pagarte
+    </div>
+
+    <div class="d-flex justify-content-center mb-5">
+      <button (click)="modal='detail';detailedTransaction=null;" class="solid-blue-button">Cancelar solicitud</button>
+    </div>
+  </div>
+  <!-- detalle - Solicitud de pago - aprobado-->
+  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='2'" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Cobraste a</p>
+        <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+        <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+        <span [innerHtml]="detailedTransaction.sender.email"></span>
+      </li>
+    </ul>
+    <ul class="list-detail">
+      <li>
+        <span>Importe cobrado</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+      <li>
+        <span>Comisión de Peygold</span>
+        <span>-$100</span>
+      </li>
+      <li>
+        <span>Impuesto al valor agregado</span>
+        <span>-$21</span>
+      </li>
+      <li>
+        <span>Retención del IVA</span>
+        <span>-$4,41</span>
+      </li>
+      <li>
+        <span>Retención del IIBB</span>
+        <span>-$5</span>
+      </li>
+    </ul>
+    <ul class="amount-detail">
+      <li>
+        <span>Total recibido</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+    <ul>
+      <div class="d-flex justify-content-center">
+        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+      </div>
+    </ul>
+
+    <div class="d-flex justify-content-center mt-4 mb-5 blue-link">
+      <button (click)="modal = 'refundmoney';">Reintegrar dinero</button>
+    </div>
+  </div>
+  <!-- Reintegro - Solicitud de pago - aprobado-->
+  <div *ngIf="modal=='refundmoney' && detailedTransaction.status.value=='2'" class="modal-content pl-4 pr-4 pt-2">
+
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Cobraste a</p>
+        <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+        <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+        <span [innerHtml]="detailedTransaction.sender.email"></span>
+      </li>
+    </ul>
+    <ul class="list-detail">
+      <li>
+        <span>Importe cobrado</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+      <li>
+        <span>Comisión de Peygold</span>
+        <span>-$100</span>
+      </li>
+      <li>
+        <span>Impuesto al valor agregado</span>
+        <span>-$21</span>
+      </li>
+      <li>
+        <span>Retención del IVA</span>
+        <span>-$4,41</span>
+      </li>
+      <li>
+        <span>Retención del IIBB</span>
+        <span>-$5</span>
+      </li>
+    </ul>
+    <ul class="amount-detail">
+      <li>
+        <span>Total recibido</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+    <ul>
+      <div class="d-flex justify-content-center">
+        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+      </div>
+    </ul>
+    <div class="alert alert-dark text-center mt-5" role="alert">
+      Reintegraremos el dinero a {{detailedTransaction.sender.completeName}}.<br> Lo verá nuevamente en su billetera
+    </div>
+    <div class="d-flex justify-content-center mt-3 mb-5">
+      <button (click)="detailedTransaction = null;" class="solid-blue-button">Reintegrar</button>
+    </div>
+  </div>
+</app-ui-pey-sidebar>
+
+<!-- Ingreso de dinero-->
+
+<app-ui-pey-sidebar
+  *ngIf="detailedTransaction && (detailedTransaction.originRecharge.value=='3' || detailedTransaction.originRecharge.value=='7' || detailedTransaction.originRecharge.value=='8' || detailedTransaction.originRecharge.value=='9')"
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+
+  <div class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+
+    <ul class="amount-detail">
+      <li>
+        <span>Ingresaste</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+
+    <ul class="card-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Medio de pago</p>
+        <i class="img-tarjeta"></i>
+        <span [innerHtml]="detailedTransaction.originRecharge.label"></span>
+        <span *ngIf="detailedTransaction.originRecharge.value=='3'">Master Card</span>
+      </li>
+    </ul>
+
+  </div>
+</app-ui-pey-sidebar>
+<!-- envio o pago de dinero-->
+<app-ui-pey-sidebar *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='1'"
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+  <!-- detalle - envio o pago de dinero-->
+  <div *ngIf="modal=='detail'" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Pagaste a</p>
+        <i class="circle" [innerHtml]="detailedTransaction.receiver.initials"></i>
+        <span [innerHtml]="detailedTransaction.receiver.completeName"></span>
+        <span [innerHtml]="detailedTransaction.receiver.email"></span>
+      </li>
+    </ul>
+
+    <ul class="amount-detail">
+      <li>
+        <span>Importe total</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+
+
+    <div class="d-flex justify-content-center">
+      <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+    </div>
+
+
+    <div class="d-flex justify-content-center blue-link">
+      <button (click)="modal='refundmoney'">Solicitar reintegro</button>
+    </div>
+  </div>
+  <div *ngIf="modal=='refundmoney'" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Pagaste a</p>
+        <i class="circle" [innerHtml]="detailedTransaction.receiver.initials"></i>
+        <span [innerHtml]="detailedTransaction.receiver.completeName"></span>
+        <span [innerHtml]="detailedTransaction.receiver.email"></span>
+      </li>
+    </ul>
+
+    <ul class="amount-detail">
+      <li>
+        <span>Importe total</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+
+
+    <div class="d-flex justify-content-center">
+      <input value="No hay notas" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+    </div>
+
+    <div class="alert alert-dark text-center  mb-4" role="alert">
+      Pediremos un reintegro a {{detailedTransaction.receiver.completeName}}. Deberá responder dentro de las próximas
+      48hs hábiles.
+    </div>
+
+    <div class="d-flex justify-content-center mb-3">
+      <button (click)="detailedTransaction = null;" class="solid-blue-button">Solicitar reintegro</button>
+    </div>
+  </div>
+</app-ui-pey-sidebar>

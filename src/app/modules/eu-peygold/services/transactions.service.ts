@@ -63,7 +63,7 @@ export class TransactionsService extends HttpService {
  * Search generic transactions.
  * @return Promise<Array<Transaction>> the list of transaction
  */
-  searchGenericTransaction(params: any): Promise<Array<Transaction>> {
+  searchGenericTransaction(params: any, user:User): Promise<Array<Transaction>> {
     return this.post('/transactions/GetGenericsTransactions', params)
       .pipe(
         map((response) => {
@@ -109,21 +109,20 @@ export class TransactionsService extends HttpService {
 
             switch (item.idOriginRecharge) { //1,3,6,7,8,9
               case (1): //Envio de pago
-                if (item.idUser != item.receiver.idUser) {//usuario logueado envia pago
+
+                if(user.email == item.emailSender){
                   transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
                   transaction.description = "Enviaste dinero a " + item.receiver.fullName;
-
-                } else {
+                }else if(user.email == item.receiver.email){
                   //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
                   transaction.description = item.fullNameSender + " te envió dinero";
-
                 }
                 break;
               case (2): //Solicitud de pago
-                if (item.idUser != item.receiver.idUser) {//usuario logueado envia solicitud
+                if (user.email == item.emailSender) {//usuario logueado envia solicitud
                   transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
                   transaction.description = item.receiver.fullName + " te solicitó dinero";
-                } else {
+                } else if(user.email == item.receiver.email){
                   //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
                   transaction.description = "Cobraste a " + item.fullNameSender;
 
@@ -134,14 +133,12 @@ export class TransactionsService extends HttpService {
                 transaction.description = "Ingresaste dinero";
                 break;
               case (6):// Cobros
-                if (item.idUser != item.receiver.idUser) {
+                if (user.email == item.emailSender) {
                   transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
                   transaction.description = item.receiver.fullName + " te solicitó dinero";
-                } else { // Usuario logueado envia solicitud de pago
+                } else if(user.email == item.receiver.email){ // Usuario logueado envia solicitud de pago
                   //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
                   transaction.description = "Cobraste a " + item.fullNameSender;
-
-
                 }
                 break;
               case (7):// Ingreso con Efectivo
