@@ -29,6 +29,7 @@ import { CardsComponent } from './components/cards/cards.component';
 import {EuPeyReportAccountStatusComponent} from './components/eu-pey-report-account-status/eu-pey-report-account-status.component';
 import {EuPeyReportRetentionsComponent} from './components/eu-pey-report-retentions/eu-pey-report-retentions.component';
 import {EuPeyReportRetentionsDetailComponent} from './components/eu-pey-report-retentions-detail/eu-pey-report-retentions-detail.component';
+import { EuPeyNotificationsComponent } from './components/eu-pey-notifications/eu-pey-notifications.component';
 
 
 export const config: Routes = [
@@ -133,6 +134,13 @@ export const config: Routes = [
           title: 'Reportes: Retenciones - Detalles'
         },
       },
+      {
+        path: routes.notifications.index.route,
+        component: EuPeyNotificationsComponent,
+        data: {
+          title: 'Notificaciones'
+        },
+      },      
 
     ]
   },

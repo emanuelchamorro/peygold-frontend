@@ -88,7 +88,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
       // Search the current transactions.
 
-      this.transactionsService.searchGenericTransaction(this.params("2020-07-27 00:00:01", "2020-07-31 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter), this.user).then(
+      this.transactionsService.searchGenericTransaction(this.params("2020-07-27 00:00:01", "2020-08-01 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter), this.user).then(
         (transactions: Array<Transaction>) => {
           this.transactions = transactions;
           console.log(this.transactions);
@@ -256,9 +256,9 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
         sDate.setDate(1);
         eDate.setMonth(eDate.getMonth() - 1);
 
-        const d = new Date(eDate.getFullYear(), eDate.getMonth(), 0);
+        const d = new Date(eDate.getFullYear(), eDate.getMonth()+1, 0);
         const day = d.getDate()
-
+        eDate.setDate(day);
 
         this.startDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;
         this.endDate = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;

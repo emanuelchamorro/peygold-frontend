@@ -200,9 +200,12 @@
                           *ngIf="transaction.originRecharge.value=='6' && user.email==transaction.receiver.email && transaction.status.value=='2'"
                           (click)="modal='refundmoney';setTransaction(transaction)" type="button">Reintegrar
                           dinero</button></li>
-                      <li><button *ngIf="transaction.originRecharge.value=='1'"
-                          (click)="modal='refundmoney';setTransaction(transaction)" type="button">Solicitar
+                      <li><button *ngIf="transaction.originRecharge.value=='1' && user.email==transaction.sender.email"
+                          (click)="modal='requestrefundmoney';setTransaction(transaction)" type="button">Solicitar
                           reintegro</button></li>
+                      <li><button *ngIf="transaction.originRecharge.value=='1' && user.email==transaction.receiver.email"
+                          (click)="modal='refundmoney';setTransaction(transaction)" type="button">Reintegrar
+                          dinero</button></li>
                     </ul>
                   </div>
                 </div>
@@ -225,7 +228,7 @@
     </div>
   </div>
 </div>
-<!-- idOriginRecharge = 6 y Alquien envio solicitud de pago-->
+<!-- MODAL idOriginRecharge = 6 - Solicitud de pago - Se recibe solicitud de pago-->
 <app-ui-pey-sidebar
   *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='6' && user.email==detailedTransaction.sender.email"
   (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
@@ -320,11 +323,11 @@
 
 </app-ui-pey-sidebar>
 
-<!-- idOriginRecharge = 6 y Se envia solicitud de pago-->
+<!-- MODAL idOriginRecharge = 6 - Solicitud de pago - Se envia solicitud de pago-->
 <app-ui-pey-sidebar
   *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='6' && user.email==detailedTransaction.receiver.email"
   (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
-  <!-- detalle - Solicitud de pago - rechazada-->
+  <!-- Detalle - Solicitud de pago (estado rechazada) -->
   <div *ngIf="modal=='detail' && detailedTransaction.status.value=='3'" class="modal-content pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
@@ -353,7 +356,7 @@
       Se rechazó la solicitud
     </div>
   </div>
-  <!-- detalle - Solicitud de pago - pendiente-->
+  <!-- Detalle - Solicitud de pago (estado pendiente)-->
   <div *ngIf="modal=='detail' && detailedTransaction.status.value=='1'" class="modal-content pl-4 pr-4 pt-2">
 
     <ul class="operation-date">
@@ -388,7 +391,7 @@
       <button (click)="modal='cancel'">Cancelar solicitud</button>
     </div>
   </div>
-  <!-- Solicitud de pago - cancelar-->
+  <!-- Solicitud de pago - Cancelar solicitud-->
   <div *ngIf="modal=='cancel'" class="modal-content pl-4 pr-4 pt-2">
 
     <ul class="operation-date">
@@ -428,7 +431,7 @@
       <button (click)="modal='detail';detailedTransaction=null;" class="solid-blue-button">Cancelar solicitud</button>
     </div>
   </div>
-  <!-- detalle - Solicitud de pago - aprobado-->
+  <!-- Detalle - Solicitud de pago (estado aprobado)-->
   <div *ngIf="modal=='detail' && detailedTransaction.status.value=='2'" class="modal-content pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
@@ -447,13 +450,13 @@
       <li>
         <span>Importe cobrado</span>
         <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
-          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+          {{ (detailedTransaction.amount + detailedTransaction.commissionAmmount) | currency:' ':'symbol':'1.0'}}</span>
       </li>
       <li>
         <span>Comisión de Peygold</span>
-        <span>-$100</span>
+        <span>$ -{{detailedTransaction.commissionAmmount | number:'1.2'}}</span>
       </li>
-      <li>
+<!--      <li>
         <span>Impuesto al valor agregado</span>
         <span>-$21</span>
       </li>
@@ -464,7 +467,7 @@
       <li>
         <span>Retención del IIBB</span>
         <span>-$5</span>
-      </li>
+      </li>-->
     </ul>
     <ul class="amount-detail">
       <li>
@@ -483,7 +486,7 @@
       <button (click)="modal = 'refundmoney';">Reintegrar dinero</button>
     </div>
   </div>
-  <!-- Reintegro - Solicitud de pago - aprobado-->
+  <!-- Reintegrar dinero - Solicitud de pago (estado aprobado)-->
   <div *ngIf="modal=='refundmoney' && detailedTransaction.status.value=='2'" class="modal-content pl-4 pr-4 pt-2">
 
     <ul class="operation-date">
@@ -503,13 +506,13 @@
       <li>
         <span>Importe cobrado</span>
         <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
-          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+          {{ (detailedTransaction.amount + detailedTransaction.commissionAmmount) | currency:' ':'symbol':'1.0'}}</span>
       </li>
       <li>
         <span>Comisión de Peygold</span>
-        <span>-$100</span>
+        <span>$ -{{detailedTransaction.commissionAmmount | number:'1.2'}}</span>
       </li>
-      <li>
+  <!--    <li>
         <span>Impuesto al valor agregado</span>
         <span>-$21</span>
       </li>
@@ -520,7 +523,7 @@
       <li>
         <span>Retención del IIBB</span>
         <span>-$5</span>
-      </li>
+      </li> -->
     </ul>
     <ul class="amount-detail">
       <li>
@@ -538,13 +541,13 @@
       Reintegraremos el dinero a {{detailedTransaction.sender.completeName}}.<br> Lo verá nuevamente en su billetera
     </div>
     <div class="d-flex justify-content-center mt-3 mb-5">
-      <button (click)="detailedTransaction = null;" class="solid-blue-button">Reintegrar</button>
+      <button (click)="detailedTransaction = null;" class="solid-blue-button">Reintegrar dinero</button>
     </div>
   </div>
 </app-ui-pey-sidebar>
 
-<!-- Ingreso de dinero-->
-
+<!-- MODAL idOriginRecharge =(3,7,8,9) - Ingreso de dinero-->
+ 
 <app-ui-pey-sidebar
   *ngIf="detailedTransaction && (detailedTransaction.originRecharge.value=='3' || detailedTransaction.originRecharge.value=='7' || detailedTransaction.originRecharge.value=='8' || detailedTransaction.originRecharge.value=='9')"
   (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
@@ -569,17 +572,17 @@
         <p>Medio de pago</p>
         <i class="img-tarjeta"></i>
         <span [innerHtml]="detailedTransaction.originRecharge.label"></span>
-        <span *ngIf="detailedTransaction.originRecharge.value=='3'">Master Card</span>
       </li>
     </ul>
 
   </div>
 </app-ui-pey-sidebar>
-<!-- envio o pago de dinero-->
+
+<!-- MODAL idOriginRecharge =1 -  Envio de dinero-->
 <app-ui-pey-sidebar *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='1'"
   (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
-  <!-- detalle - envio o pago de dinero-->
-  <div *ngIf="modal=='detail'" class="modal-content pl-4 pr-4 pt-2">
+  <!-- Detalle - Envio de dinero-->
+  <div *ngIf="modal=='detail' && user.email==detailedTransaction.sender.email" class="modal-content pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -610,10 +613,56 @@
 
 
     <div class="d-flex justify-content-center blue-link">
-      <button (click)="modal='refundmoney'">Solicitar reintegro</button>
+      <button (click)="modal='requestrefundmoney'">Solicitar reintegro</button>
     </div>
   </div>
-  <div *ngIf="modal=='refundmoney'" class="modal-content pl-4 pr-4 pt-2">
+  <!-- Detalle - Se recibe dinero -->
+  <div *ngIf="modal=='detail' && user.email==detailedTransaction.receiver.email" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Recibiste de</p>
+        <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+        <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+        <span [innerHtml]="detailedTransaction.sender.email"></span>
+      </li>
+    </ul>
+    <ul class="list-detail">
+      <li>
+        <span>Importe</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{ (detailedTransaction.amount + detailedTransaction.commissionAmmount) | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+      <li>
+        <span>Comisión de Peygold</span>
+        <span>$ -{{detailedTransaction.commissionAmmount | number:'1.2'}}</span>
+      </li>
+
+    </ul>
+    <ul class="amount-detail">
+      <li>
+        <span>Total</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+
+    <ul>
+      <div class="d-flex justify-content-center">
+        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+      </div>
+    </ul>
+
+    <div class="d-flex justify-content-center mt-4 mb-5 blue-link">
+      <button (click)="modal='refundmoney'">Reintegrar dinero</button>
+    </div>
+  </div>
+  <!-- Solicitar reintegro - Envio de dinero -->
+  <div *ngIf="modal=='requestrefundmoney'" class="modal-content pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -649,6 +698,64 @@
 
     <div class="d-flex justify-content-center mb-3">
       <button (click)="detailedTransaction = null;" class="solid-blue-button">Solicitar reintegro</button>
+    </div>
+  </div>
+  <!-- Reintegrar dinero - Se recibe dinero -->
+  <div *ngIf="modal=='refundmoney'" class="modal-content pl-4 pr-4 pt-2">
+
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+    <ul class="user-info-modal">
+      <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+        <p>Recibiste de</p>
+        <i class="circle" [innerHtml]="detailedTransaction.sender.initials"></i>
+        <span [innerHtml]="detailedTransaction.sender.completeName"></span>
+        <span [innerHtml]="detailedTransaction.sender.email"></span>
+      </li>
+    </ul>
+    <ul class="list-detail">
+      <li>
+        <span>Importe</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{ (detailedTransaction.amount + detailedTransaction.commissionAmmount) | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+      <li>
+        <span>Comisión de Peygold</span>
+        <span>$ -{{detailedTransaction.commissionAmmount | number:'1.2'}}</span>
+      </li>
+<!--      <li>
+        <span>Impuesto al valor agregado</span>
+        <span>-$21</span>
+      </li>
+      <li>
+        <span>Retención del IVA</span>
+        <span>-$4,41</span>
+      </li>
+      <li>
+        <span>Retención del IIBB</span>
+        <span>-$5</span>
+      </li> -->
+    </ul>
+    <ul class="amount-detail">
+      <li>
+        <span>Total recibido</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+          {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+    <ul>
+      <div class="d-flex justify-content-center">
+        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+      </div>
+    </ul>
+    <div class="alert alert-dark text-center mt-5" role="alert">
+      Reintegraremos el dinero a {{detailedTransaction.sender.completeName}}.<br> Lo verá nuevamente en su billetera
+    </div>
+    <div class="d-flex justify-content-center mt-3 mb-5">
+      <button (click)="detailedTransaction = null;" class="solid-blue-button">Reintegrar dinero</button>
     </div>
   </div>
 </app-ui-pey-sidebar>

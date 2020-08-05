@@ -100,6 +100,9 @@ export class ReportsService extends HttpService {
             return detail;
           })
 
+          console.log('transaction.totalAmount'+transaction.id, transaction.totalAmount)
+
+
           return transaction;
         });
 

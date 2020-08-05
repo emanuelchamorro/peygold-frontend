@@ -2,6 +2,7 @@ import {ErrorResponse} from '../entities/error-response';
 import {NgModel} from '@angular/forms';
 import {Message} from '../entities/message';
 import {routes as CommonsRoutes} from '../routes';
+import {routes as RoutesEU} from '../../eu-peygold/routes';
 import {Router} from '@angular/router';
 import {MessageTypeEnum} from '../../../enums';
 
@@ -10,6 +11,8 @@ export class BaseComponent {
   protected isBusy = false;
 
   protected submitted = false;
+
+  protected routesEu = RoutesEU;
 
   /**
    * Should be injected by the child components.
