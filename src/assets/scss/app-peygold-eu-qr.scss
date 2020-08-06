@@ -203,3 +203,18 @@
 }
 }
 
+ul.right-menu-actions {
+  text-align: right;
+  display: flex;
+  list-style: none;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+ul.right-menu-actions li a {
+
+  font-size: 14px;
+  color: #3575BA!important;
+  cursor: pointer;
+  font-weight: 500;
+}

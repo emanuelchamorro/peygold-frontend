@@ -231,9 +231,9 @@
 <!-- MODAL idOriginRecharge = 6 - Solicitud de pago - Se recibe solicitud de pago-->
 <app-ui-pey-sidebar
   *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='6' && user.email==detailedTransaction.sender.email"
-  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación"class="BoxDetails Actividad" >
   <!-- Detalle -->
-  <div *ngIf="modal=='detail'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='detail'" class="modal-content-actividad pl-4 pr-4 pt-2">
     <span>Estas aceptando la siguiente solicitud:</span>
 
     <ul class="user-info-modal">
@@ -264,7 +264,7 @@
     </div>
   </div>
   <!-- Pagar -->
-  <div *ngIf="modal=='pay'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='pay'" class="modal-content-actividad pl-4 pr-4 pt-2">
     <span>Estas aceptando la siguiente solicitud:</span>
 
     <ul class="user-info-modal">
@@ -293,7 +293,7 @@
     </div>
   </div>
   <!-- Rechazar -->
-  <div *ngIf="modal=='reject'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='reject'" class="modal-content-actividad pl-4 pr-4 pt-2">
     <span>Estas Rechazando la siguiente solicitud:</span>
 
     <ul class="user-info-modal">
@@ -326,9 +326,9 @@
 <!-- MODAL idOriginRecharge = 6 - Solicitud de pago - Se envia solicitud de pago-->
 <app-ui-pey-sidebar
   *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='6' && user.email==detailedTransaction.receiver.email"
-  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación" class="BoxDetails Actividad">
   <!-- Detalle - Solicitud de pago (estado rechazada) -->
-  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='3'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='3'" class="modal-content-actividad pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -357,7 +357,7 @@
     </div>
   </div>
   <!-- Detalle - Solicitud de pago (estado pendiente)-->
-  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='1'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='1'" class="modal-content-actividad pl-4 pr-4 pt-2">
 
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
@@ -392,7 +392,7 @@
     </div>
   </div>
   <!-- Solicitud de pago - Cancelar solicitud-->
-  <div *ngIf="modal=='cancel'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='cancel'" class="modal-content-actividad pl-4 pr-4 pt-2">
 
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
@@ -432,7 +432,7 @@
     </div>
   </div>
   <!-- Detalle - Solicitud de pago (estado aprobado)-->
-  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='2'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='detail' && detailedTransaction.status.value=='2'" class="modal-content-actividad pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -487,7 +487,7 @@
     </div>
   </div>
   <!-- Reintegrar dinero - Solicitud de pago (estado aprobado)-->
-  <div *ngIf="modal=='refundmoney' && detailedTransaction.status.value=='2'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='refundmoney' && detailedTransaction.status.value=='2'" class="modal-content-actividad pl-4 pr-4 pt-2">
 
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
@@ -550,9 +550,9 @@
  
 <app-ui-pey-sidebar
   *ngIf="detailedTransaction && (detailedTransaction.originRecharge.value=='3' || detailedTransaction.originRecharge.value=='7' || detailedTransaction.originRecharge.value=='8' || detailedTransaction.originRecharge.value=='9')"
-  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación" class="BoxDetails Actividad">
 
-  <div class="modal-content pl-4 pr-4 pt-2">
+  <div class="modal-content-actividad pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -580,9 +580,9 @@
 
 <!-- MODAL idOriginRecharge =1 -  Envio de dinero-->
 <app-ui-pey-sidebar *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='1'"
-  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación">
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación" class="BoxDetails Actividad">
   <!-- Detalle - Envio de dinero-->
-  <div *ngIf="modal=='detail' && user.email==detailedTransaction.sender.email" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='detail' && user.email==detailedTransaction.sender.email" class="modal-content-actividad pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -617,7 +617,7 @@
     </div>
   </div>
   <!-- Detalle - Se recibe dinero -->
-  <div *ngIf="modal=='detail' && user.email==detailedTransaction.receiver.email" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='detail' && user.email==detailedTransaction.receiver.email" class="modal-content-actividad pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -662,7 +662,7 @@
     </div>
   </div>
   <!-- Solicitar reintegro - Envio de dinero -->
-  <div *ngIf="modal=='requestrefundmoney'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='requestrefundmoney'" class="modal-content-actividad pl-4 pr-4 pt-2">
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
         <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
@@ -701,7 +701,7 @@
     </div>
   </div>
   <!-- Reintegrar dinero - Se recibe dinero -->
-  <div *ngIf="modal=='refundmoney'" class="modal-content pl-4 pr-4 pt-2">
+  <div *ngIf="modal=='refundmoney'" class="modal-content-actividad pl-4 pr-4 pt-2">
 
     <ul class="operation-date">
       <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>

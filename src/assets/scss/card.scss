@@ -164,6 +164,8 @@ h2 {
 .prepaga-datos form span:first-of-type {
 	font-weight: 700;
 }
+
+/*
 .BoxDetails.Actividad {
 	.modal-content {
 		display: flex;
@@ -256,7 +258,7 @@ ul.total-amount-detail {
 			}
 		}
 	}
-}
+}*/
 .prepaga-new-direction {
 	border-top: solid 1px #a5a5a591;
 	padding-top: 20px;
@@ -554,6 +556,9 @@ display: none
 .historial-item .icon-card:before {
 	font-size: 16px;
 }
+
+
+
 @media screen and (max-width: 1024px) {
 	.button-prepaga {
 		width: 100%;
