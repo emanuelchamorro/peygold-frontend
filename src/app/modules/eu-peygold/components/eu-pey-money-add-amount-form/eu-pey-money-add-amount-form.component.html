@@ -30,7 +30,7 @@
           </ng-select>
 
           
-          <div class="input-blue-text d-flex justify-content-center" *ngIf="!transaction.type.isMultiPey">
+          <div class="input-blue-text d-flex justify-content-center flex-column align-items-center" *ngIf="!transaction.type.isMultiPey">
             <input [required]="!transaction.type.isMultiPey" type="text" placeholder="$0" class="col-xs-12 col-sm-6 form-control InputAmount"
                    [prefix]="transaction.type.coin | translate" mask="separator.2" thousandSeparator="."
                    [min]="transaction.type.minAmount"

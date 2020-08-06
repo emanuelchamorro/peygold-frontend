@@ -46,6 +46,17 @@
       background-position: center center;
     }
   }
+  .multipey-detail ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+  }
+  .multipey-detail ul li {
+    margin-right: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333333;
+  }
   .bodyCardMessage {
     padding: 30px 10px;
     h2 {
