@@ -33,7 +33,7 @@
       </div>
       <div class="col-sm-4">
         <ul class="right-menu-actions">
-          <li><a class="mr-3">Imprimir</a></li>
+          <li><a (click)="printQR()" class="mr-3">Imprimir</a></li>
           <li><a (click)="pdf.saveAs('codigoqr.pdf')">Descargar</a></li>
         </ul>
       </div>
@@ -59,7 +59,7 @@
       </div>
       <div class="col-sm-4">
         <ul class="right-menu-actions">
-          <li><a class="mr-3">Imprimir</a></li>
+          <li><a (click)="printQR()" class="mr-3">Imprimir</a></li>
           <li><a (click)="pdf.saveAs('codigoqr.pdf')">Descargar</a></li>
         </ul>
       </div>
@@ -107,11 +107,13 @@
 
 </div>
 
+
 <div text-align="center" style="position: absolute; left: -1000px; top: 0;">
     <kendo-pdf-export #pdf>
-        <qr-code [value]="user.toQR" [size]="250"></qr-code>
+        <div #contentQr>
+            <qr-code [value]="user.toQR" [size]="250"></qr-code>
+        </div>
     </kendo-pdf-export>
-
 </div>
 
 <!--<app-eu-pey-money-add-amount-form icon="icon-Iconos-06" title="QR: Cobrar con QR"
