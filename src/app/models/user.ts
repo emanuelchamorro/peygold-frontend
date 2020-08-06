@@ -88,6 +88,7 @@ export class User extends Model {
   public identityVerified:VerifyStatus;
   public isLoadAlldocuemnts:boolean;
   public cards: Array<Card>;
+  public qrImage:string;
 
 
   /**

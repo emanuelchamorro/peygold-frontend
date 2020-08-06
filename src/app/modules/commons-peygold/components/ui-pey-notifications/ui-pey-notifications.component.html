@@ -1,0 +1,14 @@
+<div >
+    <h2><span class="icon-Iconos-01 fs-22"></span>Notificaciones</h2>
+
+    <div class="notificaciones-container grey-box w-100">
+        <div *ngFor="let notification of notifications"  class="p-3">
+            <img class="notificaciones-img" [src]="notification.image">
+            <div class="d-flex flex-column">
+                <span [innerHtml]="notification.title"></span>
+                <span [innerHtml]="notification.message"></span>
+                <span [innerHtml]="notification.date | date:medium"></span>
+            </div>
+        </div>
+    </div>
+</div>

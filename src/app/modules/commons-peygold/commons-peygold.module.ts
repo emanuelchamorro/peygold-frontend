@@ -29,6 +29,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { UiPeyHelpLayoutComponent } from './layout/ui-pey-help-layout/ui-pey-help-layout.component';
 import { UiPeyVerifySecurityCodeComponent } from './components/ui-pey-verify-security-code/ui-pey-verify-security-code.component';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { UiPeyNotificationsComponent } from './components/ui-pey-notifications/ui-pey-notifications.component';
+
 
 
 
@@ -51,7 +53,7 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
     UiPeyMessageSuccessModalComponent,
     UiPeyHelpLayoutComponent,
     UiPeyVerifySecurityCodeComponent,
-
+    UiPeyNotificationsComponent
   ],
   imports: [
     CommonModule,
@@ -84,7 +86,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
     UIPeyAddressFormComponent,
     UiPeyMessageSuccessComponent,
     UiPeyVerifySecurityCodeComponent,
-    UiPeyMessageSuccessModalComponent
+    UiPeyMessageSuccessModalComponent,
+    UiPeyNotificationsComponent
  
   ]
 })

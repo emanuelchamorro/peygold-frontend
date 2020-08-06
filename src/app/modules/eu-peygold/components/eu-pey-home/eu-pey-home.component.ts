@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Balance } from '../../../../models/balance';
 import { UserService } from '../../services/user.service';
-import { Transaction, TransactionStatus, TransactionType } from '../../../../models';
+import { Transaction, TransactionStatus, TransactionType, User } from '../../../../models';
 import { TransactionsService } from '../../services/transactions.service';
 import { BaseComponent } from '../base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -9,6 +9,7 @@ import { environment } from '../../../../../environments/environment';
 import { OriginTransactionType } from '../../../../models/origin-transaction-type';
 import { InMemoryService } from '../../../../services/in-memory.service';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../../../auth-peygold/services/auth.service';
 
 @Component({
   selector: 'app-eu-pey-home',
@@ -17,7 +18,8 @@ import { NgForm } from '@angular/forms';
 })
 export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
-
+  private detailedTransaction: any; //cambiar tipo
+  public user:User;
   public totalItems: number;
   public page: number;
   public previousPage: number;
@@ -33,7 +35,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   public transactionTypes: Array<TransactionType>;
 
   public filter: string = null;
-  public selectdFilterTransactionType:string;
+  public selectdFilterTransactionType: string;
 
   protected filtersOriginRechargeDefault: Array<any> = [1, 3, 6, 7, 8, 9];
   protected filtersTransationStatusDefault: Array<any> = [1, 2, 3];
@@ -44,14 +46,15 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   public startDate: string;
   public endDate: string;
 
-  public sDateInput:string;
-  public eDateInput:string;
+  public sDateInput: string;
+  public eDateInput: string;
 
   constructor(
     private userService: UserService,
     private transactionsService: TransactionsService,
     private spinnerService: NgxSpinnerService,
-    private inMemoryService: InMemoryService
+    private inMemoryService: InMemoryService,
+    private authService: AuthService
   ) {
     super();
   }
@@ -63,6 +66,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
     // Get the user balance
     this.busy();
     this.spinnerService.show();
+    this.user = this.authService.user();
     this.setFiltersDefault()
     this.userService.balances().then((balances: Array<Balance>) => {
       balances.map((balance: Balance) => {
@@ -84,15 +88,15 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
       // Search the current transactions.
 
-      this.transactionsService.searchGenericTransaction(this.params("2020-07-01 00:00:01", "2020-07-31 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault,this.filter)).then(
+      this.transactionsService.searchGenericTransaction(this.params("2020-07-27 00:00:01", "2020-08-01 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter), this.user).then(
         (transactions: Array<Transaction>) => {
           this.transactions = transactions;
           console.log(this.transactions);
-          this.spinnerService.hide();
+
           this.originTransactionTypes = this.inMemoryService.loadOriginRecharge;
           this.transactionStatus = this.inMemoryService.loadTransactionStatus;
           this.transactionTypes = this.inMemoryService.transactionTypes(false, true);
-          if (transactions && transactions.length>0) {
+          if (transactions && transactions.length > 0) {
             this.page = 1;
             this.previousPage = 1;
             this.totalItems = (this.page * 10) + 1;
@@ -104,6 +108,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
             this.totalItems = 0;
             this.showPagination = false;
           }
+          this.spinnerService.hide();
           this.unbusy();
         }).catch((error) => {
           this.spinnerService.hide();
@@ -207,20 +212,20 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
     }
   }
 
-  setFiltersDefault(){
+  setFiltersDefault() {
     this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
     this.filtersTransationStatus = this.filtersTransationStatusDefault;
-    this.selectdFilterTransactionType = "-1";
+    this.selectdFilterTransactionType = undefined;
     this.startDate = undefined;
     this.endDate = undefined;
 
   }
 
 
-    /**
-   * set filter by range dates
-   * @param range 
-   */
+  /**
+ * set filter by range dates
+ * @param range 
+ */
   setFilterRange(range: number) {
 
     let startTime = '00:00:01';
@@ -251,9 +256,9 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
         sDate.setDate(1);
         eDate.setMonth(eDate.getMonth() - 1);
 
-        const d = new Date(eDate.getFullYear(), eDate.getMonth(), 0 );
+        const d = new Date(eDate.getFullYear(), eDate.getMonth()+1, 0);
         const day = d.getDate()
-
+        eDate.setDate(day);
 
         this.startDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;
         this.endDate = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;
@@ -281,18 +286,18 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
     this.spinnerService.show();
     let params;
 
-    if(this.filter && this.filter!=''){
-      params = this.params(this.startDate, this.endDate, this.selectdFilterTransactionType, page, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault,this.filter)
-    }else{
-      params = this.params(this.startDate, this.endDate, this.selectdFilterTransactionType, page, environment.paginator.per_page, this.filtersTransationStatus, this.filtersOriginRecharge,this.filter);
+    if (this.filter && this.filter != '') {
+      params = this.params(this.startDate, this.endDate, this.selectdFilterTransactionType, page, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter)
+    } else {
+      params = this.params(this.startDate, this.endDate, this.selectdFilterTransactionType, page, environment.paginator.per_page, this.filtersTransationStatus, this.filtersOriginRecharge, this.filter);
     }
 
-    this.transactionsService.searchGenericTransaction(params).then(
+    this.transactionsService.searchGenericTransaction(params, this.user ).then(
       (transactions: Array<Transaction>) => {
         this.transactions = transactions;
         console.log(this.transactions);
-        this.spinnerService.hide();
-        if (transactions && transactions.length>0) {
+
+        if (transactions && transactions.length > 0) {
           this.page = 1;
           this.previousPage = 1;
           this.totalItems = (this.page * 10) + 1;
@@ -303,6 +308,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
           this.totalItems = 0;
           this.showPagination = false;
         }
+        this.spinnerService.hide();
         this.unbusy();
       }).catch((error) => {
         this.page = 1;
@@ -316,13 +322,13 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   }
 
 
-  paramsDefault(): any{
-    this.params("2020-07-01 00:00:01", "2020-07-31 11:59:59", null, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault,this.filter);
+  paramsDefault(): any {
+    this.params("2020-07-01 00:00:01", "2020-07-31 11:59:59", null, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter);
   }
   /**
    * Get params 
    */
-  params(startDate: string, endDate: string, idTransactionType: string, page: number, perPage: number, statusArray: Array<any>, originRechargeArray: Array<any>, word:string): any {
+  params(startDate: string, endDate: string, idTransactionType: string, page: number, perPage: number, statusArray: Array<any>, originRechargeArray: Array<any>, word: string): any {
     let params: any = {}
 
     if (startDate && endDate) {
@@ -337,7 +343,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
       params.Hasta = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;
 
     }
-    if (idTransactionType) {
+    if (idTransactionType && idTransactionType) {
       params.IdTransactionType = idTransactionType;
     }
 
@@ -353,20 +359,30 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
   }
 
-  onSubmit(){
+  onSubmit() {
     let startTime = '00:00:01';
     let endTime = '11:59:59';
     const sDArray = this.sDateInput.split('/');
     const eDArray = this.eDateInput.split('/');
-    this.startDate = sDArray[2]+'/'+sDArray[1]+'/'+sDArray[0]+' '+startTime;
-    this.endDate = eDArray[2]+'/'+eDArray[1]+'/'+eDArray[0]+' '+endTime;
+    this.startDate = sDArray[2] + '/' + sDArray[1] + '/' + sDArray[0] + ' ' + startTime;
+    this.endDate = eDArray[2] + '/' + eDArray[1] + '/' + eDArray[0] + ' ' + endTime;
     console.log(this.startDate);
     console.log(this.endDate);
     this.loadPage(1);
   }
 
-  resetForm(rangeForm:NgForm){
+  resetForm(rangeForm: NgForm) {
     setTimeout(() => rangeForm.resetForm({}), 1200);
+  }
+
+
+  /**
+* set the transaction detail
+* @param transaction The transaction to show
+* @return void
+*/
+setTransaction(transaction: any): void { //cambiar tipo
+    this.detailedTransaction = transaction;
   }
 
 }

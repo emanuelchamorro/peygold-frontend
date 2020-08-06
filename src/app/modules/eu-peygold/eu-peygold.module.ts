@@ -47,6 +47,7 @@ import { EuPeyReportAccountStatusComponent } from './components/eu-pey-report-ac
 import { EuPeyReportRetentionsComponent } from './components/eu-pey-report-retentions/eu-pey-report-retentions.component';
 import { EuPeyReportRetentionsDetailComponent } from './components/eu-pey-report-retentions-detail/eu-pey-report-retentions-detail.component';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { EuPeyNotificationsComponent } from './components/eu-pey-notifications/eu-pey-notifications.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
     CardsComponent,
     EuPeyReportAccountStatusComponent,
     EuPeyReportRetentionsComponent,
-    EuPeyReportRetentionsDetailComponent,    
+    EuPeyReportRetentionsDetailComponent,
+    EuPeyNotificationsComponent,    
   ],
   imports: [
     CommonModule,

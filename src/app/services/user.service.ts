@@ -215,6 +215,8 @@ export class UserService extends HttpService {
       user.phoneNumberConfirmedStatus = new VerifyStatus(true);
       user.identityVerified = new VerifyStatus(true);
 
+      //qr image
+      //user.qrImage = 'qr';
 
       return user;
     });

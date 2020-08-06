@@ -51,5 +51,8 @@ export const routes = {
   reportretentionsdetails : {
     index: {route: 'reportretentionsdetails/:month/:year', href: indexRoute + '/reportretentionsdetails'},
   },
+  notifications : {
+    index: {route: 'notifications', href: indexRoute + '/notifications'},
+  }
 
 };
