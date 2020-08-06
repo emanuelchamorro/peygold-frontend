@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {GuardAuthService} from './services/guard-auth.service';
 import {UIPeyLayoutComponent} from '../commons-peygold/layout/ui-pey-layout/ui-pey-layout.component';
+import {UiPePeyLayoutQrComponent} from '../commons-peygold/layout/ui-pe-pey-layout-qr/ui-pe-pey-layout-qr.component';
 import {UIPeyCardLayoutComponent} from '../commons-peygold/layout/ui-pey-layout-card/ui-pey-layout-card.component';
 import {EuPeyHomeComponent} from './components/eu-pey-home/eu-pey-home.component';
 import {routes} from './routes';
@@ -85,10 +86,7 @@ export const config: Routes = [
       },
       // END REQUEST MONEY
       // QR
-      {
-        path: routes.qr.generator.route,
-        component: EuPeyQrGeneratorComponent,
-      },
+      
       {
         path: routes.qr.scanner.route,
         component: EuPeyQrScannerComponent,
@@ -145,6 +143,17 @@ export const config: Routes = [
     ]
   },
   {
+    path: routes.index.route,
+    component: UiPePeyLayoutQrComponent,
+    canActivate: [GuardAuthService],
+    children: [
+      {
+        path: routes.qr.generator.route,
+        component: EuPeyQrGeneratorComponent,
+      },
+    ]
+  },
+   {
     path: routes.index.route,
     component: UIPeyCardLayoutComponent,
     canActivate: [GuardAuthService],
