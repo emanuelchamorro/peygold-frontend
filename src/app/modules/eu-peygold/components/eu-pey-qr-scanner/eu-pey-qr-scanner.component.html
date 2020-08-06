@@ -12,8 +12,8 @@
   <button *ngIf="!camera" class="btn-blue" type="button" (click)="activateCamera()">Iniciar Camara</button>
   <button *ngIf="camera" class="btn-blue" type="button" (click)="deactivateCamera()">Detener Camara</button>
 
-  <input class="btn-blue" type="file" #file name="file" id="file" (change)="preview(file.files)">
-  <div align="center">
+ <!--  <input class="btn-blue" type="file" #file name="file" id="file" (change)="preview(file.files)"> -->
+  <div text-align="center">
     <ng2-qrcode-reader (result)="readQR($event)" [qrr-show]="validQR" [qrr-value]="value" [qrr-type]="'url'">
     </ng2-qrcode-reader><br>
     <div #result></div>
