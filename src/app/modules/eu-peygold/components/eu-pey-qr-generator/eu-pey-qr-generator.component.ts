@@ -12,7 +12,7 @@ import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
 })
 export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
 
-  @ViewChild('contentQr',{static:false}) contentQr: ElementRef;
+  //@ViewChild('contentQr',{static:false}) contentQr: ElementRef;
 
   private user: User;
   public step:number;
@@ -49,9 +49,10 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
   }
 
 
-  printQR(){
-    let printContents:HTMLDivElement, popupWin;
-    printContents  = this.contentQr.nativeElement;
+  printQR(contentQr:HTMLDivElement){
+    let printContents, popupWin;
+    //console.log(innerHtml)
+    printContents  = contentQr.innerHTML;
 
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
@@ -64,7 +65,7 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
           </style>
         </head>
     <body onload="window.print();window.close()">
-    ${printContents.innerHTML}
+    ${printContents}
     </body>
       </html>`
     );
