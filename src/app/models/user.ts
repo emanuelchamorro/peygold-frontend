@@ -275,6 +275,9 @@ export class User extends Model {
     return this.phoneNumberConfirmedStatus.verified && this.identityVerified.verified;
   }
 
+  /**
+   * 
+   */
   get currentCard():Card{
     const card =  new Card();
     card.id = 1;
@@ -321,6 +324,17 @@ export class User extends Model {
 
     return this.cards;
 
+  }
+
+    /**
+   * Get the QR info
+   */
+  get toQR(): string {
+    return '{' +
+      `"fullName": "${btoa(this.completeName.trim())}",` +
+      `"email": "${this.email.replace(/ /g, "")}",` +
+      `"avatarURL": "${this.avatarURL}"` +
+    '}';
   }
 }
 
