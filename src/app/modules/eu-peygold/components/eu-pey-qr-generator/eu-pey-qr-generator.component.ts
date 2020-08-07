@@ -15,7 +15,6 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
   public step:number;
   private transaction: Transaction;
 
-
   private title: string;
   private message: string;
   private showImageBottom: boolean;
@@ -35,6 +34,7 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
     this.buttonLabel = "Cobrar con QR";
     this.step = this.user.qrImage!=null && this.user.qrImage!=undefined  ? 2 : 1;
   }
+  
 
   /**
    * generate codigo qr
