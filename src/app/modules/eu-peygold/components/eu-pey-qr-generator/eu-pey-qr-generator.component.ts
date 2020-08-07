@@ -17,7 +17,7 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
   private user: User;
   public step:number;
   private transaction: Transaction;
-
+  public classTop = "classTop"
   private title: string;
   private message: string;
   private showImageBottom: boolean;
