@@ -2,7 +2,7 @@
   <p style="font-size: 20px; color: white">Procesando...</p>
 </ngx-spinner>
 <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
-<div #step1  [ngStyle]="{'display': step==1 ? 'block' : 'none'}">
+<div #step1 [ngStyle]="{'display': step==1 ? 'block' : 'none'}">
   <div class="heading d-flex align-items-center">
     <span class="icon-Iconos-06 fs-22"></span>
     <h2>QR: Pagar con QR</h2>
@@ -12,7 +12,7 @@
   <button *ngIf="!camera" class="btn-blue" type="button" (click)="activateCamera()">Iniciar Camara</button>
   <button *ngIf="camera" class="btn-blue" type="button" (click)="deactivateCamera()">Detener Camara</button>
 
- <!--  <input class="btn-blue" type="file" #file name="file" id="file" (change)="preview(file.files)"> -->
+  <!--  <input class="btn-blue" type="file" #file name="file" id="file" (change)="preview(file.files)"> -->
   <div text-align="center">
     <ng2-qrcode-reader (result)="readQR($event)" [qrr-show]="validQR" [qrr-value]="value" [qrr-type]="'url'">
     </ng2-qrcode-reader><br>
@@ -24,68 +24,82 @@
     </qr-scanner>
   </div>
 </div>
-<div *ngIf="step==2">
-    <div>
-      
-        <div class="col-12">
-          <h2><span class="icon-Iconos-06"></span><strong>QR: </strong>Pagar con QR</h2>
-          <p>Confirma que los datos sean correctos</p>
-        </div>
-     
-    </div>
-    <div class="d-flex justify-content-center flex-column pagarQr mb-4">
-      <div class="grey-box verificarDatos">
-        <div class="row flex-column">
-          <div class="border-0 mb-4">
-            <div class="fontRounded">
-              <span>Paula</span>
-            </div>
-            <div class="p-10">
-              <h4 class="text-center">{{decode.fullName}}</h4>
-              <p class="text-center">{{decode.email}}</p>
-            </div>
-          </div>
-          <div class="data-row d-flex justify-content-between">
-                <div class="p-10">
-                  <p class="text-left">Recibirá</p>
-                </div>
-                <div class="p-10">
-                  <p *ngFor="let pay of decode.payments" class="text-right">
-                    <strong>
-                      {{ pay.idTransactionType == 1 ? "$" : "P$G"
-                        }}{{ pay.ammount | currency: " ":"symbol":"1.0" }}
-                    </strong>
-                  </p>
-                </div> 
-          </div>
 
-
-        </div>
-      </div>
-      <div class="row-buttons justify-content-end">
-        <button class="white-button-border" (click)="back()">Volver</button>
-        <button class="solid-blue-button" (click)="send()">Enviar</button>
-      </div>
-    </div>
-   
-  
+<!-- VISTA PARA INDICAR MONTO -->
+<div *ngIf="step==2" class="col-lg-11">
+  <app-eu-pey-money-add-amount-form icon="icon-Iconos-06" title="QR: Cobrar con QR"
+    description="Elegí el monto que deseas recibir." [multipey]="true" 
+    (continue)="setTransaction($event)">
+  </app-eu-pey-money-add-amount-form>
 </div>
-<div *ngIf="step==3">
 
-    <div class="content-center">
-      <div class="grey-box w-75 alertSuccesError p-4 mt-5 mb-5">
-        <div class="alert-container">
-          <img src="/assets/images/confirmacion-blanco.svg" alt="confirmacion" width="100" height="100"
-            class="SuccessWhite" />
-          <h2 class="text-center">¡El pago fue enviado!</h2>
-          <p class="text-center">Has pagado exitosamente a <b>{{decode.fullName}}</b>.</p>
-          <p class="text-center">El importe total fue descontado de tu billetera Peygold,<br />verás la operacion
-            reflejada en "Movimientos".</p>
+<!-- VISTA CONFIRMAR PAGO -->
+<div *ngIf="step==3">
+  <div>
+
+    <div class="col-12">
+      <h2><span class="icon-Iconos-06"></span><strong>QR: </strong>Pagar con QR</h2>
+      <p>Confirma que los datos sean correctos</p>
+    </div>
+
+  </div>
+  <div class="d-flex justify-content-center flex-column pagarQr mb-4">
+    <div class="grey-box verificarDatos">
+      <div class="row flex-column">
+        <div class="border-0 mb-4">
+          <div class="fontRounded">
+            <span>Paula</span>
+          </div>
+          <div class="p-10">
+            <h4 class="text-center">{{decode.fullName}}</h4>
+            <p class="text-center">{{decode.email}}</p>
+          </div>
         </div>
+        <div class="data-row d-flex justify-content-between">
+          <div class="p-10">
+            <p class="text-left">Recibirá</p>
+          </div>
+          <div class="p-10">
+            <p *ngFor="let pay of payments" class="text-right">
+              <strong>
+                {{ pay.idTransactionType == 1 ? "$" : "P$G"
+                        }}{{ pay.ammount | currency: " ":"symbol":"1.0" }}
+              </strong>
+            </p>
+          </div>
+        </div>
+
+
       </div>
     </div>
-    <div class="ActionBtns">
-      <a href="#" class="btn-blue-border">Volver a inicio</a>
+    <div class="row-buttons justify-content-end">
+      <button class="white-button-border" (click)="back()">Volver</button>
+      <button class="solid-blue-button" (click)="send()">Enviar</button>
     </div>
- 
+  </div>
+
+
+</div>
+<!-- VISTA DE TRANSACCION REALIZADA -->
+<div *ngIf="step==4">
+
+    <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
+    [buttonLabel]="buttonLabel" [routeTo]="routeTo" class="d-flex"></app-ui-pey-message-success>
+
+<!--  <div class="content-center">
+    <div class="grey-box w-75 alertSuccesError p-4 mt-5 mb-5">
+      <div class="alert-container">
+        <img src="/assets/images/confirmacion-blanco.svg" alt="confirmacion" width="100" height="100"
+          class="SuccessWhite" />
+        <h2 class="text-center">¡El pago fue enviado!</h2>
+        <p class="text-center">Has pagado exitosamente a <b>{{decode.fullName}}</b>.</p>
+        <p class="text-center">El importe total fue descontado de tu billetera Peygold,<br />verás la operacion
+          reflejada en "Movimientos".</p>
+      </div>
+    </div>
+  </div>
+  <div class="ActionBtns">
+    <a href="/" class="btn-blue-border">Volver a inicio</a>
+  </div>-->
+
 </div>
