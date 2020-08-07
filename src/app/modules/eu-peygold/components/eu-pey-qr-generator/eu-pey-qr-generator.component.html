@@ -1,9 +1,28 @@
 <!--VISTA USUARIO NO HA GENERADO CODIGO QR-->
-<div text-align="center" style="position: absolute; left: -1000px; top: 0;">
+<div text-align="center" style="position: absolute; left: -1000px; top: 0;" >
     <kendo-pdf-export #pdf>
-        <div #contentQr>
-            <qr-code [value]="user.toQR" [size]="250"></qr-code>
+        <div #contentQr style="width: 400px; border: 1px dashed black;">
+              <img src="/assets/images/Tijera.svg" width="30" style="position: absolute; top: -12px;
+              right: 20px;">
+              <div style="padding: 15px 15px 45px 15px; margin: auto; background-color: #3575BA; text-align: center;">
+              
+                  <img src="/assets/images/logo peygold.svg" width="120">
+               
+                <h2 style="color: white; font-size: 29px!important; text-transform: uppercase;margin-top: 25px;
+                margin-bottom: 35px; letter-spacing: 1px;">Pagá desde <br> tu celular</h2>
+                <qr-code [value]="user.toQR" [size]="250">     
+               </qr-code>
         </div>
+        <div style="background-color: white; display: inline-block; width: 100%; padding: 15px;
+      ">
+          <span style="margin-right: 15px;     font-size: 14px;">Con las apps de:</span>
+          <img src="/assets/images/peygold-logo-black.svg" width="90" style="margin-right: 15px;">
+          <img src="/assets/images/tienda-pey.svg"  width="90">
+        </div>
+        <div style="background-color: white; width: 100%; margin: auto; text-align: center; padding: 10px;">
+          <span style="font-size: 10px;">CUIL 30495883049 - CONFORTSUR S.A</span>
+        </div>
+      </div>
     </kendo-pdf-export>
 </div>
 <div *ngIf="step == 1" class="bg-gradient white-container-wrapper col-lg-11">
@@ -48,7 +67,11 @@
   </div>
 
   <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
+<<<<<<< HEAD
     [buttonLabel]="buttonLabel"  (onContinue)="paymentRequestQR($event)" class=" d-flex"></app-ui-pey-message-success>
+=======
+    [buttonLabel]="buttonLabel" (onContinue)="paymentRequestQR($event)" class="d-flex" [classTop]="classTop" ></app-ui-pey-message-success>
+>>>>>>> 0c946ad71029c4ee308b1beccd26a6b72081e20d
 </div>
 <!--VISTA PARA INDICAR MONTO - ACCION OPCIONAL-->
 <div *ngIf="step == 3" class="white-container-wrapper col-lg-11">
