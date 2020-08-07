@@ -13,7 +13,6 @@ export class UiPeyMessageSuccessComponent implements OnInit {
   @Input() public showImageBottom:boolean;
   @Input() public routeTo:string;
   @Input() public buttonLabel:string;
-  @Input() public classTop:string;
   @Output()
   public onContinue: EventEmitter<any> = new EventEmitter<any>();
 
