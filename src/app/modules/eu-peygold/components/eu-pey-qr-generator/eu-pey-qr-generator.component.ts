@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Transaction, User } from '../../../../models';
 import { BaseComponent } from '../base.component';
 import { AuthService } from '../../../auth-peygold/services/auth.service';
+import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
 
 
 @Component({
@@ -10,6 +11,8 @@ import { AuthService } from '../../../auth-peygold/services/auth.service';
   styleUrls: ['./eu-pey-qr-generator.component.scss']
 })
 export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
+
+  //@ViewChild('contentQr',{static:false}) contentQr: ElementRef;
 
   private user: User;
   public step:number;
@@ -43,6 +46,30 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
 
     this.user.qrImage="QR";
     this.step++;
+  }
+
+
+  printQR(contentQr:HTMLDivElement){
+    let printContents, popupWin;
+    //console.log(innerHtml)
+    printContents  = contentQr.innerHTML;
+
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <title>Print tab</title>
+          <style>
+          //........Customized style.......
+          </style>
+        </head>
+    <body onload="window.print();window.close()">
+    ${printContents}
+    </body>
+      </html>`
+    );
+    popupWin.document.close();
   }
 
   /**
