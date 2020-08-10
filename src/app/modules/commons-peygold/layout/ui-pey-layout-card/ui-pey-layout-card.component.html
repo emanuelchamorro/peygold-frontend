@@ -10,47 +10,7 @@
             <img src="assets/images/bars.svg" class="topbar-bars main-menu-toggle" alt="">
           </button>
         </li>
-        <li class="ml-4">
-          <button class="notificationes-btn" (click)="displayNotifications()" [ngClass]="{'green-badge': thereAreNotifications}">
-            <img src="/assets/images/notification-bell.svg" class="topbar-notis" alt="">
-          </button>
-        </li>
-        <div class="notificaciones-tooltip" [ngClass]="{'active': display}"> 
-            <span class="p-3">Notificaciones</span>
-            <ul>
-             <li >
-               <a class="d-flex p-3">
-                <img class="notificaciones-img" src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg">
-                <div class= "content d-flex flex-column"> 
-                 <span>Rechazaron tu solicitud de dinero</span>
-                 <span>Martin Goldberg rechazo tu solicitud de pago</span>
-                 <span class="last-date">25 de febrero</span>
-                </div>
-              </a>
-             </li>
-             <li >
-              <a class="d-flex p-3">
-               <img class="notificaciones-img" src="https://wingman.mediumra.re/assets/img/avatar-female-1.jpg" >
-               <div class= "content d-flex flex-column"> 
-                <span>Te pagaron</span>
-                <span>Lucia Chiesa acepto tu solicitud de pago</span>
-                <span>10 de febrero</span>
-               </div>
-             </a>
-            </li>
-            <li >
-              <a class="d-flex p-3">
-               <img class="notificaciones-img " src="/assets/images/new-icons/check-01.svg">
-               <div class= "content d-flex flex-column"> 
-                <span>¡Bienvenido!</span>
-                <span>Te registraste exitosamente en la plataforma</span>
-                <span>9 de febrero</span>
-               </div>
-             </a>
-            </li>
-            </ul>
-            <a class="d-flex p-3"> Ver todas las notificaciones</a>
-          </div>
+        <app-ui-pey-bar-notifications></app-ui-pey-bar-notifications>
       </div>
       <div>
         <li class="country-nav-item">Argentina <img src="assets/images/flag-arg.svg" alt=""></li>

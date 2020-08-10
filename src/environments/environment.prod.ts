@@ -57,7 +57,8 @@ export const environment = {
       id: '4',
       label:	'Argentina',
     }
-  }
+  },
+  google_map_key: 'AIzaSyCg7znlGohP4P3AlvKrLL73N7Dz7L7UTDQ', 
 };
 
 /*

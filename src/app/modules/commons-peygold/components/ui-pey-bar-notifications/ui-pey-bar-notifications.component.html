@@ -1,0 +1,23 @@
+<li class="ml-4">
+    <button class="notificationes-btn" (click)="displayNotifications()"
+        [ngClass]="{'green-badge': thereAreNotifications}">
+        <img src="/assets/images/notification-bell.svg" class="topbar-notis" alt="">
+    </button>
+</li>
+<div class="notificaciones-tooltip" [ngClass]="{'active': display}">
+    <span class="p-3">Notificaciones</span>
+    <ul>
+        <li *ngFor="let notification of notifications">
+            <a class="d-flex p-3">
+                <img class="notificaciones-img" [src]="notification.image">
+                <div class="content d-flex flex-column">
+                    <span [innerHtml]="notification.title"></span>
+                    <span [innerHtml]="notification.message"></span>
+                    <span [innerHtml]="notification.date | date:medium"></span>
+                </div>
+            </a>
+        </li>
+    </ul>
+    <a [routerLink]="routesEu.notifications.index.route" (click)="displayNotifications()" class="d-flex p-3"> Ver todas
+        las notificaciones</a>
+</div>

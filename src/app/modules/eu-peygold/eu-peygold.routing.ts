@@ -31,6 +31,8 @@ import {EuPeyReportAccountStatusComponent} from './components/eu-pey-report-acco
 import {EuPeyReportRetentionsComponent} from './components/eu-pey-report-retentions/eu-pey-report-retentions.component';
 import {EuPeyReportRetentionsDetailComponent} from './components/eu-pey-report-retentions-detail/eu-pey-report-retentions-detail.component';
 import { EuPeyNotificationsComponent } from './components/eu-pey-notifications/eu-pey-notifications.component';
+import { EuPeyEcommercesComponent } from './components/eu-pey-ecommerces/eu-pey-ecommerces.component';
+import { EuPeyCardComponent } from './components/eu-pey-card/eu-pey-card.component';
 
 
 export const config: Routes = [
@@ -138,7 +140,21 @@ export const config: Routes = [
         data: {
           title: 'Notificaciones'
         },
-      },      
+      },  
+      {
+        path: routes.ecommerces.index.route,
+        component: EuPeyEcommercesComponent,
+        data: {
+          title: 'Comercios adheridos'
+        },
+      }, 
+      {
+        path: routes.ecommerces.index.route,
+        component: EuPeyEcommercesComponent,
+        data: {
+          title: 'Comercios adheridos'
+        },
+      },   
 
     ]
   },
@@ -160,7 +176,7 @@ export const config: Routes = [
     children: [
       {
         path: routes.card.index.route,
-        component: CardsComponent,
+        component: EuPeyCardComponent,
       },
       // END USER
     ]

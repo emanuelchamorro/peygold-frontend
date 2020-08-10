@@ -48,6 +48,10 @@ import { EuPeyReportRetentionsComponent } from './components/eu-pey-report-reten
 import { EuPeyReportRetentionsDetailComponent } from './components/eu-pey-report-retentions-detail/eu-pey-report-retentions-detail.component';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { EuPeyNotificationsComponent } from './components/eu-pey-notifications/eu-pey-notifications.component';
+import { EuPeyEcommercesComponent } from './components/eu-pey-ecommerces/eu-pey-ecommerces.component';
+import { EuPeyCardComponent } from './components/eu-pey-card/eu-pey-card.component';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { environment } from '../../../environments/environment';
 
 @NgModule({
   declarations: [
@@ -76,7 +80,9 @@ import { EuPeyNotificationsComponent } from './components/eu-pey-notifications/e
     EuPeyReportAccountStatusComponent,
     EuPeyReportRetentionsComponent,
     EuPeyReportRetentionsDetailComponent,
-    EuPeyNotificationsComponent,    
+    EuPeyNotificationsComponent,
+    EuPeyEcommercesComponent,
+    EuPeyCardComponent,    
   ],
   imports: [
     CommonModule,
@@ -103,8 +109,13 @@ import { EuPeyNotificationsComponent } from './components/eu-pey-notifications/e
         },
         deps: [ HttpClient ]
       },
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: environment.google_map_key
     })
   ],
-  providers: [NgbPaginationConfig]
+  providers: [
+    NgbPaginationConfig,
+    GoogleMapsAPIWrapper]
 })
 export class EuPeyGoldModule { }

@@ -35,6 +35,7 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
   private showImageBottom: boolean;
   private routeTo: string;
   private buttonLabel: string;
+  public changeClass:boolean = true;
 
   //TODO: PARA LA NUEVA IMPLEMENTACION DE PAGO POR QR
   payments: any;

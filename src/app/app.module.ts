@@ -21,6 +21,7 @@ import { LocationService } from './services/location.service';
 import { BanksService } from './services/banks.service';
 import { PePeygoldModule } from './modules/pe-peygold/pe-peygold.module';
 import { PgHelpModule } from './modules/pg-help/pg-help.module';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 
 
 
@@ -71,7 +72,11 @@ export function bankProviderFactory(
         deps: [ HttpClient ]
       },
     }),
-    PgHelpModule
+    PgHelpModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.google_map_key
+    })
+    
   ],
   providers: [
     { provide: LocationStrategy,  useClass: PathLocationStrategy},
@@ -82,7 +87,8 @@ export function bankProviderFactory(
     LocationService,    
     { provide: APP_INITIALIZER, useFactory: countriesProviderFactory, deps: [LocationService], multi: true },
     BanksService,
-    { provide: APP_INITIALIZER, useFactory: bankProviderFactory, deps: [BanksService], multi: true }
+    { provide: APP_INITIALIZER, useFactory: bankProviderFactory, deps: [BanksService], multi: true },
+    GoogleMapsAPIWrapper
   ],
   bootstrap: [AppComponent]
 })

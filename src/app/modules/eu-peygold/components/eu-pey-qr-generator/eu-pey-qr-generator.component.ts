@@ -17,11 +17,12 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
   private user: User;
   public step:number;
   private transaction: Transaction;
-  public classTop = "classTop"
+  
   private title: string;
   private message: string;
   private showImageBottom: boolean;
   private buttonLabel: string;
+  public changeClass:boolean = true;
 
   constructor(
     private authService: AuthService
@@ -65,7 +66,7 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
           </style>
         </head>
     <body onload="window.print();window.close()">
-    ${printContents}
+      ${printContents}
     </body>
       </html>`
     );

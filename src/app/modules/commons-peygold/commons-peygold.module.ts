@@ -31,6 +31,11 @@ import { UiPeyHelpLayoutComponent } from './layout/ui-pey-help-layout/ui-pey-hel
 import { UiPeyVerifySecurityCodeComponent } from './components/ui-pey-verify-security-code/ui-pey-verify-security-code.component';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { UiPeyNotificationsComponent } from './components/ui-pey-notifications/ui-pey-notifications.component';
+import { UiPeyBarNotificationsComponent } from './components/ui-pey-bar-notifications/ui-pey-bar-notifications.component';
+import { UiPeySingleMapComponent } from './components/ui-pey-single-map/ui-pey-single-map.component';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { environment } from '../../../environments/environment';
+
 
 
 
@@ -55,7 +60,9 @@ import { UiPeyNotificationsComponent } from './components/ui-pey-notifications/u
     UiPeyMessageSuccessModalComponent,
     UiPeyHelpLayoutComponent,
     UiPeyVerifySecurityCodeComponent,
-    UiPeyNotificationsComponent
+    UiPeyNotificationsComponent,
+    UiPeyBarNotificationsComponent,
+    UiPeySingleMapComponent
   ],
   imports: [
     CommonModule,
@@ -76,6 +83,9 @@ import { UiPeyNotificationsComponent } from './components/ui-pey-notifications/u
         },
         deps: [ HttpClient ]
       },
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: environment.google_map_key
     })
   ],
   exports: [
@@ -89,8 +99,11 @@ import { UiPeyNotificationsComponent } from './components/ui-pey-notifications/u
     UiPeyMessageSuccessComponent,
     UiPeyVerifySecurityCodeComponent,
     UiPeyMessageSuccessModalComponent,
-    UiPeyNotificationsComponent
+    UiPeyNotificationsComponent,
+    UiPeySingleMapComponent
  
-  ]
+  ],
+  providers: [ 
+    GoogleMapsAPIWrapper]
 })
 export class CommonsPeyGoldModule { }
