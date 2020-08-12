@@ -1,2 +1,2 @@
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="14" (mapReady)="mapReady($event)"></agm-map>
+<agm-map *ngIf="ecommerces" [latitude]="lat" [longitude]="lng" [zoom]="14" (mapReady)="mapReady($event)"></agm-map>
 
