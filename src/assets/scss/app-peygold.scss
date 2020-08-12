@@ -162,3 +162,11 @@ ng-select {
 	}
 }
 
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;//:For Chrome
+      color-adjust: exact;//:For Firefox
+   }
+}
+
