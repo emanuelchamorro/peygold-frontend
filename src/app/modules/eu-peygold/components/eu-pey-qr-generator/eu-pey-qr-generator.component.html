@@ -11,10 +11,13 @@
         <h2 style="color: white; font-size: 29px!important; text-transform: uppercase;margin-top: 25px;
                 margin-bottom: 35px; letter-spacing: 1px;">Pagá desde <br> tu celular</h2>
        <div #contentQr>
+        
+         
           <qr-code [value]="user.toQR" [size]="250">
-            </qr-code>
+          </qr-code>
+      
        </div>
-
+       </div>
       </div>
       <div style="background-color: white; display: inline-block; width: 100%; padding: 15px;">
         <span style="margin-right: 15px;     font-size: 14px;">Con las apps de:</span>
@@ -24,7 +27,7 @@
       <div style="background-color: white; width: 100%; margin: auto; text-align: center; padding: 10px;">
         <span style="font-size: 10px;">CUIL 30495883049 - CONFORTSUR S.A</span>
       </div>
-    </div>
+    
   </kendo-pdf-export>
 </div>
 <div *ngIf="step == 1" class="bg-gradient white-container-wrapper col-lg-11">
@@ -53,7 +56,7 @@
   </div>
 </div>
 <!--VISTA USUARIO YA HA GENERADO CODIGO QR-->
-<div *ngIf="step == 2" class="white-container-wrapper">
+<div *ngIf="step == 2" class="white-container-wrapper col-lg-11">
   <div class="top">
     <div class="row TopTitle">
       <div class="col-sm-8">

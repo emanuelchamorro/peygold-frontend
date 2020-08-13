@@ -63,10 +63,16 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
           <title>Print tab</title>
           <style>
           //........Customized style.......
+         
           </style>
         </head>
     <body onload="window.print();window.close()">
-      ${printContents}
+    <div style="width:100px; height:50px; background-color: red; display:block">
+    </div>
+          ${printContents}
+        
+     
+         
     </body>
       </html>`
     );
