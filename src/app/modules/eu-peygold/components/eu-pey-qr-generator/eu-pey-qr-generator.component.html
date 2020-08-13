@@ -78,7 +78,7 @@
 <!--VISTA PARA INDICAR MONTO - ACCION OPCIONAL-->
 <div *ngIf="step == 3" class="white-container-wrapper col-lg-11">
   <app-eu-pey-money-add-amount-form icon="icon-Iconos-06" title="QR: Cobrar con QR"
-    description="Elegí el monto que deseas recibir." [multipey]="true" (continue)="setTransaction($event)">
+    description="Elegí el monto que deseas recibir." [multipey]="true" [creditPoints]="true" (continue)="setTransaction($event)">
   </app-eu-pey-money-add-amount-form>
 </div>
 <!--VISTA  RESUMEN DE LA OPERACION -->

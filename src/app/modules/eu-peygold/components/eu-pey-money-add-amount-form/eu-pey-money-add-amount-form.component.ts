@@ -23,6 +23,9 @@ export class EuPeyMoneyAddAmountFormComponent extends BaseComponent implements O
   @Input()
   multipey: false;
 
+  @Input()
+  creditPoints: false;
+
   @Output()
   continue: EventEmitter<Transaction> = new EventEmitter<Transaction>();
 
@@ -40,7 +43,7 @@ export class EuPeyMoneyAddAmountFormComponent extends BaseComponent implements O
   ngOnInit() {
     this.transaction = new Transaction();
     this.transaction.type = new TransactionType(TransactionTypeEnum.Fiat);
-    this.transactionTypes = this.inMemoryService.transactionTypes(this.multipey);
+    this.transactionTypes = this.inMemoryService.transactionTypes(this.multipey, this.creditPoints);
     if (this.multipey) {
       this.transaction.multiPey = [
         Transaction.createFromType(TransactionTypeEnum.Fiat),
