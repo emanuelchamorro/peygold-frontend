@@ -67,12 +67,28 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
           </style>
         </head>
     <body onload="window.print();window.close()">
-    <div style="width:100px; height:50px; background-color: red; display:block">
-    </div>
+    <div  style="width: 400px; border: 1px dashed black;">
+      <img src="/assets/images/Tijera.svg" width="30" style="position: absolute; top: -12px;
+              right: 20px;">
+      <div style="padding: 15px 15px 45px 15px; margin: auto; background-color: #3575BA; text-align: center;">
+
+        <img src="/assets/images/logo peygold.svg" width="120">
+
+        <h2 style="color: white; font-size: 29px!important; text-transform: uppercase;margin-top: 25px;
+                margin-bottom: 35px; letter-spacing: 1px;">Pagá desde <br> tu celular</h2>
           ${printContents}
         
-     
-         
+   
+     </div>
+     <div style="background-color: white; display: inline-block; width: 100%; padding: 15px;">
+     <span style="margin-right: 15px;     font-size: 14px;">Con las apps de:</span>
+     <img src="/assets/images/peygold-logo-black.svg" width="90" style="margin-right: 15px;">
+     <img src="/assets/images/tienda-pey.svg" width="90">
+   </div>
+   <div style="background-color: white; width: 400px; margin: auto; text-align: center; padding: 10px;">
+     <span style="font-size: 10px; ">CUIL 30495883049 - CONFORTSUR S.A</span>
+   </div>
+   </div>      
     </body>
       </html>`
     );
