@@ -33,10 +33,15 @@
     .info-card .fa-map-marker-alt:before,
     .info-card .fa-phone:before,
     .info-card .fa-envelope:before{
-        margin-right: 2px;
+        margin-right: 5px;
         display: flex;
         font-size: 14px;
         color: #3575BA;
+    }
+    .info-card .fa-map-marker-alt,
+    .info-card .fa-phone,
+    .info-card .fa-envelope{
+   width: 25px;
     }
 }
 
