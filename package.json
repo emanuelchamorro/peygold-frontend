@@ -35,6 +35,7 @@
     "angular2-qrscanner": "^1.0.7",
     "http-status-codes": "^1.4.0",
     "ng2-qrcode-reader": "0.0.1",
+    "ng5-slider": "^1.2.4",
     "ngx-export-as": "^1.4.2",
     "ngx-mask": "^8.2.0",
     "ngx-spinner": "^8.1.0",

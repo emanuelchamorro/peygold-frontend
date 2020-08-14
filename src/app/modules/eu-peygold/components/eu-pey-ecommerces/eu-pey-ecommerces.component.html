@@ -50,9 +50,10 @@
               </div>
             </div>
           </div>
-          <div class="input-group">
-            <input type="number" class="comercios-km" value="20" />
-            <label class="ml-2">KM</label>
+          <div class="input-group" style="width: 500px">
+             <ng5-slider [(value)]="km" [options]="options"></ng5-slider> 
+           <!-- <input type="number" class="comercios-km" [(ngModel)]="km" name="km"/>
+            <label class="ml-2">KM</label> -->
           </div>
         </form>
       </div>

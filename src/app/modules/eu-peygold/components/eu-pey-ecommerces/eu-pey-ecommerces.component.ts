@@ -5,6 +5,7 @@ import { environment } from '../../../../../environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PaginationResponse } from '../../../../modules/commons-peygold/entities/pagination-response';
 import { BaseComponent } from '../base.component';
+import { Options, LabelType } from 'ng5-slider';
 
 @Component({
   selector: 'app-eu-pey-ecommerces',
@@ -15,6 +16,22 @@ export class EuPeyEcommercesComponent extends BaseComponent implements OnInit {
 
 
   protected filter: string = '';
+  protected km: number = 5;
+  options: Options = {
+    floor: 1,
+    ceil: 20,
+    showTicks: true,
+    showSelectionBar: true,
+    /*translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.High:
+          return  value + 'km';
+        default:
+          return value + 'km';
+      }
+    }*/
+
+  };
 
   protected ecommerces: Array<any> = null;
   protected address: string = null;

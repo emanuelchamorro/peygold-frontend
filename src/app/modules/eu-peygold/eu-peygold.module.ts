@@ -52,6 +52,7 @@ import { EuPeyEcommercesComponent } from './components/eu-pey-ecommerces/eu-pey-
 import { EuPeyCardComponent } from './components/eu-pey-card/eu-pey-card.component';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { environment } from '../../../environments/environment';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { environment } from '../../../environments/environment';
     }),
     AgmCoreModule.forRoot({
       apiKey: environment.google_map_key
-    })
+    }),
+    Ng5SliderModule
   ],
   providers: [
     NgbPaginationConfig,
