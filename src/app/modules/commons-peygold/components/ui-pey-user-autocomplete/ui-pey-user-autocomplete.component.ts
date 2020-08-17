@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../../../models';
 import {BaseComponent} from '../base-component.component';
 import {UserService} from '../../../../services/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ui-pey-user-autocomplete',
@@ -13,6 +14,7 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
   @Output() selectUser: EventEmitter<User> = new EventEmitter<User>();
 
   private users: Array<User>;
+  private recentUsers: Array<User>;
 
   @Input()
   private user: User;
@@ -20,11 +22,14 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
   @Input()
   private filterUsers: Array<number>;
 
+  private userName:string;
+
   /**
    * UIPeyUserAutocompleteComponent
    */
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
@@ -33,7 +38,14 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    * On Init implementation
    */
   ngOnInit() {
-
+    this.spinnerService.show();
+    this.userService.search('may').then((users: Array<User>) => {
+      if (this.filterUsers) {
+        users = users.filter((user) => !this.filterUsers.includes(user.id) && user.active) ;
+      }
+      this.recentUsers = users;
+      this.spinnerService.hide();
+    });
   }
 
   /**
@@ -67,5 +79,17 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    */
   clearUser() {
     this.selectUser.emit(null);
+  }
+
+  /**
+   * set recent user
+   * @param user 
+   */
+  setUser(user: User){
+    this.users = new Array<User>();
+    this.users.push(user);
+    this.userName = user.fullName;
+    this.emitUser(user);
+
   }
 }

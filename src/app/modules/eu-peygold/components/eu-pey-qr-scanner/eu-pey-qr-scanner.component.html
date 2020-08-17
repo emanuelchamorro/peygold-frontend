@@ -28,7 +28,7 @@
 <!-- VISTA PARA INDICAR MONTO -->
 <div *ngIf="step==2" class="col-lg-11">
   <app-eu-pey-money-add-amount-form icon="icon-Iconos-06" title="QR: Cobrar con QR"
-    description="Elegí el monto que deseas recibir." [multipey]="true"  [creditPoints]="true"
+    description="Elegí el monto que deseas recibir." [multipey]="true" [creditPoints]="true"
     (continue)="setTransaction($event)">
   </app-eu-pey-money-add-amount-form>
 </div>
@@ -77,29 +77,10 @@
       <button class="solid-blue-button" (click)="send()">Enviar</button>
     </div>
   </div>
-
-
 </div>
 <!-- VISTA DE TRANSACCION REALIZADA -->
 <div *ngIf="step==4">
-
-    <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
-    [buttonLabel]="buttonLabel" [routeTo]="routeTo" class="d-flex justify-content-center" [changeClass]="changeClass"></app-ui-pey-message-success>
-
-<!--  <div class="content-center">
-    <div class="grey-box w-75 alertSuccesError p-4 mt-5 mb-5">
-      <div class="alert-container">
-        <img src="/assets/images/confirmacion-blanco.svg" alt="confirmacion" width="100" height="100"
-          class="SuccessWhite" />
-        <h2 class="text-center">¡El pago fue enviado!</h2>
-        <p class="text-center">Has pagado exitosamente a <b>{{decode.fullName}}</b>.</p>
-        <p class="text-center">El importe total fue descontado de tu billetera Peygold,<br />verás la operacion
-          reflejada en "Movimientos".</p>
-      </div>
-    </div>
-  </div>
-  <div class="ActionBtns">
-    <a href="/" class="btn-blue-border">Volver a inicio</a>
-  </div>-->
-
+  <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
+    [buttonLabel]="buttonLabel" [routeTo]="routeTo" class="d-flex justify-content-center" [changeClass]="changeClass">
+  </app-ui-pey-message-success>
 </div>

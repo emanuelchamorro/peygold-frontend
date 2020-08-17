@@ -1,6 +1,6 @@
 <ngx-spinner>
-    <p style="font-size: 20px; color: white">Procesando...</p>
-  </ngx-spinner>
+  <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
 <div class="">
   <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
   <h2><span class="icon-Iconos-08 fs-22"></span>Comercios Adheridos</h2>
@@ -27,32 +27,23 @@
         <form class="form-inline">
           <div class="input-group ml-0">
             <div class="boxSelect">
-              <a class="btn-dropDown stateDrop">Todas las operaciones <i class="fa fa-chevron-right"></i></a>
+              <a class="btn-dropDown stateDrop"><span>Todas las categorias</span><i class="fa fa-chevron-right"></i></a>
               <div class="downFecha stateDown">
                 <ul>
-                  <li>
-                    <a href="#" class="optionDate">Todas las categorias</a>
+                  <li id="allServiceCategory" (click)="setFilterServiceCategory('-1')" class="optionDate">Todas las
+                    categorias
                   </li>
-                  <li>
-                    <a href="#" class="optionDate">Comida y bebida</a>
+                  <li *ngFor="let category of serviceCategories" id="category.label"
+                    (click)="setFilterServiceCategory(category.value)" class="optionDate"
+                    [innerHtml]="category.label">
                   </li>
-                  <li>
-                    <a href="#" class="optionDate">Actividades</a>
-                  </li>
-                  <li>
-                    <a href="#" class="optionDate">Compras</a>
-                  </li>
-                  <li>
-                    <a href="#" class="optionDate">Servicios</a>
-                  </li>
-
                 </ul>
               </div>
             </div>
           </div>
           <div class="input-group" style="width: 500px">
-             <ng5-slider [(value)]="km" [options]="options"></ng5-slider> 
-           <!-- <input type="number" class="comercios-km" [(ngModel)]="km" name="km"/>
+            <ng5-slider [(value)]="km" [options]="options" (userChangeEnd)="searchInKM($event)"></ng5-slider>
+            <!-- <input type="number" class="comercios-km" [(ngModel)]="km" name="km"/>
             <label class="ml-2">KM</label> -->
           </div>
         </form>

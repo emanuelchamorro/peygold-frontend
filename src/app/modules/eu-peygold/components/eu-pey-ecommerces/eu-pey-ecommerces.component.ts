@@ -6,6 +6,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PaginationResponse } from '../../../../modules/commons-peygold/entities/pagination-response';
 import { BaseComponent } from '../base.component';
 import { Options, LabelType } from 'ng5-slider';
+import { ServiceCategoryService } from '../../../../services/service-category.service';
+import { ServiceCategory } from '../../../../models/service-category';
 
 @Component({
   selector: 'app-eu-pey-ecommerces',
@@ -22,30 +24,39 @@ export class EuPeyEcommercesComponent extends BaseComponent implements OnInit {
     ceil: 20,
     showTicks: true,
     showSelectionBar: true,
-    /*translate: (value: number, label: LabelType): string => {
+    translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.High:
-          return  value + 'km';
+          return value + 'km';
         default:
           return value + 'km';
       }
-    }*/
+    }
 
   };
 
   protected ecommerces: Array<any> = null;
   protected address: string = null;
   protected cityName: string = 'Caracas';
+  protected serviceCategories: Array<ServiceCategory>;
+  protected selectdFilterServiceCategory: string;
 
 
   constructor(private mapSearchService: MapSearchService,
-    private spinnerService: NgxSpinnerService) {
+    private spinnerService: NgxSpinnerService,
+    private serviceCategoryService: ServiceCategoryService) {
     super();
   }
 
   ngOnInit() {
+
+    this.serviceCategoryService.all().then((items: Array<ServiceCategory>) => {
+      this.serviceCategories = items;
+    });
+    this.spinnerService.show();
     this.mapSearchService.search('@', 1, environment.paginator.per_page).then(
       (response: PaginationResponse) => {
+        this.spinnerService.hide();
         if (response.data && response.data.length > 0) {
           this.ecommerces = response.data;
         } else {
@@ -54,11 +65,16 @@ export class EuPeyEcommercesComponent extends BaseComponent implements OnInit {
       }
     ).catch(
       (error) => {
+        this.spinnerService.hide();
         this.setError("Ha ocurrido un error. No será posible visualizar los comercios de nuestra red Peygold.");
       }
     )
   }
 
+  /**
+   * search with pagination
+   * @param page 
+   */
 
   loadPage(page: number) {
     let word = (this.filter && this.filter != '') ? this.filter : '@';
@@ -96,6 +112,25 @@ export class EuPeyEcommercesComponent extends BaseComponent implements OnInit {
       this.filter = '';
       this.loadPage(1);
     }
+  }
+
+/**
+ * search by km
+ * @param event 
+ */
+  searchInKM(event: any) {
+    console.log('event', event)
+  }
+
+  /**
+* set filter 
+* @param filter service category
+*/
+  setFilterServiceCategory(filter: string) {
+    this.filter = null;
+    this.selectdFilterServiceCategory = filter && filter != '-1' ? filter : null;
+    console.log('category', this.selectdFilterServiceCategory)
+    //this.loadPage(1);
   }
 
 }

@@ -33,6 +33,9 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
   @Input()
   public multipey:boolean;
 
+  @Input()
+  creditPoints: boolean;
+
 
   private transactionTypes: Array<TransactionType>;
 
@@ -58,7 +61,7 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
       this.transaction.type = new TransactionType(TransactionTypeEnum.Fiat);
     }
 
-    this.transactionTypes = this.inMemoryService.transactionTypes(this.multipey);
+    this.transactionTypes = this.inMemoryService.transactionTypes(this.multipey, this.creditPoints);
     if (this.multipey) {
       this.transaction.multiPey = [
         Transaction.createFromType(TransactionTypeEnum.Fiat),
@@ -86,6 +89,7 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
    * @return void;
    */
   setUser(user: User) {
+    console.log(user);
     if (this.type === 'request') {
       this.transaction.sender = user;
       this.transaction.receiver = this.startedByUser;

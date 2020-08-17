@@ -1,25 +1,27 @@
-<label class="has-float-label text-left mb-3 w-100">
-  <ng-autocomplete
-    name="user"
-    [(ngModel)]="user"
-    placeholder="Nombre o correo electrónico"
-    [data]="users"
-    searchKeyword="fullName"
-    (inputChanged)='searchUsers($event)'
-    (inputCleared)="clearUser()"
-    (selected)='emitUser($event)'
-    [itemTemplate]="itemTemplateStatic"
-    [notFoundTemplate]="notFoundTemplate"
-  >
-  </ng-autocomplete>
-  <ng-template #itemTemplateStatic let-item>
-    <div class="item d-flex p-2">
-      <img [src]="item.avatarURL" height="40" width="40" (error)="this.src = 'assets/images/Isologotipo.svg'">
-      <div class="d-flex flex-column pl-2 w-100">
-       <span [innerHTML]="item.fullName"></span>
-       <small>{{item.email}}</small>
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+  </ngx-spinner>
+<div class="form-group col-md-9 mb-4">
+  <label class="has-float-label w-100">
+    <ng-autocomplete name="user" [(ngModel)]="userName" placeholder="Correo electrónico*" [data]="users"
+      searchKeyword="fullName" (inputChanged)='searchUsers($event)' (inputCleared)="clearUser()"
+      (selected)='emitUser($event)' [itemTemplate]="itemTemplateStatic" [notFoundTemplate]="notFoundTemplate">
+    </ng-autocomplete>
+    <ng-template #itemTemplateStatic let-item>
+      <div class="item d-flex p-2">
+        <img [src]="item.avatarURL" height="40" width="40" (error)="this.src = 'assets/images/Isologotipo.svg'">
+        <div class="d-flex flex-coitem.avatarURLlumn pl-2 w-100">
+          <span [innerHTML]="item.fullName"></span>
+          <small>{{item.email}}</small>
+        </div>
       </div>
-    </div>
-  </ng-template>
-  <span class="placeholder">Nombre o correo electrónico</span>
-</label>
+    </ng-template>
+    <span class="placeholder">Correo electrónico*</span>
+  </label>
+</div>
+<ul class="col-md-9 mb-4">
+  <li *ngFor="let recentUser of recentUsers" (click)="setUser(recentUser)">
+    <i class="circle">{{recentUser.initials}}</i>
+    <span [innerHtml]="recentUser.fullName"></span>
+  </li>
+</ul>

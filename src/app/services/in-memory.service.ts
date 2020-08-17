@@ -52,7 +52,7 @@ export class InMemoryService extends BaseService {
     );
 
     if (creditPoints) {
-      types.push(new TransactionType(TransactionTypeEnum.CreditPoints, 'Peygold créditos(PC$G)'));
+      types.push(new TransactionType(TransactionTypeEnum.CreditPoints, 'Peygold créditos(P$C)'));
     } 
 
     if (multipey) {
