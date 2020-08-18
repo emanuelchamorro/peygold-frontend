@@ -21,7 +21,7 @@
 </div>
 <ul class="col-md-9 mb-4">
   <li *ngFor="let recentUser of recentUsers" (click)="setUser(recentUser)">
-    <i class="circle">{{recentUser.initials}}</i>
+    <i class="circle"> <img [src]="recentUser.avatarURL"/> </i>
     <span [innerHtml]="recentUser.fullName"></span>
   </li>
 </ul>
