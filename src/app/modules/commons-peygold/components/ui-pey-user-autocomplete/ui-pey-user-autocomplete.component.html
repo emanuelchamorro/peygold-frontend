@@ -9,9 +9,9 @@
     </ng-autocomplete>
     <ng-template #itemTemplateStatic let-item>
       <div class="item d-flex p-2">
-        <img [src]="item.avatarURL" height="40" width="40" (error)="this.src = 'assets/images/Isologotipo.svg'">
+        <img [src]="item.avatarURL" height="40" width="40"  (error)="this.src = 'assets/images/Isologotipo.svg'">
         <div class="d-flex flex-coitem.avatarURLlumn pl-2 w-100">
-          <span [innerHTML]="item.fullName"></span>
+          <span class="fullNameWidth" [innerHTML]="item.fullName"></span>
           <small>{{item.email}}</small>
         </div>
       </div>
@@ -21,7 +21,7 @@
 </div>
 <ul class="col-md-9 mb-4">
   <li *ngFor="let recentUser of recentUsers" (click)="setUser(recentUser)">
-    <i class="circle"> <img [src]="recentUser.avatarURL"/> </i>
-    <span [innerHtml]="recentUser.fullName"></span>
+    <i class="circle"> <img class="imgItem" [src]="recentUser.avatarURL"/> </i>
+    <span class="fullNameWidth" [innerHtml]="recentUser.fullName"></span>
   </li>
 </ul>

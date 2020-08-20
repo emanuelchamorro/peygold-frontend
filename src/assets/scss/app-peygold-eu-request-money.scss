@@ -282,7 +282,8 @@ flex-sm-column {
 		font-size: 16px;
 		border-radius: 100%;
 		font-style: normal;
-		color: #fff;
+        color: #fff;
+        overflow: hidden;
 	}
 	ul {
 		list-style: none;

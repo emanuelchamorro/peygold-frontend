@@ -2,6 +2,26 @@ input.comercios-km {
 	height: 26px;
 	display: flex;
 	width: 90px;
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
+.btn-comercios-km {
+    margin-bottom: 0!important;
+    height: 26px;
+    border-top-left-radius: 0;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.6);
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+	border-bottom-left-radius: 0;
+	background-color: #3575BA;
+	color: white;
+	width: 35px;
+}
+
+.btn-comercios-km.fa-search:before {
+	font-size: 13px;
 }
 .comercios-map {
 	width: 100%;

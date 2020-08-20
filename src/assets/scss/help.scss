@@ -3,16 +3,12 @@
   position: relative;
 }
 
-.help-circle {
+.help-icons {
   display: flex;
   width: 100px;
   height: 100px;
-  background-color: #fff;
-  border-radius:100%;
-  position:relative;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 article.help {
@@ -28,11 +24,14 @@ article.help section {
  
 }
 
-.help-temas h2, .help-faq h2 {
-
-  color:#3575BA ;
+.help-faq h2 {
+ color: #3575ba;
+ font-size: 19px!important;
 }
-
+.help-temas h2 {
+  color: #333333;
+  font-size: 37px!important;
+ }
 
 .help-temas .row > div {
 
@@ -40,63 +39,63 @@ article.help section {
   padding-bottom: 15px;
 }
 
-.help-temas .row > div:nth-of-type(1), .help-temas .row > div:nth-of-type(2), .help-temas .row > div:nth-of-type(3) {
-
-  border-right: solid 1px #dcdcdc;
-}
-.help-temas .row > div > div > a:hover > .help-circle {
-
-  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302), 0 4px 8px 3px rgba(60, 64, 67, 0.149);
-}
 
 
-.help-temas .row > div:first-of-type > div > a > .help-circle {
+
+
+.help-temas .row > div:first-of-type > a > div > .help-icons {
 
 background-image: url(/assets/images/help-security.svg);
 background-repeat: no-repeat;
-background-size: 80px;
-background-position: center;
+background-size: contain;
+    background-position: center;
+    height: 100px;
 }
 
-.help-temas .row > div:nth-of-type(2)> div > a > .help-circle {
+.help-temas .row > div:nth-of-type(2)> a > div > .help-icons {
 
   background-image: url(/assets/images/help-user.svg);
   background-repeat: no-repeat;
-  background-size: 80px;
+  background-size: cover;
   background-position: center;
+  height: 100px;
 }
 
-.help-temas .row > div:nth-of-type(3)> div > a > .help-circle {
+.help-temas .row > div:nth-of-type(3)> a > div > .help-icons {
 
   background-image: url(/assets/images/help-creditos.svg);
   background-repeat: no-repeat;
-  background-size: 70px;
+  background-size: contain;
   background-position: center;
+  height: 100px;
 }
 
 
-.help-temas .row > div:nth-of-type(4)> div > a > .help-circle {
+.help-temas .row > div:nth-of-type(4)> a > div > .help-icons {
 
   background-image: url(/assets/images/help-tarjeta.svg);
   background-repeat: no-repeat;
-  background-size: 70px;
+  background-size: contain;
   background-position: center;
+  height: 100px;
 }
-.help-temas .row > div > div > a {
+.help-temas .row > div > a > div {
 display: flex;
 justify-content: center;
 flex-direction: column;
 align-items: center;
 }
-.help-temas .row > div > div > a > h4 {
+.help-temas .row > div > a > div > h4 {
   color:#333333;
-  font-size: 16px;
+  font-size: 19px;
   font-weight: 700;
 }
 
-.help-temas .row > div > div > a > p {
+.help-temas .row > div > a > div > p {
 
   font-size: 13px;
+  padding-left: 10px;
+  padding-right: 10px;
  
 }
 
@@ -400,7 +399,29 @@ cursor: pointer;
 
 }
 
+.help-temas .shadow-box {
+  position: absolute;
+  height: 100%;
+  width: 90%;
+  box-shadow: 0px 4px 42px #4c4c5d24;
+  border-radius: 1rem;
 
+  background: transparent;
+}
+.help-temas .info-box {
+display: flex;
+flex-direction: column;
+text-align: center;
+height: 100%;
+width: 100%;
+border-radius: 0.5rem;
+z-index: 2;
+align-items: flex-end;
+justify-content: center;
+padding-bottom: 30px;
+
+padding: 1rem;
+}
 
 @media only screen and (max-width: 1024px) {
 
@@ -424,11 +445,7 @@ cursor: pointer;
 
 @media only screen and (max-width: 576px) {
 
-  .help-temas .row > div:nth-of-type(1), .help-temas .row > div:nth-of-type(2), .help-temas .row > div:nth-of-type(3) {
 
-      border-right:0;
-      border-bottom: solid 1px #dcdcdc;
-  }
    
   .help-faq .col-sm-4 form {
   display: flex;

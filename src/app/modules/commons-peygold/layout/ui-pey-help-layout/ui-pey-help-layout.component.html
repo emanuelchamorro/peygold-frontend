@@ -7,35 +7,75 @@
             <img src="/assets/images/Isologotipo.svg" alt=""/>
           </a>
         </li>
-        <div class="user-toolbar d-flex">
-            <li class="position-relative">
-              <a class="btn-user d-flex justify-content-center align-items-center" id="cityclick">
+        <div class="faq-toolbar">
+          <ul class="navbar-nav mr-auto d-flex flex-row">
+            <li>
+              <a >¿Como funciona?</a>
+            </li>
+            <li>
+              <a>Beneficios y funcionalidades</a>
+            </li> 
+             <li>
+                <div class="questions-dropdown">
+                   <button class="dropbtn">Preguntas frecuentes</button><span class="chevron-down"></span>
+                      <div class="dropdown-content">
+                          <div class="inner-content pt-3 pb-3 row">
+                           <div class="col-xs-12 col-sm-3 pr-0 pl-0">
+                            <a>
+                              <span>Seguridad</span>
+                              <span>Descubre como protegemos tu cuenta y tu información sensible</span>
+                            </a>
+                           </div>
+                           <div class="col-xs-12 col-sm-3 pr-0 pl-0">
+                            <a>
+                              <span>Mi Cuenta</span>
+                              <span>Información para manejar tus datos y actualizarlos </span>
+                            </a>
+                           </div>
+                           <div class="col-xs-12 col-sm-3 pr-0 pl-0">
+                            <a>
+                              <span>Peygold Créditos</span>
+                              <span>Todo lo que tenes que saber de la moneda exclusiva de Peygold</span>
+                            </a>
+                           </div>
+                           <div class="col-xs-12 col-sm-3 pr-0 pl-0">
+                            <a>
+                              <span>Tarjeta prepaga</span>
+                              <span>Cómo pedir tu tarjeta y aprovechar los beneficios</span>
+                            </a>
+                           </div>      
+                        </div>
+                        </div>
+                      </div>
+                      <a class="faq-responsive d-none">Preguntas frecuentes</a>
+                    </li> 
+          </ul>
+       </div>
+        <div class="d-flex">
+            <!--User Tooltip-->
+            <li class="position-relative user-toolbar-dropdown">
+              <button class="dropbtn d-flex justify-content-center align-items-center" id="cityclick">
                 <div class="circle-user mr-2">
                   <span [innerHtml]="user.initials"></span>
                 </div>  
-                <span [innerHtml]="user.completeName"></span>
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 238.003 238.003" style="enable-background:new 0 0 238.003 238.003;" xml:space="preserve" class="chevron-right">
-                  <g>
-                    <g>
-                      <path d="M181.776,107.719L78.705,4.648c-6.198-6.198-16.273-6.198-22.47,0s-6.198,16.273,0,22.47
-                            l91.883,91.883l-91.883,91.883c-6.198,6.198-6.198,16.273,0,22.47s16.273,6.198,22.47,0l103.071-103.039
-                            c3.146-3.146,4.672-7.246,4.64-11.283C186.416,114.902,184.89,110.833,181.776,107.719z"></path>
-                    </g>
-                  </g>
-                </svg>
-                 </a>
+                <span class="text-white" [innerHtml]="user.completeName"></span>
+                <span class="chevron-down"></span>
+              </button>
+                <div class="dropdown-content">
+                  <div class="inner-content pt-3 pb-3 row">
+                    <ul>
+                      <li>
+                        <a [routerLink]="routes.home.href">Mi Cuenta</a>
+                      </li>
+                      <li>
+                         <a routerLink="/logout" > Cerrar sesión</a>
+   
+                     </li>
+                     </ul>
+                  </div></div>
+                
                <!--User Tooltip-->
-                 <div class="user-tooltip"> 
-                  <ul>
-                   <li>
-                     <a [routerLink]="routes.home.href">Ir a mi cuenta</a>
-                   </li>
-                   <li>
-                      <a routerLink="/logout" > Cerrar sesión</a>
-
-                  </li>
-                  </ul>
-                </div>
+              
             </li>                
           </div>
          </ul>

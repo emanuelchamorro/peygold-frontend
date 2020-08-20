@@ -1,8 +1,8 @@
 <form name="formTransaction" (ngSubmit)="formTransaction.valid && emitTransaction()" #formTransaction="ngForm" novalidate>
   <div class="grey-box d-flex flex-column align-items-center">
     <div class="pey-request w-100 d-flex justify-content-center b-bottom-line  p-3">
-      <div class="form-group col-md-9 mb-4">
-        <app-ui-pey-user-autocomplete  [filterUsers]="[authService.user().id]" (selectUser)="setUser($event)" ></app-ui-pey-user-autocomplete>
+      <div class="border-0 w-100 mb-4 mt-4">
+        <app-ui-pey-user-autocomplete  [filterUsers]="[authService.user().id]" (selectUser)="setUser($event)" class="d-flex align-items-center w-100 flex-column justify-content-center"></app-ui-pey-user-autocomplete>
         <div *ngIf="(!transaction.receiver || !transaction.sender) && formTransaction.submitted" class="invalid-feedback">
           Por favor seleccione un usuario.
         </div>
