@@ -5,11 +5,12 @@ import {MercadoPagoService} from '../../services/mercado-pago.service';
 import {IdentificationType} from '../../../mercado-pago/models/identification-type';
 import {environment} from '../../../../../environments/environment';
 import {CreditCardTransaction} from '../../../../models/credit-card-transaction';
-import {Transaction, User} from '../../../../models';
+import {Transaction, User, CreditCard} from '../../../../models';
 import {AuthService} from '../../../auth-peygold/services/auth.service';
 import {Message} from '../../../commons-peygold/entities/message';
 import {Router} from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Card } from 'src/app/models/card';
 
 @Component({
   selector: 'app-eu-pey-money-add-by-credit-card',
@@ -18,13 +19,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent implements OnInit {
 
-  private step = 1;
+  public step = 1;
 
   private identificationTypes: Array<IdentificationType>;
 
   protected transaction: CreditCardTransaction;
 
   protected hasCardError = false;
+
+  protected user: User;
 
   constructor(
     private mercadoPago: MercadoPago,
@@ -53,7 +56,9 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
   /**
    * OnInit implementation
    */
-  ngOnInit() {}
+  ngOnInit() {
+    this.user = this.authService.user();
+  }
 
   /**
    * Continue with the next step
@@ -66,7 +71,7 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
    * Go back with the previous step
    */
   back() {
-    this.step--;
+    this.step = 1;
   }
 
   /**
@@ -122,5 +127,54 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
         this.transaction.creditCard.type = null;
       });
     }
+  }
+
+/**
+ * proccess card saved to pay
+ * @param card 
+ */
+  setCard(card:Card){
+
+    if (card.number && card.number.length > 6) {
+      this.spinnerService.show();
+      card.dueDate = card.dueDate.replace('/','');
+      card.number = card.number.replace(/ /g, "");
+      const bin = card.number.substring(0, 6);
+      //know Payment Method
+      this.mercadoPago.getPaymentMethod({bin}).then((extraInfo) => {
+
+          this.transaction.creditCard.extraInfo = extraInfo;
+          this.transaction.creditCard.type = extraInfo.id;
+          this.transaction.creditCard.identificationType = new IdentificationType();
+
+          this.transaction.creditCard.identificationType.id = this.user.documentType.value;
+          this.transaction.creditCard.identificationNumber = this.user.documentNumber;
+          this.transaction.creditCard.holderName = this.user.completeName;
+          this.transaction.creditCard.expirationDate = card.dueDate;
+          this.transaction.creditCard.securityCode = Number(card.pin);
+          this.transaction.creditCard.number = Number(card.number);
+
+          //create token card
+          this.mercadoPago.createToken(this.transaction.mercadoPagoTransaction).then((token: string) => {
+            this.transaction.creditCard.token = token;
+            this.spinnerService.hide();
+            this.step = 3;
+          }).catch(() => {
+            this.spinnerService.hide();
+            this.hasCardError = true;
+          });
+
+
+      }).catch(() => {
+        this.spinnerService.hide();
+        this.transaction.creditCard.extraInfo = null;
+        this.transaction.creditCard.type = null;
+      });
+    }    
+  }
+
+  goToSetCardInfo(){
+    this.transaction.creditCard = new CreditCard();
+    this.step = 2;
   }
 }

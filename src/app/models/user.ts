@@ -290,7 +290,7 @@ export class User extends Model {
    //return null;
   }
 
-  //TODO:DUMMY GET TARJETAS
+  //TODO:DUMMY GET TARJETAS PREPAY
   get allCards():Array<Card>{
 
     this.cards = new Array<Card>();
@@ -320,6 +320,44 @@ export class User extends Model {
     card.dueDate = '01/2028'
     card.amount = 3600;
     card.pin = '9876';
+    this.cards.push(card);
+
+    return this.cards;
+
+  }
+
+  //TODO:DUMMY GET TARJETAS
+  get allCardsPostpay():Array<Card>{
+
+    this.cards = new Array<Card>();
+    let card =  new Card();
+    card.id = 1;
+    card.number = '4509 9535 6623 3704'
+    card.status = new Status('2','Activa');
+    card.dueDate = '10/2025'
+    card.pin = '123';
+    card.type = 1;
+    card.icon = card.type == 1 ? '/assets/images/tarjetas/mastercard.svg': '/assets/images/tarjetas/american.svg';
+    this.cards.push(card);
+
+    card =  new Card();
+    card.id = 2;
+    card.number = '4509 9535 6623 3704'
+    card.status = new Status('2','Activa');
+    card.dueDate = '10/2025'
+    card.pin = '123';
+    card.type = 2;
+    card.icon = card.type == 2 ? '/assets/images/tarjetas/american.svg': '/assets/images/tarjetas/mastercard.svg';
+    this.cards.push(card);
+
+    card =  new Card();
+    card.id = 3;
+    card.number = '4509 9535 6623 3704'
+    card.status = new Status('2','Activa');
+    card.dueDate = '10/2025'
+    card.pin = '123';
+    card.type = 3;
+    card.icon = card.type == 3 ? '/assets/images/tarjetas/mastercard.svg': '/assets/images/tarjetas/american.svg';
     this.cards.push(card);
 
     return this.cards;

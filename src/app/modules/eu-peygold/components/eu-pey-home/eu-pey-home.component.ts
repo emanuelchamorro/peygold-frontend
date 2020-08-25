@@ -88,7 +88,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
       // Search the current transactions.
 
-      this.transactionsService.searchGenericTransaction(this.params("2020-07-27 00:00:01", "2020-08-01 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter), this.user).then(
+      this.transactionsService.searchGenericTransaction(this.params("2020-07-27 00:00:01", "2020-08-30 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter), this.user).then(
         (transactions: Array<Transaction>) => {
           this.transactions = transactions;
           console.log(this.transactions);

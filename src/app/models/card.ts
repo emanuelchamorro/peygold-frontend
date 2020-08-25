@@ -12,5 +12,8 @@ export class Card extends Model{
     public amount:number;
     public pin:string;
     public repeatPin:string;
+    public type:number;
+    public namePrintedCard:string;
+    public icon:string;
 
 }
