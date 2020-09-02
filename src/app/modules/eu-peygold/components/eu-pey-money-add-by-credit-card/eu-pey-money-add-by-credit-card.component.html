@@ -21,7 +21,7 @@
         <p>Elegí con que tarjeta querés abonar</p>
       </div>
     </div>
-    <div class="content-center row">
+    <div class="content-center row mt-3">
       <div class="grey-box col-md-8 pr-0 pl-0">
         <div class="mb-3"></div>
         <div *ngFor="let card of user.allCardsPostpay" class="card-row d-flex justify-content-between">
@@ -36,7 +36,7 @@
           </div>
           <button class="delete-card p-3">Eliminar</button>
         </div>
-        <div class="card-row add-new-card text-left p-3 ">
+        <div class="card-row add-new-card text-left p-3 border-0 ">
           <button class="btn-add-card " (click)="goToSetCardInfo()">Agregar otra tarjeta</button>
         </div>
       </div>
@@ -61,7 +61,7 @@
       </div>
     </div>
     <form name="formCreditCard" (ngSubmit)="formCreditCard.valid && prepareTransaction()" #formCreditCard="ngForm"
-      novalidate>
+      novalidate class="mt-3">
       <div class="wallet-conteiner mb-2">
         <div class="ingresarDinero w-100">
           <div class="row">
@@ -69,10 +69,10 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label class="has-float-label mb-0 w-100">
-                    <input required type="text" mask="0000 0000 0000 0009" placeholder="Número de tarjeta"
+                    <input required type="text" mask="0000 0000 0000 0009" placeholder="Número de tarjeta*"
                       class="form-control" name="creditCardNumber" [(ngModel)]="transaction.creditCard.number"
                       #creditCardNumber="ngModel" (ngModelChange)="onCardNumberChange($event)" />
-                    <span>Número de tarjeta</span>
+                    <span>Número de tarjeta*</span>
                     <div
                       *ngIf="!creditCardNumber.pristine && creditCardNumber.invalid || formCreditCard.submitted && creditCardNumber.errors || transaction.creditCard.isInvaild"
                       class="invalid-feedback text-left">
@@ -84,10 +84,10 @@
                 </div>
                 <div class="form-group col-md-12">
                   <label class="has-float-label mb-0 w-100">
-                    <input required type="text" placeholder="Nombre y Apellido" class="form-control"
+                    <input required type="text" placeholder="Nombre y Apellido*" class="form-control"
                       name="creditCardHolderName" [(ngModel)]="transaction.creditCard.holderName"
                       #creditCardHolderName="ngModel" />
-                    <span>Nombre y Apellido</span>
+                    <span>Nombre y Apellido*</span>
                     <div
                       *ngIf="!creditCardHolderName.pristine && creditCardHolderName.invalid || formCreditCard.submitted && creditCardHolderName.errors"
                       class="invalid-feedback text-left">
@@ -96,8 +96,9 @@
                   </label>
                 </div>
               </div>
+              <label class="date">Fecha de vencimiento*</label>
               <div class="form-row">
-                <div class="form-group col-md-6">
+                <!--<div class="form-group col-md-6">
                   <label class="has-float-label mb-0 w-100">
                     <input required type="text" placeholder="Fecha de Vencimiento" class="form-control"
                       name="creditCardExpirationDate" [specialCharacters]="['/']" mask="00/0000"
@@ -111,8 +112,27 @@
                       </div>
                     </div>
                   </label>
-                </div>
-                <div class="form-group col-md-6">
+                </div>-->
+
+            <div class="col-md-5">
+              <div class="form-row"> 
+               <div class="form-group col-md-5">
+                  <label class="has-float-label mb-0 w-100">
+                      <input type="text" placeholder="mm" class="form-control">
+                      <span>mm</span>
+                  </label>
+              </div>
+              <span class="d-flex align-items-center col-xs-2 justify-content-center">/</span>
+              <div class="form-group col-md-5">
+                  <label class="has-float-label mb-0 w-100">
+                      <input type="text" placeholder="aa" class="form-control">
+                      <span>aa</span>
+                  </label>
+               </div>
+             </div>
+            </div>
+
+                <div class="form-group col-md-7">
                   <label class="has-float-label mb-0 w-100">
                     <input required maxlength="3" type="password" name="creditCardSecurityCode" placeholder="CCVV"
                       class="form-control SecNumb" [OnlyNumber]="true" [(ngModel)]="transaction.creditCard.securityCode"
@@ -142,11 +162,11 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label class="has-float-label mb-0 w-100">
-                    <input required type="text" placeholder="Número" class="form-control"
+                    <input required type="text" placeholder="Número*" class="form-control"
                       name="creditCardIdentificationNumber" [OnlyNumber]="true"
                       [(ngModel)]="transaction.creditCard.identificationNumber"
                       #creditCardIdentificationNumber="ngModel" />
-                    <span>Número</span>
+                    <span>Número*</span>
                     <div
                       *ngIf="!creditCardIdentificationNumber.pristine && creditCardIdentificationNumber.invalid || formCreditCard.submitted && creditCardIdentificationNumber.errors"
                       class="invalid-feedback text-left">
