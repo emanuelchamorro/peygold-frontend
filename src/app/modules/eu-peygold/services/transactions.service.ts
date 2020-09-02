@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Constants } from '../../utils/constants';
 import { OriginTransactionType } from 'src/app/models/origin-transaction-type';
 import { environment } from '../../../../environments/environment';
+import { PaginationResponse } from '../../commons-peygold/entities/pagination-response';
 
 @Injectable({
   providedIn: 'root'
@@ -61,105 +62,121 @@ export class TransactionsService extends HttpService {
 
   /**
  * Search generic transactions.
- * @return Promise<Array<Transaction>> the list of transaction
+ * @return Promise<PaginationResponse> the list of transaction
  */
-  searchGenericTransaction(params: any, user:User): Promise<Array<Transaction>> {
-    return this.post('/transactions/GetGenericsTransactions', params)
-      .pipe(
-        map((response) => {
-          return response.value.map((item: any) => {
-            const transaction = new Transaction();
+  searchGenericTransaction(params: any, user: User): Promise<PaginationResponse> {
+    const paginator = new PaginationResponse(params.Page, params.Size);
+    return this.post('/transactions/GetGenericsTransactions', params).toPromise().then(
 
-            transaction.id = item.idTransactionHistory;
-            transaction.createdAt = item.dateAndTime;
-            transaction.amount = item.amount || item.ammount;
+      (response: any) => {
+        paginator.count = response.recordCount;
+        paginator.data = response.getTransactionDTOs.map((item: any) => {
+          const transaction = new Transaction();
 
-            //Sender
-            transaction.sender = new User();
-            transaction.sender.id = item.idSender;
-            transaction.sender.email = item.emailSender;
-            transaction.sender.fullName = item.fullNameSender;
+          transaction.id = item.idTransactionHistory;
+          transaction.createdAt = item.dateAndTime;
+          transaction.amount = item.amount || item.ammount;
+
+          //Sender
+          transaction.sender = new User();
+          transaction.sender.id = item.idSender;
+          transaction.sender.email = item.emailSender;
+          transaction.sender.fullName = item.fullNameSender;
 
 
-            if (item.receiver) {
-              transaction.receiver = new User();
-              transaction.receiver.id = item.receiver.idUser;
-              transaction.receiver.idAspNetUser = item.receiver.idAspNetUser;
-              transaction.receiver.name = item.receiver.firstName;
-              transaction.receiver.lastName = item.receiver.lastName;
-              transaction.receiver.email = item.receiver.email;
-              transaction.receiver.phone = item.receiver.phone;
-              transaction.receiver.avatarURL = item.receiver.avatarURL;
-              transaction.receiver.fullName = item.receiver.fullName;
-              transaction.receiver.idUserType = item.receiver.idUserType;
-              transaction.receiver.active = item.receiver.active;
-              transaction.receiver.documentNumber = item.receiver.dni;
-              transaction.receiver.cuit = item.receiver.cuit;
-              transaction.receiver.systemUserTypeId = item.receiver.systemUserTypeId;
-            }
+          if (item.receiver) {
+            transaction.receiver = new User();
+            transaction.receiver.id = item.receiver.idUser;
+            transaction.receiver.idAspNetUser = item.receiver.idAspNetUser;
+            transaction.receiver.name = item.receiver.firstName;
+            transaction.receiver.lastName = item.receiver.lastName;
+            transaction.receiver.email = item.receiver.email;
+            transaction.receiver.phone = item.receiver.phone;
+            transaction.receiver.avatarURL = item.receiver.avatarURL;
+            transaction.receiver.fullName = item.receiver.fullName;
+            transaction.receiver.idUserType = item.receiver.idUserType;
+            transaction.receiver.active = item.receiver.active;
+            transaction.receiver.documentNumber = item.receiver.dni;
+            transaction.receiver.cuit = item.receiver.cuit;
+            transaction.receiver.systemUserTypeId = item.receiver.systemUserTypeId;
+          }
 
-            transaction.messages = item.message;
-            transaction.reason = item.reason;
-            transaction.type = new TransactionType(item.idTransactionType);
-            transaction.commissionPercentaje = item.commissionPercentaje;
-            transaction.commissionAmmount = item.commissionAmmount;
-            transaction.originRecharge = new OriginTransactionType(item.idOriginRecharge, item.originRechargeName);
-            transaction.symbol = Constants.symbolsArray[item.idTransactionType - 1];
-            transaction.status = new TransactionStatus(item.status);
+          transaction.messages = item.message;
+          transaction.reason = item.reason;
+          transaction.type = new TransactionType(item.idTransactionType);
+          transaction.commissionPercentaje = item.commissionPercentaje;
+          transaction.commissionAmmount = item.commissionAmmount;
+          transaction.originRecharge = new OriginTransactionType(item.idOriginRecharge, item.originRechargeName);
+          transaction.symbol = Constants.symbolsArray[item.idTransactionType - 1];
+          transaction.status = new TransactionStatus(item.status);
 
-            switch (item.idOriginRecharge) { //1,3,6,7,8,9
-              case (1): //Envio de pago
+          switch (item.idOriginRecharge) { //1,3,6,7,8,9
+            case (1): //Envio de pago
 
-                if(user.email == item.emailSender){
-                  transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
-                  transaction.description = "Enviaste dinero a " + item.receiver.fullName;
-                }else if(user.email == item.receiver.email){
-                  //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
-                  transaction.description = item.fullNameSender + " te envió dinero";
-                }
-                break;
-              case (2): //Solicitud de pago
-                if (user.email == item.emailSender) {//usuario logueado envia solicitud
-                  transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
-                  transaction.description = item.receiver.fullName + " te solicitó dinero";
-                } else if(user.email == item.receiver.email){
-                  //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+              if (user.email == item.emailSender) {
+                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+                transaction.description = "Pagaste/Enviaste dinero a " + item.receiver.fullName;
+              } else if (user.email == item.receiver.email) {
+                //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+                transaction.description = item.fullNameSender + " te envió dinero";
+              }
+              break;
+            case (2): //Solicitud de pago
+              if (user.email == item.emailSender) {//usuario logueado envia solicitud
+                transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
+                transaction.description = item.receiver.fullName + " te solicitó dinero";
+              } else if (user.email == item.receiver.email) {
+                //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+                transaction.description = "Cobraste a " + item.fullNameSender;
+
+              }
+              break;
+            case (3): //Ingreso con Tarjeta
+              transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+              transaction.description = "Ingresaste dinero";
+              break;
+            case (6):// Cobros
+              if (user.email == item.emailSender) {
+                transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
+                transaction.description = item.receiver.fullName + " te solicitó dinero";
+              } else if (user.email == item.receiver.email) { // Usuario logueado envia solicitud de pago
+                //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+                if (transaction.status.value == '2') {
+                  transaction.description = "Cobraste/Recibiste dinero de " + item.fullNameSender;
+                } else {
                   transaction.description = "Cobraste a " + item.fullNameSender;
-
                 }
-                break;
-              case (3): //Ingreso con Tarjeta
-                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
-                transaction.description = "Ingresaste dinero";
-                break;
-              case (6):// Cobros
-                if (user.email == item.emailSender) {
-                  transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
-                  transaction.description = item.receiver.fullName + " te solicitó dinero";
-                } else if(user.email == item.receiver.email){ // Usuario logueado envia solicitud de pago
-                  //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
-                  transaction.description = "Cobraste a " + item.fullNameSender;
-                }
-                break;
-              case (7):// Ingreso con Efectivo
-                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
-                transaction.description = "Ingresaste dinero";
-                break;
-              case (8):// Ingreso con Deposito
-                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
-                transaction.description = "Ingresaste dinero";
-                break;
-              case (9):// Ingreso con Transferencia
-                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
-                transaction.description = "Ingresaste dinero";
-                break;
-            }
 
-            return transaction;
+              }
+              break;
+            case (7):// Ingreso con Efectivo
+              transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+              transaction.description = "Ingresaste dinero";
+              break;
+            case (8):// Ingreso con Deposito
+              transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+              transaction.description = "Ingresaste dinero";
+              break;
+            case (9):// Ingreso con Transferencia
+              transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+              transaction.description = "Ingresaste dinero";
+              break;
+          }
 
-          });
-        }
-        )).toPromise();
+          return transaction;
+
+        });
+        return paginator;
+      }
+
+    ).catch(
+      () => {
+        return paginator;
+      }
+    )
+
+
+
   }
 
   /**

@@ -10,6 +10,7 @@ import { OriginTransactionType } from '../../../../models/origin-transaction-typ
 import { InMemoryService } from '../../../../services/in-memory.service';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../auth-peygold/services/auth.service';
+import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
 
 @Component({
   selector: 'app-eu-pey-home',
@@ -18,7 +19,9 @@ import { AuthService } from '../../../auth-peygold/services/auth.service';
 })
 export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
-  private detailedTransaction: any; //cambiar tipo
+  private paginateTransactions: PaginationResponse;
+
+  private detailedTransaction: any;
   public user:User;
   public totalItems: number;
   public page: number;
@@ -88,20 +91,19 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
       // Search the current transactions.
 
-      this.transactionsService.searchGenericTransaction(this.params("2020-07-27 00:00:01", "2020-08-30 00:00:01", this.selectdFilterTransactionType, 1, environment.paginator.per_page, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter), this.user).then(
-        (transactions: Array<Transaction>) => {
-          this.transactions = transactions;
-          console.log(this.transactions);
+      this.transactionsService.searchGenericTransaction(this.params(null, null, this.selectdFilterTransactionType, 1, 10, this.filtersTransationStatusDefault, this.filtersOriginRechargeDefault, this.filter), this.user).then(
+        (response: PaginationResponse) => {
+          this.paginateTransactions = response;
 
           this.originTransactionTypes = this.inMemoryService.loadOriginRecharge;
           this.transactionStatus = this.inMemoryService.loadTransactionStatus;
           this.transactionTypes = this.inMemoryService.transactionTypes(false, true);
-          if (transactions && transactions.length > 0) {
-            this.page = 1;
+          if (this.paginateTransactions.data.length > 0) {
+            this.transactions = this.paginateTransactions.data;
+            this.page = response.page;
             this.previousPage = 1;
-            this.totalItems = (this.page * 10) + 1;
+            this.totalItems = response.count;
             this.showPagination = true;
-
           } else {
             this.page = 1;
             this.previousPage = 1;
@@ -293,14 +295,14 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
     }
 
     this.transactionsService.searchGenericTransaction(params, this.user ).then(
-      (transactions: Array<Transaction>) => {
-        this.transactions = transactions;
-        console.log(this.transactions);
+      (response: PaginationResponse) => {
+        this.paginateTransactions = response;
 
-        if (transactions && transactions.length > 0) {
-          this.page = 1;
+        if (this.paginateTransactions.data.length > 0) {
+          this.transactions = this.paginateTransactions.data;
+          this.page = response.page;
           this.previousPage = 1;
-          this.totalItems = (this.page * 10) + 1;
+          this.totalItems = response.count;
           this.showPagination = true;
         } else {
           this.page = 1;
@@ -343,7 +345,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
       params.Hasta = eDate.getFullYear() + '-' + (eDate.getMonth() + 1 > 9 ? eDate.getMonth() + 1 : '0' + (eDate.getMonth() + 1)) + '-' + (eDate.getDate() > 9 ? eDate.getDate() : '0' + eDate.getDate()) + ' ' + endTime;
 
     }
-    if (idTransactionType && idTransactionType) {
+    if (idTransactionType) {
       params.IdTransactionType = idTransactionType;
     }
 
