@@ -11,6 +11,8 @@ export class CreditCard extends Model {
   public number: number;
   public securityCode: number;
   public expirationDate: string;
+  public expirationMonth: number;
+  public expirationYear: number;
   public holderName: string;
   public type: string;
   public identificationType: IdentificationType;
@@ -22,20 +24,20 @@ export class CreditCard extends Model {
   /**
    * Get the expiration month from the expiration date if exist.
    */
-  get expirationMonth(): number {
+ /* get expirationMonth(): number {
     if (this.expirationDate) {
       return Number(this.expirationDate.substring(0, 2));
     }
-  }
+  }*/
 
   /**
    * Get the expiration year from the expiration date if exist.
    */
-  get expirationYear(): number {
+ /* get expirationYear(): number {
     if (this.expirationDate) {
       return Number(this.expirationDate.substring(2));
     }
-  }
+  }*/
 
   /**
    * Return true if the card is invalid

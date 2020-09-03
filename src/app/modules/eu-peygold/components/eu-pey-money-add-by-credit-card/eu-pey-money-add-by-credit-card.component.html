@@ -118,15 +118,19 @@
               <div class="form-row"> 
                <div class="form-group col-md-5">
                   <label class="has-float-label mb-0 w-100">
-                      <input type="text" placeholder="mm" class="form-control">
+                      <input type="text" placeholder="mm" class="form-control"
+                      name="expirationMonth" mask="00"
+                      [(ngModel)]="transaction.creditCard.expirationMonth" #expirationMonth="ngModel" />
                       <span>mm</span>
                   </label>
               </div>
               <span class="d-flex align-items-center col-xs-2 justify-content-center">/</span>
               <div class="form-group col-md-5">
                   <label class="has-float-label mb-0 w-100">
-                      <input type="text" placeholder="aa" class="form-control">
-                      <span>aa</span>
+                      <input type="text" placeholder="aa" class="form-control"
+                      name="expirationYear" mask="0000"
+                      [(ngModel)]="transaction.creditCard.expirationYear" #expirationYear="ngModel" />
+                      <span>aaaa</span>
                   </label>
                </div>
              </div>
