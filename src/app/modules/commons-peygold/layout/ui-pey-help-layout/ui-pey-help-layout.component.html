@@ -10,36 +10,36 @@
         <div class="faq-toolbar">
           <ul class="navbar-nav mr-auto d-flex flex-row">
             <li>
-              <a >¿Como funciona?</a>
+              <a href="http://www.peygold.com/">¿Como funciona?</a>
             </li>
             <li>
-              <a>Beneficios y funcionalidades</a>
+              <a href="http://www.peygold.com/">Beneficios y funcionalidades</a>
             </li> 
              <li>
                 <div class="questions-dropdown">
-                   <button class="dropbtn">Preguntas frecuentes</button><span class="chevron-down"></span>
+                   <button class="dropbtn" >Preguntas frecuentes</button><span class="chevron-down"></span>
                       <div class="dropdown-content">
                           <div class="inner-content pt-3 pb-3 row">
                            <div class="col-xs-12 col-sm-3 pr-0 pl-0">
-                            <a>
+                            <a [routerLink]="[routesHelp.peygoldquestions.href,4]">
                               <span>Seguridad</span>
                               <span>Descubre como protegemos tu cuenta y tu información sensible</span>
                             </a>
                            </div>
                            <div class="col-xs-12 col-sm-3 pr-0 pl-0">
-                            <a>
+                            <a [routerLink]="[routesHelp.peygoldquestions.href, 3]">
                               <span>Mi Cuenta</span>
                               <span>Información para manejar tus datos y actualizarlos </span>
                             </a>
                            </div>
                            <div class="col-xs-12 col-sm-3 pr-0 pl-0">
-                            <a>
+                            <a [routerLink]="[routesHelp.peygoldquestions.href,10]">
                               <span>Peygold Créditos</span>
                               <span>Todo lo que tenes que saber de la moneda exclusiva de Peygold</span>
                             </a>
                            </div>
                            <div class="col-xs-12 col-sm-3 pr-0 pl-0">
-                            <a>
+                            <a [routerLink]="[routesHelp.peygoldquestions.href,9]">
                               <span>Tarjeta prepaga</span>
                               <span>Cómo pedir tu tarjeta y aprovechar los beneficios</span>
                             </a>
@@ -91,11 +91,11 @@
 
      <nav class="d-flex  p-0">
       <ul class="footer-nav w-100">
-        <li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li>
-        <li><a href="contactanos.html">Contacto</a></li>
+        <li><a [routerLink]="routesHelp.frequentquestions.href">Preguntas frecuentes</a></li>
+        <li><a [routerLink]="routesHelp.cantactus.route">Contacto</a></li>
         <li><a>Políticas de privacidad</a></li>
         <li><a>Términos de uso</a></li>
-        <li><a>Ayuda</a></li>
+        <li><a [routerLink]="routesHelp.context">Ayuda</a></li>
       </ul>
       <ul class="social-media">
         <li><a><i class="icon-facebook"></i></a></li>

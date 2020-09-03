@@ -3,6 +3,7 @@ import {AuthService} from '../../../auth-peygold/services/auth.service';
 import {BaseComponent} from '../../components/base-component.component';
 import {User} from '../../../../models';
 import {routes as euRoutes} from '../../../eu-peygold/routes';
+import {routes as helpRoutes} from '../../../pg-help/routes';
 
 @Component({
   selector: 'app-ui-pey-help-layout',
@@ -14,6 +15,7 @@ export class UiPeyHelpLayoutComponent extends BaseComponent implements OnInit {
 
   user: User;
   protected routes = euRoutes;
+  protected routesHelp = helpRoutes;
 
   constructor(private authService: AuthService) { 
     super();
