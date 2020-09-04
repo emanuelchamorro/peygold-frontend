@@ -29,7 +29,7 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    */
   constructor(
     private userService: UserService,
-    private spinnerService:NgxSpinnerService
+    /*nnerService:NgxSpinnerService*/
   ) {
     super();
   }
@@ -38,13 +38,13 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    * On Init implementation
    */
   ngOnInit() {
-    this.spinnerService.show();
+    //this.spinnerService.show();
     this.userService.search('may').then((users: Array<User>) => {
       if (this.filterUsers) {
         users = users.filter((user) => !this.filterUsers.includes(user.id) && user.active) ;
       }
       this.recentUsers = users;
-      this.spinnerService.hide();
+      //this.spinnerService.hide();
     });
   }
 
