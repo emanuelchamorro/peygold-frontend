@@ -12,4 +12,13 @@ ng-autocomplete {
     font-size: 14px !important;
     font-weight: bold !important;
   }
+
+  .autocomplete-container .suggestions-container ul {
+    display: flex;
+    justify-content: start;
+  }
+  .autocomplete-container .suggestions-container ul li,
+  .autocomplete-container .suggestions-container ul li div {
+  width: 100%;
+  }
 }

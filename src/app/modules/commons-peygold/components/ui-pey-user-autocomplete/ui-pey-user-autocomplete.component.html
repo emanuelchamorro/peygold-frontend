@@ -7,12 +7,12 @@
       searchKeyword="fullName" (inputChanged)='searchUsers($event)' (inputCleared)="clearUser()"
       (selected)='emitUser($event)' [itemTemplate]="itemTemplateStatic" [notFoundTemplate]="notFoundTemplate">
     </ng-autocomplete>
-    <ng-template #itemTemplateStatic let-item>
-      <div class="item d-flex p-2">
+    <ng-template #itemTemplateStatic let-item class="w-100">
+      <div class="item w-100 d-flex p-2">
         <img [src]="item.avatarURL" height="40" width="40"  (error)="this.src = 'assets/images/Isologotipo.svg'">
-        <div class="d-flex flex-coitem.avatarURLlumn pl-2 w-100">
-          <span class="fullNameWidth" [innerHTML]="item.fullName"></span>
-          <small>{{item.email}}</small>
+        <div class="d-flex flex-column item.avatarURLlumn pl-2 w-100">
+          <span class="fullNameWidth* text-left m-0" [innerHTML]="item.fullName"></span>
+          <small class="text-left">{{item.email}}</small>
         </div>
       </div>
     </ng-template>
