@@ -3,6 +3,12 @@
     overflow-y: scroll;
     max-height: 400px;
 }
+.content-center.home-filters{
+    padding-bottom: 140px;
+}
+ngb-pagination{
+    z-index: 0;
+}
 
 /* Scrollbar*/
 .movimientos-container::-webkit-scrollbar {
