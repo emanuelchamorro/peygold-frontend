@@ -34,7 +34,7 @@
 }
 #top-navbar-register {
 	z-index: 2;
-	height: 51px;
+	
 	width: calc(100% - 33%);
 	position: fixed;
 	top: 0;
@@ -57,6 +57,31 @@
 	transition: all 0.5s;
 	left: 0;
 	width: 100% !important;
+}
+.top-nav-register {
+
+	margin-top: 16px!important;
+	margin-bottom:16px!important;
+	display: flex;
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+	align-items: center;
+	>div {
+		display: flex;
+		align-items: center;
+		&:last-child {
+			li {
+				margin-right: 1.75rem;
+			}
+			>span {
+				border-left: 1px solid #b1b1b1;
+			}
+		}
+	}
+	button {
+		outline: none;
+	}
 }
 .top-nav {
 	height: 3.2rem;
@@ -85,6 +110,7 @@
 		outline: none;
 	}
 }
+
 .country-nav-item {
 	color: rgba(27, 27, 27, 0.82);
 	font-size: 13px;
@@ -327,7 +353,7 @@ ul.list-group {
 	}
 }
 .sidebar-icon {
-	width: 22px;
+
 	height: 22px;
 	fill: #3575BA;
 	position: relative;
@@ -358,7 +384,7 @@ ul.sublist-pay {
 }
 .chevron-right {
 	transition: all 0.5s;
-	width: 8px;
+	min-width: 8px;
 	height: 8px;
 }
 .chevron-show-accordion {
@@ -722,6 +748,53 @@ ul.sublist-pay {
 		}
 	}
 }
+/* Register navbar toggle*/
+
+.navbar-toggler:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+}
+.navbar-toggler-icon {
+    display: inline-block;
+	width: 1.5em!important;
+    height: 1.5em!important;
+    vertical-align: middle;
+    content: "";
+    background: no-repeat center center;
+    background-size: 100% 100%;
+}
+
+#btn-toggler-nav {
+	display: none;
+}
+span.register-title {
+	text-align: left!important;
+}
+/* Scrollbar dashboard sidebar*/
+#sidebar-container::-webkit-scrollbar {
+    width: 14px;
+ 
+}
+#sidebar-container::-webkit-scrollbar-thumb {
+    height: 6px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-border-radius: 7px;
+    background-color: rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+#sidebar-container::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+#sidebar-container::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+
 @media screen and (min-width: 865px) and (max-width: 955px) {
 	.top-navbar-collapse {
 		left: 11rem;
@@ -764,6 +837,7 @@ ul.sublist-pay {
 		}
 		width: 3.2rem;
 	}
+
 }
 @media screen and (max-width: 865px) {
 	.sidebar-extended {
@@ -827,6 +901,10 @@ ul.sublist-pay {
 	}
 	#footer {
 		display: none;
+	}
+
+	#btn-toggler-nav {
+		display: block;
 	}
 }
 
