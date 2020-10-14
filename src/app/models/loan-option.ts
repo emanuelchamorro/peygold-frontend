@@ -21,13 +21,15 @@ export class LoanOption extends Model {
     let date =  new Date();
     for (let i = 0; i < this.dues; i++ ) {
       const check = new Check();
-
+      debugger;
       let dueDate = new Date()
-      let month = dueDate.getMonth()+1;
+      let month = dueDate.getMonth();
+
       dueDate.setMonth(month + (i+1));
+
       check.gender = 1;
-      check.issuanceDateStr = date.getDate()+'/'+(date.getMonth()) +'/'+date.getFullYear();
-      check.expirationDateStr = dueDate.getDate()+'/'+(dueDate.getMonth()) +'/'+dueDate.getFullYear();
+      check.issuanceDateStr = date.getDate()+'/'+(date.getMonth()+1) +'/'+date.getFullYear();
+      check.expirationDateStr = dueDate.getDate()+'/'+(dueDate.getMonth()+1) +'/'+dueDate.getFullYear();
       check.issuanceDate = {
         "year": date.getFullYear(),
         "month": date.getMonth()+1,
@@ -35,7 +37,7 @@ export class LoanOption extends Model {
       };
       check.expirationDate = {
         "year": dueDate.getFullYear(),
-        "month": dueDate.getMonth(),
+        "month": dueDate.getMonth()+1,
         "day": dueDate.getDate(),
       };
 

@@ -29,6 +29,15 @@ export class TransactionStatus extends SelectOption {
       case TransactionStatusEnum.Rejected:
         this.label = this.label ? this.label : 'Devuelta';
         break;
+      case TransactionStatusEnum.Active:
+        this.label = this.label ? this.label : 'Activa';
+        break;
+      case TransactionStatusEnum.Desactive:
+        this.label = this.label ? this.label : 'Desactivada';
+        break;
+      case TransactionStatusEnum.Finish:
+        this.label = this.label ? this.label : 'Finalizada';
+        break;
     }
   }
 }

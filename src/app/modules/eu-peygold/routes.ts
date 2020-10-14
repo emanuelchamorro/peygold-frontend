@@ -53,6 +53,14 @@ export const routes = {
   },
   notifications : {
     index: {route: 'notifications', href: indexRoute + '/notifications'},
-  }
-
+  },
+  auction : {
+    index: {route: 'auction', href: indexRoute + '/auction'},
+  },
+  auctions : {
+    index: {route: 'auctions', href: indexRoute + '/auctions'},
+  }, 
+  myauctions : {
+    index: {route: 'myauctions', href: indexRoute + '/myauctions'},
+  }, 
 };

@@ -19,17 +19,17 @@ export class TransactionType extends SelectOption {
       case TransactionTypeEnum.Fiat:
         this.coin  = '$';
         this.label = this.label?this.label:'Pesos';
-        this.minAmount = 1000;
+        this.minAmount = 100;
         break;
       case TransactionTypeEnum.Points:
         this.coin  = 'P$G';
         this.label = this.label?this.label:'Puntos';
-        this.minAmount = 1000;
+        this.minAmount = 100;
         break;
       case TransactionTypeEnum.CreditPoints:
-        this.coin  = 'PC$G';
+        this.coin  = 'P$C';
         this.label = this.label?this.label:'Credit Points';
-        this.minAmount = 1000;
+        this.minAmount = 100;
         break;
     }
   }

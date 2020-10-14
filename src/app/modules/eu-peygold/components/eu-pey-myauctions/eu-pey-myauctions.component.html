@@ -1,0 +1,178 @@
+<div *ngIf="peygoldCreditsInAuction && peygoldCreditsInAuction.length==0 && step==1">
+    <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Mis Remates</span></h2>
+    <div class="content-center"> 
+      <div class="grey-box d-flex flex-column w-100">   
+          <div class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
+              <img class="d-flex mb-3" src="/assets/images/new-icons/rematando.svg" height="100" width="100">
+              <h2 class="text-dark">No iniciaste ningún remate</h2>
+              <span>No tienes saldo suficiente para iniciar un remate</span>
+          </div>
+      </div>
+   </div>
+
+</div>
+<div *ngIf="peygoldCreditsInAuction && peygoldCreditsInAuction.length>0 && step==1">
+    <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Mis Remates</span></h2>
+    <p class="opening-text">Detalle de tus remates creados</p>
+    <div class="content-center">
+
+        <div class="filtros w-100">
+            <div class="d-flex justify-content-between">
+                <div class="left">
+                    <button class="btn btn-sm filtrarOrdenar">
+                        Filtrar/Ordenar
+                    </button>
+                </div>
+                <div class="right">
+                    <form action="?" name="buscarFiltro">
+                        <input type="text" class="input-buscar" name="buscar" placeholder="Buscar" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="content-center">
+            <div class="grey-box d-flex flex-column w-100">
+                <div class="DownFilters">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <div class="boxSelect">
+                                <a class="btn-dropDown stateDrop">Importe<i class="fa fa-chevron-right"></i></a>
+                                <div class="downFecha stateDown">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="optionDate">Mayor primero</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="optionDate">Menor primero</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div>
+                                <div class="boxSelect">
+                                    <a class="btn-dropDown stateDrop">Todos los Estados <i
+                                            class="fa fa-chevron-right"></i></a>
+                                    <div class="downFecha stateDown">
+                                        <ul>
+                                            <li><a href="#" class="optionDate">Activa</a></li>
+                                            <li><a href="#" class="optionDate">Pausada</a></li>
+                                            <li><a href="#" class="optionDate">Finalizada</a></li>
+                                            <li>
+                                                <a href="#" class="optionDate">Todos los Estados</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <table class="table remates">
+
+                    <tbody class="list">
+
+                        <tr *ngFor="let auction of peygoldCreditsInAuction" class="d-flex justify-content-between align-items-center">
+                            <td class=""><span [innerHtml]="auction.transaction.type.coin +' '+ auction.transaction.amountToAuction"></span></td>
+                            <td><span [innerHtml]="auction.discount+'%'"></span></td>
+                            <td class=""><span>Finaliza en 5 dias</span></td>
+                            <td class=""><span [innerHtml]="'Vto. '+auction.transaction.type.coin+' '+auction.expirationDate"></span></td>
+                            <td class=""><span>Activa</span></td>
+                            <td>
+                                <div class="detallePopup">
+                                    <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
+                                    <div class="details slide-toggle-content">
+                                        <ul>
+                                            <li><a class="text-left" (click)="selectPeygoldCredit(auction)"> Editar remate</a>
+                                        </ul>
+                                        <ul>
+                                            <li><button type="button" class="text-left">
+                                                    <span class="Seguridad-icon icon-Activar"></span>Activar</button>
+                                            </li>
+                                            <li><button type="button" class="text-left">
+                                                    <span
+                                                        class="Seguridad-icon icon-Desactivar"></span>Desactivar</button>
+                                            </li>
+                                            <li><button type="button" class="text-left">
+                                                    <span
+                                                        class="Seguridad-icon icon-Finalizar "></span>Finalizar</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-container">
+                <nav>
+                    <ul class="pagination">
+                        <!--	Here the JS Function Will Add the Rows -->
+                        <li><a href="#" class="active"><span>1</span></a></li>
+                        <li><a href="#"><span>2</span></a></li>
+                        <li><a href="#"><span>3</span></a></li>
+                        <li><a href="#"><span>4</span></a></li>
+                        <li><a href="#"><span>5</span></a></li>
+                        <li><a href="#">Siguiente &gt;</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="auction && step==2">
+    <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Editar remate</span></h2>
+    <p class="opening-text">Personaliza tus remates indicando que descuento quieres ofrecer y durante cuanto tiempo.
+        A su vez puedes pausar y reactivar la publicación cuantas veces quieras
+    </p>
+    <form name="formConfigTransaction" #formConfigTransaction="ngForm"
+        (ngSubmit)="formConfigTransaction.form.valid && saveAuction()" novalidate>
+        <div class="rematar-puntos  pt-4 mb-2">
+            <div class="grey-box d-flex flex-column align-items-center p-3 col-xs-12">
+                <div class="amount d-flex flex-column mt-3 mb-3">
+                    <span>Estas rematando</span>
+                    <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction}}</span>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="has-float-label w-100">
+                        <input name="discount" [(ngModel)]="auction.discount" #discount="ngModel"
+                            placeholder="Descuento ofrecido*" suffix="%" mask="0*" class="d-flex w-100" required />
+                        <span>Descuento ofrecido*</span>
+                    </label>
+                    <div *ngIf="!discount.pristine && discount.invalid || formConfigTransaction.submitted && discount.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="discount.errors.required">Campo es requerido</div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="has-float-label w-100">
+                        <input name="duration" [(ngModel)]="auction.duration" #duration="ngModel" type="text"
+                            placeholder="Duración*"  class=" d-flex w-100"
+                            [max-value]="auction.timeLimit" required />
+                        <span>Duración*</span>
+                    </label>
+                    <div *ngIf="!duration.pristine && duration.invalid || formConfigTransaction.submitted && duration.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="duration.errors.required">Campo es requerido</div>
+                        <div *ngIf="duration.errors.max">Sólo quedan {{ auction.timeLimit }} días válidos para rematar
+                            los peygolds créditos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-buttons justify-content-end mt-3">
+                <button type="button" (click)="step = step - 1; auction=null" class="white-button-border">Volver</button>
+                <button type="submit" class="solid-blue-button" (click)="saveAuction()">Guardar cambios</button>
+            </div>
+
+        </div>
+    </form>
+</div>

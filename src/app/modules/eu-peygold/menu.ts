@@ -32,6 +32,13 @@ export const menu: Array<MenuItem> = [
   //      new MenuItem().fromJSON({label: 'Remates disponibles', href: routes.home.href}),
   //  ]}),
   new MenuItem().fromJSON({
+    label: 'Remates', icon: 'icon-Iconos-13', childs: [
+      new MenuItem().fromJSON({ label: 'Rematar mis créditos', href: routes.auction.index.href }),
+      new MenuItem().fromJSON({ label: 'Mis remates', href: routes.myauctions.index.href }),
+      new MenuItem().fromJSON({ label: 'Ver remates disponibles', href: routes.auctions.index.href }),
+    ]
+  }),
+  new MenuItem().fromJSON({
     label: 'Reportes', icon: 'icon-reportes-27', childs: [
       new MenuItem().fromJSON({ label: 'Estado de cuenta', href: routes.reportaccountstatus.index.href }),
       new MenuItem().fromJSON({ label: 'Retenciones', href: routes.reportretentions.index.href }),

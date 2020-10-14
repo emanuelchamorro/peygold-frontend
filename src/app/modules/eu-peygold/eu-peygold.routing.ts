@@ -33,6 +33,9 @@ import {EuPeyReportRetentionsDetailComponent} from './components/eu-pey-report-r
 import { EuPeyNotificationsComponent } from './components/eu-pey-notifications/eu-pey-notifications.component';
 import { EuPeyEcommercesComponent } from './components/eu-pey-ecommerces/eu-pey-ecommerces.component';
 import { EuPeyCardComponent } from './components/eu-pey-card/eu-pey-card.component';
+import { EuPeyMyauctionsComponent } from './components/eu-pey-myauctions/eu-pey-myauctions.component';
+import { EuPeyAuctionComponent } from './components/eu-pey-auction/eu-pey-auction.component';
+import { EuPeyAuctionsComponent } from './components/eu-pey-auctions/eu-pey-auctions.component';
 
 
 export const config: Routes = [
@@ -154,8 +157,28 @@ export const config: Routes = [
         data: {
           title: 'Comercios adheridos'
         },
-      },   
-
+      },
+      {
+        path: routes.auction.index.route,
+        component: EuPeyAuctionComponent,
+        data: {
+          title: 'Rematar'
+        },
+      },
+      {
+        path: routes.myauctions.index.route,
+        component: EuPeyMyauctionsComponent,
+        data: {
+          title: 'Mis Remates'
+        },
+      },               
+      {
+        path: routes.auctions.index.route,
+        component: EuPeyAuctionsComponent,
+        data: {
+          title: 'Remates disponibles'
+        },
+      },  
     ]
   },
   {

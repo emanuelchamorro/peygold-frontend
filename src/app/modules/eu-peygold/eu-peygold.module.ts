@@ -53,6 +53,11 @@ import { EuPeyCardComponent } from './components/eu-pey-card/eu-pey-card.compone
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { environment } from '../../../environments/environment';
 import { Ng5SliderModule } from 'ng5-slider';
+import { EuPeyAuctionComponent } from './components/eu-pey-auction/eu-pey-auction.component';
+import { EuPeyAuctionsComponent } from './components/eu-pey-auctions/eu-pey-auctions.component';
+import { EuPeyMyauctionsComponent } from './components/eu-pey-myauctions/eu-pey-myauctions.component';
+import { MinValueDirective } from './directive/min-value.directive';
+import { MaxValueDirective } from './directive/max-value.directive';
 
 @NgModule({
   declarations: [
@@ -83,7 +88,12 @@ import { Ng5SliderModule } from 'ng5-slider';
     EuPeyReportRetentionsDetailComponent,
     EuPeyNotificationsComponent,
     EuPeyEcommercesComponent,
-    EuPeyCardComponent,    
+    EuPeyCardComponent,
+    EuPeyAuctionComponent,
+    EuPeyAuctionsComponent,
+    EuPeyMyauctionsComponent, 
+    MinValueDirective,
+    MaxValueDirective 
   ],
   imports: [
     CommonModule,

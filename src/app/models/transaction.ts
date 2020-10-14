@@ -36,6 +36,8 @@ export class Transaction extends Model {
   public iconImg:string;
   public description:string;
   public sign:string; //signo de la transaccion
+
+  public amountToAuction:any;
   
 
   /**
