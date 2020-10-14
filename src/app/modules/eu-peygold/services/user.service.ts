@@ -87,7 +87,7 @@ export class UserService extends HttpService {
 
     const peygoldCreditsToAuction = new Array<Auction>();
     
-    let auction = new Auction();
+  /*let auction = new Auction();
     auction.transaction = new Transaction();
     auction.status = new TransactionStatus('6');
     auction.transaction.amount = 1500;
@@ -146,8 +146,7 @@ export class UserService extends HttpService {
     auction.discount = 2;
     auction.duration = 12;
     auction.transaction.createdAt = new Date();
-    peygoldCreditsToAuction.push(auction);
-
+    peygoldCreditsToAuction.push(auction);*/
 
 
     

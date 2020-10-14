@@ -1,6 +1,6 @@
 <div *ngIf="peygoldCreditsInAuction && peygoldCreditsInAuction.length==0 && step==1">
     <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Mis Remates</span></h2>
-    <div class="content-center"> 
+    <div class="content-center mt-5"> 
       <div class="grey-box d-flex flex-column w-100">   
           <div class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
               <img class="d-flex mb-3" src="/assets/images/new-icons/rematando.svg" height="100" width="100">
@@ -143,7 +143,7 @@
 
                 <div class="form-group col-md-6">
                     <label class="has-float-label w-100">
-                        <input name="discount" [(ngModel)]="auction.discount" #discount="ngModel"
+                        <input name="discount" [(ngModel)]="auction.discount" #discount="ngModel" type="text"
                             placeholder="Descuento ofrecido*" suffix="%" mask="0*" class="d-flex w-100" required />
                         <span>Descuento ofrecido*</span>
                     </label>

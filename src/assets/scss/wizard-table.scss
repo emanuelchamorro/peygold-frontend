@@ -11,6 +11,18 @@
   box-sizing: border-box;
 }
 
+/*seteo de tablas*/
+
+.table tr, .table thead {
+  border-bottom: 1px solid #dee2e6;
+      }
+.table thead th {
+  border-bottom: 0!important;
+}
+.table td {
+  border:0!important
+}
+
 /*Fun begins*/
 .tab_container {
   margin: 0 auto;

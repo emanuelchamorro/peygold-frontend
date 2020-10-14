@@ -1,0 +1,112 @@
+.rematar-puntos .amount span:nth-of-type(2) {
+    
+    font-weight: 700;
+    font-size: 24px;
+    color: #3675bb;
+
+}
+
+table.remates tr td:first-of-type span {
+
+    background-color: #fff;
+    border: solid 2px #3675bb ;
+    border-radius: 0.5rem;
+    padding: 10px;
+    color: #3675bb;
+    font-weight: 600;
+}
+
+
+.table.remates .detallePopup .details ul:last-of-type {
+    border-top: 1px solid #BDBDBD;
+}
+
+
+
+.table.remates-disponibles td i.circle, .user-remate i.circle {
+
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    display: flex;
+    margin-right: 15px;
+    background: linear-gradient(to right, #4852a0 0%, #3575ba 52%, #4398d4 100%);
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border-radius: 100%;
+    font-style: normal;
+    color: #fff;
+}
+
+.remate-revision-compra > div {
+    border-bottom: solid 1px #80808063;
+    padding: 1rem 2rem 1rem 2rem; }
+
+.remate-revision-compra .user-remate i.circle {
+    font-size: 19px;
+    height: 70px;
+    width: 70px;
+    margin-right: 0;
+}
+
+.remate-revision-compra .user-remate span:first-of-type {
+    font-size: 14px;
+    font-weight: 700;
+} 
+.icon-pesos, .icon-puntos {
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    background: no-repeat;
+    background-position: center;
+    border-radius: 4em;
+    background-color: #fff;
+    background-position-y: 22px;
+    background-size: 62px;
+  }
+
+.table.remates td {
+    border: 0;
+    padding: .75rem;
+    display: flex;
+} 
+  .icon-pesos {
+    background-image: url('~src/assets/images/Pesos.svg');
+  }
+  
+  .icon-puntos {
+    background-image: url('~src/assets/images/puntos-icon.svg');
+  }
+
+  .remate-revision-compra div ul {
+      list-style: none;
+      padding-left: 0;
+      margin:0;
+  }
+  .remate-revision-compra div ul li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.remate-revision-compra div ul li span:nth-of-type(2) {
+
+    font-weight: 600;
+}
+.remate-revision-compra .total-amount ul li{
+
+    padding: 0;
+}
+.remate-revision-compra .total-amount ul li span:first-of-type{
+    align-items: center;
+    display: flex;
+    font-weight: 700;
+}
+.remate-revision-compra .total-amount ul li span:nth-of-type(2){
+
+    font-size: 24px;
+    font-weight: 700;
+    color: #3675bb;
+}
+
