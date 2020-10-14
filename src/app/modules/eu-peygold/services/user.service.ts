@@ -148,7 +148,6 @@ export class UserService extends HttpService {
     auction.transaction.createdAt = new Date();
     peygoldCreditsToAuction.push(auction);*/
 
-
     
     
     return peygoldCreditsToAuction;
