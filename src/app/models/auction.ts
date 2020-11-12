@@ -1,6 +1,6 @@
 import {Model} from './model';
 import {User} from './user';
-import {TransactionStatus} from './transaction-status';
+import {AuctionStatus} from './auction-status';
 import {Transaction} from './transaction';
 
 
@@ -16,10 +16,12 @@ export class Auction extends Model {
   public reason: string;
   public transaction: Transaction;
 
-  public status: TransactionStatus;
-  public discount: number;
-  public duration:number;
-  public expirationDate;
+  public status: AuctionStatus;
+  public discount: any;
+  public duration:any;
+  public year:number;
+  public month: number;
+  
 
   /**
    * Return term of day valid for auction
@@ -36,14 +38,22 @@ export class Auction extends Model {
 
   }
 
-  get year():number{
-    return new Date(this.expirationDate).getFullYear();
-
+  get expirationDate():any{
+    let date = new Date(this.year+'/'+this.month+'/'+'30');
+    return date;
   }
 
-  get month():number{
-    return new Date(this.expirationDate).getMonth() + 1;
-    
+  get auctionExpirationDate():any{
+    const startDate = new Date(this.transaction.createdAt);
+    const endDate = new Date();
+    endDate.setDate(startDate.getDate() + this.duration);
+    return endDate;
+  }
+
+  get endsIn():any{
+    const startDate = new Date();
+    const endDate = this.auctionExpirationDate;
+    return endDate.getDate() - startDate.getDate();
   }
  
 }

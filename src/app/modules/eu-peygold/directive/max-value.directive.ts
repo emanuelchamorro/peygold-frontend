@@ -16,7 +16,5 @@ export class MaxValueDirective implements Validator {
     return (v > this.max) ? { "max": true } : null;
   }
 
-
-
 }
 

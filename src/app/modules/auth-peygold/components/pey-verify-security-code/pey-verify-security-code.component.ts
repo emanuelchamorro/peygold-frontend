@@ -31,7 +31,7 @@ export class PeyVerifySecurityCodeComponent  extends BaseComponent implements On
 
     this.user = this.authService.getUserTemp();
     this.title = "Autenticación en dos pasos";
-    this.sendType = 0;
+    this.sendType = 0; //0:email 1:sms
     this.message = "Introduce el código de autenticación único de seis digitos que se envió al movil terminado en 5050.";
     this.step = 1;
   }

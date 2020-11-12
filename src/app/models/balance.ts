@@ -68,10 +68,14 @@ export class Balance extends Model {
    */
   get currencyType(): string {
     if (this.isCredit) {
-      return 'P$G';
+      return 'P$C';
     }
     if (this.isFiat) {
       return '$';
+    }
+
+    if (this.isPoints) {
+      return 'P$G';
     }
 
     return '';

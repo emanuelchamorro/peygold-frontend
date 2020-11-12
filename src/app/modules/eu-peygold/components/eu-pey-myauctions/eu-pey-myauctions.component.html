@@ -1,17 +1,8 @@
-<div *ngIf="peygoldCreditsInAuction && peygoldCreditsInAuction.length==0 && step==1">
-    <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Mis Remates</span></h2>
-    <div class="content-center mt-5"> 
-      <div class="grey-box d-flex flex-column w-100">   
-          <div class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
-              <img class="d-flex mb-3" src="/assets/images/new-icons/rematando.svg" height="100" width="100">
-              <h2 class="text-dark">No iniciaste ningún remate</h2>
-              <span>No tienes saldo suficiente para iniciar un remate</span>
-          </div>
-      </div>
-   </div>
-
-</div>
-<div *ngIf="peygoldCreditsInAuction && peygoldCreditsInAuction.length>0 && step==1">
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<div *ngIf="auctions && auctions.data && step==1">
     <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Mis Remates</span></h2>
     <p class="opening-text">Detalle de tus remates creados</p>
     <div class="content-center">
@@ -36,16 +27,12 @@
                     <form class="form-inline">
                         <div class="input-group">
                             <div class="boxSelect">
-                                <a class="btn-dropDown stateDrop">Importe<i class="fa fa-chevron-right"></i></a>
+                                <a class="btn-dropDown stateDrop"><span>Importe</span><i class="fa fa-chevron-right"></i></a>
                                 <div class="downFecha stateDown">
                                     <ul>
-                                        <li>
-                                            <a href="#" class="optionDate">Mayor primero</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="optionDate">Menor primero</a>
-                                        </li>
-
+                                        <li (click)="setOrder(0)" class="optionDate">Importe</li>
+                                        <li (click)="setOrder(1)" class="optionDate">Mayor primero</li>
+                                        <li (click)="setOrder(0)" class="optionDate">Menor primero</li>
                                     </ul>
                                 </div>
                             </div>
@@ -53,16 +40,14 @@
                         <div class="input-group">
                             <div>
                                 <div class="boxSelect">
-                                    <a class="btn-dropDown stateDrop">Todos los Estados <i
+                                    <a class="btn-dropDown stateDrop"><span>Todos los Estados</span> <i
                                             class="fa fa-chevron-right"></i></a>
                                     <div class="downFecha stateDown">
                                         <ul>
-                                            <li><a href="#" class="optionDate">Activa</a></li>
-                                            <li><a href="#" class="optionDate">Pausada</a></li>
-                                            <li><a href="#" class="optionDate">Finalizada</a></li>
-                                            <li>
-                                                <a href="#" class="optionDate">Todos los Estados</a>
-                                            </li>
+                                            <li (click)="setStatus(0)" class="optionDate">Todos los Estados</li>
+                                            <li (click)="setStatus(1)" class="optionDate">Activo</li>
+                                            <li (click)="setStatus(2)" class="optionDate">Pausado</li>
+                                            <li (click)="setStatus(3)" class="optionDate">Finalizado</li>
 
                                         </ul>
                                     </div>
@@ -75,15 +60,29 @@
 
 
                 <table class="table remates">
-
+                   <!-- <thead>
+                        <tr>
+                            <th scope="col">Importe</th>
+                            <th scope="col">Descuento</th>
+                            <th scope="col">Finaliza en</th>                            
+                            <th scope="col">Vencimiento</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Comprador</th>
+                            <th scope="col" width="20"></th>
+                        </tr>
+                    </thead>-->
                     <tbody class="list">
 
-                        <tr *ngFor="let auction of peygoldCreditsInAuction" class="d-flex justify-content-between align-items-center">
-                            <td class=""><span [innerHtml]="auction.transaction.type.coin +' '+ auction.transaction.amountToAuction"></span></td>
+                        <tr *ngFor="let auction of auctions.data" class="d-flex justify-content-between align-items-center">
+                            <td class=""><span>
+                                     +' '+ 
+                                {{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
+                            </span></td>
                             <td><span [innerHtml]="auction.discount+'%'"></span></td>
-                            <td class=""><span>Finaliza en 5 dias</span></td>
-                            <td class=""><span [innerHtml]="'Vto. '+auction.transaction.type.coin+' '+auction.expirationDate"></span></td>
-                            <td class=""><span>Activa</span></td>
+                            <td class=""><span>Finaliza en {{auction.endsIn}} dias</span></td>
+                            <td class=""><span [innerHtml]="auction.expirationDate | date:medium"></span></td>
+                            <td class=""><span [innerHtml]="auction.status.label"></span></td>
+                            <td class=""><span >Celina Lopez</span></td>
                             <td>
                                 <div class="detallePopup">
                                     <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
@@ -92,14 +91,14 @@
                                             <li><a class="text-left" (click)="selectPeygoldCredit(auction)"> Editar remate</a>
                                         </ul>
                                         <ul>
-                                            <li><button type="button" class="text-left">
+                                            <li><button type="button" class="text-left" (click)="changeAuctionStatus(auction,1)">
                                                     <span class="Seguridad-icon icon-Activar"></span>Activar</button>
                                             </li>
-                                            <li><button type="button" class="text-left">
+                                            <li><button type="button" class="text-left" (click)="changeAuctionStatus(auction,2)">
                                                     <span
-                                                        class="Seguridad-icon icon-Desactivar"></span>Desactivar</button>
+                                                        class="Seguridad-icon icon-Desactivar"></span>Pausar</button>
                                             </li>
-                                            <li><button type="button" class="text-left">
+                                            <li><button type="button" class="text-left" (click)="changeAuctionStatus(auction,3)">
                                                     <span
                                                         class="Seguridad-icon icon-Finalizar "></span>Finalizar</button>
                                             </li>
@@ -110,21 +109,16 @@
                         </tr>
                     </tbody>
                 </table>
+                <div *ngIf="!showPagination" class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
+                        <img class="d-flex mb-3" src="/assets/images/new-icons/rematando.svg" height="100" width="100">
+                        <h2 class="text-dark">No iniciaste ningún remate</h2>
+                        <span>No tienes saldo suficiente para iniciar un remate</span>
+                </div>
             </div>
 
-            <div class="pagination-container">
-                <nav>
-                    <ul class="pagination">
-                        <!--	Here the JS Function Will Add the Rows -->
-                        <li><a href="#" class="active"><span>1</span></a></li>
-                        <li><a href="#"><span>2</span></a></li>
-                        <li><a href="#"><span>3</span></a></li>
-                        <li><a href="#"><span>4</span></a></li>
-                        <li><a href="#"><span>5</span></a></li>
-                        <li><a href="#">Siguiente &gt;</a></li>
-                    </ul>
-                </nav>
-            </div>
+            <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+            (pageChange)="loadPage($event)">
+            </ngb-pagination>
         </div>
     </div>
 </div>
@@ -139,7 +133,7 @@
             <div class="grey-box d-flex flex-column align-items-center p-3 col-xs-12">
                 <div class="amount d-flex flex-column mt-3 mb-3">
                     <span>Estas rematando</span>
-                    <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction}}</span>
+                    <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}</span>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -154,19 +148,26 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="has-float-label w-100">
-                        <input name="duration" [(ngModel)]="auction.duration" #duration="ngModel" type="text"
-                            placeholder="Duración*"  class=" d-flex w-100"
-                            [max-value]="auction.timeLimit" required />
-                        <span>Duración*</span>
-                    </label>
-                    <div *ngIf="!duration.pristine && duration.invalid || formConfigTransaction.submitted && duration.errors"
-                        class="invalid-feedback">
-                        <div *ngIf="duration.errors.required">Campo es requerido</div>
-                        <div *ngIf="duration.errors.max">Sólo quedan {{ auction.timeLimit }} días válidos para rematar
-                            los peygolds créditos</div>
+                        <label class="input-group has-float-label w-100">
+                                <input name="datepicker" placeholder="Duración*" class="d-flex w-100" ngbDatepicker #datepicker="ngbDatepicker"
+                                [autoClose]="'inside'" (dateSelect)="onDateSelection($event)" [dayTemplate]="t" [minDate]="minDate" [maxDate]="maxDate"
+                                outsideDays="hidden" (click)="datepicker.toggle()" required>                            
+                            <ng-template #t let-date let-focused="focused">
+                                <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                    [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                    (mouseleave)="hoveredDate = null">
+                                    {{ date.day }}
+                                </span>
+                            </ng-template>
+                            <span>Duración*</span>
+                        </label>
+                        <div *ngIf="!datepicker.pristine && datepicker.invalid || formConfigTransaction.submitted && datepicker.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="datepicker.errors.required">Campo es requerido</div>
+                            <div *ngIf="datepicker.errors.max">Sólo quedan {{ auction.timeLimit }} días válidos para rematar
+                                los peygolds créditos</div>
+                        </div>
                     </div>
-                </div>
             </div>
 
             <div class="row-buttons justify-content-end mt-3">

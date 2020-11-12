@@ -238,4 +238,5 @@ export class TransactionsService extends HttpService {
 
     }).toPromise();
   }
+
 }

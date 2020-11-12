@@ -121,7 +121,7 @@ export class EuPeyLoanRequestsComponent extends BaseComponent implements OnInit 
       console.log('creditos', response)
       this.loans = response;
      
-      if(this.loans.data.length){
+      if(this.loans.data.length>0){
         this.page = response.page;
         this.previousPage = 1;
         this.totalItems = response.count;

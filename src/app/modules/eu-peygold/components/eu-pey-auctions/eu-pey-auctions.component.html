@@ -1,37 +1,8 @@
-<div *ngIf="peygoldCreditsInAuction && peygoldCreditsInAuction.length==0 && step==1">
-    <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Remates disponibles</span></h2>
-  
- <div class="content-center mt-5">
-        <div class="grey-box d-flex flex-column w-100">
-            <div class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
-                <img class="d-flex mb-3" src="/assets/images/new-icons/remate.svg" height="100" width="100">
-                <h2 class="text-dark">No encontramos remates disponibles</h2>
-                <span>Cuando un usuario remate sus P$Gc veras la oferta aqui</span>
-            </div>
-        </div>
-    </div>
-
-<!--HAY REMATES PERO NO TIENES SALDO SUFICIENTE-->
-
-  <!--   <div class="content-center mt-5">
-        <div class="grey-box d-flex flex-column w-100">
-            <div class="sin-saldo-suficiente d-flex justify-content-center align-items-center flex-column p-5">
-                <img class="d-flex mb-3" src="/assets/images/new-icons/remate.svg" height="100" width="100">
-                <h2 class="text-dark">Hay remates disponibles pero no tienes saldo suficiente</h2>
-                <span>Recarga tu billetera y vuelve a intentarlo</span>
-            </div>
-        </div>
-        <div class="d-flex justify-content-end w-100 mt-4">
-            <button class="solid-blue-button">Ingresar dinero</button>
-        </div>
-    </div>-->
-
-
-<!---------------------------------------------------------->
-</div>
-
-
-<div *ngIf="peygoldCreditsInAuction && peygoldCreditsInAuction.length>0 && step==1">
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
+<ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+<div *ngIf="auctions && auctions.data && step==1">
     <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Remates Disponibles</span></h2>
     <p class="opening-text">Te mostraremos todos los remates disponibles. Selecciona el que te
         interese para acceder a más información y concretar la adquisición de puntos.
@@ -47,7 +18,8 @@
                 </div>
                 <div class="right">
                     <form action="?" name="buscarFiltro">
-                        <input type="text" class="input-buscar" name="buscar" placeholder="Buscar" />
+                        <input type="text" class="input-buscar" name="filter" (keyup)="search($event)"
+                        [(ngModel)]="filter" placeholder="Buscar" />
                     </form>
                 </div>
             </div>
@@ -58,15 +30,12 @@
                     <form class="form-inline">
                         <div class="input-group">
                             <div class="boxSelect">
-                                <a class="btn-dropDown stateDrop">Importe<i class="fa fa-chevron-right"></i></a>
+                                <a class="btn-dropDown stateDrop"><span>Importe</span><i class="fa fa-chevron-right"></i></a>
                                 <div class="downFecha stateDown">
                                     <ul>
-                                        <li>
-                                            <a href="#" class="optionDate">Mayor primero</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="optionDate">Menor primero</a>
-                                        </li>
+                                        <li (click)="setAmountOrder(0)" class="optionDate">Importe</li>
+                                        <li (click)="setAmountOrder(1)" class="optionDate">Mayor primero</li>
+                                        <li (click)="setAmountOrder(0)" class="optionDate">Menor primero</li>
 
                                     </ul>
                                 </div>
@@ -75,14 +44,13 @@
                         <div class="input-group">
                             <div>
                                 <div class="boxSelect">
-                                    <a class="btn-dropDown stateDrop">Descuento ofrecido <i
+                                    <a class="btn-dropDown stateDrop"><span>Descuento ofrecido</span><i
                                             class="fa fa-chevron-right"></i></a>
                                     <div class="downFecha stateDown">
                                         <ul>
-                                            <li><a href="#" class="optionDate">Mayor primero</a></li>
-                                            <li><a href="#" class="optionDate">Menos primero</a></li>
-
-
+                                            <li (click)="setDiscountOrder(0)" class="optionDate">Descuento ofrecido </li>
+                                            <li (click)="setDiscountOrder(1)" class="optionDate">Mayor primero</li>
+                                            <li (click)="setDiscountOrder(0)" class="optionDate">Menor primero</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -103,13 +71,17 @@
                         </tr>
                     </thead>
                     <tbody class="list">
-                        <tr *ngFor="let auction of peygoldCreditsInAuction">
-                            <td class="d-flex align-items-center"><i class="circle">J</i>Juan Perez</td>
-                            <td [innerHtml]="auction.transaction.type.coin +' '+ auction.transaction.amountToAuction">
+                        <tr *ngFor="let auction of auctions.data">
+                            <td class="d-flex align-items-center"><i class="circle" [innerHtml]="auction.transaction.sender.initials"></i>{{auction.transaction.sender.fullName}}</td>
+                            <td>
+                                {{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
                             </td>
                             <td [innerHtml]="auction.discount+'%'"></td>
-                            <td [innerHtml]="auction.expirationDate"></td>
-                            <td [innerHtml]="auction.transaction.amountToAuction - (auction.transaction.amountToAuction * auction.discount/100)"></td>
+                            <td [innerHtml]="auction.auctionExpirationDate | date:medium"></td>
+                            <td
+                                [innerHtml]="">
+                                $ {{ (auction.transaction.amountToAuction - (auction.transaction.amountToAuction * auction.discount/100)) | currency: " ":"symbol":"1.0"}}
+                            </td>
                             <td width="20">
                                 <div class="form-check">
                                     <input type="radio" value="option1" name="exampleRadios" id="exampleRadios1"
@@ -121,20 +93,17 @@
                         </tr>
                     </tbody>
                 </table>
+                <div *ngIf="!showPagination"
+                    class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
+                    <img class="d-flex mb-3" src="/assets/images/new-icons/remate.svg" height="100" width="100">
+                    <h2 class="text-dark">No encontramos remates disponibles</h2>
+                    <span>Cuando un usuario remate sus P$Gc veras la oferta aqui</span>
+                </div>
             </div>
-            <div class="pagination-container">
-                <nav>
-                    <ul class="pagination">
-                        <!--	Here the JS Function Will Add the Rows -->
-                        <li><a href="#" class="active"><span>1</span></a></li>
-                        <li><a href="#"><span>2</span></a></li>
-                        <li><a href="#"><span>3</span></a></li>
-                        <li><a href="#"><span>4</span></a></li>
-                        <li><a href="#"><span>5</span></a></li>
-                        <li><a href="#">Siguiente &gt;</a></li>
-                    </ul>
-                </nav>
-            </div>
+
+            <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+            (pageChange)="loadPage($event)">
+            </ngb-pagination>
 
             <div class="d-flex justify-content-end w-100">
                 <button class="solid-blue-button" (click)="continue()">Aceptar oferta</button>
@@ -149,48 +118,43 @@
     <p class="opening-text">Revisa que los datos sean correctos y elige como deseas abonar.
     </p>
     <div class="content-center">
-     <div class="remate-revision-compra grey-box w-75">
-       <div class="user-remate pb-4 pt-4 align-items-center justify-content-center d-flex flex-column">
-         <i class="circle mb-2">J</i>
-         <span>Juan Perez</span> 
-         <span>Usuario Peygold desde 14/07/2017</span>  
+        <div class="remate-revision-compra grey-box w-75">
+            <div class="user-remate pb-4 pt-4 align-items-center justify-content-center d-flex flex-column">
+                <i class="circle mb-2" [innerHtml]="auction.transaction.sender.initials"></i>
+                <span [innerHtml]="auction.transaction.sender.fullName"></span>
+            </div>
+            <div class="d-flex flex-column">
+                <ul>
+                    <li>
+                        <span>Importe a recibir</span>
+                        <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}</span>
+                    </li>
+                    <li>
+                        <span>Descuento aplicado</span>
+                        <span [innerHtml]="auction.discount+'%'"></span>
+                    </li>
+                    <li>
+                        <span>Fecha de vencimiento</span>
+                        <span [innerHtml]="auction.auctionExpirationDate | date:medium"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="total-amount d-flex flex-column">
+                <ul>
+                    <li>
+                        <span>Total a pagar</span>
+                        <span>$ {{(auction.transaction.amountToAuction - (auction.transaction.amountToAuction * auction.discount/100)) | currency:" ":"symbol":"1.0"}} </span>
+                    </li>
+                </ul>
+            </div>
         </div>
-       <div class="d-flex flex-column">
-        <ul>
-          <li>
-            <span>Importe a recibir</span>
-            <span [innerHtml]="auction.transaction.type.coin +' '+ auction.transaction.amountToAuction"></span>
-          </li>
-          <li>
-           <span>Descuento aplicado</span>
-           <span [innerHtml]="auction.discount+'%'"></span>
-         </li>
-         <li>
-           <span>Fecha de vencimiento</span>
-           <span [innerHtml]="auction.expirationDate"></span>
-         </li>
-         </ul>
-       </div>  
-       <div class="total-amount d-flex flex-column">
-         <ul>
-           <li>
-             <span>Total a pagar</span>
-             <span [innerHtml]="auction.transaction.amountToAuction - (auction.transaction.amountToAuction * auction.discount/100)">$14.250,00</span>
-           </li>
-         </ul>
-       </div>  
-
-        <div class="d-flex flex-column align-items-center pb-4 pt-4">
-         <span class="mb-3">Forma de pago</span>
-           <div class="icon-pesos mb-3"></div><span>Billetera<br> Peygold Pesos</span></div>  
+        <div class="row-buttons w-75 mt-3 justify-content-end">
+            <button role="button" class="white-button-border mr-2" (click)="step=step-1;auction=null;">Volver</button>
+            <button role="button" class="solid-blue-button ml-2" (click)="confirm()">Confirmar</button>
+        </div>
     </div>
-        <div class="row-buttons w-75 mt-3 justify-content-end">    
-          <button role="button" class="white-button-border mr-2" (click)="step=step-1;auction=null;">Volver</button>  
-          <button role="button" class="solid-blue-button ml-2" (click)="confirm()">Confirmar</button>  
-       </div>   
- </div>
 </div>
 <div *ngIf="auction && step==3">
     <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
-    [routeTo]="routeTo" [buttonLabel]="buttonLabel"></app-ui-pey-message-success>
+        [routeTo]="routeTo" [buttonLabel]="buttonLabel"></app-ui-pey-message-success>
 </div>

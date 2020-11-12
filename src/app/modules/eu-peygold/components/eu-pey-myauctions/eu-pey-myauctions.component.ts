@@ -1,43 +1,239 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Auction } from '../../../../models/auction';
-import { UserService } from '../../services/user.service';
+import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
+import { BaseComponent } from '../base.component';
+import { environment } from '../../../../../environments/environment';
+import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { AuctionsService } from '../../services/auctions.service';
 
 @Component({
   selector: 'app-eu-pey-myauctions',
   templateUrl: './eu-pey-myauctions.component.html',
-  styleUrls: ['./eu-pey-myauctions.component.scss']
+  styles: [`
+    .custom-day {
+      text-align: center;
+      padding: 0.185rem 0.25rem;
+      display: inline-block;
+      height: 2rem;
+      width: 2rem;
+    }
+    .custom-day.focused {
+      background-color: #e6e6e6;
+    }
+    .custom-day.range, .custom-day:hover {
+      background-color: rgb(2, 117, 216);
+      color: white;
+    }
+    .custom-day.faded {
+      background-color: rgba(2, 117, 216, 0.5);
+    }
+  `]
 })
-export class EuPeyMyauctionsComponent implements OnInit {
+export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
 
+  @ViewChild('datepicker',{static:false, read: ElementRef }) private inputDuration: ElementRef;
 
-  public auction:Auction;
-  public step: number=1;
+  public step: number = 1;
+  private auctions: PaginationResponse;
+  public auction: Auction;
 
-  private peygoldCreditsInAuction: Array<Auction>;
+  public totalItems: number;
+  public page: number;
+  public previousPage: number;
+  public showPagination: boolean;
 
-  constructor(private spinnerService: NgxSpinnerService,
-    private userService: UserService) { }
+  public status: number = 1;
+  public order: number = 0;
+
+  //
+  hoveredDate: NgbDate | null = null;
+  minDate: NgbDate;
+  maxDate: NgbDate;
+  fromDate: NgbDate;
+  toDate: NgbDate | null = null;
+
+  constructor(
+    calendar: NgbCalendar,
+    private spinnerService: NgxSpinnerService,
+    private auctionService: AuctionsService) {
+    super();
+    let today = new Date();
+    let lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+    this.minDate = calendar.getToday();
+    this.maxDate = calendar.getNext(calendar.getToday(), 'd', lastDayOfMonth.getDate());
+    this.fromDate = this.minDate;
+  }
 
   ngOnInit() {
-       // this.spinnerService.show();
-   this.peygoldCreditsInAuction = this.userService.loadPeygoldsCreditsInAuction();
+    
+
+    this.spinnerService.show();
+    this.auctionService.loadAuctionByUser(this.status, this.order, '@', 1, environment.paginator.per_page).then((response: PaginationResponse) => {
+      console.log('auctions', response);
+
+      this.auctions = response;
+
+      if (this.auctions.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+      }
+    );
   }
 
 
-    /**
-   * select peygold credit in auction
-   * @param auction 
-   */
-  selectPeygoldCredit(auction: Auction){
+  /**
+ * select peygold credit in auction
+ * @param auction 
+ */
+  selectPeygoldCredit(auction: Auction) {
     this.auction = auction;
     this.step++;
+    setTimeout(()=>{
+      let inputDurationElem:HTMLInputElement = this.inputDuration.nativeElement;
+      inputDurationElem.value = String(this.auction.duration);
+    },100)
+
+    
   }
 
-  saveAuction(){
+  saveAuction() {
+    this.spinnerService.show();
+    this.auctionService.updateAuction(this.auction).then(
+      (resp:any)=>{
+        this.spinnerService.hide();
+        console.log('resp',resp);
+        this.step = 1
+        this.auction = null;
+      }
+    ).catch(
+      (error:any)=>{
+        this.spinnerService.hide();
+        console.log('resp',error);
+        this.setError('Ha ocurrido un error. No es posible actualizar el remate.')
+      }
+    );
+  }
 
-    this.step = 1
-    this.auction = null;
+  changeAuctionStatus(auction:Auction, status:number){
+    this.spinnerService.show();
+    this.auctionService.updateAuctionStatus(auction, status).then(
+      (resp:any)=>{
+        this.spinnerService.hide();
+        console.log('resp',resp);
+        this.step = 1
+        this.auction = null;
+      }
+    ).catch(
+      (error:any)=>{
+        this.spinnerService.hide();
+        console.log('resp',error);
+        this.setError('Ha ocurrido un error. No es posible actualizar el remate.')
+      }
+    );
+  }
+
+  /**
+* load page de loans
+* @param page 
+*/
+  loadPage(page: number) {
+    this.previousPage = page - 1;
+    this.spinnerService.show();
+    this.auctionService.loadAuctionByUser(this.status, this.order, '@', page, environment.paginator.per_page).then((response: PaginationResponse) => {
+      console.log('auctions', response);
+      this.auctions = response;
+
+      if (this.auctions.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        console.log('count record', this.totalItems);
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+      }
+    )
+
+  }
+
+  /**
+ * set order 
+ * @param order 
+ */
+  setOrder(order: number) {
+    //this.filter = '';
+    this.order = order;
+    this.loadPage(1);
+  }
+
+  /**
+* set status 
+* @param status 
+*/
+  setStatus(status: number) {
+    //this.filter = '';
+    this.status = status;
+    this.loadPage(1);
+  }
+
+  onDateSelection(date: NgbDate) {
+    /*if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else*/ 
+    if (this.fromDate && date && date.after(this.fromDate)) {
+      this.toDate = date;
+    }else if(this.fromDate && date && date.equals(this.fromDate)){  
+      this.toDate = this.fromDate;
+    } else {
+      this.toDate = null;
+      //this.fromDate = date;
+    }
+    let inputDurationElem:HTMLInputElement = this.inputDuration.nativeElement;
+    const startDay =  this.fromDate.day;
+    const endDay = this.toDate.day;
+    this.auction.duration = endDay - startDay;
+    inputDurationElem.value = String(endDay - startDay);
+  }
+  
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
 
 }

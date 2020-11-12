@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../../../services/http.service';
-import {Balance, Transaction, TransactionType, TransactionStatus} from '../../../models';
+import {Balance, Transaction, TransactionType} from '../../../models';
 import {map} from 'rxjs/operators';
-import { Auction } from 'src/app/models/auction';
+import { Auction } from '../../../models/auction';
 import { TransactionTypeEnum } from '../../../enums';
 
 @Injectable({
@@ -30,128 +30,29 @@ export class UserService extends HttpService {
 
   
 
-  loadPeygoldsCredits(): Array<Auction> /*Promise<Array<Auction>>*/{
+   /**
+   * search summary peyglods credits by month and year
+   * @param page 
+   * @param perPage 
+   */
+  searchPeygoldsCredits(page: number, perPage: number): Promise<Array<Auction>>{
 
-    const peygoldCreditsToAuction = new Array<Auction>();
-    
-    let auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 1500;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2020-11-20';
-    peygoldCreditsToAuction.push(auction);
+   return this.get('/peygoldsummaries/GetCreditosDisponiblesByUser')
+    .pipe(map((peygoldsCredits: Array<any>)=> peygoldsCredits.map((item:any)=>{
+      const auction = new Auction();
+      auction.transaction = new Transaction();
+      auction.transaction.amount= item.totalAmount;
+      auction.transaction.amountToAuction = item.totalAmount; // monto maximo a subastar
+      auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
+      auction.year = item.year;
+      auction.month = item.month;
 
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 200;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2020-11-25';
-    peygoldCreditsToAuction.push(auction);
-
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 4500;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2020-12-09';
-    peygoldCreditsToAuction.push(auction);
-
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 2890;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2021-01-25';
-    peygoldCreditsToAuction.push(auction);
-
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 900;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2021-01-30';
-    peygoldCreditsToAuction.push(auction);
-
-
-
-    
-    
-    return peygoldCreditsToAuction;
+      return auction;
+    }))).toPromise();   
 
   }
 
 
-  loadPeygoldsCreditsInAuction(): Array<Auction> /*Promise<Array<Auction>>*/{
 
-    const peygoldCreditsToAuction = new Array<Auction>();
-    
-  /*let auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 1500;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2020-11-20';
-    auction.transaction.amountToAuction= 1500;
-    auction.discount = 5;
-    auction.duration = 20;
-    auction.transaction.createdAt = new Date();
-    peygoldCreditsToAuction.push(auction);
-    
-
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 200;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2020-11-25';
-    auction.transaction.amountToAuction= 100;
-    auction.discount = 2;
-    auction.duration = 19;
-    auction.transaction.createdAt = new Date();
-    peygoldCreditsToAuction.push(auction);
-
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 4500;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2020-12-09';
-    auction.transaction.amountToAuction= 2500;
-    auction.discount = 6;
-    auction.duration = 10;
-    auction.transaction.createdAt = new Date();
-    peygoldCreditsToAuction.push(auction);
-
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 2890;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2021-01-25';
-    auction.transaction.amountToAuction= 1500;
-    auction.discount = 5;
-    auction.duration = 10;
-    auction.transaction.createdAt = new Date();
-    peygoldCreditsToAuction.push(auction);
-
-    auction = new Auction();
-    auction.transaction = new Transaction();
-    auction.status = new TransactionStatus('6');
-    auction.transaction.amount = 900;
-    auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-    auction.expirationDate = '2021-01-30';
-    auction.transaction.amountToAuction= 500;
-    auction.discount = 2;
-    auction.duration = 12;
-    auction.transaction.createdAt = new Date();
-    peygoldCreditsToAuction.push(auction);*/
-
-    
-    
-    return peygoldCreditsToAuction;
-
-  }
 
 }

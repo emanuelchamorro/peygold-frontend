@@ -216,7 +216,7 @@ setFilterTransactionType(filter: string) {
         eDate.setMonth(eDate.getMonth() - 1);
 
         const d = new Date(eDate.getFullYear(), eDate.getMonth(), 0 );
-        const day = d.getDate()
+        const day = d.getDate();
 
 
         this.startDate = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;

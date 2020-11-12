@@ -4,7 +4,7 @@ export class Constants{
     Points:'P$G'
     }
 
-    public static symbolsArray = ['$','P$G','P$G','P$G'];
+    public static symbolsArray = ['$','P$G','P$C'];
 
     public static operationsOptions = [
         {

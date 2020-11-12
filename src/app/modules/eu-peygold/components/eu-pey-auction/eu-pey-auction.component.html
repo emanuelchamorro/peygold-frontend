@@ -97,7 +97,9 @@
                         <tr *ngFor="let peygoldcredit of peygoldCreditsToAuction">
                             <td [innerHtml]="peygoldcredit.year"></td>
                             <td [innerHtml]="peygoldcredit.month"></td>
-                            <td [innerHtml]="peygoldcredit.transaction.type.coin +''+ peygoldcredit.transaction.amount"></td>
+                            <td [innerHtml]="">
+                                 {{peygoldcredit.transaction.type.coin}} {{peygoldcredit.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
+                            </td>
                             <td width="20">
                                 <div class="form-check">
                                     <input type="radio" value="option1" name="exampleRadios" id="exampleRadios1"
@@ -110,20 +112,20 @@
                     </tbody>
                 </table>
             </div>
-      
+
             <div class="pagination-container">
                 <nav>
-                  <ul class="pagination">
-                   <!--	Here the JS Function Will Add the Rows -->
-                            <li><a href="#" class="active"><span>1</span></a></li>  
-                            <li><a href="#"><span>2</span></a></li>  
-                            <li><a href="#"><span>3</span></a></li> 
-                            <li><a href="#"><span>4</span></a></li> 
-                            <li><a href="#"><span>5</span></a></li>
-                            <li><a href="#">Siguiente &gt;</a></li>  
-                  </ul>
+                    <ul class="pagination">
+                        <!--	Here the JS Function Will Add the Rows -->
+                        <li><a href="#" class="active"><span>1</span></a></li>
+                        <li><a href="#"><span>2</span></a></li>
+                        <li><a href="#"><span>3</span></a></li>
+                        <li><a href="#"><span>4</span></a></li>
+                        <li><a href="#"><span>5</span></a></li>
+                        <li><a href="#">Siguiente &gt;</a></li>
+                    </ul>
                 </nav>
-              </div>
+            </div>
             <div class="d-flex justify-content-end w-100">
                 <button class="solid-blue-button" (click)="continue()">Iniciar un remate</button>
             </div>
@@ -141,53 +143,36 @@
                 <div class="ingresarDinero">
                     <div class="row">
                         <div class="w-100 pl-3 pr-3">
-                        
-                                <div class="auctionTransactionAmount text-center">
-                                    <span>Saldo disponible:</span>
-                                    <span>
-                                      {{auction.transaction.type.coin}}
-                                        {{auction.transaction.amount}}
-                                    </span>
-                                </div>
 
-                               <!-- INPUT CORREGIDO-->
+                            <div class="auctionTransactionAmount text-center">
+                                <span>Saldo disponible:</span>
+                                <span>
+                                    {{auction.transaction.type.coin}}
+                                    {{auction.transaction.amount | currency:" ":"symbol":"1.0"}}
+                                </span>
+                            </div>
 
-                                <div class="input-blue-text d-flex justify-content-center flex-column align-items-center">
-                                    <input required type="text" type="text" placeholder="$0" class="col-xs-12 col-sm-6 form-control InputAmount"
-                                           [prefix]="auction.transaction.type.coin | translate" mask="separator.2"
-                                           thousandSeparator="." [min-value]="auction.transaction.type.minAmount"
-                                           [max-value]="auction.transaction.amount" name="amount"
-                                            [(ngModel)]="auction.transaction.amountToAuction" #amount="ngModel" required />
-                                            <div *ngIf="!amount.pristine && amount.invalid || formTransaction.submitted && amount.errors"
-                                            class="col-xs-12 col-sm-6 pr-0 pl-0 invalid-feedback text-left">
-                                            <div *ngIf="amount.errors.required">Campo requerido
-                                            </div>
-                                            <div *ngIf="amount.errors.min">El valor mínimo para la transaccion es
-                                                {{ auction.transaction.type.minAmount }}
-                                            </div>
-                                            <div *ngIf="amount.errors.max">El valor máximo a rematar es {{ auction.transaction.amount }}
-                                            </div>
-                                        </div>
-                                  </div>
+                            <!-- INPUT CORREGIDO-->
 
-                            <!-- INPUT ANTERIOR-->
-                           
-                         <!--  <input required type="text" placeholder="$0"
-                                class="form-control InputAmount w-100 text-center"
-                                [prefix]="auction.transaction.type.coin | translate" mask="separator.2"
-                                thousandSeparator="." [min-value]="auction.transaction.type.minAmount"
-                                [max-value]="auction.transaction.amount" name="amount"
-                                [(ngModel)]="auction.transaction.amountToAuction" #amount="ngModel" required />
-                            <div *ngIf="!amount.pristine && amount.invalid || formTransaction.submitted && amount.errors"
-                                class="col-xs-12 col-sm-6 pr-0 pl-0 invalid-feedback text-left">
-                                <div *ngIf="amount.errors.required">Campo requerido
+                            <div class="input-blue-text d-flex justify-content-center flex-column align-items-center">
+                                <input required type="text" type="text" placeholder="$0"
+                                    class="col-xs-12 col-sm-6 form-control InputAmount"
+                                    [prefix]="auction.transaction.type.coin | translate" mask="separator.2"
+                                    thousandSeparator="." [min-value]="auction.transaction.type.minAmount"
+                                    [max-value]="auction.transaction.amount" name="amount"
+                                    [(ngModel)]="auction.transaction.amountToAuction" #amount="ngModel" required />
+                                <div *ngIf="!amount.pristine && amount.invalid || formTransaction.submitted && amount.errors"
+                                    class="col-xs-12 col-sm-6 pr-0 pl-0 invalid-feedback text-left">
+                                    <div *ngIf="amount.errors.required">Campo requerido
+                                    </div>
+                                    <div *ngIf="amount.errors.min">El valor mínimo para la transaccion es
+                                        {{ auction.transaction.type.minAmount | number:'1.2'}}
+                                    </div>
+                                    <div *ngIf="amount.errors.max">El valor máximo a rematar es
+                                        {{ auction.transaction.amount | number:'1.2'}}
+                                    </div>
                                 </div>
-                                <div *ngIf="amount.errors.min">El valor mínimo para la transaccion es
-                                    {{ auction.transaction.type.minAmount }}
-                                </div>
-                                <div *ngIf="amount.errors.max">El valor máximo a rematar es {{ auction.transaction.amount }}
-                                </div>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,13 +195,14 @@
             <div class="grey-box d-flex flex-column align-items-center p-3 col-xs-12">
                 <div class="amountToAuction amount d-flex flex-column mt-3 mb-3">
                     <span>Estas rematando</span>
-                    <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction}}</span>
+                    <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}</span>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="has-float-label w-100">
                         <input name="discount" [(ngModel)]="auction.discount" #discount="ngModel" type="text"
-                            placeholder="Descuento ofrecido*" suffix="%" value="12%" mask="0*" class="d-flex w-100" required />
+                            placeholder="Descuento ofrecido*" suffix="%" value="12%" mask="0*" class="d-flex w-100"
+                            required />
                         <span>Descuento ofrecido*</span>
                     </label>
                     <div *ngIf="!discount.pristine && discount.invalid || formConfigTransaction.submitted && discount.errors"
@@ -225,16 +211,23 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="has-float-label w-100">
-                        <input name="duration" [(ngModel)]="auction.duration" #duration="ngModel" type="text"
-                            placeholder="Duración*" value="15 dias" class=" d-flex w-100"
-                            [max-value]="auction.timeLimit" required />
+                    <label class="input-group has-float-label w-100">
+                            <input name="datepicker" placeholder="Duración*" class="d-flex w-100" ngbDatepicker #datepicker="ngbDatepicker"
+                            [autoClose]="'inside'" (dateSelect)="onDateSelection($event)" [dayTemplate]="t" [minDate]="minDate" [maxDate]="maxDate"
+                            outsideDays="hidden" (click)="datepicker.toggle()" required>                            
+                        <ng-template #t let-date let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
                         <span>Duración*</span>
                     </label>
-                    <div *ngIf="!duration.pristine && duration.invalid || formConfigTransaction.submitted && duration.errors"
+                    <div *ngIf="!datepicker.pristine && datepicker.invalid || formConfigTransaction.submitted && datepicker.errors"
                         class="invalid-feedback">
-                        <div *ngIf="duration.errors.required">Campo es requerido</div>
-                        <div *ngIf="duration.errors.max">Sólo quedan {{ auction.timeLimit }} días válidos para rematar
+                        <div *ngIf="datepicker.errors.required">Campo es requerido</div>
+                        <div *ngIf="datepicker.errors.max">Sólo quedan {{ auction.timeLimit }} días válidos para rematar
                             los peygolds créditos</div>
                     </div>
                 </div>

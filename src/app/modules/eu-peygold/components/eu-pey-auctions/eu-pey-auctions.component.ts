@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Auction } from '../../../../models/auction';
-import { UserService } from '../../services/user.service';
+import { environment } from '../../../../../environments/environment';
 import { BaseComponent } from '../base.component';
+import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
+import { AuctionsService } from '../../services/auctions.service';
 
 @Component({
   selector: 'app-eu-pey-auctions',
@@ -11,47 +13,169 @@ import { BaseComponent } from '../base.component';
 })
 export class EuPeyAuctionsComponent extends BaseComponent implements OnInit {
 
-  public auction:Auction;
-  public step: number=1;
+  private auctions: PaginationResponse;
+  public auction: Auction;
+  public step: number = 1;
 
-  private peygoldCreditsInAuction: Array<Auction>;
+  public totalItems: number;
+  public page: number;
+  public previousPage: number;
+  public showPagination: boolean;
 
-  private title:string;
-  private message:string;
-  private showImageBottom:boolean;
-  private sendType:number;
+  public amountOrder: number = 0;
+  public discountOrder: number = 0;
+  public word: string = '@';
+  public filter:string;
+
+  private title: string;
+  private message: string;
+  private showImageBottom: boolean;
+  private sendType: number;
   private routeTo: string;
-  private buttonLabel:string;
+  private buttonLabel: string;
 
   constructor(private spinnerService: NgxSpinnerService,
-    private userService: UserService) { 
-      super();
-    }
+    private auctionService: AuctionsService) {
+    super();
+  }
 
   ngOnInit() {
-       // this.spinnerService.show();
-   this.peygoldCreditsInAuction = this.userService.loadPeygoldsCreditsInAuction();
+
+    this.spinnerService.show();
+    this.auctionService.loadAuctionAvailable(this.amountOrder, this.discountOrder, this.word, 1, environment.paginator.per_page).then((response: PaginationResponse) => {
+      console.log('auctions', response);
+
+      this.auctions = response;
+
+      if (this.auctions.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+      }
+    );
   }
-    /**
-   * select peygold credit in auction
-   * @param auction 
-   */
-  selectPeygoldCredit(auction: Auction){
+  /**
+ * select peygold credit in auction
+ * @param auction 
+ */
+  selectPeygoldCredit(auction: Auction) {
     this.auction = auction;
 
   }
 
-  continue(){
+  /**
+* load page de loans
+* @param page 
+*/
+  loadPage(page: number) {
+    this.previousPage = page - 1;
+    this.spinnerService.show();
+    this.auctionService.loadAuctionAvailable(this.amountOrder, this.discountOrder, this.word, page, environment.paginator.per_page).then((response: PaginationResponse) => {
+      console.log('auctions', response);
+      this.auctions = response;
+
+      if (this.auctions.data.length > 0) {
+        this.page = response.page;
+        this.previousPage = 1;
+        this.totalItems = response.count;
+        console.log('count record', this.totalItems);
+        this.showPagination = true;
+      } else {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+      }
+      this.spinnerService.hide();
+    }).catch(
+      (erro) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+      }
+    )
+
+  }
+
+  /**
+  * set order 
+  * @param order 
+  */
+  setAmountOrder(order: number) {
+    this.word = '@';
+    this.amountOrder = order;
+    this.loadPage(1);
+  }
+
+
+  /**
+  * set order 
+  * @param order 
+  */
+  setDiscountOrder(order: number) {
+    this.word = '@';
+    this.discountOrder = order;
+    this.loadPage(1);
+  }
+
+    /**
+   * search loans by word
+   * @param filter 
+   */
+  search(filter:string){
+    console.log('filter',this.filter);
+    this.amountOrder = 0;
+    this.discountOrder = 0;
+    if(this.filter.length>3){
+      this.word = this.filter;
+      this.loadPage(1);
+    }else if(this.filter.length == 0){
+      this.word = '@';
+      this.loadPage(1);
+    }
+  }
+
+
+  continue() {
     this.step++;
   }
 
-  confirm(){
-    this.title = "¡Compra exitosa!";
-    this.message = `Los ${this.auction.transaction.type.coin} ${this.auction.transaction.amountToAuction} ya son tuyos. Tendras el importe disponible en tu billetera en la brevedad`;
-    this.showImageBottom = false;
-    this.buttonLabel = "Ir a remates";
-    this.routeTo = this.routes.auctions.index.href;
-    this.step++;
+  confirm() {
+    this.spinnerService.show();
+    this.auctionService.acceptAuction(this.auction.id).then(
+      (resp:any)=>{
+        this.spinnerService.hide();
+        this.title = "¡Compra exitosa!";
+        this.message = `Los ${this.auction.transaction.type.coin} ${this.auction.transaction.amountToAuction} ya son tuyos. Tendras el importe disponible en tu billetera en la brevedad`;
+        this.showImageBottom = false;
+        this.buttonLabel = "Ir a remates";
+        this.routeTo = this.routes.auctions.index.href;
+        this.step++;
+      }
+    ).catch(
+      (error:any)=>{
+        this.spinnerService.hide();
+        this.setError('Ha ocurrido un error. No fué posible acreditar los peygolds créditos.')
+      }
+    )
+
   }
 
 }
