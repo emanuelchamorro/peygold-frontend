@@ -668,6 +668,22 @@ input[type="hidden"]:focus {
 
 //floating label//
 
+.has-float-label > input:-webkit-autofill + span{
+
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  cursor: text;
+  font-size: 72%!important;
+  opacity: 1;
+  font-style:italic;
+  color: inherit;
+  transition: all .2s;
+  opacity: 0.7;
+
+}
+
+
 @mixin float-label-container {
   display: block;
   position: relative;

@@ -10,11 +10,17 @@ export class EuPeyLoanHelpComponent implements OnInit {
 
   @Input() public optionQuestions: Array<SelectOptionQuestion>;
 
+  toggleHelp1: boolean = false;
+  toggleHelp2: boolean = false;
+
+
   constructor() { }
 
   ngOnInit() {
   }
+  toggleContent(option: any) {
 
-
+    this.toggleHelp2 = true
+  }
 
 }

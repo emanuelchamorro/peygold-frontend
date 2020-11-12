@@ -14,4 +14,6 @@ $(function() {
     $(".secureTarjeta").hide(0);
   });
   /* End Add Money Card animation */
+
+
 });

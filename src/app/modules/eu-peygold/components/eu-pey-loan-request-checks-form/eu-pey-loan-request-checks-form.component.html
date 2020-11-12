@@ -59,49 +59,66 @@
           <!-- columnas -->
           <div class="col text-left">
             <span class="fs-14 fw-700 ">Datos del cheque</span>
+         
             <div class="input-field mt-2">
-              <input type="text" class="d-block w-100 mt-2" placeholder="N° de cuenta" mask="0*"
-                name="accountNumber-{{y}}" [(ngModel)]="currentCheck.accountNumber" #accountNumber="ngModel"
-                maxlength="8" minlength="8">
-              <div
+              <div class="has-float-label loan-check-field mb-4 w-100">
+                
+              <input type="text" class="d-block w-100" placeholder="N° de cuenta" mask="0*"
+              name="accountNumber-{{y}}" [(ngModel)]="currentCheck.accountNumber" #accountNumber="ngModel"
+              maxlength="8" minlength="8">
+                <span>N° de cuenta</span>
+                <div
                 *ngIf="!accountNumber.pristine && accountNumber.invalid || checksForm.submitted && accountNumber.errors"
                 class="invalid-feedback">
                 <div *ngIf="accountNumber.errors.required">Campo es requerido</div>
                 <div *ngIf="accountNumber.errors.minlength || accountNumber.errors.maxlength">Campo debe tener 8 dígitos</div>
               </div>
-
             </div>
+          </div>
+
             <div class="input-field">
+              <div class="has-float-label loan-check-field mb-4 w-100">
               <input type="text" class="d-block w-100" placeholder="N° de cheque" mask="0*" name="number-{{y}}"
                 [(ngModel)]="currentCheck.number" #number="ngModel"
                 maxlength="8" minlength="8">
+                <span>N° de cheque</span>
               <div *ngIf="!number.pristine && number.invalid || checksForm.submitted && number.errors"
                 class="invalid-feedback">
                 <div *ngIf="number.errors.required">Campo es requerido</div>
                 <div *ngIf="number.errors.minlength || number.errors.maxlength">Campo debe tener 8 dígitos</div>
               </div>
+             </div>
             </div>
+            
             <div class="input-field date-picker">
+              <div class="has-float-label mb-4 w-100">  
               <input class="form-control" readonly placeholder="Fecha de emisión"
               name="issuanceDate-{{y}}" [(ngModel)]="currentCheck.issuanceDate" ngbDatepicker #issuanceDate="ngModel" #issuanceDateD="ngbDatepicker" (click)="issuanceDateD.toggle()">
+              <span>Fecha de emisión</span>
               <div *ngIf="!issuanceDate.pristine && number.invalid || checksForm.submitted && issuanceDate.errors"
                 class="invalid-feedback">
                 <div *ngIf="issuanceDate.errors.required">Campo es requerido</div>
-              </div>              
+              </div>  
+             </div>             
             </div>
             <div class="input-field date-picker">
+              <div class="has-float-label mb-4 w-100">  
                 <input class="form-control" readonly placeholder="Fecha de vencimiento"
                 name="expirationDate-{{y}}" [(ngModel)]="currentCheck.expirationDate" ngbDatepicker #expirationDate="ngModel" #expirationDateD="ngbDatepicker" (click)="expirationDateD.toggle()">
-              <div *ngIf="!expirationDate.pristine && number.invalid || checksForm.submitted && expirationDate.errors"
+                <span>Fecha de vencimiento</span>
+                <div *ngIf="!expirationDate.pristine && number.invalid || checksForm.submitted && expirationDate.errors"
                 class="invalid-feedback">
                 <div *ngIf="expirationDate.errors.required">Campo es requerido</div>
-              </div>                  
+              </div>  
+              </div>                
             </div>
             <div class="input-field">
+              <div class="has-float-label mb-4 w-100">  
               <input type="text" class="d-block w-100" placeholder="Monto" name="amount-{{y}}"
                 [(ngModel)]="currentCheck.amount" #amount="ngModel" readonly>
-
+                <span>Monto</span>
             </div>
+           </div>
           </div>
 
           <div class="col text-left">
@@ -140,93 +157,124 @@
               </div>
             </div>
             <div class="input-field">
+              <div class="has-float-label mb-4 w-100">
               <input type="text" class="d-block w-100" placeholder="Dirección" name="address-{{y}}"
                 [(ngModel)]="currentCheck.address.addressFull" #address="ngModel">
-              <div *ngIf="!address.pristine && address.invalid || checksForm.submitted && address.errors"
+                <span>Dirección</span>
+                <div *ngIf="!address.pristine && address.invalid || checksForm.submitted && address.errors"
                 class="invalid-feedback">
                 <div *ngIf="address.errors.required">Campo es requerido</div>
               </div>
             </div>
+            </div>
             <div class="input-field">
+              <div class="has-float-label mb-4 w-100"> 
               <input type="text" class="d-block w-100" placeholder="Teléfono" name="checkPhone-{{y}}" mask="0*"
                 [(ngModel)]="currentCheck.address.phone" #checkPhone="ngModel">
+                <span>Teléfono</span>
               <div *ngIf="!checkPhone.pristine && checkPhone.invalid || checksForm.submitted && checkPhone.errors"
                 class="invalid-feedback">
                 <div *ngIf="checkPhone.errors.required">Campo es requerido</div>
               </div>
             </div>
           </div>
-          <div class="col text-left">
+        </div>
+         
+        <div class="col text-left">
             <span class="fs-14 fw-700">{{currentCheck.gender==1?'Datos del firmante':'Datos del endosante'}}</span>
             <div *ngIf="currentCheck.gender==2" class="input-field mt-2">
+              <div class="has-float-label mb-4 w-100"> 
               <input type="text" class="d-block w-100" placeholder="Razón Social" name="bussinessName-{{y}}"
                 [(ngModel)]="currentCheck.onwer.bussinessName" #bussinessName="ngModel">
-              <div
+                <span>Razón Social</span>
+                <div
                 *ngIf="!bussinessName.pristine && bussinessName.invalid || checksForm.submitted && bussinessName.errors"
                 class="invalid-feedback">
                 <div *ngIf="bussinessName.errors.required">Campo es requerido</div>
               </div>
+             </div>
             </div>
             <div *ngIf="currentCheck.gender==2" class="input-field">
+              <div class="has-float-label mb-4 w-100">
               <input type="text" class="d-block w-100" placeholder="Cuit" name="cuit-{{y}}"
                 [(ngModel)]="currentCheck.onwer.cuit" #cuit="ngModel" pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]">
-              <div *ngIf="!cuit.pristine && cuit.invalid || checksForm.submitted && cuit.errors"
+                <span>Cuit</span>
+                <div *ngIf="!cuit.pristine && cuit.invalid || checksForm.subCuitmitted && cuit.errors"
                 class="invalid-feedback">
                 <div *ngIf="cuit.errors.required">Campo es requerido</div>
                 <div *ngIf="cuit.errors.pattern">CUIT inválido</div>
               </div>
+             </div>
             </div>
             <div *ngIf="currentCheck.gender==1" class="input-field mt-2">
+              <div class="has-float-label mb-4 w-100">
                 <input type="text" class="d-block w-100" placeholder="Nombre y Apellido" name="fullName-{{y}}"
                   [(ngModel)]="currentCheck.onwer.fullName" #fullName="ngModel">
-                <div *ngIf="!fullName.pristine && fullName.invalid || checksForm.submitted && fullName.errors"
+                  <span>Nombre y Apellido</span>
+                  <div *ngIf="!fullName.pristine && fullName.invalid || checksForm.submitted && fullName.errors"
                   class="invalid-feedback">
                   <div *ngIf="fullName.errors.required">Campo es requerido</div>
                 </div>
+              </div>
             </div>
             <div *ngIf="currentCheck.gender==2" class="input-field">
+              <div class="has-float-label mb-4 w-100">
               <input type="text" class="d-block w-100" placeholder="Nombre y Apellido" name="fullName-{{y}}"
                 [(ngModel)]="currentCheck.onwer.fullName" #fullName="ngModel">
-              <div *ngIf="!fullName.pristine && fullName.invalid || checksForm.submitted && fullName.errors"
+                <span>Nombre y Apellido</span>
+                <div *ngIf="!fullName.pristine && fullName.invalid || checksForm.submitted && fullName.errors"
                 class="invalid-feedback">
                 <div *ngIf="fullName.errors.required">Campo es requerido</div>
               </div>
             </div>
+            </div>
             <div class="input-field">
+              <div class="has-float-label mb-4 w-100">
               <input type="text" class="d-block w-100" placeholder="DNI" name="documentNumber-{{y}}" mask="0*"
                 [(ngModel)]="currentCheck.onwer.documentNumber" #documentNumber="ngModel">
-              <div
+                <span>DNI</span>
+                <div
                 *ngIf="!documentNumber.pristine && documentNumber.invalid || checksForm.submitted && documentNumber.errors"
                 class="invalid-feedback">
                 <div *ngIf="documentNumber.errors.required">Campo es requerido</div>
               </div>
+             </div>
             </div>
             <div *ngIf="currentCheck.gender==1" class="input-field">
+              <div class="has-float-label mb-4 w-100">
                 <input type="text" class="d-block w-100" placeholder="Cuit" name="cuit-{{y}}"
                   [(ngModel)]="currentCheck.onwer.cuit" #cuit="ngModel" pattern="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]">
-                <div *ngIf="!cuit.pristine && cuit.invalid || checksForm.submitted && cuit.errors"
+                  <span>Cuit</span>
+                  <div *ngIf="!cuit.pristine && cuit.invalid || checksForm.submitted && cuit.errors"
                   class="invalid-feedback">
                   <div *ngIf="cuit.errors.required">Campo es requerido</div>
                   <div *ngIf="cuit.errors.pattern">CUIT inválido</div>
                 </div>
+              </div>
             </div>
             <div *ngIf="currentCheck.gender==1" class="input-field">
-                <input type="email" class="d-block w-100" placeholder="Correo electrónico" name="email-{{y}}"
+              <div class="has-float-label mb-4 w-100">
+               <input type="email" class="d-block w-100" placeholder="Correo electrónico" name="email-{{y}}"
                   [(ngModel)]="currentCheck.onwer.email" #email="ngModel" email="true">
-                <div *ngIf="!email.pristine && email.invalid || checksForm.submitted && email.errors"
+                  <span>Correo electrónico</span>
+                  <div *ngIf="!email.pristine && email.invalid || checksForm.submitted && email.errors"
                   class="invalid-feedback">
                   <div *ngIf="email.errors.required">Campo es requerido</div>
                   <div *ngIf="email.errors.email">correo inválido</div>
                 </div>
+              </div>
             </div>
             <div class="input-field">
+              <div class="has-float-label mb-4 w-100">
               <input type="text" class="d-block w-100" placeholder="Teléfono" name="phone-{{y}}" mask="0*"
                 [(ngModel)]="currentCheck.onwer.phone" #phone="ngModel">
-              <div *ngIf="!phone.pristine && phone.invalid || checksForm.submitted && phone.errors"
+                <span>Teléfono</span>
+                <div *ngIf="!phone.pristine && phone.invalid || checksForm.submitted && phone.errors"
                 class="invalid-feedback">
                 <div *ngIf="phone.errors.required">Campo es requerido</div>
                 <div *ngIf="phone.errors.pattern">Campo es numérico</div>
               </div>
+            </div>
             </div>
           </div>
         </div><!-- columnas -->

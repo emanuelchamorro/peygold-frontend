@@ -39,8 +39,13 @@
 
 .sidebar-sublist {
   span {
-    color: $p-dark-grey !important;
+    color: $p-dark-grey;
   }
+
+  
+}
+.sidebar-sublist > li > a > span:hover {
+  color: #3575BA;
 }
 
 .mnu-hide-panel-sidebar {
@@ -64,4 +69,8 @@
 a.sidebar-link > div > span.icon-configuracion-40 {
 
   margin-right: 6px;
+}
+
+a.sidebar-link:hover > div > span {
+  color: #3575BA;
 }
