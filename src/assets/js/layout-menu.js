@@ -9,7 +9,12 @@ $(function() {
     $("#secondary-nav").toggleClass("top-navbar-extended");
     $("#footer").toggleClass("top-navbar-extended");
   });
-  /* End Add Toggle menu */
+  /* Rotate Chevron right*/
+  
+  $(document).on('click', '.sidebar-link', function (){
+    $(this).find('.chevron-right').toggleClass("chevron-show-accordion");
+
+  })
 });
 
 

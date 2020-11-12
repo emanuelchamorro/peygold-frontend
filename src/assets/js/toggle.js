@@ -71,16 +71,10 @@ $(document).on("click", function (event) {
     $('.msg').html(msg + input + '</span>');
   });
  
-  /* Toggle  menu */
-  $(document).on('click', '.open-help', function () {
-    $('div[id="lightbox-1"]').css('opacity', '1');
-    $('div[id="lightbox-1"]').css('visibility', 'visible');
-    $('div[id="lightbox-1"]').css('z-index', '20');
 
-  });
 
-  /* Toggle help */
-  $(document).on('click', '.option-link', function () {
+   /* Toggle help */
+   $(document).on('click', '.option-link', function () {
     var id = $(this).attr('id');
     var idSplit = id.split('-');
     $('div[id="lightbox-1"]').css('opacity', '0');
@@ -100,7 +94,9 @@ $(document).on("click", function (event) {
   });
  
   $(document).on('click', '.back-arrow-help', function () {
-    
+    $(this).closest(".lightbox").css('opacity', '0');
+    $(this).closest(".lightbox").css('visibility', 'hidden');
+    $(this).closest(".lightbox").css('z-index', '0');
     $('div[id="lightbox-1"]').css('opacity', '1');
     $('div[id="lightbox-1"]').css('visibility', 'visible');
     $('div[id="lightbox-1"]').css('z-index', '20');
@@ -114,6 +110,18 @@ $(document).on("click", function (event) {
     $('div[class="lightbox"]').css('z-index', '0');
 
   });
+
+  $(document).on('click', '.lightbox__close2', function () {
+    $(this).closest(".lightbox").css('opacity', '0');
+    $(this).closest(".lightbox").css('visibility', 'hidden');
+    $(this).closest(".lightbox").css('z-index', '0');
+
+  });
+
+
+
+
+
   
   /*Loans btn options*/		
 
