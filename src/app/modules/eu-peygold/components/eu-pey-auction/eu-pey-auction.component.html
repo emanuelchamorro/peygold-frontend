@@ -210,7 +210,7 @@
                         <div *ngIf="discount.errors.required">Campo es requerido</div>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6 date-picker-auction">
                     <label class="input-group has-float-label w-100">
                             <input name="datepicker" placeholder="Duración*" class="d-flex w-100" ngbDatepicker #datepicker="ngbDatepicker"
                             [autoClose]="'inside'" (dateSelect)="onDateSelection($event)" [dayTemplate]="t" [minDate]="minDate" [maxDate]="maxDate"
