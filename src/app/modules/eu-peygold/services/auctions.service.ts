@@ -139,7 +139,7 @@ export class AuctionsService extends HttpService {
    }
 
    acceptAuction(auctionId:number){
-      return this.post(`/remates/aceptar`,{idRemate:auctionId}).toPromise();
+      return this.post(`/remates/AceptarRemate`,{idRemate:auctionId}).toPromise();
    }
 
 }
