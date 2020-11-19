@@ -55,18 +55,12 @@ export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
   private peygoldCreditsToAuction: Array<Auction>;
 
   constructor(
-    calendar: NgbCalendar,
+    private calendar: NgbCalendar,
     private spinnerService: NgxSpinnerService,
     private userService: UserService,
     private auctionService: AuctionsService) { 
       
       super();
-      let today = new Date();
-      let lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
-      this.minDate = calendar.getToday();
-      this.maxDate = calendar.getNext(calendar.getToday(), 'd', lastDayOfMonth.getDate());
-      this.fromDate = this.minDate;
-
     }
 
   ngOnInit() {
@@ -93,6 +87,10 @@ export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
   selectPeygoldCredit(peygoldcredit: Auction){
     this.auction = peygoldcredit;
     this.auction.transaction.createdAt = new Date();
+    let expirationDatePeygoldsCredit = this.auction.expirationDate;
+    this.minDate = this.calendar.getToday();
+    this.maxDate = new NgbDate(expirationDatePeygoldsCredit.getFullYear(),expirationDatePeygoldsCredit.getMonth()+1,expirationDatePeygoldsCredit.getDate());
+    this.fromDate = this.minDate;
   }
 
   continue(){
@@ -125,9 +123,7 @@ export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
   }
 
   onDateSelection(date: NgbDate) {
-    /*if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else*/ 
+ 
     if (this.fromDate && date && date.after(this.fromDate)) {
       this.toDate = date;
     }else if(this.fromDate && date && date.equals(this.fromDate)){  

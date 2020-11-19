@@ -75,33 +75,44 @@
 
                         <tr *ngFor="let auction of auctions.data" class="d-flex justify-content-between align-items-center">
                             <td class=""><span>
-                                     +' '+ 
                                 {{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
                             </span></td>
                             <td><span [innerHtml]="auction.discount+'%'"></span></td>
-                            <td class=""><span>Finaliza en {{auction.endsIn}} dias</span></td>
+                            <td class="">
+                                <span *ngIf="auction.endsIn>0">Finaliza en {{auction.endsIn}} dias</span>
+                                <span *ngIf="auction.endsIn<=0">Vencido</span>
+                            </td>
                             <td class=""><span [innerHtml]="auction.expirationDate | date:medium"></span></td>
-                            <td class=""><span [innerHtml]="auction.status.label"></span></td>
+                            <td class="">
+                                <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label"></span>
+                                <span *ngIf="auction.endsIn<=0" [innerHtml]="'Vencido'"></span>
+                            </td>
                             <td class=""><span >Celina Lopez</span></td>
                             <td>
                                 <div class="detallePopup">
                                     <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
                                     <div class="details slide-toggle-content">
-                                        <ul>
-                                            <li><a class="text-left" (click)="selectPeygoldCredit(auction)"> Editar remate</a>
+                                        <ul >
+                                            <li *ngIf="auction.endsIn>0 && auction.status.value == '2'">
+                                                <a class="text-left" (click)="selectPeygoldCredit(auction)">Editar remate</a>
+                                            </li>
+                                            <li>
+                                                <a class="text-left">Ver detalle</a>
+                                            </li>
                                         </ul>
-                                        <ul>
-                                            <li><button type="button" class="text-left" (click)="changeAuctionStatus(auction,1)">
+                                        <ul *ngIf="auction.endsIn>0 && auction.status.value != '3'">
+                                            <li *ngIf="auction.status.value == '2'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,1)">
                                                     <span class="Seguridad-icon icon-Activar"></span>Activar</button>
                                             </li>
-                                            <li><button type="button" class="text-left" (click)="changeAuctionStatus(auction,2)">
+                                            <li *ngIf="auction.status.value == '1'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,2)">
                                                     <span
                                                         class="Seguridad-icon icon-Desactivar"></span>Pausar</button>
                                             </li>
-                                            <li><button type="button" class="text-left" (click)="changeAuctionStatus(auction,3)">
+                                            <li *ngIf="auction.status.value == '1'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,3)">
                                                     <span
                                                         class="Seguridad-icon icon-Finalizar "></span>Finalizar</button>
                                             </li>
+
                                         </ul>
                                     </div>
                                 </div>

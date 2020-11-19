@@ -15,13 +15,13 @@ export class AuctionStatus extends SelectOption {
 
     switch (this.value) {
       case AuctionStatusEnum.Actived:
-        this.label = this.label ? this.label : 'Activa';
+        this.label = this.label ? this.label : 'Activo';
         break;
       case AuctionStatusEnum.Pused:
-        this.label = this.label ? this.label : 'Desactivada';
+        this.label = this.label ? this.label : 'Pausado';
         break;
       case AuctionStatusEnum.Finished:
-        this.label = this.label ? this.label : 'Finalizada';
+        this.label = this.label ? this.label : 'Finalizado';
         break;
     }
   }

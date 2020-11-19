@@ -43,7 +43,7 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
   public previousPage: number;
   public showPagination: boolean;
 
-  public status: number = 1;
+  public status: number = 0;
   public order: number = 0;
 
   //
@@ -54,15 +54,11 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
   toDate: NgbDate | null = null;
 
   constructor(
-    calendar: NgbCalendar,
+    private calendar: NgbCalendar,
     private spinnerService: NgxSpinnerService,
     private auctionService: AuctionsService) {
     super();
-    let today = new Date();
-    let lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
-    this.minDate = calendar.getToday();
-    this.maxDate = calendar.getNext(calendar.getToday(), 'd', lastDayOfMonth.getDate());
-    this.fromDate = this.minDate;
+
   }
 
   ngOnInit() {
@@ -103,7 +99,14 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
  * @param auction 
  */
   selectPeygoldCredit(auction: Auction) {
-    this.auction = auction;
+    this.auction = auction;    
+    let initDateAuction = new Date(this.auction.transaction.createdAt);
+    let expirationDatePeygoldsCredit = this.auction.expirationDate;
+
+    this.minDate = new NgbDate(initDateAuction.getFullYear(),initDateAuction.getMonth()+1,initDateAuction.getDate());
+    this.maxDate = new NgbDate(expirationDatePeygoldsCredit.getFullYear(),expirationDatePeygoldsCredit.getMonth()+1,expirationDatePeygoldsCredit.getDate());
+    this.fromDate = this.minDate;
+    this.toDate = new NgbDate(initDateAuction.getFullYear(),initDateAuction.getMonth()+1, initDateAuction.getDate() + this.auction.duration);
     this.step++;
     setTimeout(()=>{
       let inputDurationElem:HTMLInputElement = this.inputDuration.nativeElement;
@@ -139,6 +142,7 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
         console.log('resp',resp);
         this.step = 1
         this.auction = null;
+        this.loadPage(this.page);
       }
     ).catch(
       (error:any)=>{

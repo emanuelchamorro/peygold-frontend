@@ -36,7 +36,7 @@ export class AuctionsService extends HttpService {
     return this.put(`/remates/${auction.id}`,
       {
         remateId:auction.id,
-        status: 1,//parseInt(auction.status.value),
+        status: parseInt(auction.status.value),
         daysExpiration:auction.duration,
         discount: parseInt(auction.discount)
 
@@ -52,7 +52,9 @@ export class AuctionsService extends HttpService {
     return this.put(`/remates/${auction.id}`,
       {
         remateId:auction.id,
-        status: status
+        status: status,
+        daysExpiration:auction.duration,
+        discount: parseInt(auction.discount)
       }
     ).toPromise();
   }
@@ -90,7 +92,7 @@ export class AuctionsService extends HttpService {
 
    loadAuctionAvailable(amountOrder: number, discountOrder:number, word:string, page: number, perPage: number): Promise<PaginationResponse>{
     const paginator = new PaginationResponse(page, perPage);
-    return this.get(`/remates/search/${word}/${amountOrder}/${discountOrder}/${page}/${perPage}`).toPromise().then(
+    return this.post(`/remates/search/${word}/${page}/${perPage}`,{sortDiscount:discountOrder,sortAmount:amountOrder}).toPromise().then(
       (resp:any)=>{
         paginator.count = resp.recordCount;
         paginator.data = resp.rematesDTOs.map((item: any)=>{

@@ -38,21 +38,33 @@ export class Auction extends Model {
 
   }
 
+    /**
+   * Return expirations day of peygolds creditos
+   */
   get expirationDate():any{
     let date = new Date(this.year+'/'+this.month+'/'+'30');
     return date;
   }
 
+  /**
+   * Return expirations day of remate
+   */
   get auctionExpirationDate():any{
+
     const startDate = new Date(this.transaction.createdAt);
     const endDate = new Date();
     endDate.setDate(startDate.getDate() + this.duration);
     return endDate;
   }
 
+  /**
+   * Countdown
+   */
   get endsIn():any{
+
     const startDate = new Date();
     const endDate = this.auctionExpirationDate;
+    const end = endDate.getDate() - startDate.getDate();
     return endDate.getDate() - startDate.getDate();
   }
  

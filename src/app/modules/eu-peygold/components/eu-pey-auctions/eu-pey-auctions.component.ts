@@ -23,7 +23,7 @@ export class EuPeyAuctionsComponent extends BaseComponent implements OnInit {
   public showPagination: boolean;
 
   public amountOrder: number = 0;
-  public discountOrder: number = 0;
+  public discountOrder: number = -1;
   public word: string = '@';
   public filter:string;
 
@@ -120,7 +120,14 @@ export class EuPeyAuctionsComponent extends BaseComponent implements OnInit {
   */
   setAmountOrder(order: number) {
     this.word = '@';
-    this.amountOrder = order;
+    if(order== -1){
+      this.amountOrder = 0;
+      this.discountOrder = -1;
+    }else{
+      this.amountOrder = order;
+      this.discountOrder = -1;
+    }
+
     this.loadPage(1);
   }
 
@@ -131,7 +138,14 @@ export class EuPeyAuctionsComponent extends BaseComponent implements OnInit {
   */
   setDiscountOrder(order: number) {
     this.word = '@';
-    this.discountOrder = order;
+    if(order == -1){
+      this.amountOrder = 0;
+      this.discountOrder = -1;
+    }else{
+      this.discountOrder = order;
+      this.amountOrder = -1;
+    }
+
     this.loadPage(1);
   }
 
