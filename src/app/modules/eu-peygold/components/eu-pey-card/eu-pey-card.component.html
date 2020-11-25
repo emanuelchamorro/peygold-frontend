@@ -667,60 +667,70 @@
                 </label>
 
             </div>
-            <div class="form-group mb-4">
-                <label class="has-float-label mb-0 w-100">
+        <!--Fecha de Vencimiento-->
+            <label class="col-form-label-sm text-muted">Fecha de vencimiento*</label> 
+            <div class="form-row justify-content-between mb-3">
+                <div class="col-2">
                     <input type="text" name="monthExpiration" #monthExpiration="ngModel"
                         [(ngModel)]="cardToActive.monthExpiration"
                         [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && monthExpiration.errors}"
-                        placeholder="Mes de vencimiento*" class="w-100" minlength="1" maxlength="2" mask="0*"
+                        placeholder="mm" class="w-100" minlength="1" maxlength="2" mask="0*"
                         required />
-                    <span>Mes de vencimiento*</span>
-                    <div *ngIf="!monthExpiration.pristine && monthExpiration.invalid || activateCardForm.submitted && monthExpiration.errors"
-                        class="invalid-feedback">
-                        <div *ngIf="monthExpiration.errors.required">Campo es requerido</div>
-                        <div *ngIf="monthExpiration.errors.minlength || monthExpiration.errors.maxlength">Campo debe
-                            tener 1 a 2
-                            dígitos</div>
-
                     </div>
-                </label>
-            </div>
-            <div class="form-group mb-4">
-                <label class="has-float-label mb-0 w-100">
+                
+                 <div class="d-flex justify-content-center align-items-center">
+                   <span>/</span> 
+                 </div>
+
+                 <div class="col-2">    
                     <input type="text" name="yearExpiration" #yearExpiration="ngModel"
                         [(ngModel)]="cardToActive.yearExpiration"
                         [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && yearExpiration.errors}"
-                        placeholder="Año de vencimiento*" class="w-100" minlength="2" maxlength="2" mask="0*"
+                        placeholder="aa" class="w-100" minlength="2" maxlength="2" mask="0*"
                         required />
-                    <span>Año de vencimiento*</span>
-                    <div *ngIf="!yearExpiration.pristine && yearExpiration.invalid || activateCardForm.submitted && yearExpiration.errors"
-                        class="invalid-feedback">
-                        <div *ngIf="yearExpiration.errors.required">Campo es requerido</div>
-                        <div *ngIf="yearExpiration.errors.minlength || yearExpiration.errors.maxlength">Campo debe tener
-                            2
-                            dígitos</div>
-
-                    </div>
-                </label>
-
-            </div>
-            <div class="form-group mb-4">
-                <label class="has-float-label mb-0 w-100">
+                 </div>
+               
+           
+                <div class="col-7"> 
                     <input type="text" name="securityCode" #securityCode="ngModel"
                         [(ngModel)]="cardToActive.securityCode"
                         [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && securityCode.errors}"
                         placeholder="CVV*" class="w-100" minlength="3" maxlength="3" mask="0*" required />
-                    <span>CVV*</span>
+                 </div>
+                   
+            
+                 </div>
+              <!--Errores Fecha de Vencimiento-->
+                 <div class="d-flex align-items-center flex-column mb-3">
+
+                    <div *ngIf="!monthExpiration.pristine && monthExpiration.invalid || activateCardForm.submitted && monthExpiration.errors"
+                    class="invalid-feedback">
+                    <div *ngIf="monthExpiration.errors.required">Campo es requerido</div>
+                    <div *ngIf="monthExpiration.errors.minlength || monthExpiration.errors.maxlength">Campo debe
+                        tener 1 a 2
+                        dígitos</div>
+                    </div>
+
+                    <div *ngIf="!yearExpiration.pristine && yearExpiration.invalid || activateCardForm.submitted && yearExpiration.errors"
+                    class="invalid-feedback">
+                    <div *ngIf="yearExpiration.errors.required">Campo es requerido</div>
+                    <div *ngIf="yearExpiration.errors.minlength || yearExpiration.errors.maxlength">Campo debe tener
+                        2
+                        dígitos</div>
+
+                     </div> 
+
+
                     <div *ngIf="!securityCode.pristine && securityCode.invalid || activateCardForm.submitted && securityCode.errors"
-                        class="invalid-feedback">
-                        <div *ngIf="securityCode.errors.required">Campo es requerido</div>
-                        <div *ngIf="securityCode.errors.minlength || securityCode.errors.maxlength">Campo debe tener 3
-                            dígitos</div>
+                    class="invalid-feedback">
+                    <div *ngIf="securityCode.errors.required">Campo es requerido</div>
+                    <div *ngIf="securityCode.errors.minlength || securityCode.errors.maxlength">Campo debe tener 3
+                        dígitos</div>
 
                     </div>
-                </label>
 
-            </div>
+                 </div>
+
             <div class="form-group mb-4">
                 <label class="has-float-label mb-0 w-100">
                     <input type="text" name="pin" #pin="ngModel" [(ngModel)]="cardToActive.pin"
