@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Card } from 'src/app/models/card';
 import { InMemoryService } from '../../../../services';
 import { TransactionTypeEnum } from '../../../../enums';
+import { CardService } from '../../services/card.service';
 
 
 @Component({
@@ -38,6 +39,8 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
   private states: Array<State>;
   private cities: Array<City>;
 
+  public cardSelected: Card;
+
 
   private title: string;
   private message: string;
@@ -47,7 +50,8 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
   constructor(private authService: AuthService,
     private locationService: LocationService,
     private spinnerService: NgxSpinnerService,
-    private inMemoryService: InMemoryService) {
+    private inMemoryService: InMemoryService,
+    private cardService: CardService) {
     super();
   }
 
@@ -106,12 +110,60 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
    * send card request
    */
   sendCardRequest() {
+    let requestInfo;
+    if(this.activeView){
+      requestInfo =  {
+        street: this.user.address.street,
+        floor: this.user.address.floor,
+        homeNumber : this.user.address.houseNumber,
+        postalCode : this.user.address.zipCode,
+        creditCardType : 2,
+        city : this.user.address.city.value
+      }
+    }else{
+      requestInfo =  {
+        street: this.address.street,
+        floor: this.address.floor,
+        homeNumber : this.address.houseNumber,
+        postalCode : this.address.zipCode,
+        creditCardType : 2,
+        city : this.address.city.value
+      }
+    }
+    this.spinnerService.show();
+    this.cardService.requestPrepaidCard(requestInfo).then(
+      (resp)=>{
+       
+        console.log(resp);        
+        if(resp.code == 422){
+          this.spinnerService.hide();
+          this.confirmCardRequest = false;
+          const response = JSON.parse(resp.message);
+          console.log(resp);
+        }else{
+          this.authService.reloadUser().then( (user: User) =>{ 
+            this.user = this.authService.user();
+            this.spinnerService.hide();
+            this.title = "¡Tu tarjeta está en camino!";
+            this.message = `La solicitud ${resp.idRequestPrepaidCard} ha sido procesada exitosamente.<br>Recibirás tu tarjeta prepaga en los próximos días hábiles`;
+            this.showImageBottom = false;
+            this.buttonLabel = "Cerrar";
+            this.stepConfirmCardRequest++;
+            
+          })
 
-    this.title = "¡Tu tarjeta está en camino!";
-    this.message = "La solicitud 12345678 ha sido procesada exitosamente.<br>Recibirás tu tarjeta prepaga en los próximos días hábiles";
-    this.showImageBottom = false;
-    this.buttonLabel = "Cerrar";
-    this.stepConfirmCardRequest++;
+        }
+      }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        console.log(error);
+        this.setError('Ha ocurrido un error. No fué posible procesar su solicitud.');
+        
+      }
+    );
+
+
 
   }
   /**
@@ -119,11 +171,40 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
    */
 
   activateCardUser() {
-    this.title = "¡Tu tarjeta ha sido activada!";
-    this.message = "Podras hacer uso";
-    this.showImageBottom = false;
-    this.buttonLabel = "Cerrar";
-    this.stepactivateCard++;
+    this.spinnerService.show();
+    let requestInfo = {
+      CardNumber: this.cardToActive.number,
+      YearExpiration: this.cardToActive.yearExpiration,
+      MonthExpiration : this.cardToActive.monthExpiration,
+      Pin : this.cardToActive.pin,
+      SecurityCode : this.cardToActive.securityCode
+    }    
+    this.cardService.activateCard(requestInfo).then(
+      (resp:any)=>{
+        this.spinnerService.hide();
+        if(resp.code == 404){
+          console.log('resp.message',resp.message);
+          this.setInputError(resp.message);
+        }else{
+          this.authService.reloadUser().then( (user: User) =>{ 
+            this.user = this.authService.user();
+            this.title = "¡Tu tarjeta ha sido activada!";
+            this.message = "Podras hacer uso";
+            this.showImageBottom = false;
+            this.buttonLabel = "Cerrar";
+            this.stepactivateCard++;            
+          });
+        }
+
+      }
+    ).catch(
+      (error:any)=>{
+        this.spinnerService.hide();
+        this.setError('Ha ocurrido un error. No fué posible activar la tarjeta.');
+      }
+    );
+
+
   }
 
   /**
@@ -147,14 +228,31 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
  * suapend card
  */
   sendSuspendCard() {
-    this.title = "¡Tu tarjeta ha sido suspendida!";
-    this.message = "Podras hacer uso";
-    this.showImageBottom = false;
-    this.buttonLabel = "Cerrar";
-    this.stepCardSuspend++;
+    this.spinnerService.show();
+    this.cardService.suspendCard(this.user.currentCard.id).then(
+      (resp)=>{
+        this.spinnerService.hide();
+        console.log('resp',resp);
+        this.authService.reloadUser().then( (user: User) =>{ 
+          this.user = this.authService.user();
+          this.title = "¡Tu tarjeta ha sido suspendida!";
+          this.message = "Ya no podras hacer uso";
+          this.showImageBottom = false;
+          this.buttonLabel = "Cerrar";
+          this.stepCardSuspend++;          
+        })
+      }
+    ).catch(
+      (error)=>{
+        console.log('error',error);
+        this.spinnerService.hide();
+        this.setError('Ha ocurrido un error. No fué posible suspender la tarjeta.');
+      }
+    )
   }
+
   /**
- * suapend card
+ * send recharge card
  */
   sendRecharge() {
     console.log(this.transaction);
@@ -177,5 +275,10 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
            this.spinnerService.hide();
            this.setError("Ha ocurrido un error. No fué posible recargar tu billetera.");
        });*/
+  }
+
+
+  showDetail(card:Card){
+    this.cardSelected = card;
   }
 }

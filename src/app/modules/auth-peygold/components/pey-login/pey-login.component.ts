@@ -9,6 +9,7 @@ import {routes as scRoutes} from '../../../sc-peygold/routes';
 import {routes as euRoutes} from '../../../eu-peygold/routes';
 import {routes as authRoutes} from '../../routes';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-pey-login',
@@ -26,7 +27,8 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
   constructor(
     private authService: AuthService,
     protected router: Router,
-    private spinnerService:NgxSpinnerService
+    private spinnerService:NgxSpinnerService,
+    private notificationService: NotificationService
   ) {
     super();
   }
@@ -59,7 +61,10 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
         this.spinnerService.hide();
         localStorage.setItem("hsu",btoa(JSON.stringify(userAccount)));
         this.unbusy();
+        let claveBorrar = localStorage.getItem('auth');
+        console.log(`Subscripcion a actualizar ${claveBorrar}`)
         this.goToDashboard(user);
+        this.notificationService.updateSuscription(claveBorrar, user.email);
       }else{
         this.spinnerService.hide();
         this.authService.sendToken(this.user.email,0).then((resp)=>{

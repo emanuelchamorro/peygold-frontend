@@ -84,8 +84,8 @@
                             </td>
                             <td class="col-2 d-flex justify-content-center"><span [innerHtml]="auction.expirationDate | date:medium"></span></td>
                             <td class="col-1 d-flex justify-content-center">
-                                <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label"></span>
-                                <span *ngIf="auction.endsIn<=0" [innerHtml]="'Vencido'"></span>
+                                <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label" [ngClass]="{'text-success': auction.status.value==1, 'text-primary':auction.status.value==2, 'text-danger':auction.status.value==3}"></span>
+                                <span *ngIf="auction.endsIn<=0" [innerHtml]="'Vencido'" class="text-danger"></span>
                             </td>
                             <td class="col-2 d-flex justify-content-center"><span >Celina Lopez</span></td>
                             <td class="col-1 d-flex justify-content-end">
@@ -108,7 +108,7 @@
                                                     <span
                                                         class="Seguridad-icon icon-Desactivar"></span>Pausar</button>
                                             </li>
-                                            <li *ngIf="auction.status.value == '1'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,3)">
+                                            <li *ngIf="auction.status.value == '1' || auction.status.value == '2'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,3)">
                                                     <span
                                                         class="Seguridad-icon icon-Finalizar "></span>Finalizar</button>
                                             </li>

@@ -38,6 +38,9 @@ export const environment = {
     url: 'https://api.peygold.com/api',
     avatarUrl: 'https://api.peygold.com'
   },
+  api_notification: {
+    url: 'https://mensajeropush.herokuapp.com'
+  },
   localStorage: {
     user_var_name: 'pey_user',
     user_id_var_name: 'uid',

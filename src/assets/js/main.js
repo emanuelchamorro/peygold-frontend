@@ -14,9 +14,23 @@ function urlBase64ToUint8Array(base64String) {
     }
     return outputArray;
 }
-//https://mensajeropush.herokuapp.com/subscription
-//https://localhost:3000/subscription'
 
+//---------------------------------------------------------------------
+// mh: 19/11/20
+// URL a utilizar. Seteo de la const a utilizar
+//---------------------------------------------------------------------
+const urlLocal = 'http://localhost:3000';
+const urlRemota = 'https://mensajeropush.herokuapp.com';
+const url = urlRemota;
+
+//---------------------------------------------------------------------
+// mh: 17/11/20
+// Registrar el service worker si este se encuentra disponible en el 
+// navegador del usuario.
+// Si la registración del web worker es exitosa, se envia una subscripción
+// al servidor en una petición POST y se almacena en localStorage la clave
+// auth generada.
+//---------------------------------------------------------------------
 const subscription = async () => {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/assets/js/worker.js')
@@ -25,8 +39,7 @@ const subscription = async () => {
                 const register = registration;
                 register.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY) })
                     .then((subscription) => {  //subscription es el objeto que va a utilizar el servidor para comunicarse
-
-                        fetch('https://mensajeropush.herokuapp.com/subscription', {
+                        fetch(url + '/subscription', {
                             method: 'POST',
                             mode: 'cors',
                             body: JSON.stringify(subscription),
@@ -35,7 +48,13 @@ const subscription = async () => {
                             }
                         })
                             .then(() => {
-                                console.log('suscripto ok!');
+                                const laSuscrip = JSON.stringify(subscription);
+                                const quebrado = laSuscrip.split("auth");
+                                let elAuth = quebrado[1].substring(1);
+                                elAuth = elAuth.slice(0,-2);
+                                //guardar la subscripción en localStorage
+                                localStorage.setItem('auth', elAuth);
+                                console.log(`Suscripto ok!. El auth: ${elAuth} se guardó localmente.`);
                             })
                             .catch(err => {
                                 //alert(err)
@@ -48,14 +67,49 @@ const subscription = async () => {
     } else {
         console.log('Service workers are not supported.');
     }
-
 }
 subscription();
 
+
+
+//---------------------------------------------------------------------
+// mh: 17/11/20
+// Detectar cuando el usuario hace cambios en los permisos de recibir
+// notificaciones. SOLO en el caso de cambiar el permiso a denied se 
+// enviará al servidor un pedido de borrar la clave (auth) que estaba 
+// utilizando el usuario hasta ese momento.
+// Si el usuario vuelve a permitir las notificaciones push, se generará
+// una nueva clave.
+// mh: 18/11/20, se envia la peticion de borrar (el fetch) encubierto en
+// un put a la url ../borrar, para evitar problemas con los argumentos 
+// de este request desde el archivo 'main' del cliente y el request que
+// se envia directo via api request
+//---------------------------------------------------------------------
 if ('permissions' in navigator) {
     navigator.permissions.query({ name: 'notifications' }).then(function (notificationPerm) {
         notificationPerm.onchange = function () {
-            console.log("Parece que el usuario cambió los permisos. Nuevo permiso: " + notificationPerm.state);
+            console.log("El usuario cambió los permisos. Nuevo permiso: " + notificationPerm.state);
+            if (notificationPerm.state == 'denied') {
+                let claveBorrar = localStorage.getItem('auth');
+                const objJson = { "valor" : claveBorrar};
+                console.log('valor a borrar:', objJson.valor);
+
+                console.log(`Se enviará una petición de borrar la clave ${claveBorrar}`)
+                fetch(url + '/borrar', {
+                    method: 'PUT',
+                    mode: 'cors',
+                    body: JSON.stringify(objJson),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(() => {
+                        console.log('Se envió el pedido de borrar la subscripción ok!');
+                    })
+                    .catch(err => {
+                        console.log('Error con el borrado de la clave', err);
+                    })
+            }
         };
     });
 }

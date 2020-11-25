@@ -11,6 +11,8 @@ import { IvaCondition } from '../models/iva-condition';
 import { ServiceCategory } from '../models/service-category';
 import { VerifyStatus } from '../models/verify-status';
 import { Document } from '../models/document';
+import { Card } from '../models/card';
+import { Status } from '../models/status';
 
 @Injectable({
   providedIn: 'root'
@@ -214,6 +216,23 @@ export class UserService extends HttpService {
 
       user.phoneNumberConfirmedStatus = new VerifyStatus(true);
       user.identityVerified = new VerifyStatus(true);
+
+      user.prepaidCards = response.tarjetasPrepagas.map( (c:any) =>{
+          let card = new Card();
+          card.id = c.idTarjetaPrepaga;
+          card.creationDate = c.creationDate;
+          card.number = c.number;
+          card.status = new Status(String(c.status));
+          card.securityCode = c.securityCode;
+          card.amount = c.amount;
+          card.pin = c.pin;
+          card.yearExpiration = c.yearExpiration;
+          card.monthExpiration = c.monthExpiration;
+          card.user = new User();
+          card.user.id = c.id;
+          card.creditCardType = c.creditCardType;
+          return card;
+      })
 
       //qr image
       //user.qrImage = 'qr';

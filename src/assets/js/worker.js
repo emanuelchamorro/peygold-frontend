@@ -3,7 +3,6 @@
 self.addEventListener('push', e => {
     const data = e.data.json();
     console.log(data);
-    console.log('Cambio en el servidor firebase')
     self.registration.showNotification(data.title, {
         body: data.message,
         icon: '/images/marcador.png'

@@ -89,7 +89,8 @@ export class User extends Model {
   public isLoadAlldocuemnts:boolean;
   public cards: Array<Card>;
   public qrImage:string;
-
+  public prepaidCards: Array<Card>;
+  public postpayCards: Array<Card>;
 
   /**
    * Get the user complete Name
@@ -279,50 +280,18 @@ export class User extends Model {
    * 
    */
   get currentCard():Card{
-    const card =  new Card();
-    card.id = 1;
-    card.number = '3456 0987 7564 0009'
-    card.status = new Status('2','Activa');
-    card.dueDate = '01/2040'
-    card.amount = 5600;
-    card.pin = '4321'
-    return card;
-   //return null;
+
+    if(this.prepaidCards){
+      return this.prepaidCards[this.prepaidCards.length - 1];
+    }else{
+      return null;
+    }
   }
 
   //TODO:DUMMY GET TARJETAS PREPAY
-  get allCards():Array<Card>{
+  get allPrepaidCards():Array<Card>{
 
-    this.cards = new Array<Card>();
-    let card =  new Card();
-    card.id = 1;
-    card.number = '3456 0987 7564 0009'
-    card.status = new Status('3','Suspendida');
-    card.dueDate = '01/2040'
-    card.amount = 5600;
-    card.pin = '4321';
-
-    this.cards.push(card);
-
-    card =  new Card();
-    card.id = 1;
-    card.number = '3456 8888 7564 1234'
-    card.status = new Status('3','Suspendida');
-    card.dueDate = '01/2030'
-    card.amount = 4600;
-    card.pin = '5678';
-    this.cards.push(card);
-
-    card =  new Card();
-    card.id = 1;
-    card.number = '3456 0987 7564 1533'
-    card.status = new Status('3','Suspendida');
-    card.dueDate = '01/2028'
-    card.amount = 3600;
-    card.pin = '9876';
-    this.cards.push(card);
-
-    return this.cards;
+    return this.prepaidCards;
 
   }
 
