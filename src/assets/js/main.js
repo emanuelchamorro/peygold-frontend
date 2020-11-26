@@ -47,27 +47,33 @@ const subscription = async () => {
                                 'Content-Type': 'application/json'
                             }
                         })
-                            .then(() => {
+                            .then((response) => {
+                                console.log(response);
+                                //return response.text()
                                 const laSuscrip = JSON.stringify(subscription);
                                 const quebrado = laSuscrip.split("auth");
                                 let elAuth = quebrado[1].substring(1);
-                                elAuth = elAuth.slice(0,-2);
+                                elAuth = elAuth.slice(2, -3);
+                                console.log(`el auth: ${elAuth}`);
                                 //guardar la subscripción en localStorage
+                                localStorage.clear();
                                 localStorage.setItem('auth', elAuth);
                                 console.log(`Suscripto ok!. El auth: ${elAuth} se guardó localmente.`);
                             })
                             .catch(err => {
                                 //alert(err)
-                                console.log('error!', err);
+                                throw "Error en la llamada Ajax";
+                                //console.log('--------------->error!', err);
                             })
                     });
-            }, /*catch*/ function (error) {
+            }, function (error) {
                 console.log('Service worker registration failed:', error);
             });
     } else {
         console.log('Service workers are not supported.');
     }
 }
+
 subscription();
 
 
@@ -91,7 +97,7 @@ if ('permissions' in navigator) {
             console.log("El usuario cambió los permisos. Nuevo permiso: " + notificationPerm.state);
             if (notificationPerm.state == 'denied') {
                 let claveBorrar = localStorage.getItem('auth');
-                const objJson = { "valor" : claveBorrar};
+                const objJson = { "valor": claveBorrar };
                 console.log('valor a borrar:', objJson.valor);
 
                 console.log(`Se enviará una petición de borrar la clave ${claveBorrar}`)

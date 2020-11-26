@@ -19,7 +19,7 @@ import {ReplaySubject} from 'rxjs';
 export class NotificationService extends Http1Service {
 
   updateSuscription(auth:string, mail:string):Promise<any>{
-    return this.put('/',{auth:auth, mail:mail}).toPromise().then(
+    return this.put('',{auth:auth, mail:mail}).toPromise().then(
       (resp)=>{
         console.log('resp',resp);
         return resp;

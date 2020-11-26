@@ -110,7 +110,7 @@ export class TransactionsService extends HttpService {
           transaction.symbol = Constants.symbolsArray[item.idTransactionType - 1];
           transaction.status = new TransactionStatus(item.status);
 
-          switch (item.idOriginRecharge) { //1,3,6,7,8,9
+          switch (item.idOriginRecharge) { //1,3,6,7,8,9,10
             case (1): //Envio de pago
 
               if (user.email == item.emailSender) {
@@ -160,6 +160,16 @@ export class TransactionsService extends HttpService {
             case (9):// Ingreso con Transferencia
               transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
               transaction.description = "Ingresaste dinero";
+              break;
+            case (10): //Remates
+
+              if (user.email == item.emailSender) {
+                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
+                transaction.description = "Pagaste remate a " + item.receiver.fullName;
+              } else if (user.email == item.receiver.email) {
+                //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
+                transaction.description = item.fullNameSender + " acepto tu remate";
+              }
               break;
           }
 

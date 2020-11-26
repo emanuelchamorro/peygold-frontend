@@ -40,7 +40,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   public filter: string = null;
   public selectdFilterTransactionType: string;
 
-  protected filtersOriginRechargeDefault: Array<any> = [1, 3, 6, 7, 8, 9];
+  protected filtersOriginRechargeDefault: Array<any> = [1, 3, 6, 7, 8, 9, 10];
   protected filtersTransationStatusDefault: Array<any> = [1, 2, 3];
 
   protected filtersOriginRecharge: Array<any>;
@@ -143,7 +143,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
         case (5)://8,7,3,9
           this.filtersOriginRecharge.push(8, 7, 3, 9);
           break;
-        case (2)://remates
+        case (2):
           this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
           break;
         case (4)://creditos

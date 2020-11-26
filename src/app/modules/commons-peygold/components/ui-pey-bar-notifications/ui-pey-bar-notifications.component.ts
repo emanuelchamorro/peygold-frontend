@@ -22,7 +22,7 @@ export class UiPeyBarNotificationsComponent extends BaseComponent implements OnI
   ngOnInit() {
 
     this.notifications = this.notificationService.all(1, environment.paginator.per_page).slice(0,3);
-    this.thereAreNotifications = true;
+    this.thereAreNotifications = false;
   }
 
   displayNotifications():void{

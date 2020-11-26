@@ -146,9 +146,9 @@ export class InMemoryService extends BaseService {
 
     originTransactionTypes.push(new OriginTransactionType('6','Cobros'));
     originTransactionTypes.push(new OriginTransactionType('1','Envios de dinero'));
-    originTransactionTypes.push(new OriginTransactionType('10','Solicitudes recibidas'));
+    originTransactionTypes.push(new OriginTransactionType('2','Solicitudes recibidas'));
     originTransactionTypes.push(new OriginTransactionType('5','Ingreso de dinero')); //8,7,3,9
-    originTransactionTypes.push(new OriginTransactionType('2','Remates'));
+    originTransactionTypes.push(new OriginTransactionType('10','Remates'));
     originTransactionTypes.push(new OriginTransactionType('4','Créditos'));
 
 
