@@ -400,6 +400,7 @@ span.cuenta-destino {
 .activate-card-form-style {
 	span {
 		font-size: 14px;
+		font-weight: 600;
 	}
 	.form-check {
 		margin-top: 10px;
@@ -419,6 +420,12 @@ span.cuenta-destino {
 				font-size: 14px;
 			}
 		}
+	}
+
+	.form-row input::placeholder {
+	font-size: 13px;
+    color: #999;
+    font-style: italic;
 	}
 }
 table.tarjeta-actividad {
