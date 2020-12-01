@@ -282,7 +282,8 @@ export class User extends Model {
   get currentCard():Card{
 
     if(this.prepaidCards){
-      return this.prepaidCards[this.prepaidCards.length - 1];
+      //return this.prepaidCards[this.prepaidCards.length - 1];
+      return this.prepaidCards[0];
     }else{
       return null;
     }

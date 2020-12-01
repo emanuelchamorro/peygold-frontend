@@ -91,7 +91,7 @@ export class BaseComponent {
     this.fieldError = message;
 
     if (clean) {
-      setTimeout(() => this.fieldError = '', 1000);
+      setTimeout(() => this.fieldError = '', 5000);
     }
     return this;
   }

@@ -1,5 +1,5 @@
 /**
- * TransactionStatus enumerator
+ * OriginTransactionType enumerator
  */
 export enum OriginTransactionTypeEnum {
   pey1 = '1', //pago

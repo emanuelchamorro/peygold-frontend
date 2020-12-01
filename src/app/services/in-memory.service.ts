@@ -62,6 +62,17 @@ export class InMemoryService extends BaseService {
     return types;
   }
 
+
+  /**
+   * Get the list of transaction type
+   */
+  transactionTypeFiat(): Array<TransactionType> {
+    const types = new Array<TransactionType>(
+      new TransactionType(TransactionTypeEnum.Fiat, 'Pesos($)')
+    );
+    return types;
+  }
+
   /**
    * Returns the loan options to make a loan request.
    */

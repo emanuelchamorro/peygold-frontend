@@ -13,6 +13,7 @@ import { VerifyStatus } from '../models/verify-status';
 import { Document } from '../models/document';
 import { Card } from '../models/card';
 import { Status } from '../models/status';
+import { CardType } from '../models/card-type';
 
 @Injectable({
   providedIn: 'root'
@@ -230,7 +231,7 @@ export class UserService extends HttpService {
           card.monthExpiration = c.monthExpiration;
           card.user = new User();
           card.user.id = c.id;
-          card.creditCardType = c.creditCardType;
+          card.creditCardType = new CardType(c.creditCardType);
           return card;
       })
 

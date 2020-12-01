@@ -1,6 +1,7 @@
 import {Model} from './model';
 import {Status} from './status';
 import { User } from './user';
+import { CardType } from './card-type';
 
 
 
@@ -21,7 +22,7 @@ export class Card extends Model{
     public yearExpiration:number;
     public monthExpiration:number;
     public user:User;
-    public creditCardType:number;
+    public creditCardType:CardType;
 
 
 }

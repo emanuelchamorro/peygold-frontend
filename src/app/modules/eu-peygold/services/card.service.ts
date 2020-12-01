@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpService} from '../../../services/http.service';
 import { Address, User } from '../../../models';
 import { Card } from '../../../models/card';
+import { CardType } from '../../../models/card-type';
 
 
 @Injectable({
@@ -9,7 +10,10 @@ import { Card } from '../../../models/card';
 })
 export class CardService extends HttpService {
 
-
+/**
+ * request prepay card request
+ * @param requestInfo 
+ */
   requestPrepaidCard(requestInfo:any): Promise<any>{
    return this.post('/tarjetas/SolicitarTarjeta',requestInfo).toPromise().then(
       (resp)=>{
@@ -24,6 +28,10 @@ export class CardService extends HttpService {
     );
   }
 
+  /**
+   * activate card
+   * @param requestInfo 
+   */
   activateCard(requestInfo:any):Promise<any>{
 
     return this.post('/tarjetas/ActivarTarjeta',requestInfo).toPromise().then(
@@ -39,7 +47,10 @@ export class CardService extends HttpService {
     );
   }
 
-
+/**
+ * suspend card
+ * @param id 
+ */
   suspendCard(id:number): Promise<any>{
 
     return this.put('/tarjetas/SuspenderTarjeta',{idPrepaidCard:id}).toPromise().then(
@@ -55,6 +66,9 @@ export class CardService extends HttpService {
     );
   }
 
+  /**
+   * get all cards by user
+   */
   getCards():Promise<Array<Card>>{
     let cards = new Array<Card>();
    return this.get('/tarjetas/GetTarjetasByUser').toPromise().then(
@@ -63,7 +77,7 @@ export class CardService extends HttpService {
             let card = new Card();
             card.id = c.idTarjetaPrepaga;
             card.number = c.number;
-            card.creditCardType = c.cardType;
+            card.creditCardType = new CardType(c.cardType);
             card.securityCode = c.securityCode;
             card.amount = c.balance;
             card.pin = c.pin;
@@ -87,6 +101,38 @@ export class CardService extends HttpService {
       }
     );
 
+  }
+
+/**
+ * card recharge
+ * @param requestInfo 
+ */
+  cardRecharge(requestInfo:any):Promise<any>{
+    return this.post('/tarjetas/Transferir', requestInfo).toPromise().then(
+      (resp:any)=>{
+        return resp;
+      }
+    ).catch(
+      (error:any)=>{
+        return error;
+      }
+    )
+  }
+
+  /**
+   * update pin
+   * @param requestInfo 
+   */
+  updatePin(requestInfo:any):Promise<any>{
+    return this.put('/tarjetas/ModificarPin',requestInfo).toPromise().then(
+      (resp:any)=>{
+          return resp;
+      }
+    ).catch(
+      (error)=>{
+        return error;
+      }
+    );
   }
 
 }

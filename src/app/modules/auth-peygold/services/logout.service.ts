@@ -19,7 +19,6 @@ export class LogoutService implements CanActivate {
       var auth = localStorage.getItem('auth');
       localStorage.clear();
       localStorage.setItem('auth',auth);
-      localStorage.clear();
     }
     return true;
   }

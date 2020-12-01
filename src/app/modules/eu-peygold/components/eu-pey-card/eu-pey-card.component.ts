@@ -31,6 +31,8 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
   public stepactivateCard: number = 0;
   public stepPinUpdate: number = 0;
   public stepCardSuspend: number = 0;
+  public stepRechargeView: number = 0;
+  
 
   public transaction: Transaction;
   public transactionTypes: Array<TransactionType>;
@@ -46,6 +48,9 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
   private message: string;
   private showImageBottom: boolean;
   private buttonLabel: string;
+  public userAccount: any;
+  public repeatPasswordInput: string;
+  public pin:any;
 
   constructor(private authService: AuthService,
     private locationService: LocationService,
@@ -58,10 +63,11 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.sendTypeAddress = '0';
     this.spinnerService.show();
+    this.userAccount = localStorage.getItem("hsu") ? JSON.parse(atob(localStorage.getItem("hsu"))) : undefined;
     this.user = this.authService.user();
     this.transaction = new Transaction();
     this.transaction.type = new TransactionType(TransactionTypeEnum.Fiat);
-    this.transactionTypes = this.inMemoryService.transactionTypes(this.multipey);
+    this.transactionTypes = this.inMemoryService.transactionTypeFiat();
     if (this.multipey) {
       this.transaction.multiPey = [
         Transaction.createFromType(TransactionTypeEnum.Fiat),
@@ -181,6 +187,7 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
     }    
     this.cardService.activateCard(requestInfo).then(
       (resp:any)=>{
+        
         this.spinnerService.hide();
         if(resp.code == 404){
           console.log('resp.message',resp.message);
@@ -218,13 +225,35 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
  * update pin
  */
   sendUpdatePin() {
-    this.title = "¡Tu PIN ha sido actualizado!";
-    this.message = "Podras hacer uso";
-    this.showImageBottom = false;
-    this.buttonLabel = "Cerrar";
-    this.stepPinUpdate++;
+    this.spinnerService.show();
+    let requestInfo = {
+        pinNuevo: this.pin,
+        idTarjeta: this.user.currentCard.id
+    }
+
+    this.cardService.updatePin(requestInfo).then(
+      (resp:any)=>{
+        this.spinnerService.hide();
+        this.authService.reloadUser().then( (user: User) =>{ 
+          this.user = this.authService.user();
+          this.title = "¡Tu PIN ha sido actualizado!";
+          this.message = "Podras hacer uso";
+          this.showImageBottom = false;
+          this.buttonLabel = "Cerrar";
+          this.stepPinUpdate++;           
+        });
+      }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        this.setError('Ha ocurrido un error. No fué posible actualizar el pin.');
+      }
+    );
+
+
   }
-  /**
+
+/**
  * suapend card
  */
   sendSuspendCard() {
@@ -255,26 +284,34 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
  * send recharge card
  */
   sendRecharge() {
-    console.log(this.transaction);
-    //this.transaction = transaction;
-    /* this.transaction.originRecharge = new OriginTransactionType('8');
-     this.spinnerService.show();
-     this.transactionsService.createExternal(this.transaction).then(
+    this.spinnerService.show();
+    let requestInfo ={
+      idTarjeta:this.user.currentCard.id, 
+      amount: this.transaction.amount,
+      tipoTransaccion: this.transaction.type.value
+    }
+
+     this.cardService.cardRecharge(requestInfo).then(
        (resp)=>{
          console.log(resp);
-         if(resp.success){
-           this.spinnerService.hide();
-           this.transaction.paymentCode = this.getRandomInt(100000,200000);
-         }else{
-           this.spinnerService.hide();
-           this.setError("Ha ocurrido un error. No fué posible recargar tu billetera.");
-         }
+         this.spinnerService.hide();
+
+         this.authService.reloadUser().then( (user: User) =>{ 
+          this.user = this.authService.user();
+          this.title = "¡Listo!";
+          this.message = `Recargaste tu tarjeta. El importe fue descontado de tu Billetera Pesos.`;
+          this.showImageBottom = false;
+          this.buttonLabel = "Cerrar";
+          this.stepRechargeView++;      
+        })
+
+
        }).catch(
          (error)=>{
            console.log(error);
            this.spinnerService.hide();
-           this.setError("Ha ocurrido un error. No fué posible recargar tu billetera.");
-       });*/
+           this.setError("Ha ocurrido un error. No fué posible recargar tu tarjeta.");
+       });
   }
 
 

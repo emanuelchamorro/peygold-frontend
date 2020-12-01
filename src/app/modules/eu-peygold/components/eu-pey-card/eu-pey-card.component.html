@@ -1,5 +1,5 @@
 <ngx-spinner>
-        <p style="font-size: 20px; color: white">Procesando...</p>
+    <p style="font-size: 20px; color: white">Procesando...</p>
 </ngx-spinner>
 <!--VISTA CUENTA DE PEYGOLD NO VERIFICADA-->
 <div *ngIf="!user.isVerifiedAccount" class="white-container-wrapper bg-gradient">
@@ -431,7 +431,8 @@
                                 </svg>
                             </span>
                         </a>
-                        <a *ngIf="user.currentCard.status.value=='2'" (click)="activityView=false;rechargeView=true"
+                        <a *ngIf="user.currentCard.status.value=='2'"
+                            (click)="activityView=false;rechargeView=true;stepRechargeView=0"
                             class="prepaga-recargar d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-column text-left w-100">
                                 <span>Recargar tarjeta</span>
@@ -548,7 +549,8 @@
                                     Peygold</span>
                             </div>
                             <div class="col-sm-3">
-                                <button (click)="preSendCardRequest()" type="button" class="solid-blue-button" id="viewModal1">Solicitar
+                                <button (click)="preSendCardRequest()" type="button" class="solid-blue-button"
+                                    id="viewModal1">Solicitar
                                     tarjeta</button>
                             </div>
                         </a>
@@ -609,14 +611,14 @@
             </li>
             <li>
                 <span>Fecha de vencimiento</span>
-                <span [innerHtml]="cardSelected.monthExpiration+'/'+cardSelected.yearExpiration"></span> 
+                <span [innerHtml]="cardSelected.monthExpiration+'/'+cardSelected.yearExpiration"></span>
             </li>
             <li>
                 <span>Estado</span>
                 <span [innerHtml]="cardSelected.status.label"></span>
             </li>
         </ul>
-        <span>Últimas transacciones</span>
+     <!--   <span>Últimas transacciones</span>
         <ul class="list-detail mb-3 align-items-center">
             <li>
                 <span>Recargaste tu tarjeta</span>
@@ -633,7 +635,7 @@
                 </div>
             </li>
 
-        </ul>
+        </ul>-->
 
     </div>
 
@@ -643,9 +645,11 @@
 <!--MODAL ACTIVAR TARJETA-->
 <app-ui-pey-sidebar *ngIf="activateCard" (onClose)="activateCard=false;stepactivateCard=0" [closed]="!activateCard"
     title="Activar Tarjeta">
+    <div *ngIf="inputError" class="alert alert-danger alert-dismissible fade show" role="alert"
+        [innerHtml]="fieldError">
+    </div>
     <div *ngIf="stepactivateCard==0" class="activate-card-form-style pl-4 pr-4 pt-2">
-        <div *ngIf="inputError" class="alert alert-danger alert-dismissible fade show" role="alert" [innerHtml]="error">
-        </div>
+
         <span>Activa los datos para activar tu tarjeta</span>
         <form name="activateCardForm" #activateCardForm="ngForm"
             (ngSubmit)="activateCardForm.form.valid && activateCardUser()" class="mt-4" novalidate
@@ -667,69 +671,67 @@
                 </label>
 
             </div>
-        <!--Fecha de Vencimiento-->
-            <label class="col-form-label-sm text-muted">Fecha de vencimiento*</label> 
+            <!--Fecha de Vencimiento-->
+            <label class="col-form-label-sm text-muted">Fecha de vencimiento*</label>
             <div class="form-row justify-content-between mb-3">
                 <div class="col-2">
                     <input type="text" name="monthExpiration" #monthExpiration="ngModel"
                         [(ngModel)]="cardToActive.monthExpiration"
                         [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && monthExpiration.errors}"
-                        placeholder="mm" class="w-100" minlength="1" maxlength="2" mask="0*"
-                        required />
-                    </div>
-                
-                 <div class="d-flex justify-content-center align-items-center">
-                   <span>/</span> 
-                 </div>
+                        placeholder="mm" class="w-100" minlength="1" maxlength="2" mask="0*" required />
+                </div>
 
-                 <div class="col-2">    
+                <div class="d-flex justify-content-center align-items-center">
+                    <span>/</span>
+                </div>
+
+                <div class="col-2">
                     <input type="text" name="yearExpiration" #yearExpiration="ngModel"
                         [(ngModel)]="cardToActive.yearExpiration"
                         [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && yearExpiration.errors}"
-                        placeholder="aa" class="w-100" minlength="2" maxlength="2" mask="0*"
-                        required />
-                 </div>
-               
-           
-                <div class="col-7"> 
+                        placeholder="aa" class="w-100" minlength="2" maxlength="2" mask="0*" required />
+                </div>
+
+
+                <div class="col-7">
                     <input type="text" name="securityCode" #securityCode="ngModel"
                         [(ngModel)]="cardToActive.securityCode"
                         [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && securityCode.errors}"
                         placeholder="CVV*" class="w-100" minlength="3" maxlength="3" mask="0*" required />
-                 </div>
-                   
-            
-                 </div>
-              <!--Errores Fecha de Vencimiento-->
-                 <div class="d-flex align-items-center flex-column mb-3">
+                </div>
 
-                    <div *ngIf="!monthExpiration.pristine && monthExpiration.invalid || activateCardForm.submitted && monthExpiration.errors"
+
+            </div>
+            <!--Errores Fecha de Vencimiento-->
+            <div class="d-flex align-items-center flex-column mb-3">
+
+                <div *ngIf="!monthExpiration.pristine && monthExpiration.invalid || activateCardForm.submitted && monthExpiration.errors"
                     class="invalid-feedback">
                     <div *ngIf="monthExpiration.errors.required">Campo es requerido</div>
                     <div *ngIf="monthExpiration.errors.minlength || monthExpiration.errors.maxlength">Campo debe
                         tener 1 a 2
                         dígitos</div>
-                    </div>
+                </div>
 
-                    <div *ngIf="!yearExpiration.pristine && yearExpiration.invalid || activateCardForm.submitted && yearExpiration.errors"
+                <div *ngIf="!yearExpiration.pristine && yearExpiration.invalid || activateCardForm.submitted && yearExpiration.errors"
                     class="invalid-feedback">
                     <div *ngIf="yearExpiration.errors.required">Campo es requerido</div>
                     <div *ngIf="yearExpiration.errors.minlength || yearExpiration.errors.maxlength">Campo debe tener
                         2
                         dígitos</div>
 
-                     </div> 
+                </div>
 
 
-                    <div *ngIf="!securityCode.pristine && securityCode.invalid || activateCardForm.submitted && securityCode.errors"
+                <div *ngIf="!securityCode.pristine && securityCode.invalid || activateCardForm.submitted && securityCode.errors"
                     class="invalid-feedback">
                     <div *ngIf="securityCode.errors.required">Campo es requerido</div>
                     <div *ngIf="securityCode.errors.minlength || securityCode.errors.maxlength">Campo debe tener 3
                         dígitos</div>
 
-                    </div>
+                </div>
 
-                 </div>
+            </div>
 
             <div class="form-group mb-4">
                 <label class="has-float-label mb-0 w-100">
@@ -749,11 +751,14 @@
                 <label class="has-float-label mb-0 w-100">
                     <input type="text" name="repeatPin" #repeatPin="ngModel" [(ngModel)]="cardToActive.repeatPin"
                         [ngClass]="{'ng-dirty ng-invalid' : activateCardForm.submitted && repeatPin.errors}"
-                        placeholder="Confirma el nuevo PIN*" class="w-100" mask="0*" required />
+                        placeholder="Confirma el nuevo PIN*" class="w-100" minlength="4" maxlength="4" mask="0*"
+                        required />
                     <span>Confirm el nuevo PIN*</span>
                     <div *ngIf="!repeatPin.pristine && repeatPin.invalid || activateCardForm.submitted && repeatPin.errors"
                         class="invalid-feedback">
                         <div *ngIf="repeatPin.errors.required">Campo es requerido</div>
+                        <div *ngIf="repeatPin.errors.minlength || repeatPin.errors.maxlength">Campo debe tener 4 dígitos
+                        </div>
                         <div *ngIf="repeatPin.errors.mustMatch">
                             Los pin's no coinciden
                         </div>
@@ -825,23 +830,34 @@
     <div *ngIf="stepPinUpdate==1" class="modal-content pl-4 pr-4 pt-2">
         <div class="nuevoPIN-modal">
             <span>Ingresa tu contraseña de Peygold para continuar:</span>
-            <form name="passwordValidate" #passwordValidate="ngForm"
+            <form name="passwordValidate" #passwordValidate="ngForm" [mustMatch]="['password', 'repeatPassword']"
                 (ngSubmit)="passwordValidate.form.valid && validatePassword()" novalidate>
                 <div class="form-group mt-4">
                     <label class="has-float-label w-100">
-                        <input type="password" name="password" #password="ngModel" ngModel placeholder="Contraseña*"
-                            value="" class=" w-100" required />
-                        <span>Contraseña*</span>
-                        <div *ngIf="!password.pristine && password.invalid || passwordValidate.submitted && password.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="password.errors.required">Campo es requerido</div>
+                        <input type="password" class="w-100"
+                            [ngClass]="{'is-valid' : !repeatPassword.errors}" name="repeatPassword"
+                            [(ngModel)]="repeatPasswordInput" #repeatPassword="ngModel" required
+                            autocomplete="new-password" />
+                        <div class="validation-space">
+                            <div *ngIf="!repeatPassword.pristine && repeatPassword.invalid || passwordValidate.submitted && repeatPassword.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="repeatPassword.errors.required">Campo es requerido</div>
+                                <div *ngIf="repeatPassword.errors.mustMatch">
+                                    La contraseña es inválida
+                                </div>
+                            </div>
                         </div>
+                        <span>Contraseña*</span>
                     </label>
                 </div>
 
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="solid-blue-button">Continuar</button>
                 </div>
+                <label class="has-float-label w-100" style="visibility: hidden;">
+                    <input type="password" name="password" #password="ngModel" [(ngModel)]="userAccount.password"
+                    placeholder="Contraseña*" value="" class=" w-100" />
+                </label>
 
             </form>
 
@@ -853,7 +869,7 @@
             <span>Ingresa tu nuevo PIN para poder operar en cajeros automaticos:</span>
             <form name="updatePin" #updatePin="ngForm" (ngSubmit)="updatePin.form.valid && sendUpdatePin()" novalidate>
                 <div class="form-group mt-4">
-                    <input type="text" name="newPin" #newPin="ngModel" ngModel placeholder="0000" minlength="4"
+                    <input type="text" name="newPin" #newPin="ngModel" [(ngModel)]="pin" placeholder="0000" minlength="4"
                         maxlength="4" mask="0*" required>
                     <div *ngIf="!newPin.pristine && newPin.invalid || updatePin.submitted && newPin.errors"
                         class="invalid-feedback">
@@ -1071,7 +1087,8 @@
     </div>
 </div>
 <!--VISTA PARA RECARGA DE TARJETA-->
-<div *ngIf="user.isVerifiedAccount && user.currentCard && rechargeView" class="white-container-wrapper">
+<div *ngIf="user.isVerifiedAccount && user.currentCard && rechargeView && stepRechargeView==0"
+    class="white-container-wrapper">
 
 
     <div class="top">
@@ -1134,7 +1151,7 @@
                             </div>
                             <span class="cuenta-destino d-flex justify-content-center w-100">Cuenta destino: Tarjeta
                                 Prepaga
-                                Mastercard</span>
+                                {{user.currentCard.creditCardType.label}}</span>
                         </div>
                     </div>
                 </div>
@@ -1148,37 +1165,10 @@
         </div>
 
     </form>
-
-
-    <!--  <form>
-            <div class="wallet-conteiner mb-2">
-                <div class="col-xs-12 col-sm-9">
-                    <div class="ingresarDinero">
-    
-                        <div class="form-group">
-    
-                            <select class="form-control Export text-center">
-                                <option selected>Billetera pesos($8.566,22)</option>
-                                <option>Billetera Peygold($4.689)</option>
-                            </select>
-    
-                        </div>
-    
-                        <div class="form-group">
-                            <input type="text" class="InputAmount" placeholder="$0">
-                            <span class="cuenta-destino d-flex justify-content-center w-100">Cuenta destino: Tarjeta Prepaga
-                                Mastercard</span>
-                        </div>
-                    </div>
-                    <div class="row-buttons justify-content-end mt-3">
-                        <button type="button" (click)="activityView=false;rechargeView=false"
-                            class="white-button-border">Volver</button>
-                        <button type="submit" class="white-button-border">Cancelar</button>
-                        <button type="submit" class="solid-blue-button">Recargar tarjeta</button>
-                    </div>
-                </div>
-            </div>
-    
-        </form> -->
-
+</div>
+<div *ngIf="user.isVerifiedAccount && user.currentCard && rechargeView && stepRechargeView==1"
+    class="white-container-wrapper">
+    <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
+        (onContinue)="rechargeView=false;stepRechargeView=0" [buttonLabel]="buttonLabel">
+    </app-ui-pey-message-success>
 </div>

@@ -64,7 +64,9 @@ export class PeyLoginComponent extends BaseComponent implements OnInit {
         let claveBorrar = localStorage.getItem('auth');
         console.log(`Subscripcion a actualizar ${claveBorrar}`)
         this.goToDashboard(user);
-        this.notificationService.updateSuscription(claveBorrar, user.email);
+        if(claveBorrar){
+          this.notificationService.updateSuscription(claveBorrar, user.email);
+        }
       }else{
         this.spinnerService.hide();
         this.authService.sendToken(this.user.email,0).then((resp)=>{
