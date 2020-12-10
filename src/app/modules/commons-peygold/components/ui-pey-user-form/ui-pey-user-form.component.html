@@ -4,7 +4,7 @@
 <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert" [innerHtml]="error"></div>
 <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert" [innerHtml]="success"></div>
 
-<form name="form" (ngSubmit)="save()" #storeUser="ngForm" novalidate>
+<form *ngIf="editableUser" name="form" (ngSubmit)="save()" #storeUser="ngForm" novalidate>
   <div class="grey-box user-box w-100">
     <!---side menu--->
     <div class="user-column d-flex flex-column p-4">

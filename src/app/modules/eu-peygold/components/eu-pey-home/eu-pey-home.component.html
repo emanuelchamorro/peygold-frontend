@@ -173,7 +173,7 @@
                 <img *ngIf="transaction.iconImg" class="circle" [src]="transaction.iconImg">
                 <i *ngIf="!transaction.iconImg" class="circle">{{transaction.sender.initials}}</i>{{transaction.description}}
               </td>
-              <td class="col-2"><span class="text-secondary status">{{transaction.status.label}}</span></td>
+              <td class="col-2"><span class="text-secondary status" [ngClass]="{'text-success': transaction.status.value==2, 'text-danger':transaction.status.value==3}">{{transaction.status.label}}</span></td>
               <td class="col-4 d-flex flex-row justify-content-end align-items-center">
                 <div class="d-flex flex-column mr-3">
                   <span class="fs-16 text-secondary text-right">{{transaction.sign}} {{transaction.symbol}}
@@ -289,7 +289,7 @@
       Estas pagando la solicitud a {{detailedTransaction.receiver.completeName}}
     </div>
     <div class="d-flex justify-content-center">
-      <button (click)="detailedTransaction = null; modal='detail'" class="solid-blue-button ">Pagar</button>
+      <button (click)="upadateRequest('2'); modal='detail'" class="solid-blue-button ">Pagar</button>
     </div>
   </div>
   <!-- Rechazar -->
@@ -317,7 +317,7 @@
       Estas rechazando la solicitud a {{detailedTransaction.receiver.completeName}}
     </div>
     <div class="d-flex justify-content-center">
-      <button (click)="detailedTransaction = null; modal='detail'" class="solid-blue-button ">Rechazar</button>
+      <button (click)="upadateRequest('3'); modal='detail'" class="solid-blue-button ">Rechazar</button>
     </div>
   </div>
 

@@ -3,7 +3,7 @@
 self.addEventListener('push', e => {
     const data = e.data.json();
     console.log(data);
-    var element = self.document.getElementById('iconNoti')
+    //var element = self.document.getElementById('iconNoti')
     self.registration.showNotification(data.title, {
         body: data.message,
         icon: '/images/marcador.png'

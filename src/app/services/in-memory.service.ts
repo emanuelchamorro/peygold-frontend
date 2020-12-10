@@ -15,6 +15,69 @@ import { OriginTransactionType } from '../models/origin-transaction-type';
 })
 export class InMemoryService extends BaseService {
 
+  private monthOptions = [
+    {
+      label:"Enero",
+      value:"1",
+      isSelected:false
+    },
+    {
+      label:"Febrero",
+      value:"2",
+      isSelected:false
+    },
+    {
+      label:"Marzo",
+      value:"3",
+      isSelected:false
+    },
+    {
+      label:"Abril",
+      value:"4",
+      isSelected:false
+    },
+    {
+      label:"Mayo",
+      value:"5",
+      isSelected:false
+    },
+    {
+      label:"Junio",
+      value:"6",
+      isSelected:false
+    },
+    {
+      label:"Julio",
+      value:"7",
+      isSelected:false
+    },
+    {
+      label:"Agosto",
+      value:"8",
+      isSelected:false
+    },
+    {
+      label:"Septiembre",
+      value:"9",
+      isSelected:false
+    },
+    {
+      label:"Octubre",
+      value:"10",
+      isSelected:false
+    },
+    {
+      label:"Noviembre",
+      value:"11",
+      isSelected:false
+    },
+    {
+      label:"Diciembre",
+      value:"12",
+      isSelected:false
+    }
+  ]
+
    /**
    * Get the list of document models
    */
@@ -161,6 +224,7 @@ export class InMemoryService extends BaseService {
     originTransactionTypes.push(new OriginTransactionType('5','Ingreso de dinero')); //8,7,3,9
     originTransactionTypes.push(new OriginTransactionType('10','Remates'));
     originTransactionTypes.push(new OriginTransactionType('4','Créditos'));
+    originTransactionTypes.push(new OriginTransactionType('11','Recargas de tarjeta'));
 
 
     return originTransactionTypes
@@ -180,6 +244,24 @@ export class InMemoryService extends BaseService {
 
     return transactionStatus
 
+  }
+
+  get years():Array<number>{
+    const currentDate = new Date();
+    let maxYear = currentDate.getFullYear();
+    const minDate = maxYear - 6;
+    maxYear +=5;
+    let yearList = new Array<number>();
+    while(maxYear > minDate){
+      yearList.push(maxYear);
+      maxYear -= 1; 
+    }
+
+    return yearList;
+  }
+
+  get months():Array<any>{
+    return this.monthOptions;
   }
 
 }

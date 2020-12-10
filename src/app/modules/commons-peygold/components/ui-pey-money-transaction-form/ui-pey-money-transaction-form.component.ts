@@ -78,7 +78,7 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
    */
   public emitTransaction() {
     console.log('transac', this.transaction);
-    if ((this.type === 'request' && this.transaction.isValidToRequestMoney) || this.transaction.isValidToSendMoney) {
+    if ( this.transaction.sender && ((this.type === 'request' && this.transaction.isValidToRequestMoney) || this.transaction.isValidToSendMoney)) {
       this.continue.emit(this.transaction);
     }
   }
