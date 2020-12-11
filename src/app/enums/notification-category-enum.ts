@@ -7,5 +7,6 @@ export enum NotificationCategoryEnum {
   tarjeta = '3', //Cuestiones de tarjeterio
   creditos = '4', //El tema de los creditos
   remates = '5', //El tema de los remates
+  ingreso = '6', //El tema de los remates
 
 }

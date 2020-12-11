@@ -4,7 +4,7 @@
         <img src="/assets/images/notification-bell.svg" class="topbar-notis" alt="">
     </button>
 </li>
-<div class="notificaciones-tooltip" [ngClass]="{'active': display}">
+<div *ngIf="notifications && notifications.data" class="notificaciones-tooltip" [ngClass]="{'active': display}">
     <span class="p-3">Notificaciones</span>
     <ul>
         <li *ngFor="let notification of notifications.data">
