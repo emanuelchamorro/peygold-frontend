@@ -92,4 +92,8 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
     this.emitUser(user);
 
   }
+
+  validateImg(event, user:User){
+    user.avatarURL = 'https://api.peygold.com/images/user.png';
+  }
 }

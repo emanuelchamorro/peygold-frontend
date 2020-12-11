@@ -3,19 +3,7 @@
 </ngx-spinner>
 <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
 <h2><span class="icon-Iconos-13 fs-22"></span>Remates: <span>Rematar mis créditos</span></h2>
-<div *ngIf="peygoldCreditsToAuction && peygoldCreditsToAuction.length==0 && step==1">
-    <div class="content-center">
-        <div class="grey-box d-flex flex-column w-100">
-            <div class="sin-remates d-flex justify-content-center align-items-center flex-column p-5">
-                <img class="d-flex mb-3" src="/assets/images/new-icons/remate.svg" height="100" width="100">
-                <h2 class="text-dark">No tienes saldo suficiente para iniciar un remate</h2>
-                <span>Recibe o solicita P$C para poder comenzar un remate</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="peygoldCreditsToAuction && peygoldCreditsToAuction.length>0 && step==1">
+<div *ngIf="peygoldCreditsToAuction && peygoldCreditsToAuction.data && step==1">
     <p class="opening-text">Te mostraremos tus Peygolds Créditos disponibles según su vencimiento,
         selecciona el monto que deseas rematar
     </p>
@@ -28,7 +16,7 @@
                         Filtrar/Ordenar
                     </button>
                 </div>
-                <div class="right">
+                <div class="right" style="visibility: hidden;">
                     <form action="?" name="buscarFiltro">
                         <input type="text" class="input-buscar" name="buscar" placeholder="Buscar" />
                     </form>
@@ -41,15 +29,12 @@
                     <form class="form-inline">
                         <div class="input-group">
                             <div class="boxSelect">
-                                <a class="btn-dropDown stateDrop">Importe<i class="fa fa-chevron-right"></i></a>
+                                <a class="btn-dropDown stateDrop"><span>Importe</span><i class="fa fa-chevron-right"></i></a>
                                 <div class="downFecha stateDown">
                                     <ul>
-                                        <li>
-                                            <a href="#" class="optionDate">Mayor primero</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="optionDate">Menor primero</a>
-                                        </li>
+                                            <li (click)="setOrder(0)" class="optionDate">Importe</li>
+                                            <li (click)="setOrder(1)" class="optionDate">Mayor primero</li>
+                                            <li (click)="setOrder(0)" class="optionDate">Menor primero</li>
 
                                     </ul>
                                 </div>
@@ -58,29 +43,31 @@
                         <div class="input-group">
                             <div>
                                 <div class="boxSelect">
-                                    <a class="btn-dropDown stateDrop">Fecha <i class="fa fa-chevron-right"></i></a>
+                                    <a class="btn-dropDown stateDrop"><span>Año</span> <i class="fa fa-chevron-right"></i></a>
                                     <div class="downFecha stateDown">
                                         <ul>
-                                            <li><a href="#" class="optionDate">Hoy</a></li>
-                                            <li><a href="#" class="optionDate">Ayer</a></li>
-                                            <li>
-                                                <a href="#" class="optionDate">Mes Pasado</a>
-                                            </li>
-                                            <div class="dropdown-divider"></div>
-                                            <li>
-                                                <a href="#" class="btn">Desde 05/08/2019</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="btn">Desde 05/08/2019</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="btn btn-sm">Aceptar</a>
-                                            </li>
+                                            <li (click)="setYear(0)" class="optionDate">Año</li>
+                                            <li *ngFor="let year of inMemoryService.years" (click)="setYear(year)" class="optionDate">{{year}}</li>
+
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="input-group">
+                                <div>
+                                    <div class="boxSelect">
+                                        <a class="btn-dropDown stateDrop"><span>Mes</span> <i class="fa fa-chevron-right"></i></a>
+                                        <div class="downFecha stateDown">
+                                            <ul>
+                                                <li (click)="setMonth('0')" class="optionDate">Mes</li>
+                                                <li *ngFor="let month of inMemoryService.months" (click)="setMonth(month.value)" class="optionDate">{{month.label}}</li>
+    
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
                     </form>
                 </div>
 
@@ -94,7 +81,7 @@
                         </tr>
                     </thead>
                     <tbody class="list">
-                        <tr *ngFor="let peygoldcredit of peygoldCreditsToAuction">
+                        <tr *ngFor="let peygoldcredit of peygoldCreditsToAuction.data">
                             <td [innerHtml]="peygoldcredit.year"></td>
                             <td [innerHtml]="peygoldcredit.month"></td>
                             <td [innerHtml]="">
@@ -111,21 +98,15 @@
                         </tr>
                     </tbody>
                 </table>
+                <div *ngIf="!showPagination" class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
+                        <img class="d-flex mb-3" src="/assets/images/new-icons/remate.svg" height="100" width="100">
+                        <h2 class="text-dark">No tienes saldo suficiente para iniciar un remate</h2>
+                        <span>Recibe o solicita P$C para poder comenzar un remate</span>
+                </div>
             </div>
-
-            <div class="pagination-container">
-                <nav>
-                    <ul class="pagination">
-                        <!--	Here the JS Function Will Add the Rows -->
-                        <li><a href="#" class="active"><span>1</span></a></li>
-                        <li><a href="#"><span>2</span></a></li>
-                        <li><a href="#"><span>3</span></a></li>
-                        <li><a href="#"><span>4</span></a></li>
-                        <li><a href="#"><span>5</span></a></li>
-                        <li><a href="#">Siguiente &gt;</a></li>
-                    </ul>
-                </nav>
-            </div>
+            <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+            (pageChange)="loadPage($event)">
+            </ngb-pagination>
             <div class="d-flex justify-content-end w-100">
                 <button class="solid-blue-button" (click)="continue()">Iniciar un remate</button>
             </div>

@@ -4,6 +4,7 @@ import {Balance, Transaction, TransactionType} from '../../../models';
 import {map} from 'rxjs/operators';
 import { Auction } from '../../../models/auction';
 import { TransactionTypeEnum } from '../../../enums';
+import { PaginationResponse } from '../../commons-peygold/entities/pagination-response';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class UserService extends HttpService {
    * @param page 
    * @param perPage 
    */
-  searchPeygoldsCredits(page: number, perPage: number): Promise<Array<Auction>>{
+  loadPeygoldsCredits(page: number, perPage: number): Promise<Array<Auction>>{
 
    return this.get('/peygoldsummaries/GetCreditosDisponiblesByUser')
     .pipe(map((peygoldsCredits: Array<any>)=> peygoldsCredits.map((item:any)=>{
@@ -52,7 +53,47 @@ export class UserService extends HttpService {
 
   }
 
+   /**
+   * search summary peyglods credits by month and year with filters
+   * @param page 
+   * @param perPage 
+   */
+  searchPeygoldsCredits(year: number, month:number, sortAmount:number, page: number, perPage: number): Promise<PaginationResponse>{
+    const paginator = new PaginationResponse(page, perPage);
+    return this.post(`/peygoldsummaries/search/${page}/${perPage}`,{year,month,sortAmount}).toPromise().then(
+      (resp:any)=>{
+        paginator.count = resp.recordCount;
+        paginator.data = resp.creditosDTOs.map((item:any)=>{
+          const auction = new Auction();
+          auction.transaction = new Transaction();
+          auction.transaction.amount= item.totalAmount;
+          auction.transaction.amountToAuction = item.totalAmount; // monto maximo a subastar
+          auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
+          auction.year = item.year;
+          auction.month = item.month;
 
+          return auction;
+        });
+        return paginator;
+      }
+    ).catch(
+      (resp:any)=>{
+        return paginator;
+      }
+    );   
+ 
+   }
+
+
+  /* const auction = new Auction();
+   auction.transaction = new Transaction();
+   auction.transaction.amount= item.totalAmount;
+   auction.transaction.amountToAuction = item.totalAmount; // monto maximo a subastar
+   auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
+   auction.year = item.year;
+   auction.month = item.month;
+
+   return auction;*/
 
 
 }

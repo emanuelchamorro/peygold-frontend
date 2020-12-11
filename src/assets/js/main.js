@@ -32,7 +32,11 @@ const url = urlRemota;
 // auth generada.
 //---------------------------------------------------------------------
 const subscription = async () => {
+
     if ('serviceWorker' in navigator) {
+       /* if (!('PushManager' in window)) {
+            throw new Error('No Push API Support!')
+          }*/
         navigator.serviceWorker.register('/assets/js/worker.js')
             .then(function (registration) {
                 console.log('Service worker registration succeeded:', registration);
@@ -72,6 +76,7 @@ const subscription = async () => {
         console.log('Service workers are not supported.');
     }
 }
+
 
 subscription();
 

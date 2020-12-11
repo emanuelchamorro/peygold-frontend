@@ -68,6 +68,7 @@ export class RequestTransactionsService extends HttpService {
    * @return Promise
    */
   create(transaction: Transaction) {
+    debugger;
     return this.post('/requesttransactions', {
       Ammount: transaction.amount,
       IdUserSender: transaction.sender.id,
@@ -82,7 +83,7 @@ export class RequestTransactionsService extends HttpService {
    * @return Promise
    */
   update(transaction: Transaction) {
-    return this.put(`/requesttransactions/${transaction.id}`, {
+    return this.put(`/requesttransactions`, {
       RequestTransactionId: transaction.id,
       ProcessedStatus: parseInt(transaction.status.value),
       ProcessedComments: transaction.processedComments

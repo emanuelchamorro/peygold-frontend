@@ -3,9 +3,11 @@ import { UserService } from '../../services/user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from '../base.component';
 import { Auction } from '../../../../models/auction';
-import {NgbDate, NgbCalendar, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
 import { AuctionsService } from '../../services/auctions.service';
+import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
+import { InMemoryService } from '../../../../services/in-memory.service';
 
 @Component({
   selector: 'app-eu-pey-auction',
@@ -30,20 +32,20 @@ import { AuctionsService } from '../../services/auctions.service';
     }
   `]
 })
-export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
+export class EuPeyAuctionComponent extends BaseComponent implements OnInit {
 
 
-  @ViewChild('datepicker',{static:false, read: ElementRef }) private inputDuration: ElementRef;
+  @ViewChild('datepicker', { static: false, read: ElementRef }) private inputDuration: ElementRef;
 
-  public auction:Auction;
-  public step: number=1;
+  public auction: Auction;
+  public step: number = 1;
 
-  private title:string;
-  private message:string;
-  private showImageBottom:boolean;
-  private sendType:number;
+  private title: string;
+  private message: string;
+  private showImageBottom: boolean;
+  private sendType: number;
   private routeTo: string;
-  private buttonLabel:string;
+  private buttonLabel: string;
 
   //
   hoveredDate: NgbDate | null = null;
@@ -52,30 +54,55 @@ export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate | null = null;
 
-  private peygoldCreditsToAuction: Array<Auction>;
+  private peygoldCreditsToAuction: PaginationResponse;
+
+  public totalItems: number;
+  public page: number;
+  public previousPage: number;
+  public showPagination: boolean;
+
+  public year: number = 0;
+  public month: number = 0;
+  public sortAmount: number = 0;
 
   constructor(
     private calendar: NgbCalendar,
     private spinnerService: NgxSpinnerService,
     private userService: UserService,
-    private auctionService: AuctionsService) { 
-      
-      super();
-    }
+    private auctionService: AuctionsService,
+    private inMemoryService: InMemoryService) {
+
+    super();
+  }
 
   ngOnInit() {
 
-   this.spinnerService.show();
-   this.userService.searchPeygoldsCredits(1, environment.paginator.per_page).then(
-     (response: Array<Auction>)=>{
-      this.spinnerService.hide();
-      this.peygoldCreditsToAuction = response;
-     }
-   ).catch(
-     (error:any)=>{
-      this.spinnerService.hide();
-      this.setError('Ha ocurrido un error. No es posible visualizar el resumen de peygolds creditos.');
-     });
+    this.spinnerService.show();
+    this.userService.searchPeygoldsCredits(this.year, this.month, this.sortAmount, 1, environment.paginator.per_page).then(
+      (response: PaginationResponse) => {
+        this.peygoldCreditsToAuction = response;
+
+        if (this.peygoldCreditsToAuction.data.length > 0) {
+          this.page = response.page;
+          this.previousPage = 1;
+          this.totalItems = response.count;
+          this.showPagination = true;
+        } else {
+          this.page = 1;
+          this.previousPage = 1;
+          this.totalItems = 0;
+          this.showPagination = false;
+        }
+        this.spinnerService.hide();
+      }
+    ).catch(
+      (error: any) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+      });
 
 
   }
@@ -84,29 +111,29 @@ export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
    * select peygold credit to auction
    * @param peygoldcredit 
    */
-  selectPeygoldCredit(peygoldcredit: Auction){
+  selectPeygoldCredit(peygoldcredit: Auction) {
     this.auction = peygoldcredit;
     this.auction.transaction.createdAt = new Date();
     let expirationDatePeygoldsCredit = this.auction.expirationDate;
     this.minDate = this.calendar.getToday();
-    this.maxDate = new NgbDate(expirationDatePeygoldsCredit.getFullYear(),expirationDatePeygoldsCredit.getMonth()+1,expirationDatePeygoldsCredit.getDate());
+    this.maxDate = new NgbDate(expirationDatePeygoldsCredit.getFullYear(), expirationDatePeygoldsCredit.getMonth() + 1, expirationDatePeygoldsCredit.getDate());
     this.fromDate = this.minDate;
   }
 
-  continue(){
-    if(this.auction){
+  continue() {
+    if (this.auction) {
       this.step++;
-    }else{
+    } else {
       this.setError('Seleccione un peygold crédito.');
-    }    
+    }
   }
 
-  saveAuction(){
+  saveAuction() {
     this.spinnerService.show();
     this.auctionService.createAuction(this.auction).then(
-      (resp:any)=>{
+      (resp: any) => {
         this.spinnerService.hide();
-        console.log('resp',resp);
+        console.log('resp', resp);
         this.title = "¡Remataste peygolds créditos!";
         this.message = "Colocaste tus peygolds créditos exitosamente";
         this.showImageBottom = false;
@@ -115,25 +142,25 @@ export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
         this.step++;
       }
     ).catch(
-      (error:any)=>{
+      (error: any) => {
         this.spinnerService.hide();
-        console.log('resp',error);
+        console.log('resp', error);
       }
     )
   }
 
   onDateSelection(date: NgbDate) {
- 
+
     if (this.fromDate && date && date.after(this.fromDate)) {
       this.toDate = date;
-    }else if(this.fromDate && date && date.equals(this.fromDate)){  
+    } else if (this.fromDate && date && date.equals(this.fromDate)) {
       this.toDate = this.fromDate;
     } else {
       this.toDate = null;
       //this.fromDate = date;
     }
-    let inputDurationElem:HTMLInputElement = this.inputDuration.nativeElement;
-    const startDay =  this.fromDate.day;
+    let inputDurationElem: HTMLInputElement = this.inputDuration.nativeElement;
+    const startDay = this.fromDate.day;
     const endDay = this.toDate.day;
     this.auction.duration = endDay - startDay;
     inputDurationElem.value = String(endDay - startDay);
@@ -150,6 +177,68 @@ export class EuPeyAuctionComponent  extends BaseComponent implements OnInit {
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
-  
+
+
+  /**
+* load page de loans
+* @param page 
+*/
+  loadPage(page: number) {
+    this.previousPage = page - 1;
+    this.spinnerService.show();
+    this.userService.searchPeygoldsCredits(this.year, this.month, this.sortAmount, page, environment.paginator.per_page).then(
+      (response: PaginationResponse) => {
+        this.peygoldCreditsToAuction = response;
+
+        if (this.peygoldCreditsToAuction.data.length > 0) {
+          this.page = response.page;
+          this.previousPage = 1;
+          this.totalItems = response.count;
+          this.showPagination = true;
+        } else {
+          this.page = 1;
+          this.previousPage = 1;
+          this.totalItems = 0;
+          this.showPagination = false;
+        }
+        this.spinnerService.hide();
+      }
+    ).catch(
+      (error: any) => {
+        this.page = 1;
+        this.previousPage = 1;
+        this.totalItems = 0;
+        this.showPagination = false;
+        this.spinnerService.hide();
+      });
+
+  }
+
+  /**
+  * set order 
+  * @param order 
+  */
+  setOrder(order: number) {
+    this.sortAmount = order;
+    this.loadPage(1);
+  }
+
+  /**
+ * set order 
+ * @param order 
+ */
+  setYear(year: number) {
+    this.year = year;
+    this.loadPage(1);
+  }
+
+  /**
+* set order 
+* @param order 
+*/
+  setMonth(month: string) {
+    this.month = parseInt(month);
+    this.loadPage(1);
+  }
 
 }

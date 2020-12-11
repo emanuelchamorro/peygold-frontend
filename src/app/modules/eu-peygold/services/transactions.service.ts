@@ -110,15 +110,26 @@ export class TransactionsService extends HttpService {
           transaction.symbol = Constants.symbolsArray[item.idTransactionType - 1];
           transaction.status = new TransactionStatus(item.status);
 
-          switch (item.idOriginRecharge) { //1,3,6,7,8,9,10
+          switch (item.idOriginRecharge) { //1,3,6,7,8,9,10, 11
             case (1): //Envio de pago
 
               if (user.email == item.emailSender) {
-                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
-                transaction.description = "Pagaste/Enviaste dinero a " + item.receiver.fullName;
+                if(item.reason=='Remate'){
+                  transaction.iconImg = "/assets/images/new-icons/remate.svg";
+                  transaction.description = "Pagaste remate a " + item.receiver.fullName;
+                }else{
+                  transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
+                  transaction.description = "Pagaste/Enviaste dinero a " + item.receiver.fullName;
+                }
+
               } else if (user.email == item.receiver.email) {
                 //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
-                transaction.description = item.fullNameSender + " te envió dinero";
+                if(item.reason=='Remate'){
+                  transaction.description = item.fullNameSender + " te pagó remate";
+                }else{
+                  transaction.description = item.fullNameSender + " te envió dinero";
+                }
+
               }
               break;
             case (2): //Solicitud de pago
@@ -164,13 +175,17 @@ export class TransactionsService extends HttpService {
             case (10): //Remates
 
               if (user.email == item.emailSender) {
-                transaction.iconImg = "/assets/images/new-icons/ingresar-dinero.svg";
-                transaction.description = "Pagaste remate a " + item.receiver.fullName;
+                transaction.iconImg = "/assets/images/new-icons/remate.svg";
+                transaction.description = "Remataste tus P$C";
               } else if (user.email == item.receiver.email) {
-                //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
-                transaction.description = item.fullNameSender + " acepto tu remate";
+                transaction.iconImg = "/assets/images/new-icons/remate.svg";
+                transaction.description = "Aceptaste remate de "+item.fullNameSender;
               }
               break;
+              case (11): //Recarga de tarjeta
+                transaction.iconImg = "/assets/images/new-icons/tarjeta.svg";
+                transaction.description = item.message.replace('Recarga de Tarjeta','Recargaste tu tarjeta ');
+              break;             
           }
 
           return transaction;

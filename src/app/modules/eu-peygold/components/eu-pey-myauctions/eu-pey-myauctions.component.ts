@@ -194,7 +194,6 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
  * @param order 
  */
   setOrder(order: number) {
-    //this.filter = '';
     this.order = order;
     this.loadPage(1);
   }

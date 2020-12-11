@@ -52,6 +52,9 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
   public repeatPasswordInput: string;
   public pin:any;
 
+  public cardRecord:boolean;
+  public stepCardRecord:number;
+
   constructor(private authService: AuthService,
     private locationService: LocationService,
     private spinnerService: NgxSpinnerService,
@@ -62,7 +65,7 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.sendTypeAddress = '0';
-    this.spinnerService.show();
+
     this.userAccount = localStorage.getItem("hsu") ? JSON.parse(atob(localStorage.getItem("hsu"))) : undefined;
     this.user = this.authService.user();
     this.transaction = new Transaction();
@@ -74,11 +77,23 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
         Transaction.createFromType(TransactionTypeEnum.Points),
       ];
     }
+    this.spinnerService.show();
 
     const country = new Country(environment.locations.default.id, environment.locations.default.label);
     this.locationService.getStates(country).then((states) => {
       this.states = states
-      this.spinnerService.hide();
+
+      if(this.user.currentCard && this.user.currentCard.status.value == '2'){
+        this.cardService.getCardById(this.user.currentCard.id).then(
+          (resp:Card)=>{
+            this.spinnerService.hide();
+            this.user.currentCard.transactions = resp.transactions;
+            console.log('this.user.currentCard.transactions',this.user.currentCard.transactions)
+          }
+        )
+      }else{
+        this.spinnerService.hide();
+      }
     });
   }
 
@@ -316,6 +331,24 @@ export class EuPeyCardComponent extends BaseComponent implements OnInit {
 
 
   showDetail(card:Card){
+
+    this.spinnerService.show();
     this.cardSelected = card;
+    this.cardService.getCardById(card.id).then(
+      (resp:Card)=>{
+
+ 
+        this.cardSelected.transactions = resp.transactions;
+        this.cardRecord=true;
+        this.stepCardRecord=0;
+        this.spinnerService.hide();
+
+      }
+    )
+
+
+
+
+    
   }
 }

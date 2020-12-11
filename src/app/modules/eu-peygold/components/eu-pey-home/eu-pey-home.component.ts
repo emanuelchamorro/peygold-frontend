@@ -11,6 +11,9 @@ import { InMemoryService } from '../../../../services/in-memory.service';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../auth-peygold/services/auth.service';
 import { PaginationResponse } from '../../../commons-peygold/entities/pagination-response';
+import { RequestTransactionsService } from '../../services/request-transactions.service';
+import { Message } from '../../../commons-peygold/entities/message';
+import { ErrorResponse } from '../../../commons-peygold/entities/error-response';
 
 @Component({
   selector: 'app-eu-pey-home',
@@ -40,7 +43,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   public filter: string = null;
   public selectdFilterTransactionType: string;
 
-  protected filtersOriginRechargeDefault: Array<any> = [1, 3, 6, 7, 8, 9, 10];
+  protected filtersOriginRechargeDefault: Array<any> = [1, 2, 3, 6, 7, 8, 9, 10, 11];
   protected filtersTransationStatusDefault: Array<any> = [1, 2, 3];
 
   protected filtersOriginRecharge: Array<any>;
@@ -57,7 +60,8 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
     private transactionsService: TransactionsService,
     private spinnerService: NgxSpinnerService,
     private inMemoryService: InMemoryService,
-    private authService: AuthService
+    private authService: AuthService,
+    private requestTransactionsService: RequestTransactionsService
   ) {
     super();
   }
@@ -138,7 +142,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
           this.filtersOriginRecharge = this.filtersOriginRechargeDefault;
           break;
         case (10):
-          this.filtersOriginRecharge.push(6);
+          this.filtersOriginRecharge.push(10);
           break;
         case (5)://8,7,3,9
           this.filtersOriginRecharge.push(8, 7, 3, 9);
@@ -338,7 +342,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
       params.Hasta = endDate;
     } else {
       let startTime = '00:00:01';
-      let endTime = '11:59:59';
+      let endTime = '23:59:59';
       let sDate = new Date();
       let eDate = new Date();
       params.Desde = sDate.getFullYear() + '-' + (sDate.getMonth() + 1 > 9 ? sDate.getMonth() + 1 : '0' + (sDate.getMonth() + 1)) + '-' + (sDate.getDate() > 9 ? sDate.getDate() : '0' + sDate.getDate()) + ' ' + startTime;
@@ -385,6 +389,39 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 */
 setTransaction(transaction: any): void { //cambiar tipo
     this.detailedTransaction = transaction;
+  }
+
+
+  /**
+   * Proccess the transaction.
+   * @return void;
+   */
+  upadateRequest(statusId:string) {
+
+    this.spinnerService.show();
+    const status = new TransactionStatus(statusId);
+    this.detailedTransaction.status = status;
+    this.detailedTransaction.processedComments = status.id == '2' ? "Se aprueba solicitu de pago" : "Se rechaza solicitud de pago"
+    this.requestTransactionsService.update(this.detailedTransaction).then(() => {
+
+      let message = this.detailedTransaction.status.value == '2' ? new Message(
+        '¡El pago fue enviado!',
+        `Has pagado exitosamente a <b>${this.detailedTransaction.receiver.completeName}</b>. ` +
+        'El importe fue descontado de tus billeteras Peygold, veras las operaciones reflejadas en "Movimientos"'
+      ) : new Message(
+        '¡El pago fue enviado!',
+        `Rechazaste la solicitud de pago de <b>${this.detailedTransaction.receiver.completeName} y </b>. ` +
+        'ya no aparecerá como pendiente.'
+      );
+      this.spinnerService.hide();
+      this.detailedTransaction = null;
+      this.showSuccessFeedback(message);
+    }).catch((e: ErrorResponse) => {
+      this.spinnerService.hide();
+      this.submitted = false;
+      const message = e.message || 'No es posible realizar la transacción';
+      this.setError(message);
+    });
   }
 
 }

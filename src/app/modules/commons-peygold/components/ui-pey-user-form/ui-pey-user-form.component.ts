@@ -34,7 +34,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
   
   public routes = routes;
   @Input()
-  protected user: User;
+  public user: User;
   @Input()
   public aView:string;
 
@@ -86,11 +86,15 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
       this.activeView = this.aView;
     }
 
-    console.log('aView',this.aView);
-    console.log('activeView',this.activeView);
+    if(!this.user){
+      this.user = this.authService.user();
+    }
 
 
     this.editableUser = this.user;
+    this.completeName = this.user.completeName;
+    this.documentTypes = this.inMemoryService.documentTypes;
+    this.useSameAddress = JSON.stringify(this.editableUser.address) === JSON.stringify(this.editableUser.billingAddress);
     this.identityDocuments = new Array<any>();
     // Get the list of institutions
     this.institutionService.all().then((institutions: Array<Institution>) => {
@@ -110,9 +114,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
       this.nationalities = countries;
     });
 
-    this.completeName = this.user.completeName;
-    this.documentTypes = this.inMemoryService.documentTypes;
-    this.useSameAddress = JSON.stringify(this.editableUser.address) === JSON.stringify(this.editableUser.billingAddress);
+
 
     this.iibbConditionService.all().then((items: Array<IIBBCondition>) => {
       this.iibbConditions = items;

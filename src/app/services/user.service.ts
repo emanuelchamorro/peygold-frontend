@@ -14,15 +14,17 @@ import { Document } from '../models/document';
 import { Card } from '../models/card';
 import { Status } from '../models/status';
 import { CardType } from '../models/card-type';
+import { CommonsService } from './commons.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends HttpService {
 
-  constructor(
+  constructor( 
     protected http: HttpClient,
-    protected inMemoryService: InMemoryService,
+    protected inMemoryService: InMemoryService
+    
   ) {
     super(http);
   }
@@ -39,7 +41,12 @@ export class UserService extends HttpService {
       const user = new User();
       user.id = response.idUser;
       user.idAspNetUser = response.idAspNetUser;
-      user.avatarURL = environment.api.avatarUrl + response.avatarURL;
+      this.getImage(environment.api.avatarUrl + response.avatarURL).then(
+        (resp)=>{
+          user.avatarURL = resp;
+        }
+      );
+      
       user.dateRegistered = response.dateRegistered;
       user.name = response.firstName;
       user.lastName = response.lastName;
@@ -309,5 +316,17 @@ export class UserService extends HttpService {
    */
   public addDocuments(documents: Array<any>): Promise<any> {
     return this.post('/users/AddDocuments', { Documents: documents }).toPromise();
+  }
+
+  getImage(url:string):Promise<string>{
+    return this.get(url).toPromise().then(
+      (resp)=>{
+        return url;
+      }
+    ).catch(
+      (error)=>{
+        return null;
+      }
+    )
   }
 }
