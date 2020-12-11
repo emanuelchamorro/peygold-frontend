@@ -83,7 +83,7 @@ export class RequestTransactionsService extends HttpService {
    * @return Promise
    */
   update(transaction: Transaction) {
-    return this.put(`/requesttransactions/${transaction.id}`, {
+    return this.put(`/requesttransactions`, {
       RequestTransactionId: transaction.id,
       ProcessedStatus: parseInt(transaction.status.value),
       ProcessedComments: transaction.processedComments

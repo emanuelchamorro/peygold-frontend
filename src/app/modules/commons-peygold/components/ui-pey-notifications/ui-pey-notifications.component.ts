@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Notification } from '../../../../models/notification';
+import { PaginationResponse } from '../../entities/pagination-response';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Notification } from '../../../../models/notification';
 export class UiPeyNotificationsComponent implements OnInit {
 
   @Input()
-  public notifications:Array<Notification>;
+  public notifications:PaginationResponse;
 
   constructor() { }
 

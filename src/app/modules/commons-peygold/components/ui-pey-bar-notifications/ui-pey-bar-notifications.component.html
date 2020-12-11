@@ -7,7 +7,7 @@
 <div class="notificaciones-tooltip" [ngClass]="{'active': display}">
     <span class="p-3">Notificaciones</span>
     <ul>
-        <li *ngFor="let notification of notifications">
+        <li *ngFor="let notification of notifications.data">
             <a class="d-flex p-3">
                 <img class="notificaciones-img" [src]="notification.image">
                 <div class="content d-flex flex-column">

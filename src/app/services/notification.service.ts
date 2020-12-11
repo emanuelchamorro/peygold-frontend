@@ -4,7 +4,11 @@ import { HttpService } from './http.service';
 
 import { HttpClient } from '@angular/common/http';
 import { InMemoryService } from './in-memory.service';
-import { SelectOption } from '../models';
+import { SelectOption, User } from '../models';
+import { PaginationResponse } from '../modules/commons-peygold/entities/pagination-response';
+import { NotificationCategory } from '../models/notification-category';
+import { NotificationCategoryEnum } from '../enums/notification-category-enum';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -163,9 +167,60 @@ export class NotificationService extends HttpService {
    * Get user notifications by user.
    * @param id identifier
    */
-  all(page: number, perPage: number): any[] {
+  all(page: number, perPage: number): Promise<PaginationResponse> {
+      let paginationResponse = new PaginationResponse(page,perPage);
+    return this.get(`/notification/${page}/${perPage}`).toPromise().then(
+      (resp)=>{
+        paginationResponse.count = resp.recordCount;
+        paginationResponse.data = resp.notificationsDTO.map((item:any)=>{
+          let notification = new Notification();
+          notification.status = item.status;
+          notification.date = item.date;
+          notification.title = item.title;
+          notification.message = item.bodyMessage;
+          notification.category = new NotificationCategory(item.category);
+          
 
-    return this.notifications;
+          if(item.senderDTO){
+            notification.sender = new User();
+            notification.sender.id = item.senderDTO.id;
+            notification.sender.email = item.senderDTO.email;
+            notification.sender.avatarURL = environment.api.avatarUrl + item.senderDTO.avatar;
+            notification.sender.fullName = item.senderDTO.fullname;
+          }
+
+          switch (String(item.category)) {
+            case NotificationCategoryEnum.sistema:
+              notification.image = '/assets/images/new-icons/movimientos.svg';
+              break;
+            case NotificationCategoryEnum.pagos:
+              if(item.senderDTO){
+                notification.image = notification.sender.avatarURL;
+              }else{
+                notification.image = '/assets/images/new-icons/solicitud-dinero.svg';
+              }
+              
+              break;
+            case NotificationCategoryEnum.tarjeta:
+              notification.image = '/assets/images/new-icons/tarjeta.svg';
+              break;
+            case NotificationCategoryEnum.creditos:
+              notification.image = '/assets/images/new-icons/credito.svg';
+              break;
+            case NotificationCategoryEnum.remates:
+              notification.image = '/assets/images/new-icons/remate.svg';
+              break;
+           }
+
+          return notification;
+        })
+        return paginationResponse;
+      }
+    ).catch(
+      (error)=>{
+        return paginationResponse;
+      }
+    );
 
   }
 

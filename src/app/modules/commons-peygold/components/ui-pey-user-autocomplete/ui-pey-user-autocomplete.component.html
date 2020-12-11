@@ -7,7 +7,8 @@
     </ng-autocomplete>
     <ng-template #itemTemplateStatic let-item class="w-100">
       <div class="item w-100 d-flex p-2">
-        <img [src]="item.avatarURL" height="40" width="40"  (error)="this.src = 'assets/images/Isologotipo.svg'">
+      <!-- <img [src]="item.avatarURL" height="40" width="40"  (error)="this.src = 'https://api.peygold.com/images/user.png'"> --> 
+      <img [src]="item.avatarURL" height="40" width="40"  (error)="validateImg($event,item)">
         <div class="d-flex flex-column item.avatarURLlumn pl-2 w-100">
           <span class="fullNameWidth* text-left m-0" [innerHTML]="item.fullName"></span>
           <small class="text-left">{{item.email}}</small>
@@ -19,7 +20,7 @@
 </div>
 <ul class="col-md-9 mb-4">
   <li *ngFor="let recentUser of recentUsers" (click)="setUser(recentUser)">
-    <i class="circle"> <img class="imgItem" [src]="recentUser.avatarURL"/> </i>
+    <i class="circle"> <img class="imgItem" [src]="recentUser.avatarURL" (error)="validateImg($event,recentUser)"/> </i>
     <span class="fullNameWidth" [innerHtml]="recentUser.fullName"></span>
   </li>
 </ul>
