@@ -27,7 +27,8 @@
                     <form class="form-inline">
                         <div class="input-group">
                             <div class="boxSelect">
-                                <a class="btn-dropDown stateDrop"><span>Importe</span><i class="fa fa-chevron-right"></i></a>
+                                <a class="btn-dropDown stateDrop"><span>Importe</span><i
+                                        class="fa fa-chevron-right"></i></a>
                                 <div class="downFecha stateDown">
                                     <ul>
                                         <li (click)="setOrder(0)" class="optionDate">Importe</li>
@@ -64,7 +65,7 @@
                         <tr class="w-100 d-flex justify-content-between align-items-center">
                             <th scope="col" class="col-2">Importe</th>
                             <th scope="col" class="col-2">Descuento<br>ofrecido</th>
-                            <th scope="col" class="col-2">Duración<br>del remate</th>                            
+                            <th scope="col" class="col-2">Duración<br>del remate</th>
                             <th scope="col" class="col-2">Vencimiento<br>de los P$C</th>
                             <th scope="col" class="col-1">Estado</th>
                             <th scope="col" class="col-2">Comprador</th>
@@ -73,42 +74,53 @@
                     </thead>
                     <tbody class="list">
 
-                        <tr *ngFor="let auction of auctions.data" class="d-flex w-100 justify-content-between align-items-center">
+                        <tr *ngFor="let auction of auctions.data"
+                            class="d-flex w-100 justify-content-between align-items-center">
                             <td class="col-2"><span class="w-100">
-                                {{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
-                            </span></td>
-                            <td class="col-2 d-flex justify-content-center"><span [innerHtml]="auction.discount+'%'"></span></td>
+                                    {{auction.transaction.type.coin}}
+                                    {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
+                                </span></td>
+                            <td class="col-2 d-flex justify-content-center"><span
+                                    [innerHtml]="auction.discount+'%'"></span></td>
                             <td class="col-2 d-flex justify-content-center">
                                 <span *ngIf="auction.endsIn>0">Finaliza en {{auction.endsIn}} dias</span>
                                 <span *ngIf="auction.endsIn<=0">Vencido</span>
                             </td>
-                            <td class="col-2 d-flex justify-content-center"><span [innerHtml]="auction.expirationDate | date:medium"></span></td>
+                            <td class="col-2 d-flex justify-content-center"><span
+                                    [innerHtml]="auction.expirationDate | date:medium"></span></td>
                             <td class="col-1 d-flex justify-content-center">
-                                <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label" [ngClass]="{'text-success': auction.status.value==1, 'text-primary':auction.status.value==2, 'text-danger':auction.status.value==3}"></span>
+                                <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label"
+                                    [ngClass]="{'text-success': auction.status.value==1, 'text-primary':auction.status.value==2, 'text-danger':auction.status.value==3}"></span>
                                 <span *ngIf="auction.endsIn<=0" [innerHtml]="'Vencido'" class="text-danger"></span>
                             </td>
-                            <td class="col-2 d-flex justify-content-center"><span >Celina Lopez</span></td>
+                            <td class="col-2 d-flex justify-content-center"><span>Celina Lopez</span></td>
                             <td class="col-1 d-flex justify-content-end">
                                 <div class="detallePopup">
                                     <a role="button" class="detailBtn slide-toggle"><i class="optionPoint"></i></a>
                                     <div class="details slide-toggle-content">
-                                        <ul >
+                                        <ul>
                                             <li *ngIf="auction.endsIn>0 && auction.status.value == '2'">
-                                                <a class="text-left" (click)="selectPeygoldCredit(auction)">Editar remate</a>
+                                                <a class="text-left" (click)="selectPeygoldCredit(auction)">Editar
+                                                    remate</a>
                                             </li>
                                             <li>
-                                                <a class="text-left">Ver detalle</a>
+                                                <a class="text-left"
+                                                    (click)="selectPeygoldCredit(auction);modal='detail'">Ver
+                                                    detalle</a>
                                             </li>
                                         </ul>
                                         <ul *ngIf="auction.endsIn>0 && auction.status.value != '3'">
-                                            <li *ngIf="auction.status.value == '2'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,1)">
+                                            <li *ngIf="auction.status.value == '2'"><button type="button"
+                                                    class="text-left" (click)="changeAuctionStatus(auction,1)">
                                                     <span class="Seguridad-icon icon-Activar"></span>Activar</button>
                                             </li>
-                                            <li *ngIf="auction.status.value == '1'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,2)">
-                                                    <span
-                                                        class="Seguridad-icon icon-Desactivar"></span>Pausar</button>
+                                            <li *ngIf="auction.status.value == '1'"><button type="button"
+                                                    class="text-left" (click)="changeAuctionStatus(auction,2)">
+                                                    <span class="Seguridad-icon icon-Desactivar"></span>Pausar</button>
                                             </li>
-                                            <li *ngIf="auction.status.value == '1' || auction.status.value == '2'"><button type="button" class="text-left" (click)="changeAuctionStatus(auction,3)">
+                                            <li *ngIf="auction.status.value == '1' || auction.status.value == '2'">
+                                                <button type="button" class="text-left"
+                                                    (click)="changeAuctionStatus(auction,3)">
                                                     <span
                                                         class="Seguridad-icon icon-Finalizar "></span>Finalizar</button>
                                             </li>
@@ -120,15 +132,16 @@
                         </tr>
                     </tbody>
                 </table>
-                <div *ngIf="!showPagination" class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
-                        <img class="d-flex mb-3" src="/assets/images/new-icons/rematando.svg" height="100" width="100">
-                        <h2 class="text-dark">No iniciaste ningún remate</h2>
-                        <span>No tienes saldo suficiente para iniciar un remate</span>
+                <div *ngIf="!showPagination"
+                    class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
+                    <img class="d-flex mb-3" src="/assets/images/new-icons/rematando.svg" height="100" width="100">
+                    <h2 class="text-dark">No iniciaste ningún remate</h2>
+                    <span>No tienes saldo suficiente para iniciar un remate</span>
                 </div>
             </div>
 
             <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
-            (pageChange)="loadPage($event)">
+                (pageChange)="loadPage($event)">
             </ngb-pagination>
         </div>
     </div>
@@ -144,7 +157,8 @@
             <div class="grey-box d-flex flex-column align-items-center p-3 col-xs-12">
                 <div class="amount d-flex flex-column mt-3 mb-3">
                     <span>Estas rematando</span>
-                    <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}</span>
+                    <span>{{auction.transaction.type.coin}}
+                        {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}</span>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -159,30 +173,32 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                        <label class="input-group has-float-label w-100">
-                                <input name="datepicker" placeholder="Duración*" class="d-flex w-100" ngbDatepicker #datepicker="ngbDatepicker"
-                                [autoClose]="'inside'" (dateSelect)="onDateSelection($event)" [dayTemplate]="t" [minDate]="minDate" [maxDate]="maxDate"
-                                outsideDays="hidden" (click)="datepicker.toggle()" required>                            
-                            <ng-template #t let-date let-focused="focused">
-                                <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
-                                    [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
-                                    (mouseleave)="hoveredDate = null">
-                                    {{ date.day }}
-                                </span>
-                            </ng-template>
-                            <span>Duración*</span>
-                        </label>
-                        <div *ngIf="!datepicker.pristine && datepicker.invalid || formConfigTransaction.submitted && datepicker.errors"
-                            class="invalid-feedback">
-                            <div *ngIf="datepicker.errors.required">Campo es requerido</div>
-                            <div *ngIf="datepicker.errors.max">Sólo quedan {{ auction.timeLimit }} días válidos para rematar
-                                los peygolds créditos</div>
-                        </div>
+                    <label class="input-group has-float-label w-100">
+                        <input name="datepicker" placeholder="Duración*" class="d-flex w-100" ngbDatepicker
+                            #datepicker="ngbDatepicker" [autoClose]="'inside'" (dateSelect)="onDateSelection($event)"
+                            [dayTemplate]="t" [minDate]="minDate" [maxDate]="maxDate" outsideDays="hidden"
+                            (click)="datepicker.toggle()" required>
+                        <ng-template #t let-date let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
+                        <span>Duración*</span>
+                    </label>
+                    <div *ngIf="!datepicker.pristine && datepicker.invalid || formConfigTransaction.submitted && datepicker.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="datepicker.errors.required">Campo es requerido</div>
+                        <div *ngIf="datepicker.errors.max">Sólo quedan {{ auction.timeLimit }} días válidos para rematar
+                            los peygolds créditos</div>
                     </div>
+                </div>
             </div>
 
             <div class="row-buttons justify-content-end mt-3">
-                <button type="button" (click)="step = step - 1; auction=null" class="white-button-border">Volver</button>
+                <button type="button" (click)="step = step - 1; auction=null"
+                    class="white-button-border">Volver</button>
                 <button type="submit" class="solid-blue-button" (click)="saveAuction()">Guardar cambios</button>
             </div>
 
@@ -190,9 +206,69 @@
     </form>
 </div>
 
-  <!-- Modal Remates 1 -->
 
-  <!--  <div class="ShowDetails">
+<app-ui-pey-sidebar *ngIf="modal=='detail'" (onClose)="auction = null" [closed]="!auction"
+    title="Detalles de la operación" class="BoxDetails Actividad">
+
+    <div class="modal-content pl-4 pr-4 pt-2">
+        <ul class="operation-date">
+            <li><span [innerHtml]="'Operacion #'+auction.id"></span>
+                <span [innerHtml]="auction.transaction.createdAt | date: medium"></span>
+            </li>
+        </ul>
+
+        <ul class="list-detail">
+            <li>
+
+                <span>Importe rematado</span>
+                <span>
+                    {{auction.transaction.type.coin}}
+                    {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
+                </span>
+            </li>
+            <li>
+                <span>Descuento aplicado</span>
+                <span [innerHtml]="auction.discount+'%'"></span>
+            </li>
+            <li>
+                <span>Vencimiento P$C</span>
+                <span [innerHtml]="auction.expirationDate | date:medium"></span>
+            </li>
+        </ul>
+
+
+        <!-- <ul class="amount-detail">
+            <li class="line-trough">
+                <span>Total recibido</span>
+                <span>$400</span>
+            </li>
+        </ul>
+
+
+        <ul class="user-info-modal">
+            <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+                <p>Contraparte</p>
+                <i class="circle">AC</i>
+                <span>Andres Calamaro</span>
+                <span>andy1425@gmail.com</span>
+            </li>
+        </ul>-->
+
+
+        <div class="alert alert-danger text-center" role="alert">
+            <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label"
+                [ngClass]="{'text-success': auction.status.value==1, 'text-primary':auction.status.value==2, 'text-danger':auction.status.value==3}"></span>
+            <span *ngIf="auction.endsIn<=0" [innerHtml]="'Vencido'" class="text-danger"></span>
+        </div>
+
+    </div>
+
+
+</app-ui-pey-sidebar>
+
+<!-- Modal Remates 1 -->
+
+<!--  <div class="ShowDetails">
     <div class="BoxDetails Remates">
         <div class="HeadDetail">
           <h3>Detalles de la operación</h3>
@@ -247,8 +323,8 @@
              </div>
           </div>
         </div>-->
-   
-   
+
+
 <!-- Modal Remates 2 -->
 
 <!--  <div class="ShowDetails">
@@ -312,4 +388,3 @@
              </div>
           </div>
         </div>-->
-    
