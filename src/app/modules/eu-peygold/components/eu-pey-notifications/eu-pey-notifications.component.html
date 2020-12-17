@@ -4,9 +4,9 @@
 <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
 <app-ui-pey-notifications  [notifications]="notifications"></app-ui-pey-notifications>
 <div *ngIf="!showPagination" class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
-    <img class="d-flex mb-3" src="/assets/images/new-icons/remate.svg" height="100" width="100">
-    <h2 class="text-dark">No tienes saldo suficiente para iniciar un remate</h2>
-    <span>Recibe o solicita P$C para poder comenzar un remate</span>
+   <!-- <img class="d-flex mb-3" src="/assets/images/new-icons/remate.svg" height="100" width="100">
+    <h2 class="text-dark">No tienes notificaciones aún</h2>
+    <span></span>-->
 </div>
 <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
 (pageChange)="loadPage($event)">
