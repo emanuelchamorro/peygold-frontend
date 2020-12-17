@@ -177,7 +177,11 @@ html, body {
   color: #3675bb;
   font-size: 13px;
 }
-
+.icon-bell5:before {
+  content: "\e900";
+  color: #3675bb;
+  font-size: 19px;
+}
 
 .fa-star {
   color: rgba(52, 114, 182, 0.56);

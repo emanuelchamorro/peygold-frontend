@@ -44,7 +44,7 @@ export const menu: Array<MenuItem> = [
       new MenuItem().fromJSON({ label: 'Retenciones', href: routes.reportretentions.index.href }),
     ]
   }),
-  new MenuItem().fromJSON({ label: 'Notificaciones', href: routes.notifications.index.href, icon: 'icon-card' }),
+  new MenuItem().fromJSON({ label: 'Notificaciones', href: routes.notifications.index.href, icon: 'icon-bell5' }),
   new MenuItem().fromJSON({
     label: 'Creditos', icon: 'icon-creditos-26', childs: [
       new MenuItem().fromJSON({ label: 'Solicitar creditos', href: routes.loans.request.href }),
