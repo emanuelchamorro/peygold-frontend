@@ -32,6 +32,7 @@ export class NotificationService extends HttpService {
       let paginationResponse = new PaginationResponse(page,perPage);
     return this.get(`/notification/${page}/${perPage}`).toPromise().then(
       (resp)=>{
+        console.log('resp notification', resp);
         paginationResponse.count = resp.recordCount;
         paginationResponse.data = resp.notificationsDTO.map((item:any)=>{
           let notification = new Notification();
@@ -52,13 +53,13 @@ export class NotificationService extends HttpService {
 
           switch (String(item.category)) {
             case NotificationCategoryEnum.sistema:
-              notification.image = '/assets/images/new-icons/movimientos.svg';
+              notification.image = '/assets/images/new-icons/bienvenido.svg';
               break;
             case NotificationCategoryEnum.pagos:
               if(item.senderDTO){
                 notification.image = notification.sender.avatarURL;
               }else{
-                notification.image = '/assets/images/new-icons/solicitud-dinero.svg';
+                notification.image = '/assets/images/new-icons/pago-global.svg';
               }
               
               break;
@@ -82,6 +83,7 @@ export class NotificationService extends HttpService {
       }
     ).catch(
       (error)=>{
+        console.log('resp notification', error);
         return paginationResponse;
       }
     );

@@ -76,7 +76,9 @@
                         <tr>
                             <th scope="col">Año</th>
                             <th scope="col">Mes</th>
-                            <th scope="col">Monto</th>
+                            <th scope="col">Monto P$C</th>
+                            <th scope="col">Monto Remates Publicados</th>
+                            <th scope="col">Monto Disponible</th>
                             <th scope="col" width="20"></th>
                         </tr>
                     </thead>
@@ -84,9 +86,15 @@
                         <tr *ngFor="let peygoldcredit of peygoldCreditsToAuction.data">
                             <td [innerHtml]="peygoldcredit.year"></td>
                             <td [innerHtml]="peygoldcredit.month"></td>
-                            <td [innerHtml]="">
-                                 {{peygoldcredit.transaction.type.coin}} {{peygoldcredit.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}
+                            <td>
+                                 {{peygoldcredit.transaction.type.coin}} {{peygoldcredit.transaction.amount | currency:" ":"symbol":"1.0"}}
                             </td>
+                            <td>
+                                {{peygoldcredit.transaction.type.coin}} {{peygoldcredit.transaction.amountRemated | currency:" ":"symbol":"1.0"}}
+                           </td>
+                           <td>
+                            {{peygoldcredit.transaction.type.coin}} {{peygoldcredit.transaction.amountAvailableToAuction | currency:" ":"symbol":"1.0"}}
+                           </td>
                             <td width="20">
                                 <div class="form-check">
                                     <input type="radio" value="option1" name="exampleRadios" id="exampleRadios1"
@@ -115,7 +123,8 @@
     </div>
 </div>
 
-<div *ngIf="auction && step==2">
+<div *ngIf="auctionSelected && step==2">
+        
     <p class="opening-text">Te mostramos tu saldo disponible, indica el monto que deseas rematar</p>
     <form name="formTransaction" (ngSubmit)="formTransaction.form.valid && continue()" #formTransaction="ngForm"
         class="pt-4" novalidate>
@@ -126,31 +135,31 @@
                         <div class="w-100 pl-3 pr-3">
 
                             <div class="auctionTransactionAmount text-center">
-                                <span>Saldo disponible:</span>
+                                <span>Saldo disponible: </span>
                                 <span>
-                                    {{auction.transaction.type.coin}}
-                                    {{auction.transaction.amount | currency:" ":"symbol":"1.0"}}
+                                    {{auctionSelected.transaction.type.coin}} 
+                                    {{auctionSelected.transaction.amountAvailableToAuction | currency:" ":"symbol":"1.0"}}
                                 </span>
                             </div>
-
+                            
                             <!-- INPUT CORREGIDO-->
 
                             <div class="input-blue-text d-flex justify-content-center flex-column align-items-center">
                                 <input required type="text" type="text" placeholder="$0"
                                     class="col-xs-12 col-sm-6 form-control InputAmount"
-                                    [prefix]="auction.transaction.type.coin | translate" mask="separator.2"
-                                    thousandSeparator="." [min-value]="auction.transaction.type.minAmount"
-                                    [max-value]="auction.transaction.amount" name="amount"
-                                    [(ngModel)]="auction.transaction.amountToAuction" #amount="ngModel" required />
+                                    [prefix]="auctionSelected.transaction.type.coin | translate" mask="separator.2"
+                                    thousandSeparator="." [min-value]="auctionSelected.transaction.type.minAmount"
+                                    [max-value]="auctionSelected.transaction.amountAvailableToAuction" name="amount"
+                                    [(ngModel)]="auctionSelected.transaction.amountToAuction" #amount="ngModel" required />
                                 <div *ngIf="!amount.pristine && amount.invalid || formTransaction.submitted && amount.errors"
                                     class="col-xs-12 col-sm-6 pr-0 pl-0 invalid-feedback text-left">
                                     <div *ngIf="amount.errors.required">Campo requerido
                                     </div>
                                     <div *ngIf="amount.errors.min">El valor mínimo para la transaccion es
-                                        {{ auction.transaction.type.minAmount | number:'1.2'}}
+                                        {{ auctionSelected.transaction.type.minAmount | number:'1.2'}}
                                     </div>
                                     <div *ngIf="amount.errors.max">El valor máximo a rematar es
-                                        {{ auction.transaction.amount | number:'1.2'}}
+                                        {{ auctionSelected.transaction.amountAvailableToAuction | number:'1.2'}}
                                     </div>
                                 </div>
                             </div>
@@ -176,12 +185,12 @@
             <div class="grey-box d-flex flex-column align-items-center p-3 col-xs-12">
                 <div class="amountToAuction amount d-flex flex-column mt-3 mb-3">
                     <span>Estas rematando</span>
-                    <span>{{auction.transaction.type.coin}} {{auction.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}</span>
+                    <span>{{auctionSelected.transaction.type.coin}} {{auctionSelected.transaction.amountToAuction | currency:" ":"symbol":"1.0"}}</span>
                 </div>
 
                 <div class="form-group col-md-6">
                     <label class="has-float-label w-100">
-                        <input name="discount" [(ngModel)]="auction.discount" #discount="ngModel" type="text"
+                        <input name="discount" [(ngModel)]="auctionSelected.discount" #discount="ngModel" type="text"
                             placeholder="Descuento ofrecido*" suffix="%" value="12%" mask="0*" class="d-flex w-100"
                             required />
                         <span>Descuento ofrecido*</span>

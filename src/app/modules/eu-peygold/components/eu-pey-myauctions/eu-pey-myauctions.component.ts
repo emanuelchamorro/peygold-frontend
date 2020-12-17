@@ -36,7 +36,7 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
 
   public step: number = 1;
   private auctions: PaginationResponse;
-  public auction: Auction;
+  public auctionSelected: Auction;
 
   public totalItems: number;
   public page: number;
@@ -99,31 +99,35 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
  * @param auction 
  */
   selectPeygoldCredit(auction: Auction) {
-    this.auction = auction;    
-    let initDateAuction = new Date(this.auction.transaction.createdAt);
-    let expirationDatePeygoldsCredit = this.auction.expirationDate;
+    this.auctionSelected = auction;    
+    let initDateAuction = new Date(this.auctionSelected.transaction.createdAt);
+    let expirationDatePeygoldsCredit = this.auctionSelected.expirationDate;
 
     this.minDate = new NgbDate(initDateAuction.getFullYear(),initDateAuction.getMonth()+1,initDateAuction.getDate());
     this.maxDate = new NgbDate(expirationDatePeygoldsCredit.getFullYear(),expirationDatePeygoldsCredit.getMonth()+1,expirationDatePeygoldsCredit.getDate());
     this.fromDate = this.minDate;
-    this.toDate = new NgbDate(initDateAuction.getFullYear(),initDateAuction.getMonth()+1, initDateAuction.getDate() + this.auction.duration);
+    this.toDate = new NgbDate(initDateAuction.getFullYear(),initDateAuction.getMonth()+1, initDateAuction.getDate() + this.auctionSelected.duration);
     this.step++;
     setTimeout(()=>{
       let inputDurationElem:HTMLInputElement = this.inputDuration.nativeElement;
-      inputDurationElem.value = String(this.auction.duration);
+      inputDurationElem.value = String(this.auctionSelected.duration);
     },100)
 
     
   }
 
+  viewDetail(auction: Auction){
+    this.auctionSelected = auction;  
+  }
+
   saveAuction() {
     this.spinnerService.show();
-    this.auctionService.updateAuction(this.auction).then(
+    this.auctionService.updateAuction(this.auctionSelected).then(
       (resp:any)=>{
         this.spinnerService.hide();
         console.log('resp',resp);
         this.step = 1
-        this.auction = null;
+        this.auctionSelected = null;
       }
     ).catch(
       (error:any)=>{
@@ -141,7 +145,7 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
         this.spinnerService.hide();
         console.log('resp',resp);
         this.step = 1
-        this.auction = null;
+        this.auctionSelected = null;
         this.loadPage(this.page);
       }
     ).catch(
@@ -223,7 +227,7 @@ export class EuPeyMyauctionsComponent extends BaseComponent implements OnInit {
     let inputDurationElem:HTMLInputElement = this.inputDuration.nativeElement;
     const startDay =  this.fromDate.day;
     const endDay = this.toDate.day;
-    this.auction.duration = endDay - startDay;
+    this.auctionSelected.duration = endDay - startDay;
     inputDurationElem.value = String(endDay - startDay);
   }
   

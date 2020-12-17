@@ -30,7 +30,7 @@ export class UiPeyBarNotificationsComponent extends BaseComponent implements OnI
      this.notificationService.all(1, environment.paginator.per_page).then(
       (response:PaginationResponse)=>{
         this.notifications = response;
-        if (this.notifications.data.length > 0) {
+        if (this.notifications.data && this.notifications.data.length > 0) {
           this.page = response.page;
           this.previousPage = 1;
           this.totalItems = response.count;
@@ -49,7 +49,31 @@ export class UiPeyBarNotificationsComponent extends BaseComponent implements OnI
 
   displayNotifications():void{
     
-    this.display = !this.display;
+    if(!this.display){
+      this.notificationService.all(1, environment.paginator.per_page).then(
+        (response:PaginationResponse)=>{
+          this.notifications = response;
+          if (this.notifications.data && this.notifications.data.length > 0) {
+            this.page = response.page;
+            this.previousPage = 1;
+            this.totalItems = response.count;
+            this.showPagination = true;
+            this.display = !this.display;
+            this.notifications.data = this.notifications.data.slice(0,3);
+          } else {
+            this.page = 1;
+            this.previousPage = 1;
+            this.totalItems = 0;
+            this.showPagination = false;
+            this.display = !this.display;
+          }
+          this.thereAreNotifications = false;
+        }
+      );
+    }else{
+      this.display = !this.display;
+    }
+
 
   }
 

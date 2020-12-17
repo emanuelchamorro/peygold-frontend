@@ -173,7 +173,7 @@ export class EuPeyAuctionsComponent extends BaseComponent implements OnInit {
 
   confirm() {
     this.spinnerService.show();
-    this.auctionService.acceptAuction(this.auction.id).then(
+    this.auctionService.acceptAuction(this.auction.id, this.auction.transaction.amountToAuction).then(
       (resp:any)=>{
         this.spinnerService.hide();
         this.title = "¡Compra exitosa!";

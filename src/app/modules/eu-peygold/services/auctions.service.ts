@@ -78,6 +78,22 @@ export class AuctionsService extends HttpService {
           auction.discount = item.discount;
           auction.year = item.year;
           auction.month = item.month;
+          if(item.receiver){
+            auction.transaction.receiver = new User();
+            auction.transaction.receiver.id = item.receiver.idUser;
+            auction.transaction.receiver.idAspNetUser = item.receiver.idAspNetUser;
+            auction.transaction.receiver.name = item.receiver.firstName;
+            auction.transaction.receiver.lastName = item.receiver.lastName;
+            auction.transaction.receiver.email = item.receiver.email;
+            auction.transaction.receiver.phone = item.receiver.phone;
+            auction.transaction.receiver.avatarURL = item.receiver.avatarURL;
+            auction.transaction.receiver.fullName = item.receiver.fullName;
+            auction.transaction.receiver.idUserType = item.receiver.idUserType;
+            auction.transaction.receiver.active = item.receiver.active;
+            auction.transaction.receiver.documentNumber = item.receiver.dni;
+            auction.transaction.receiver.cuit = item.receiver.cuit;
+            auction.transaction.receiver.systemUserTypeId = item.receiver.systemUserTypeId;
+          }
           return auction;
         });
         console.log('paginator',paginator);
@@ -109,21 +125,21 @@ export class AuctionsService extends HttpService {
           auction.month = item.month;
 
 
-          if (item.userSender) {
+          if (item.sender) {
             auction.transaction.sender = new User();
-            auction.transaction.sender.id = item.userSender.idUser;
-            auction.transaction.sender.idAspNetUser = item.userSender.idAspNetUser;
-            auction.transaction.sender.name = item.userSender.firstName;
-            auction.transaction.sender.lastName = item.userSender.lastName;
-            auction.transaction.sender.email = item.userSender.email;
-            auction.transaction.sender.phone = item.userSender.phone;
-            auction.transaction.sender.avatarURL = item.userSender.avatarURL;
-            auction.transaction.sender.fullName = item.userSender.fullName;
-            auction.transaction.sender.idUserType = item.userSender.idUserType;
-            auction.transaction.sender.active = item.userSender.active;
-            auction.transaction.sender.documentNumber = item.userSender.dni;
-            auction.transaction.sender.cuit = item.userSender.cuit;
-            auction.transaction.sender.systemUserTypeId = item.userSender.systemUserTypeId;
+            auction.transaction.sender.id = item.sender.idUser;
+            auction.transaction.sender.idAspNetUser = item.sender.idAspNetUser;
+            auction.transaction.sender.name = item.sender.firstName;
+            auction.transaction.sender.lastName = item.sender.lastName;
+            auction.transaction.sender.email = item.sender.email;
+            auction.transaction.sender.phone = item.sender.phone;
+            auction.transaction.sender.avatarURL = item.sender.avatarURL;
+            auction.transaction.sender.fullName = item.sender.fullName;
+            auction.transaction.sender.idUserType = item.sender.idUserType;
+            auction.transaction.sender.active = item.sender.active;
+            auction.transaction.sender.documentNumber = item.sender.dni;
+            auction.transaction.sender.cuit = item.sender.cuit;
+            auction.transaction.sender.systemUserTypeId = item.sender.systemUserTypeId;
           }
 
 
@@ -140,8 +156,8 @@ export class AuctionsService extends HttpService {
     );
    }
 
-   acceptAuction(auctionId:number){
-      return this.post(`/remates/AceptarRemate`,{idRemate:auctionId}).toPromise();
+   acceptAuction(auctionId:number,amount:number){
+      return this.post(`/remates/AceptarRemate`,{idRemate:auctionId, Amount: amount}).toPromise();
    }
 
 }

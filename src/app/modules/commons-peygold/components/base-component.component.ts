@@ -5,6 +5,7 @@ import {routes as CommonsRoutes} from '../routes';
 import {routes as RoutesEU} from '../../eu-peygold/routes';
 import {Router} from '@angular/router';
 import {MessageTypeEnum} from '../../../enums';
+import { User } from '../../../models/user';
 
 export class BaseComponent {
 
@@ -325,5 +326,9 @@ export class BaseComponent {
    */
   protected scrollToTop() {
     window.scroll(0,0);
+  }
+
+  validateImgUser(event, user:User){
+    user.avatarURL = 'https://api.peygold.com/images/user.png';
   }
 }
