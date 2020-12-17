@@ -249,11 +249,11 @@
 
 
         <ul *ngIf="auctionSelected.transaction.receiver" class="user-info-modal">
-            <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
+            <li class="d-flex justify-content-center flex-column align-items-center w-100 text-center mt-4 mb-4">
                 <p>Contraparte</p>
                 <i class="circle">{{auctionSelected.transaction.receiver.initials}}</i>
-                <span>{{auctionSelected.transaction.receiver.completeName}}</span>
-                <span>{{auctionSelected.transaction.receiver.email}}</span>
+                <span class="text-center w-100">{{auctionSelected.transaction.receiver.completeName}}</span>
+                <span class="text-center w-100">{{auctionSelected.transaction.receiver.email}}</span>
             </li>
         </ul>
 
