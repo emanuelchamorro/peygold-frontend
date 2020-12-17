@@ -18,10 +18,15 @@
     </ul>
 </nav>
 <article *ngIf="step == 1" class="authentication-two-steps">
-    <app-ui-pey-verify-security-code [user]="user" [title]="title"  [message]="message" [sendType]="sendType" (onContinue)="continue($event)">
+    <app-ui-pey-verify-security-code [user]="user" [title]="title" [message]="message" [sendType]="sendType"
+        (onContinue)="continue($event)">
     </app-ui-pey-verify-security-code>
 </article>
 
 <article *ngIf="step == 2">
-    <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom" [routeTo]="routeTo" [buttonLabel]="buttonLabel"></app-ui-pey-message-success>
+    <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
+        [routeTo]="routeTo" [buttonLabel]="buttonLabel" ></app-ui-pey-message-success>
 </article>
+
+
+<!--(onContinue)="login()" -->

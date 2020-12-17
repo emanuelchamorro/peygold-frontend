@@ -66,8 +66,9 @@ export class UserService extends HttpService {
         paginator.data = resp.creditosDTOs.map((item:any)=>{
           const auction = new Auction();
           auction.transaction = new Transaction();
-          auction.transaction.amount= item.totalAmount;
-          auction.transaction.amountToAuction = item.totalAmount; // monto maximo a subastar
+          auction.transaction.amount= item.totalAmount; // monto total de la bolsa
+          auction.transaction.amountToAuction = 0 // monto total de la bolsa
+          auction.transaction.amountRemated = item.totalRematado; // monto total rematado
           auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
           auction.year = item.year;
           auction.month = item.month;

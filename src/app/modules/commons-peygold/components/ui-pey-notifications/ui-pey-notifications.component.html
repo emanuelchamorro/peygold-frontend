@@ -5,7 +5,7 @@
     </div>
     <div *ngIf="notifications && notifications.data" class="notificaciones-container grey-box w-100">
         <div *ngFor="let notification of notifications.data"  class="p-3">
-            <img class="notificaciones-img" [src]="notification.image">
+            <img class="notificaciones-img" [src]="notification.image" (error)="validateImg($event,notification)">
             <div class="d-flex flex-column">
                 <span [innerHtml]="notification.title"></span>
                 <span [innerHtml]="notification.message"></span>

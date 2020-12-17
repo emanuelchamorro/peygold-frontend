@@ -37,7 +37,7 @@ export class EuPeyAuctionComponent extends BaseComponent implements OnInit {
 
   @ViewChild('datepicker', { static: false, read: ElementRef }) private inputDuration: ElementRef;
 
-  public auction: Auction;
+  public auctionSelected: Auction;
   public step: number = 1;
 
   private title: string;
@@ -112,16 +112,19 @@ export class EuPeyAuctionComponent extends BaseComponent implements OnInit {
    * @param peygoldcredit 
    */
   selectPeygoldCredit(peygoldcredit: Auction) {
-    this.auction = peygoldcredit;
-    this.auction.transaction.createdAt = new Date();
-    let expirationDatePeygoldsCredit = this.auction.expirationDate;
+    console.log('peygoldcredit 1',peygoldcredit);
+    this.auctionSelected = peygoldcredit;
+    this.auctionSelected.transaction.createdAt = new Date();
+    let expirationDatePeygoldsCredit = this.auctionSelected.expirationDate;
     this.minDate = this.calendar.getToday();
     this.maxDate = new NgbDate(expirationDatePeygoldsCredit.getFullYear(), expirationDatePeygoldsCredit.getMonth() + 1, expirationDatePeygoldsCredit.getDate());
     this.fromDate = this.minDate;
+    console.log('peygoldcredit 2',peygoldcredit);
   }
 
   continue() {
-    if (this.auction) {
+    if (this.auctionSelected) {
+      console.log('peygoldcredit 3',this.auctionSelected);
       this.step++;
     } else {
       this.setError('Seleccione un peygold crédito.');
@@ -130,7 +133,7 @@ export class EuPeyAuctionComponent extends BaseComponent implements OnInit {
 
   saveAuction() {
     this.spinnerService.show();
-    this.auctionService.createAuction(this.auction).then(
+    this.auctionService.createAuction(this.auctionSelected).then(
       (resp: any) => {
         this.spinnerService.hide();
         console.log('resp', resp);
@@ -162,7 +165,7 @@ export class EuPeyAuctionComponent extends BaseComponent implements OnInit {
     let inputDurationElem: HTMLInputElement = this.inputDuration.nativeElement;
     const startDay = this.fromDate.day;
     const endDay = this.toDate.day;
-    this.auction.duration = endDay - startDay;
+    this.auctionSelected.duration = endDay - startDay;
     inputDurationElem.value = String(endDay - startDay);
   }
 

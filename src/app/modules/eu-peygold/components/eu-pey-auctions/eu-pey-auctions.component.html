@@ -78,8 +78,7 @@
                             </td>
                             <td [innerHtml]="auction.discount+'%'"></td>
                             <td [innerHtml]="auction.auctionExpirationDate | date:medium"></td>
-                            <td
-                                [innerHtml]="">
+                            <td>
                                 $ {{ (auction.transaction.amountToAuction - (auction.transaction.amountToAuction * auction.discount/100)) | currency: " ":"symbol":"1.0"}}
                             </td>
                             <td width="20">

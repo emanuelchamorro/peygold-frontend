@@ -1,20 +1,12 @@
-//el worker será el encargado de escuchar, por lo tanto el listener va aqui
-
-self.addEventListener('push', e => {
-    const data = e.data.json();
-    console.log(data);
-    //var element = self.document.getElementById('iconNoti')
-    self.registration.showNotification(data.title, {
-        body: data.message,
-        icon: '/images/marcador.png'
-    });
+self.addEventListener('push', event => {
+    const data = event.data.json();
+    const promiseChain = self.registration.showNotification(
+        data.title,
+        {
+            body: data.message, 
+            icon: '/images/pizarra.png',
+            badge: '/images/geoloca.png',
+            image: '/images/billetera7.jpg',
+        })
+    event.waitUntil(promiseChain);
 });
-
-// Escuchamos el click en la ventana de notificación
-//self.addEventListener('notificationclick', event => {
-    //event.notification.close();
-    // recuperamos la url que pasamos en el options
-    //const { url } = event.notification.data;
-    //console.log(url);
-    //if (url) event.waitUntil(clients.openWindow(url));
-  //});

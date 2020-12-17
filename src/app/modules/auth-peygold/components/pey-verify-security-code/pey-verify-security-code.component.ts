@@ -55,4 +55,8 @@ export class PeyVerifySecurityCodeComponent  extends BaseComponent implements On
     }
   }
 
+  login(){
+
+  }
+
 }

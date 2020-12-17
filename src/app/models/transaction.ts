@@ -37,7 +37,8 @@ export class Transaction extends Model {
   public description:string;
   public sign:string; //signo de la transaccion
 
-  public amountToAuction:any;
+  public amountToAuction: any;
+  public amountRemated:any;
   
 
   /**
@@ -123,5 +124,9 @@ export class Transaction extends Model {
     transaction.type = new TransactionType(type);
 
     return transaction;
+  }
+
+  public get amountAvailableToAuction(){
+    return this.amount - this.amountRemated;
   }
 }

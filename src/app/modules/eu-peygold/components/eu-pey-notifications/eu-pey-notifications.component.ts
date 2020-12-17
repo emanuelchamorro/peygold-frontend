@@ -30,7 +30,7 @@ export class EuPeyNotificationsComponent extends BaseComponent implements OnInit
      this.notificationService.all(1, environment.paginator.per_page).then(
       (response:PaginationResponse)=>{
         this.notifications = response;
-        if (this.notifications.data.length > 0) {
+        if (this.notifications.data && this.notifications.data.length > 0) {
           this.page = response.page;
           this.previousPage = 1;
           this.totalItems = response.count;
