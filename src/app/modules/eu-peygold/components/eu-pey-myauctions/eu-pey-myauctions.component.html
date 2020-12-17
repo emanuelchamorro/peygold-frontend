@@ -209,7 +209,7 @@
 
 
 <app-ui-pey-sidebar *ngIf="modal=='detail'" (onClose)="auctionSelected = null" [closed]="!auctionSelected"
-    title="Detalles de la operación" class="BoxDetails Actividad">
+    title="Detalles de la operación" class="BoxDetails Remates">
 
     <div *ngIf="auctionSelected" class="modal-content pl-4 pr-4 pt-2">
         <ul class="operation-date">
@@ -220,7 +220,6 @@
 
         <ul class="list-detail">
             <li>
-
                 <span>Importe rematado</span>
                 <span>
                     {{auctionSelected.transaction.type.coin}}
@@ -239,7 +238,7 @@
 
 
         <ul  class="amount-detail">
-            <li class="line-trough">
+            <li>
                 <span *ngIf="auctionSelected.transaction.receiver">Total recibido</span>
                 <span *ngIf="!auctionSelected.transaction.receiver">Total a recibir</span>
                 <span>
@@ -259,8 +258,8 @@
         </ul>
 
 
-        <div *ngIf="auctionSelected.endsIn<=0" class="alert alert-danger text-center" role="alert">
-            <span [innerHtml]="'Vencido'" class="text-danger"></span>
+        <div *ngIf="auctionSelected.endsIn<=0" class="alert alert-danger text-center position-relative d-flex" role="alert">
+            <span [innerHtml]="'Vencido'" class="text-danger text-center w-100"></span>
         </div> 
 
     </div>
