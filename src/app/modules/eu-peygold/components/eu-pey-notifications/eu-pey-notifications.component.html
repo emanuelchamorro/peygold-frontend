@@ -6,7 +6,7 @@
 <div *ngIf="!showPagination" class="sin-remates-creados d-flex justify-content-center align-items-center flex-column p-5">
    <img class="d-flex mb-3" src="/assets/images/new-icons/bell.svg" height="100" width="100">
     <h2 class="text-dark">No tienes notificaciones disponibles</h2>
-    <span></span>-->
+    <span></span>
 </div>
 <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
 (pageChange)="loadPage($event)">
