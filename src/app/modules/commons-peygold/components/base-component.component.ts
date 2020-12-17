@@ -328,7 +328,7 @@ export class BaseComponent {
     window.scroll(0,0);
   }
 
-  validateImgUser(event, user:User){
+  public validateImgUser(event, user:User){
     user.avatarURL = 'https://api.peygold.com/images/user.png';
   }
 }
