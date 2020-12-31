@@ -22,6 +22,9 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
   @Input()
   private filterUsers: Array<number>;
 
+  @Input()
+  private suggestedUsers: Array<User>;
+
   private userName:string;
 
   /**
@@ -29,7 +32,6 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    */
   constructor(
     private userService: UserService,
-    /*nnerService:NgxSpinnerService*/
   ) {
     super();
   }
@@ -38,13 +40,11 @@ export class UIPeyUserAutocompleteComponent extends BaseComponent implements OnI
    * On Init implementation
    */
   ngOnInit() {
-    //this.spinnerService.show();
-    this.userService.search('may').then((users: Array<User>) => {
+
+    this.userService.search('@').then((users: Array<User>) => {
       if (this.filterUsers) {
         users = users.filter((user) => !this.filterUsers.includes(user.id) && user.active) ;
       }
-      this.recentUsers = users;
-      //this.spinnerService.hide();
     });
   }
 

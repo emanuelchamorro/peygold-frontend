@@ -36,6 +36,9 @@ export class UIPeyMoneyTransactionFormComponent extends BaseComponent implements
   @Input()
   creditPoints: boolean;
 
+  @Input()
+  suggestedUsers: Array<User>;
+
 
   private transactionTypes: Array<TransactionType>;
 

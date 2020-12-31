@@ -11,6 +11,8 @@ import {Message} from '../../../commons-peygold/entities/message';
 import {Router} from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Card } from 'src/app/models/card';
+import { CardService } from '../../services/card.service';
+import { CardFactory } from '../../../../factory/card-factory';
 
 @Component({
   selector: 'app-eu-pey-money-add-by-credit-card',
@@ -29,14 +31,20 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
 
   protected user: User;
 
+  protected newCard:Card;
+
+  private saveCard:boolean = false;
+
   constructor(
     private mercadoPago: MercadoPago,
     private mercadoPagoService: MercadoPagoService,
     private authService: AuthService,
     protected router: Router,
-    private spinnerService:NgxSpinnerService
+    private spinnerService:NgxSpinnerService,
+    private cardService: CardService
   ) {
     super();
+
     this.mercadoPago.setPublishableKey(environment.mercado_pago.publishable_key);
     this.mercadoPago.getIdentificationTypes().then((identificationTypes: Array<IdentificationType>) => {
       this.identificationTypes = identificationTypes;
@@ -78,7 +86,30 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
    * Get the trasacion token
    */
   prepareTransaction() {
-    this.spinnerService.show();
+      this.spinnerService.show();
+    if(this.saveCard){
+      this.cardService.createPostPayCard(CardFactory.makeCreditCardToEntity(this.transaction.creditCard)).then(
+          (resp)=>{
+            this.authService.reloadUser().then( (user: User) =>{ 
+              this.setSuccess('Tarjeta de credito fué registrada exitosamente.');
+              this.saveCard = false;            
+            })          
+          }
+        ).catch(
+          (error)=>{
+            this.saveCard = false;
+            if(error.code == 400){
+              this.setError(error.message);
+            }else{
+              this.setError('Ha ocurrido un error, tarjeta de credito no pudo ser registrada.');
+            }
+            
+          }
+        )
+    }
+
+
+
     this.mercadoPago.createToken(this.transaction.mercadoPagoTransaction).then((token: string) => {
       this.transaction.creditCard.token = token;
       this.spinnerService.hide();
@@ -137,7 +168,6 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
 
     if (card.number && card.number.length > 6) {
       this.spinnerService.show();
-      card.dueDate = card.dueDate.replace('/','');
       card.number = card.number.replace(/ /g, "");
       const bin = card.number.substring(0, 6);
       //know Payment Method
@@ -147,11 +177,12 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
           this.transaction.creditCard.type = extraInfo.id;
           this.transaction.creditCard.identificationType = new IdentificationType();
 
-          this.transaction.creditCard.identificationType.id = this.user.documentType.value;
-          this.transaction.creditCard.identificationNumber = this.user.documentNumber;
-          this.transaction.creditCard.holderName = this.user.completeName;
-          this.transaction.creditCard.expirationDate = card.dueDate;
-          this.transaction.creditCard.securityCode = Number(card.pin);
+          this.transaction.creditCard.identificationType.id = card.user.documentType.label;
+          this.transaction.creditCard.identificationNumber = card.user.documentNumber;
+          this.transaction.creditCard.holderName = card.user.name;
+          this.transaction.creditCard.expirationMonth = card.monthExpiration;
+          this.transaction.creditCard.expirationYear = card.yearExpiration;
+          this.transaction.creditCard.securityCode = card.securityCode;
           this.transaction.creditCard.number = Number(card.number);
 
           //create token card
@@ -175,6 +206,30 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
 
   goToSetCardInfo(){
     this.transaction.creditCard = new CreditCard();
+    this.newCard = new Card();
     this.step = 2;
+  }
+/**
+ * delete postpay card
+ * @param id 
+ */
+  deleteCard(id:number){
+    this.spinnerService.show();
+    this.cardService.deletePostPayCard(id).then(
+      (resp)=>{
+
+        this.authService.reloadUser().then( (user: User) =>{ 
+          this.spinnerService.hide();
+          this.setSuccess('La tarjeta de crédito ha sido eliminada exitosamente.');
+          this.saveCard = false;            
+        })
+        
+      }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        this.setError('Ha ocurrido un error. No fué posible elimanr la tarjeta de crédito.')
+      }
+    );
   }
 }

@@ -433,7 +433,7 @@
     </div>
 
     <div class="d-flex justify-content-center mb-5">
-      <button (click)="modal='detail';detailedTransaction=null;" class="solid-blue-button">Cancelar solicitud</button>
+      <button (click)="cancelRequest();modal='detail';detailedTransaction=null;" class="solid-blue-button">Cancelar solicitud</button>
     </div>
   </div>
   <!-- Detalle - Solicitud de pago (estado aprobado)-->
@@ -796,8 +796,6 @@
     </ul>
 
   </div>
-
-
 </app-ui-pey-sidebar>
 
 <!-- MODAL idOriginRecharge = 10 -  Remataste / aceptaste-->
@@ -819,41 +817,7 @@
         <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
             {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
       </li>
-      <!--   <li>
-          <span>Descuento aplicado</span>
-          <span [innerHtml]="auction.discount+'%'"></span>
-        </li>
-        <li>
-          <span>Vencimiento P$C</span>
-          <span [innerHtml]="auction.expirationDate | date:medium"></span>
-        </li>-->
     </ul>
-
-
-    <!--   <ul class="amount-detail">
-          <li class="line-trough">
-              <span>Total recibido</span>
-              <span>$400</span>
-          </li>
-      </ul>
-
-
-      <ul class="user-info-modal">
-          <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
-              <p>Contraparte</p>
-              <i class="circle">AC</i>
-              <span>Andres Calamaro</span>
-              <span>andy1425@gmail.com</span>
-          </li>
-      </ul>
-
-
-    <div class="alert alert-danger text-center" role="alert">
-      <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label"
-        [ngClass]="{'text-success': auction.status.value==1, 'text-primary':auction.status.value==2, 'text-danger':auction.status.value==3}"></span>
-      <span *ngIf="auction.endsIn<=0" [innerHtml]="'Vencido'" class="text-danger"></span>
-    </div> -->
-
   </div>
   <div *ngIf="modal=='detail' && user.email==detailedTransaction.sender.email" class="modal-content pl-4 pr-4 pt-2">
       <ul class="operation-date">
@@ -906,4 +870,71 @@
   
     </div>
 
+</app-ui-pey-sidebar>
+<!-- MODAL idOriginRecharge = 12 -  Remataste / Finalizado por usuario-->
+<app-ui-pey-sidebar *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='12'"
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación"
+  class="BoxDetails Actividad">
+
+  <div *ngIf="modal=='detail'" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+
+    <ul class="list-detail">
+      <li>
+
+        <span>Importe del remate que finalizaste</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+            {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+  </div>
+</app-ui-pey-sidebar>
+
+<!-- MODAL idOriginRecharge = 13 -  Remataste / Vencido-->
+<app-ui-pey-sidebar *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='13'"
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación"
+  class="BoxDetails Actividad">
+
+  <div *ngIf="modal=='detail'" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+
+    <ul class="list-detail">
+      <li>
+
+        <span>Importe del remate vencido</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+            {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+  </div>
+</app-ui-pey-sidebar>
+<!-- MODAL idOriginRecharge = 14 -  P$C / Vencidos-->
+<app-ui-pey-sidebar *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='14'"
+  (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación"
+  class="BoxDetails Actividad">
+
+  <div *ngIf="modal=='detail'" class="modal-content pl-4 pr-4 pt-2">
+    <ul class="operation-date">
+      <li><span [innerHtml]="'Operacion #'+detailedTransaction.id"></span>
+        <span [innerHtml]="detailedTransaction.createdAt | date: medium"></span>
+      </li>
+    </ul>
+
+    <ul class="list-detail">
+      <li>
+
+        <span>Importe de P$C vencidos</span>
+        <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
+            {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
+      </li>
+    </ul>
+  </div>
 </app-ui-pey-sidebar>

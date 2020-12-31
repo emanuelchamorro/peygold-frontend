@@ -19,7 +19,7 @@
   </label>
 </div>
 <ul class="col-md-9 mb-4">
-  <li *ngFor="let recentUser of recentUsers" (click)="setUser(recentUser)">
+  <li *ngFor="let recentUser of suggestedUsers" (click)="setUser(recentUser)">
     <i class="circle"> <img class="imgItem" [src]="recentUser.avatarURL" (error)="validateImgUser($event,recentUser)"/> </i>
     <span class="fullNameWidth" [innerHtml]="recentUser.fullName"></span>
   </li>

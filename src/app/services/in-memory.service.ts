@@ -225,6 +225,9 @@ export class InMemoryService extends BaseService {
     originTransactionTypes.push(new OriginTransactionType('10','Remates'));
     originTransactionTypes.push(new OriginTransactionType('4','Créditos'));
     originTransactionTypes.push(new OriginTransactionType('11','Recargas de tarjeta'));
+    originTransactionTypes.push(new OriginTransactionType('12','Remates que finalizaste'));
+    originTransactionTypes.push(new OriginTransactionType('13','Remates vencidos'));
+    originTransactionTypes.push(new OriginTransactionType('14','P$C vencidos'));
 
 
     return originTransactionTypes

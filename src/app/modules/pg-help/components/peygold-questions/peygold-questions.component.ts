@@ -17,6 +17,9 @@ export class PeygoldQuestionsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(routeParams => {
+      this.contentId = routeParams.contentId;
+    });
   }
 
 }

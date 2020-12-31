@@ -19,6 +19,8 @@ export class EuPeyMoneySendComponent extends BaseComponent implements OnInit {
 
   private user: User;
 
+  private suggestedUsers: Array<User>;
+
   private step = 1;
 
   constructor(
@@ -35,6 +37,11 @@ export class EuPeyMoneySendComponent extends BaseComponent implements OnInit {
    */
   ngOnInit() {
     this.user = this.authService.user();
+    this.transactionsService.getSuggestedContacts(1).then(
+      (resp:Array<User>)=>{
+        this.suggestedUsers = resp;
+      }
+    );
   }
 
   /**

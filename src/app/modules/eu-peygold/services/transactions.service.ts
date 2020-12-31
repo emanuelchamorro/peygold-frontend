@@ -114,19 +114,19 @@ export class TransactionsService extends HttpService {
             case (1): //Envio de pago
 
               if (user.email == item.emailSender) {
-                if(item.reason=='Remate'){
+                if (item.reason == 'Remate') {
                   transaction.iconImg = "/assets/images/new-icons/remate.svg";
                   transaction.description = "Pagaste remate a " + item.receiver.fullName;
-                }else{
+                } else {
                   transaction.iconImg = "/assets/images/new-icons/solicitud-dinero.svg";
                   transaction.description = "Pagaste/Enviaste dinero a " + item.receiver.fullName;
                 }
 
               } else if (user.email == item.receiver.email) {
                 //transaction.iconImg = environment.api.avatarUrl + item.avatarURL;
-                if(item.reason=='Remate'){
+                if (item.reason == 'Remate') {
                   transaction.description = item.fullNameSender + " te pagó remate";
-                }else{
+                } else {
                   transaction.description = item.fullNameSender + " te envió dinero";
                 }
 
@@ -179,13 +179,25 @@ export class TransactionsService extends HttpService {
                 transaction.description = "Remataste tus P$C";
               } else if (user.email == item.receiver.email) {
                 transaction.iconImg = "/assets/images/new-icons/remate.svg";
-                transaction.description = "Aceptaste remate de "+item.fullNameSender;
+                transaction.description = "Aceptaste remate de " + item.fullNameSender;
               }
               break;
-              case (11): //Recarga de tarjeta
-                transaction.iconImg = "/assets/images/new-icons/tarjeta.svg";
-                transaction.description = item.message.replace('Recarga de Tarjeta','Recargaste tu tarjeta ');
-              break;             
+            case (11): //Recarga de tarjeta
+              transaction.iconImg = "/assets/images/new-icons/tarjeta.svg";
+              transaction.description = item.message.replace('Recarga de Tarjeta', 'Recargaste tu tarjeta ');
+              break;
+            case (12): //Usuario finaliza remate
+              transaction.iconImg = "/assets/images/new-icons/remate.svg";
+              transaction.description = item.message.replace('Caducó', 'Finalizaste ');
+              break;
+            case (13): //Caduco remate
+              transaction.iconImg = "/assets/images/new-icons/remate.svg";
+              transaction.description = item.message;
+              break;
+            case (14): //P$C vencidos
+              transaction.iconImg = "/assets/images/new-icons/remate.svg";
+              transaction.description = item.message;
+              break;
           }
 
           return transaction;
@@ -218,6 +230,11 @@ export class TransactionsService extends HttpService {
     }).toPromise();
   }
 
+  /**
+   * Send payment
+   * @param paymentType 
+   * @param transaction 
+   */
   sendPayment(paymentType: number, transaction: Transaction) {
     let url: string;
     let payment;
@@ -246,7 +263,7 @@ export class TransactionsService extends HttpService {
         PayDTOs: [payment1, payment2]
       }
     }
-    console.log('payment en el servicio', payment)
+
     return this.post(url, payment).toPromise();
   }
 
@@ -262,6 +279,45 @@ export class TransactionsService extends HttpService {
       PayerData: "No.REF: 0125452848145 Rapid Pago"
 
     }).toPromise();
+  }
+
+  /**
+   * get suggestes contacts
+   * @param idOriginRecharge
+   */
+  getSuggestedContacts(idOriginRecharge: number): Promise<Array<User>> {
+    let users = new Array<User>();
+    return this.post('/transactions/GetContactsSuggested', { originRecharge: idOriginRecharge }).toPromise().then(
+      (resp: any) => {
+        users = resp.map((item: any) => {
+          const user = new User();
+          user.id = item.idUser;
+          user.idAspNetUser = item.idAspNetUser;
+          user.avatarURL = environment.api.avatarUrl + item.avatarURL;
+
+          user.dateRegistered = item.dateRegistered;
+          user.name = item.firstName;
+          user.lastName = item.lastName;
+          user.fullName = item.fullName;
+
+          if (item.phone.includes('+')) {
+            user.prefixPhone = item.phone.substr(0, 3);
+            user.phone = item.phone.replace(user.prefixPhone, '');
+          } else {
+            user.phone = item.phone;
+          }
+          user.email = item.email;
+          user.idUserType = item.idUserType;
+          return user;
+        });
+
+        return users;
+      }
+    ).catch(
+      (error) => {
+        return users;
+      }
+    )
   }
 
 }

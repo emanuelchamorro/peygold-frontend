@@ -83,15 +83,22 @@
                             <td class="col-2 d-flex justify-content-center"><span
                                     [innerHtml]="auction.discount+'%'"></span></td>
                             <td class="col-2 d-flex justify-content-center">
-                                <span *ngIf="auction.endsIn>0">Finaliza en {{auction.endsIn}} dias</span>
-                                <span *ngIf="auction.endsIn<=0">Vencido</span>
+                                <span *ngIf="auction.endsIn>0 && auction.status.value!='3' && !auction.transaction.receiver">Finaliza en {{auction.endsIn}} dias</span>
+                                <span *ngIf="auction.endsIn>0 && auction.status.value=='3' && !auction.transaction.receiver" class="text-danger">Finalizado</span>
+                                <span *ngIf="auction.endsIn<=0 && auction.status.value=='3' && !auction.transaction.receiver" class="text-danger">Vencido</span>
+                                <span *ngIf="auction.status.value=='3' && auction.transaction.receiver" class="text-success">Rematado</span>
+                                <span *ngIf="auction.endsIn==0 && auction.status.value=='1' && !auction.transaction.receiver" class="text-danger">Finaliza hoy</span>
                             </td>
                             <td class="col-2 d-flex justify-content-center"><span
                                     [innerHtml]="auction.expirationDate | date:medium"></span></td>
                             <td class="col-1 d-flex justify-content-center">
-                                <span *ngIf="auction.endsIn>0" [innerHtml]="auction.status.label"
-                                    [ngClass]="{'text-success': auction.status.value==1, 'text-primary':auction.status.value==2, 'text-danger':auction.status.value==3}"></span>
-                                <span *ngIf="auction.endsIn<=0" [innerHtml]="'Vencido'" class="text-danger"></span>
+                                <span *ngIf="auction.endsIn>0 && auction.status.value!='3' && !auction.transaction.receiver" 
+                                    [innerHtml]="auction.status.label"
+                                    [ngClass]="{'text-success': auction.status.value==1, 'text-primary':auction.status.value==2}"></span>
+                                <span *ngIf="auction.endsIn>0 && auction.status.value=='3' && !auction.transaction.receiver" class="text-danger">Finalizado</span>
+                                <span *ngIf="auction.endsIn<=0 && auction.status.value=='3' && !auction.transaction.receiver" [innerHtml]="'Vencido'" class="text-danger"></span>
+                                <span *ngIf="auction.status.value=='3' && auction.transaction.receiver" class="text-success">Rematado</span>
+                                <span *ngIf="auction.endsIn==0 && auction.status.value=='1' && !auction.transaction.receiver" class="text-danger">Finaliza hoy</span>
                             </td>
                             <td class="col-2 d-flex justify-content-center">
                             <span *ngIf="auction.transaction.receiver">{{auction.transaction.receiver.completeName}}</span></td>
@@ -258,134 +265,17 @@
         </ul>
 
 
-        <div *ngIf="auctionSelected.endsIn<=0" class="alert alert-danger text-center position-relative d-flex" role="alert">
-            <span [innerHtml]="'Vencido'" class="text-danger text-center w-100"></span>
+        <div *ngIf="auctionSelected.endsIn>0 && auctionSelected.status.value=='3' && !auctionSelected.transaction.receiver" class="alert alert-danger text-center position-relative d-flex" role="alert">
+            <span [innerHtml]="'Finalizado'" class="text-danger text-center w-100"></span>           
         </div> 
+        <div *ngIf="auctionSelected.endsIn<=0 && auctionSelected.status.value=='3' && !auctionSelected.transaction.receiver" class="alert alert-danger text-center position-relative d-flex" role="alert">
+                <span [innerHtml]="'Vencido'" class="text-danger text-center w-100"></span>
+         </div> 
+         <div *ngIf="auctionSelected.endsIn==0 && auctionSelected.status.value=='1' && !auctionSelected.transaction.receiver" class="alert alert-danger text-center position-relative d-flex" role="alert">
+                <span [innerHtml]="'Finaliza hoy'" class="text-danger text-center w-100"></span>
+         </div> 
 
     </div>
 
 
 </app-ui-pey-sidebar>
-
-<!-- Modal Remates 1 -->
-
-<!--  <div class="ShowDetails">
-    <div class="BoxDetails Remates">
-        <div class="HeadDetail">
-          <h3>Detalles de la operación</h3>
-          <span class="closeModal">x</span>  
-        </div>
-                
-             <div class="modal-content pl-4 pr-4 pt-2">
-                <ul class="operation-date">
-                 <li><span>Operacion #0123456789</span>  
-                 <span>1 de septiembre 14:18hs</span> 
-                 </li> 
-                </ul>
-
-                <ul class="list-detail">                          
-                    <li >
-                      <span>Importe rematado</span>  
-                      <span>P$C 500</span>
-                    </li>   
-                    <li >
-                      <span>Descuento aplicado</span>  
-                      <span>5% OFF</span>
-                    </li> 
-                    <li>
-                      <span>Vencimiento P$C</span>  
-                      <span>31/02/2020</span>
-                    </li>                  
-                  </ul>  
-
-          
-                <ul class="amount-detail">                          
-                 <li class="line-trough">
-                   <span>Total recibido</span>  
-                   <span>$400</span>
-                 </li>   
-                </ul>    
-
-                      
-                <ul class="user-info-modal">   
-                    <li class="d-flex justify-content-center flex-column align-items-center mt-4 mb-4">
-                      <p>Contraparte</p>
-                      <i class="circle">AC</i>
-                      <span>Andres Calamaro</span>  
-                      <span>andy1425@gmail.com</span> 
-                   </li>
-                 </ul>
-                    
-            
-                <div class="alert alert-danger text-center" role="alert">
-                  Se rechazó la solicitud
-                </div>
-
-             </div>
-          </div>
-        </div>-->
-
-
-<!-- Modal Remates 2 -->
-
-<!--  <div class="ShowDetails">
-    <div class="BoxDetails Remates">
-        <div class="HeadDetail">
-          <h3>Detalles de la operación</h3>
-          <span class="closeModal">x</span>  
-        </div>
-                
-             <div class="modal-content pl-4 pr-4 pt-2">
-                <ul class="operation-date">
-                 <li><span>Operacion #0123456789</span>  
-                 <span>1 de septiembre 14:18hs</span> 
-                 </li> 
-                </ul>
-
-                <ul class="list-detail">                          
-                    <li >
-                      <span>Importe rematado</span>  
-                      <span>P$C 500</span>
-                    </li>   
-                    <li >
-                      <span>Descuento aplicado</span>  
-                      <span>5% OFF</span>
-                    </li> 
-                    <li>
-                      <span>Vencimiento P$C</span>  
-                      <span>31/02/2020</span>
-                    </li>   
-                    <li>
-                        <span>Fecha de finalización</span>  
-                        <span>15/01/2021</span>
-                      </li>     
-                      <li>
-                        <span>Vencimiento P$C</span>  
-                        <span>31/02/2021</span>
-                      </li>              
-                  </ul>  
-
-                  <ul class="list-detail">                          
-                    <li >
-                        <span>Estado del remate</span>
-                        <span>FINALIZADO</span>
-                    </li>                  
-                </ul>      
-
-                     
-                <div class="alert alert-danger text-center" role="alert">
-                  Finalizaste el remate
-                </div>
-
-                <div class="alert alert-dark text-center" role="alert">
-                   Los Peygold créditos vencieron y fueron acreditados en tu billetera P$C
-                </div>
-               
-                <div class="alert alert-dark text-center" role="alert">
-                   El remate expiró. Los P$C rematados fueron acreditados a tu billetera P$C 
-               </div>
-
-
-             </div>
-          </div>
-        </div>-->
