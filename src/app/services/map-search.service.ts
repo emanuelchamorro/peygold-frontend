@@ -118,7 +118,7 @@ export class MapSearchService extends HttpService {
     let commerces = new Array<User>();
     return this.get(`/commerces/SearchCommerces/${word}/${km}/${latitud}/${longitud}`).toPromise().then(
       (response:any)=>{
-        commerces = response.map((item:any)=>{
+        commerces = response.commerceDTOs.map((item:any)=>{
           const nUser = new User();
 
           nUser.id = item.idUser;

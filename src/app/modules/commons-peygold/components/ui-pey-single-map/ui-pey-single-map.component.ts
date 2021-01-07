@@ -77,11 +77,11 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
   onSuccessGeolocating = (position) => {
     const { latitude, longitude } = position.coords;
 
-    this.latitud = latitude;
-    this.longitud = longitude;
+    //this.latitud = latitude;
+    //this.longitud = longitude;
 
-    //this.latitud = -34.85736308219589;
-    //this.longitud = -58.08378879257855;
+    this.latitud = -34.85736308219589;
+    this.longitud = -58.08378879257855;
 
     console.log('latitude', latitude)
     console.log('longitude', longitude)
@@ -89,7 +89,7 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
     this.serviceCategoryService.all().then((items: Array<ServiceCategory>) => {
       this.serviceCategories = items;
     });
-   /* this.spinnerService.show();
+    this.spinnerService.show();
     this.mapSearchService.searchByFilters(this.getParams(this.latitud, this.longitud, parseInt(this.selectdFilterServiceCategory), this.km)).then(
       (response: Array<User>) => {
         
@@ -112,7 +112,7 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
         this.spinnerService.hide();
         this.setError("Ha ocurrido un error. No será posible visualizar los comercios de nuestra red Peygold.");
       }
-    )*/
+    )
 
   }
 
