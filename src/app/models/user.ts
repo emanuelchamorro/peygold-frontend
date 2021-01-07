@@ -91,6 +91,8 @@ export class User extends Model {
   public qrImage:string;
   public prepaidCards: Array<Card>;
   public postpayCards: Array<Card>;
+  public latitud:number;
+  public longitud:number;
 
   /**
    * Get the user complete Name
@@ -166,14 +168,15 @@ export class User extends Model {
     }
 
     data.phone = this.prefixPhone+''+this.phone;
-
     if(this.isCompany){
       data.AliasInstitucion = this.alias;
       data.IdCategoriaComercio = parseInt(this.serviceCategory.id);
       data.IdCondicionIB = parseInt(this.iibbCondition.id);
       data.IdCondicionIva = parseInt(this.ivaCondition.id);
       data.Actividad = this.activity;
-      data.NumeroIB =this.iibbNumber;
+      data.NumeroIB = this.iibbNumber;
+      data.latitud = this.latitud;
+      data.longitud = this.longitud;
     }
 
     if(this.isInstitution){

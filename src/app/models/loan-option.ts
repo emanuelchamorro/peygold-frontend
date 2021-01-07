@@ -21,7 +21,6 @@ export class LoanOption extends Model {
     let date =  new Date();
     for (let i = 0; i < this.dues; i++ ) {
       const check = new Check();
-      debugger;
       let dueDate = new Date()
       let month = dueDate.getMonth();
 

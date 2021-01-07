@@ -281,6 +281,9 @@ export class UserService extends HttpService {
         return card;
       })
 
+      user.latitud = response.latitud;
+      user.longitud = response.longitud;
+
       //qr image
       //user.qrImage = 'qr';
 

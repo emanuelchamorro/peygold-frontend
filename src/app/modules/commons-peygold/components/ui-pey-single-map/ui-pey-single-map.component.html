@@ -1,2 +1,58 @@
-<agm-map *ngIf="ecommerces" [latitude]="lat" [longitude]="lng" [zoom]="14" (mapReady)="mapReady($event)"></agm-map>
+<ngx-spinner>
+    <p style="font-size: 20px; color: white">Procesando...</p>
+  </ngx-spinner>
+  <div class="">
+    <ngb-alert type="danger" *ngIf="error" [innerHtml]="error"></ngb-alert>
+    <h2><span class="icon-Iconos-08 fs-22"></span>Comercios Adheridos</h2>
+    <p class="opening-text">Encuentra comercios cercanos a tu ubicación</p>
+    <div class="content-center">
+  
+      <div class="filtros mb-2 w-100">
+        <div class="d-flex justify-content-between">
+          <div class="left">
+            <button class="btn btn-sm filtrarOrdenar">
+              Filtrar/Ordenar
+            </button>
+          </div>
+          <div class="right">
+            <form action="?" name="buscarFiltro">
+              <input [(ngModel)]="filter" (keydown.enter)="setFilterByWord($event)" type="text" class="input-buscar" name="buscar"
+                placeholder="Buscar" />
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex map-container flex-column w-100 mt-2">
+        <div class="DownFilters border-bottom-0 pr-3 pl-3">
+          <form class="form-inline">
+            <div class="input-group ml-0">
+              <div class="boxSelect">
+                <a class="btn-dropDown stateDrop"><span>Todas las categorias</span><i class="fa fa-chevron-right"></i></a>
+                <div class="downFecha stateDown">
+                  <ul>
+                    <li id="allServiceCategory" (click)="setFilterServiceCategory('-1')" class="optionDate">Todas las
+                      categorias
+                    </li>
+                    <li *ngFor="let category of serviceCategories" id="category.label"
+                      (click)="setFilterServiceCategory(category.value)" class="optionDate"
+                      [innerHtml]="category.label">
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="input-group" style="width: 500px">
+               <input type="number" class="comercios-km"  [(ngModel)]="km" name="km"/>
+               <button type="submit" class="btn-comercios-km  fas fa-search" (click)="setFilterByKM()"></button>
+            </div>
+          </form>
+        </div>
+  
+        <div class="comercios-map">
+            <agm-map [latitude]="latitud" [longitude]="longitud" [zoom]="14" (mapReady)="mapReady($event)"></agm-map>
+        </div>
+      </div>
+    </div>
+  </div>
+
 

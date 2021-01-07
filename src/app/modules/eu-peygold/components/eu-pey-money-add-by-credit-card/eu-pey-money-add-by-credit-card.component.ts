@@ -91,6 +91,7 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
       this.cardService.createPostPayCard(CardFactory.makeCreditCardToEntity(this.transaction.creditCard)).then(
           (resp)=>{
             this.authService.reloadUser().then( (user: User) =>{ 
+              this.user = this.authService.user();
               this.setSuccess('Tarjeta de credito fué registrada exitosamente.');
               this.saveCard = false;            
             })          
@@ -219,6 +220,7 @@ export class EuPeyMoneyAddByCreditCardComponent extends EuPeyMoneyAddComponent i
       (resp)=>{
 
         this.authService.reloadUser().then( (user: User) =>{ 
+          this.user = this.authService.user();
           this.spinnerService.hide();
           this.setSuccess('La tarjeta de crédito ha sido eliminada exitosamente.');
           this.saveCard = false;            

@@ -4,7 +4,6 @@ import {AuthService} from '../../../auth-peygold/services/auth.service';
 import {UserService} from '../../../../services/user.service';
 import {InMemoryService, InstitutionService, LocationService} from '../../../../services';
 import {BaseComponent} from '../base-component.component';
-import {ErrorResponse} from '../../entities/error-response';
 import {environment} from '../../../../../environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { IvaCondition } from '../../../../models/iva-condition';
@@ -13,10 +12,10 @@ import { ServiceCategory } from '../../../../models/service-category';
 import { ServiceCategoryService } from 'src/app/services/service-category.service';
 import { IvaConditionService } from '../../../../services/iva-condition.service';
 import { IibbConditionService } from '../../../../services/iibb-condition.service';
-import { concat } from 'rxjs';
 import { NgModel } from '@angular/forms';
 import {routes} from '../../../eu-peygold/routes';
 import {Document} from '../../../../models/document';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-ui-pey-user-form',
@@ -66,6 +65,8 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
 
   private identityDocuments: Array<any>;
 
+  geocoder: any = null;
+
   constructor(
     private inMemoryService: InMemoryService,
     private authService: AuthService,
@@ -76,6 +77,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
     private ivaConditionService: IvaConditionService,
     private serviceCategoryService:ServiceCategoryService,
     private locationService: LocationService,
+    private mapsAPILoader: MapsAPILoader
   ) {
     super();
   }
@@ -127,6 +129,15 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
     this.serviceCategoryService.all().then((items: Array<ServiceCategory>) => {
       this.serviceCategories = items;
     });
+    
+    //Una Vez se pueda usar la API de google map se obtiene ubicación actual para obtener la dirección y se lanza el evento onNewAddress
+    this.mapsAPILoader.load().then(
+      () => {
+        //Instancia objeto que calcula direcciones y geolocalizaciones
+        this.geocoder = new google.maps.Geocoder();
+      }
+    );
+
   }
 
   /**
@@ -160,7 +171,7 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
    */
   public save(): void {
     // Manual validation to present error message for each section
-    console.log('entra')
+    console.log('entra save user')
     if (this.validatePersonalData(this.editableUser)) {
       this.activeView = 'personalData';
       this.savePersonalDataButton.nativeElement.click();
@@ -185,25 +196,81 @@ export class UIPeyUserFormComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    console.log('update user',this.editableUser);
-    this.spinnerService.show();
-    this.userService.update(this.editableUser).then(() => {
-      this.completeName = this.editableUser.completeName;
-      this.spinnerService.hide();
-      this.setDefaultSuccess();
-      this.authService.reloadUser().then( (user: User) =>{ 
-        console.log('reload user',user);
-        this.editableUser = user
-        let intitutionUser = this.institutions.filter(x => x.value == user.profitInstitution.value)[0];
-        this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
-        
+    if (this.editableUser.isCompany) {
+
+      let address = '';
+      if(this.editableUser.address.street){
+        address = address+' '+ this.editableUser.address.street;
+      }
+  
+      if(this.editableUser.address.city && this.editableUser.address.city.label){
+        address = address+' '+ this.editableUser.address.city.label;
+      }
+  
+      if(this.editableUser.address.state && this.editableUser.address.state.label){
+        address = address+' '+ this.editableUser.address.state.label;
+      }
+  
+      if(this.editableUser.address.country && this.editableUser.address.country.label){
+        address = address+' '+ this.editableUser.address.country.label;
+      }
+
+      this.spinnerService.show();
+      this.geocoder.geocode({'address':address},(results, status)=>{
+        if(status === 'OK'){
+          this.editableUser.latitud = results[0].geometry.location.lat();
+          this.editableUser.longitud = results[0].geometry.location.lng();
+          console.log('this.editableUser.latitud ',this.editableUser.latitud );
+          console.log('this.editableUser.longitud',this.editableUser.longitud);
+          console.log('update user',this.editableUser);
+          
+          this.userService.update(this.editableUser).then(() => {
+            this.completeName = this.editableUser.completeName;
+            this.spinnerService.hide();
+            this.setDefaultSuccess();
+            this.authService.reloadUser().then( (user: User) =>{ 
+              console.log('reload user',user);
+              this.editableUser = user
+              let intitutionUser = this.institutions.filter(x => x.value == user.profitInstitution.value)[0];
+              this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+              
+            })
+          }).catch(this.catchError)
+            .finally(() => {
+              this.spinnerService.hide();
+            this.scrollToTop();
+            this.editableUser.password = null;
+          });
+        }else{
+          this.spinnerService.hide();
+          this.setError('La dirección es invalida.')
+          return;
+        }
       })
-    }).catch(this.catchError)
-      .finally(() => {
+     
+    }else{
+      console.log('update user',this.editableUser);
+      this.spinnerService.show();
+      this.userService.update(this.editableUser).then(() => {
+        this.completeName = this.editableUser.completeName;
         this.spinnerService.hide();
-      this.scrollToTop();
-      this.editableUser.password = null;
-    });
+        this.setDefaultSuccess();
+        this.authService.reloadUser().then( (user: User) =>{ 
+          console.log('reload user',user);
+          this.editableUser = user
+          let intitutionUser = this.institutions.filter(x => x.value == user.profitInstitution.value)[0];
+          this.editableUser.profitInstitution = new ProfitInstitution(intitutionUser.value, intitutionUser.label);
+          
+        })
+      }).catch(this.catchError)
+        .finally(() => {
+          this.spinnerService.hide();
+        this.scrollToTop();
+        this.editableUser.password = null;
+      });
+    }
+
+
   }
 
   /**

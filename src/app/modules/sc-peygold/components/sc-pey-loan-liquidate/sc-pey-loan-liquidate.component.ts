@@ -116,6 +116,7 @@ export class ScPeyLoanLiquidateComponent extends BaseComponent implements OnInit
           this.title = '¡Rechazaste la liquidación!';
           this.message = 'La liquidación de los P$G para la empresa ' + this.loanDetail.applicant.bussinessName + ' fué rechazada.' +
             ' Ya no verás esta opción en la lista';
+          this.spinnerService.hide();
         }
         this.showImageBottom = false;
         this.routeTo = this.routes.loansettlements.index.href;

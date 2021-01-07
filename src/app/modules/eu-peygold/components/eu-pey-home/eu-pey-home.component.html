@@ -869,8 +869,10 @@
       </div> -->
   
     </div>
-
 </app-ui-pey-sidebar>
+
+<!-- DESDE ACA COMIENZA LAS MODALES A AJUSTAR -->
+
 <!-- MODAL idOriginRecharge = 12 -  Remataste / Finalizado por usuario-->
 <app-ui-pey-sidebar *ngIf="detailedTransaction && detailedTransaction.originRecharge.value=='12'"
   (onClose)="detailedTransaction = null" [closed]="!detailedTransaction" title="Detalles de la operación"

@@ -68,7 +68,6 @@ export class RequestTransactionsService extends HttpService {
    * @return Promise
    */
   create(transaction: Transaction) {
-    debugger;
     let url: string;
     let payment;
     if(transaction.type.value != '999'){
