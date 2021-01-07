@@ -43,8 +43,8 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   public filter: string = null;
   public selectdFilterTransactionType: string;
 
-  protected filtersOriginRechargeDefault: Array<any> = [1, 2, 3, 6, 7, 8, 9, 10, 11];
-  protected filtersTransationStatusDefault: Array<any> = [1, 2, 3];
+  protected filtersOriginRechargeDefault: Array<any> = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+  protected filtersTransationStatusDefault: Array<any> = [1, 2, 3, 4];
 
   protected filtersOriginRecharge: Array<any>;
   protected filtersTransationStatus: Array<any>;
@@ -422,6 +422,25 @@ setTransaction(transaction: any): void { //cambiar tipo
       const message = e.message || 'No es posible realizar la transacción';
       this.setError(message);
     });
+  }
+
+
+/**
+ * cancel request
+ */
+  cancelRequest(){
+    if(this.detailedTransaction){
+      this.spinnerService.show();
+      this.detailedTransaction.status =  new TransactionStatus('4');
+      this.detailedTransaction.processedComments = 'Transacción cancelada por el usuario.'
+      this.requestTransactionsService.update(this.detailedTransaction).then(() => {
+        this.spinnerService.hide();
+      }).catch((e: ErrorResponse) => {
+        this.spinnerService.hide();
+        const message = e.message || 'No es posible realizar la transacción';
+        this.setError(message);
+      });
+    }
   }
 
 }

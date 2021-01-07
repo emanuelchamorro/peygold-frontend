@@ -242,6 +242,48 @@ export class UserService extends HttpService {
           return card;
       })
 
+      user.postpayCards = response.tarjetasPostPagas.map( (c:any)=>{
+        let card = new Card();
+        card.id = c.idPostpaidCard;
+        card.creationDate = c.creationDate;
+        card.number = c.number;
+        card.status = new Status(String(c.status));
+        card.securityCode = c.securityCode;
+        card.amount = c.amount;
+        card.pin = c.pin;
+        card.yearExpiration = c.yearExpiration;
+        card.monthExpiration = c.monthExpiration;
+        card.user = new User();
+        card.user.id = c.idTitular;
+        card.creditCardType = new CardType(c.creditCardType);
+        card.user.name = c.printedName;
+
+        switch (c.documentType) {
+          case 1:
+            card.user.documentType = new DocumentType(c.documentType,'DNI');
+            break;
+          case 2:
+            card.user.documentType = new DocumentType(c.documentType,'Cédula');
+            break;
+          case 3:
+            card.user.documentType = new DocumentType(c.documentType,'L.C.');
+            break;
+          case 3:
+            card.user.documentType = new DocumentType(c.documentType,'L.E.');
+            break;
+          case 3:
+          card.user.documentType = new DocumentType(c.documentType,'Otro');
+            break;
+        }
+
+        card.user.documentNumber = c.documentNumber;
+        card.icon = c.creditCardType == 1 ? '/assets/images/tarjetas/mastercard.svg': '/assets/images/tarjetas/american.svg';
+        return card;
+      })
+
+      user.latitud = response.latitud;
+      user.longitud = response.longitud;
+
       //qr image
       //user.qrImage = 'qr';
 

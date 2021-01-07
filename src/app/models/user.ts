@@ -91,6 +91,8 @@ export class User extends Model {
   public qrImage:string;
   public prepaidCards: Array<Card>;
   public postpayCards: Array<Card>;
+  public latitud:number;
+  public longitud:number;
 
   /**
    * Get the user complete Name
@@ -166,14 +168,15 @@ export class User extends Model {
     }
 
     data.phone = this.prefixPhone+''+this.phone;
-
     if(this.isCompany){
       data.AliasInstitucion = this.alias;
       data.IdCategoriaComercio = parseInt(this.serviceCategory.id);
       data.IdCondicionIB = parseInt(this.iibbCondition.id);
       data.IdCondicionIva = parseInt(this.ivaCondition.id);
       data.Actividad = this.activity;
-      data.NumeroIB =this.iibbNumber;
+      data.NumeroIB = this.iibbNumber;
+      data.latitud = this.latitud;
+      data.longitud = this.longitud;
     }
 
     if(this.isInstitution){
@@ -299,7 +302,8 @@ export class User extends Model {
   //TODO:DUMMY GET TARJETAS
   get allCardsPostpay():Array<Card>{
 
-    this.cards = new Array<Card>();
+    return this.postpayCards;
+  /*  this.cards = new Array<Card>();
     let card =  new Card();
     card.id = 1;
     card.number = '4509 9535 6623 3704'
@@ -307,7 +311,7 @@ export class User extends Model {
     card.dueDate = '10/2025'
     card.pin = '123';
     card.type = 1;
-    card.icon = card.type == 1 ? '/assets/images/tarjetas/mastercard.svg': '/assets/images/tarjetas/american.svg';
+    
     this.cards.push(card);
 
     card =  new Card();
@@ -330,7 +334,7 @@ export class User extends Model {
     card.icon = card.type == 3 ? '/assets/images/tarjetas/mastercard.svg': '/assets/images/tarjetas/american.svg';
     this.cards.push(card);
 
-    return this.cards;
+    return this.cards;*/
 
   }
 

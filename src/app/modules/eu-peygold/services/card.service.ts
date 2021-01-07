@@ -181,111 +181,20 @@ export class CardService extends HttpService {
     );
   }
 
-/*  {
+  /**
+   * create postpay card
+   * @param card 
+   */
+  createPostPayCard(card:any){
+    return this.post('/TarjetaPostPago',card).toPromise();
+  }
 
-    "movements": [
-        {
-            "descripcion": "Solicitud de tarjeta",
-            "tipoMovimiento": "Solicitud",
-            "fecha": "2020-11-24T15:02:55.7172363",
-            "balance": 0.0,
-            "monto": 0.0
-        },
-        {
-            "idTransaccion": 39,
-            "descripcion": "Activacion de tarjeta",
-            "tipoMovimiento": "Activación",
-            "fecha": "2020-11-27T16:06:28.0926921",
-            "balance": 0.0,
-            "monto": 0.0
-        },
-        {
-            "idTransaccion": 40,
-            "descripcion": "Recarga de tarjeta",
-            "tipoMovimiento": "Recargas",
-            "fecha": "2020-11-27T16:36:57.4605543",
-            "balance": 1000.0,
-            "monto": 1000.0
-        },
-        {
-            "idTransaccion": 41,
-            "descripcion": "Recarga de tarjeta",
-            "tipoMovimiento": "Recargas",
-            "fecha": "2020-11-27T16:40:06.5350697",
-            "balance": 2270.0,
-            "monto": 1270.0
-        },
-        {
-            "idTransaccion": 42,
-            "descripcion": "Recarga de tarjeta",
-            "tipoMovimiento": "Recargas",
-            "fecha": "2020-11-27T16:41:58.3341475",
-            "balance": 4270.0,
-            "monto": 2000.0
-        },
-        {
-            "idTransaccion": 43,
-            "descripcion": "Recarga de tarjeta",
-            "tipoMovimiento": "Recargas",
-            "fecha": "2020-11-27T17:09:33.2652805",
-            "balance": 7270.0,
-            "monto": 3000.0
-        },
-        {
-            "idTransaccion": 44,
-            "descripcion": "Recarga de tarjeta",
-            "tipoMovimiento": "Recargas",
-            "fecha": "2020-11-27T17:11:17.2835719",
-            "balance": 8540.0,
-            "monto": 1270.0
-        },
-        {
-            "idTransaccion": 45,
-            "descripcion": "Recarga de tarjeta",
-            "tipoMovimiento": "Recargas",
-            "fecha": "2020-11-30T06:43:21.7115391",
-            "balance": 9540.0,
-            "monto": 1000.0
-        },
-        {
-            "idTransaccion": 46,
-            "descripcion": "Modifcacion de Pin",
-            "tipoMovimiento": "ModificacionPIN",
-            "fecha": "2020-11-30T14:36:50.4563855",
-            "balance": 9540.0,
-            "monto": 0.0
-        },
-        {
-            "idTransaccion": 47,
-            "descripcion": "Recarga de tarjeta",
-            "tipoMovimiento": "Recargas",
-            "fecha": "2020-11-30T14:45:03.9788226",
-            "balance": 10540.0,
-            "monto": 1000.0
-        },
-        {
-            "idTransaccion": 48,
-            "descripcion": "Modifcacion de Pin",
-            "tipoMovimiento": "ModificacionPIN",
-            "fecha": "2020-11-30T14:53:43.3295071",
-            "balance": 10540.0,
-            "monto": 0.0
-        },
-        {
-            "idTransaccion": 49,
-            "descripcion": "Modifcacion de Pin",
-            "tipoMovimiento": "ModificacionPIN",
-            "fecha": "2020-11-30T15:00:52.8600774",
-            "balance": 10540.0,
-            "monto": 0.0
-        }
-    ]
-  }*/
-
-
-
-
-
-
+  /**
+   * delete post pay card
+   * @param id 
+   */
+  deletePostPayCard(id:number){
+    return this.delete(`/TarjetaPostPago/${id}`).toPromise();
+  }
 
 }

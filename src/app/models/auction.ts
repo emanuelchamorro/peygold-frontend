@@ -62,10 +62,12 @@ export class Auction extends Model {
    */
   get endsIn():any{
 
-    const startDate = new Date();
-    const endDate = this.auctionExpirationDate;
-    const end = endDate.getDate() - startDate.getDate();
-    return endDate.getDate() - startDate.getDate();
+      const startDate = new Date();
+      const endDate = this.auctionExpirationDate;
+      const end = endDate.getDate() - startDate.getDate();
+      return endDate.getDate() - startDate.getDate();
+
+
   }
  
 }

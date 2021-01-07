@@ -86,15 +86,4 @@ export class UserService extends HttpService {
    }
 
 
-  /* const auction = new Auction();
-   auction.transaction = new Transaction();
-   auction.transaction.amount= item.totalAmount;
-   auction.transaction.amountToAuction = item.totalAmount; // monto maximo a subastar
-   auction.transaction.type = new TransactionType(TransactionTypeEnum.CreditPoints);
-   auction.year = item.year;
-   auction.month = item.month;
-
-   return auction;*/
-
-
 }

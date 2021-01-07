@@ -9,7 +9,7 @@
 
 <div class="content-center">
   <div class="d-flex w-75 flex-column align-items-center">
-    <app-ui-pey-money-transaction-form [startedByUser]="user" [disabled]="submitted" buttonLabel="Enviar solicitud"
+    <app-ui-pey-money-transaction-form [startedByUser]="user" [suggestedUsers]="suggestedUsers" [disabled]="submitted" buttonLabel="Enviar solicitud"
       [multipey]="true" [creditPoints]="true" (continue)="send($event)"></app-ui-pey-money-transaction-form>
   </div>
 </div>

@@ -68,13 +68,37 @@ export class RequestTransactionsService extends HttpService {
    * @return Promise
    */
   create(transaction: Transaction) {
-    debugger;
-    return this.post('/requesttransactions', {
-      Ammount: transaction.amount,
-      IdUserSender: transaction.sender.id,
-      IdTransactionType : transaction.type.value,
-      RequestComments: transaction.reason
-    }).toPromise();
+    let url: string;
+    let payment;
+    if(transaction.type.value != '999'){
+
+      url = '/requesttransactions';
+      payment = {
+        Ammount: transaction.amount,
+        IdUserSender: transaction.sender.id,
+        IdTransactionType : transaction.type.value,
+        RequestComments: transaction.reason
+      }
+
+    }else{
+      url = '/requesttransactions/CreateMultipay';
+      const payment1 = {
+        Idtransactiontype: transaction.multiPey[0].type.value,
+        Ammount: transaction.multiPey[0].amount
+      }
+      const payment2 = {
+        Idtransactiontype: transaction.multiPey[1].type.value,
+        Ammount: transaction.multiPey[1].amount
+      }
+      payment = {
+        idSender: transaction.sender.id,
+        RequestComments: transaction.reason,
+        PayDTOs: [payment1, payment2]
+      }
+    }
+
+    return this.post(url, payment).toPromise();
+
   }
 
 

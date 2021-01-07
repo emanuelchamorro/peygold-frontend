@@ -6,6 +6,10 @@ import { HelpComponent } from './components/help/help.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { FrequentQuestionsComponent } from './components/frequent-questions/frequent-questions.component';
 import { PeygoldQuestionsComponent } from './components/peygold-questions/peygold-questions.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -18,7 +22,12 @@ import { PeygoldQuestionsComponent } from './components/peygold-questions/peygol
   imports: [
     CommonModule,
     CommonsPeyGoldModule,
-    PgHelpRoutingModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    PgHelpRoutingModule,
+    NgbAlertModule,
+    NgxSpinnerModule
   ]
 })
 export class PgHelpModule { }

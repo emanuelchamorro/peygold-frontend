@@ -1,6 +1,8 @@
 <ngx-spinner>
   <p style="font-size: 20px; color: white">Procesando...</p>
 </ngx-spinner>
+<ngb-alert *ngIf="error" type="danger" [innerHtml]="error" ></ngb-alert>
+<ngb-alert *ngIf="success" type="success" [innerHtml]="success" ></ngb-alert>
 <app-eu-pey-money-add-amount-form icon="icon-Iconos-03" title="Ingresar Dinero"
   description="Elegí el monto que deseas ingresar" *ngIf="!transaction" (continue)="setTransaction($event)">
 </app-eu-pey-money-add-amount-form>
@@ -30,11 +32,11 @@
               <img [src]="card.icon" class="w-auto mr-2">
             </div>
             <div class="d-flex flex-column">
-              <span [innerHtml]="user.completeName"></span>
-              <span [innerHtml]="'xxxx xxxx xxxx '+user.currentCard.number.substr(-4)"></span>
+              <span [innerHtml]="card.user.name"></span>
+              <span [innerHtml]="'xxxx xxxx xxxx '+card.number.substr(-4)"></span>
             </div>
           </div>
-          <button class="delete-card p-3">Eliminar</button>
+          <button class="delete-card p-3" (click)="deleteCard(card.id);">Eliminar</button>
         </div>
         <div class="card-row add-new-card text-left p-3 border-0 ">
           <button class="btn-add-card " (click)="goToSetCardInfo()">Agregar otra tarjeta</button>
@@ -60,7 +62,7 @@
 
       </div>
     </div>
-    <form name="formCreditCard" (ngSubmit)="formCreditCard.valid && prepareTransaction()" #formCreditCard="ngForm"
+    <form name="formCreditCard" (ngSubmit)="formCreditCard.form.valid && prepareTransaction()" #formCreditCard="ngForm"
       novalidate class="mt-3">
       <div class="wallet-conteiner mb-2">
         <div class="ingresarDinero w-100">
@@ -98,43 +100,25 @@
               </div>
               <label class="date">Fecha de vencimiento*</label>
               <div class="form-row">
-                <!--<div class="form-group col-md-6">
-                  <label class="has-float-label mb-0 w-100">
-                    <input required type="text" placeholder="Fecha de Vencimiento" class="form-control"
-                      name="creditCardExpirationDate" [specialCharacters]="['/']" mask="00/0000"
-                      [(ngModel)]="transaction.creditCard.expirationDate" #creditCardExpirationDate="ngModel" />
-                    <span>Fecha de Vencimiento</span>
-                    <div
-                      *ngIf="!creditCardExpirationDate.pristine && creditCardExpirationDate.invalid || formCreditCard.submitted && creditCardExpirationDate.errors"
-                      class="invalid-feedback text-left">
-                      <div *ngIf="creditCardExpirationDate.errors.required">Campo es requerido</div>
-                      <div *ngIf="creditCardExpirationDate.errors['Mask error']">Fecha invalida. Mes/Año Ej: 01/2025
-                      </div>
+                <div class="col-md-5">
+                  <div class="form-row">
+                    <div class="form-group col-md-5">
+                      <label class="has-float-label mb-0 w-100">
+                        <input type="text" placeholder="mm" class="form-control" name="expirationMonth" mask="00"
+                          [(ngModel)]="transaction.creditCard.expirationMonth" #expirationMonth="ngModel" />
+                        <span>mm</span>
+                      </label>
                     </div>
-                  </label>
-                </div>-->
-
-            <div class="col-md-5">
-              <div class="form-row"> 
-               <div class="form-group col-md-5">
-                  <label class="has-float-label mb-0 w-100">
-                      <input type="text" placeholder="mm" class="form-control"
-                      name="expirationMonth" mask="00"
-                      [(ngModel)]="transaction.creditCard.expirationMonth" #expirationMonth="ngModel" />
-                      <span>mm</span>
-                  </label>
-              </div>
-              <span class="d-flex align-items-center col-xs-2 justify-content-center">/</span>
-              <div class="form-group col-md-5">
-                  <label class="has-float-label mb-0 w-100">
-                      <input type="text" placeholder="aa" class="form-control"
-                      name="expirationYear" mask="0000"
-                      [(ngModel)]="transaction.creditCard.expirationYear" #expirationYear="ngModel" />
-                      <span>aaaa</span>
-                  </label>
-               </div>
-             </div>
-            </div>
+                    <span class="d-flex align-items-center col-xs-2 justify-content-center">/</span>
+                    <div class="form-group col-md-5">
+                      <label class="has-float-label mb-0 w-100">
+                        <input type="text" placeholder="aa" class="form-control" name="expirationYear" mask="0000"
+                          [(ngModel)]="transaction.creditCard.expirationYear" #expirationYear="ngModel" />
+                        <span>aaaa</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
 
                 <div class="form-group col-md-7">
                   <label class="has-float-label mb-0 w-100">
@@ -179,7 +163,7 @@
                   </label>
                 </div>
                 <div class="form-check d-flex align-items-center">
-                  <input class="form-check-input d-flex mt-0" type="checkbox" value="" id="defaultCheck1">
+                  <input class="form-check-input d-flex mt-0" (click)="saveCard=!saveCard" type="checkbox" value="" id="defaultCheck1">
                   <label class="form-check-label pl-0" for="defaultCheck1">
                     Guardar datos de esta tarjeta
                   </label>
