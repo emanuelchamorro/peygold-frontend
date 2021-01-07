@@ -892,7 +892,20 @@
         <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
             {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
       </li>
+      <li>
+        <span>Fecha de finalización </span>
+        <span>07/01/2021</span>
+      </li>
+      <li>
+        <span>Estado del remate </span>
+        <span>FINALIZADO</span>
+      </li> 
     </ul>
+
+    <div class="alert alert-danger text-center mt-3" role="alert">
+      Has finalizado este remate.
+    </div>
+
   </div>
 </app-ui-pey-sidebar>
 
@@ -915,7 +928,22 @@
         <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
             {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
       </li>
+      <li>
+        <span>Fecha de vencimiento </span>
+        <span>07/01/2021</span>
+      </li>
     </ul>
+    <li>
+      <span>Estado del remate </span>
+      <span>VENCIDO</span>
+    </li>
+
+    </ul>
+
+    <div class="alert alert-dark text-center mt-4" role="alert">
+      El remate ha vencido. Los P$C del remate fueron devueltos a tu billetera P$C
+    </div>
+
   </div>
 </app-ui-pey-sidebar>
 <!-- MODAL idOriginRecharge = 14 -  P$C / Vencidos-->
@@ -937,6 +965,17 @@
         <span>{{detailedTransaction.sign}} {{detailedTransaction.symbol}}
             {{detailedTransaction.amount | currency:' ':'symbol':'1.0'}}</span>
       </li>
+      <li>
+        <span>Fecha de vencimiento </span>
+        <span>08/01/2021</span>
+      </li>
+      <li>
+        <span>Estado de P$C </span>
+        <span>VENCIDOS</span>
+      </li>
     </ul>
+    <div class="alert alert-dark text-center mt-4" role="alert">
+      Los P$C vencieron y fueron acreditados en tu billetera P$G.
+    </div>
   </div>
 </app-ui-pey-sidebar>
