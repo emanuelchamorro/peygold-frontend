@@ -91,8 +91,7 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
   onSuccessGeolocating = (position) => {
     const { latitude, longitude } = position.coords;
     this.cords.next([latitude, longitude]);
-    //this.latitud = -34.85736308219589;
-    //this.longitud = -58.08378879257855;
+    //this.cords.next([-34.85736308219589, -58.08378879257855]);
     console.log('latitude', latitude)
     console.log('longitude', longitude)
 
