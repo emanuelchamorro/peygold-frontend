@@ -24,7 +24,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 
   private paginateTransactions: PaginationResponse;
 
-  private detailedTransaction: any;
+  private detailedTransaction: Transaction;
   public user:User;
   public totalItems: number;
   public page: number;
@@ -43,7 +43,7 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
   public filter: string = null;
   public selectdFilterTransactionType: string;
 
-  protected filtersOriginRechargeDefault: Array<any> = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+  protected filtersOriginRechargeDefault: Array<any> = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   protected filtersTransationStatusDefault: Array<any> = [1, 2, 3, 4];
 
   protected filtersOriginRecharge: Array<any>;
@@ -387,8 +387,10 @@ export class EuPeyHomeComponent extends BaseComponent implements OnInit {
 * @param transaction The transaction to show
 * @return void
 */
-setTransaction(transaction: any): void { //cambiar tipo
+setTransaction(transaction: Transaction): void { //cambiar tipo
+  
     this.detailedTransaction = transaction;
+    console.log('setTransaction',this.detailedTransaction)
   }
 
 
@@ -441,6 +443,52 @@ setTransaction(transaction: any): void { //cambiar tipo
         this.setError(message);
       });
     }
+  }
+
+  /**
+   * create a request for refund
+   * @param detailedTransaction
+   */
+  requestForRefund(transaction:Transaction){
+    this.spinnerService.show();
+    this.requestTransactionsService.requestForRefund(transaction.id, transaction.reason).then(
+      (resp)=>{
+        this.spinnerService.hide();
+        console.log(resp);
+      }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        console.log(error);
+      }
+    );
+  }
+
+  /**
+   * refund money
+   * @param transaction 
+   */
+  refundAmount(transaction:Transaction){
+    const refundTransf = new Transaction();
+    refundTransf.amount = transaction.amount; //pilas con las comisiones
+    refundTransf.type = new TransactionType(transaction.type.id);
+    refundTransf.sender = new User();
+    refundTransf.sender.email = transaction.receiver.email;
+    refundTransf.receiver = new User();
+    refundTransf.receiver.email = transaction.sender.email;
+    this.spinnerService.show();
+    const optionSelected = transaction.type.isMultiPey ? 3 : 1;
+    refundTransf.messages = transaction.reason && transaction.reason!=''?  transaction.reason.trim() +'. Se reversa movimiento nro. '+transaction.id : 'Se reversa movimiento nro. '+transaction.id;
+    console.log('refund amount 2', refundTransf);
+    this.transactionsService.sendPayment(optionSelected,refundTransf).then(() => {
+       this.spinnerService.hide();
+     }).catch((e: ErrorResponse) => {
+       this.spinnerService.hide();
+       this.submitted = false;
+       const message = e.message || 'No es posible realizar la transacción';
+       this.setError(message);
+     });
+
   }
 
 }

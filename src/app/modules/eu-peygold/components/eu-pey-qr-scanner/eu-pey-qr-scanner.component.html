@@ -29,7 +29,7 @@
 <div *ngIf="step==2" class="col-lg-11">
   <app-eu-pey-money-add-amount-form icon="icon-Iconos-06" title="QR: Cobrar con QR"
     description="Elegí el monto que deseas recibir." [multipey]="true" [creditPoints]="true"
-    (continue)="setTransaction($event)">
+    (continue)="setTransaction($event)" [validate]="true"  [buttonLabel]="'Continuar'">
   </app-eu-pey-money-add-amount-form>
 </div>
 

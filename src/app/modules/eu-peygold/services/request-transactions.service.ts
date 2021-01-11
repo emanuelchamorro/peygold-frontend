@@ -113,4 +113,13 @@ export class RequestTransactionsService extends HttpService {
       ProcessedComments: transaction.processedComments
     }).toPromise();
   }
+
+/**
+ * create a request For Refund 
+ * @param id 
+ * @param comments 
+ */
+  requestForRefund(id:number, comments:string){
+    return this.post('/RefundRequests',{IdTransaction:id, Comments: comments}).toPromise()
+  }
 }

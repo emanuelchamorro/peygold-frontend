@@ -1,7 +1,10 @@
 <!--VISTA USUARIO NO HA GENERADO CODIGO QR-->
+<ngx-spinner>
+  <p style="font-size: 20px; color: white">Procesando...</p>
+</ngx-spinner>
 <div text-align="center" style="position: absolute; left: -1000px; top: 0;">
   <kendo-pdf-export #pdf>
-    <div  style="width: 400px; border: 1px dashed black;">
+    <div style="width: 400px; border: 1px dashed black;">
       <img src="/assets/images/Tijera.svg" width="30" style="position: absolute; top: -12px;
               right: 20px;">
       <div style="padding: 15px 15px 45px 15px; margin: auto; background-color: #3575BA; text-align: center;">
@@ -10,24 +13,24 @@
 
         <h2 style="color: white; font-size: 29px!important; text-transform: uppercase;margin-top: 25px;
                 margin-bottom: 35px; letter-spacing: 1px;">Pagá desde <br> tu celular</h2>
-       <div #contentQr>
-        
-         
+        <div #contentQr>
+
+
           <qr-code [value]="user.toQR" [size]="250">
           </qr-code>
-      
-       </div>
-       </div>
+
+        </div>
       </div>
-      <div style="background-color: white; display: inline-block; width: 100%; padding: 15px;">
-        <span style="margin-right: 15px;     font-size: 14px;">Con las apps de:</span>
-        <img src="/assets/images/peygold-logo-black.svg" width="90" style="margin-right: 15px;">
-        <img src="/assets/images/tienda-pey.svg" width="90">
-      </div>
-      <div style="background-color: white; width: 100%; margin: auto; text-align: center; padding: 10px;">
-        <span style="font-size: 10px;">CUIL 30495883049 - CONFORTSUR S.A</span>
-      </div>
-    
+    </div>
+    <div style="background-color: white; display: inline-block; width: 100%; padding: 15px;">
+      <span style="margin-right: 15px;     font-size: 14px;">Con las apps de:</span>
+      <img src="/assets/images/peygold-logo-black.svg" width="90" style="margin-right: 15px;">
+      <img src="/assets/images/tienda-pey.svg" width="90">
+    </div>
+    <div style="background-color: white; width: 100%; margin: auto; text-align: center; padding: 10px;">
+      <span style="font-size: 10px;">CUIL 30495883049 - CONFORTSUR S.A</span>
+    </div>
+
   </kendo-pdf-export>
 </div>
 <div *ngIf="step == 1" class="bg-gradient white-container-wrapper col-lg-11">
@@ -40,7 +43,7 @@
     </div>
 
     <div class="qr-heading col-md-8 mb-4 text-center">
-      <h2>¡Generá tu código y cobrá <br> con o QR !</h2>
+      <h2>¡Generá tu código y cobrá con QR !</h2>
       <p>
         Te damos la bienvenida a esta forma revolucionaria de cobrar.
         Ahora podrás recibir pagos de forma inmediata, brindandole a tus clientes
@@ -61,6 +64,10 @@
     <div class="row TopTitle">
       <div class="col-sm-8">
         <h2><span class="icon-Iconos-06"></span><strong>QR: </strong>Cobrar con QR</h2>
+
+        <p class="text-dark mt-1 mb-0 pb-2">¡Generaste tu código QR!</p>
+        <p class="pr-3">Ya tienes tu código QR listo para usar. Ahora impímelo y expónelo en tu comercio para comenzar a recibir pagos.</p>
+        <p>En el caso de que lo necesites, puedes escoger el monto que deseas recibir.</p>
       </div>
       <div class="col-sm-4">
         <ul class="right-menu-actions">
@@ -70,19 +77,14 @@
       </div>
     </div>
   </div>
-
-  <app-ui-pey-message-success [title]="title" [message]="message" [showImageBottom]="showImageBottom"
-    [buttonLabel]="buttonLabel" (onContinue)="paymentRequestQR($event)" class="d-flex justify-content-center" [changeClass]="changeClass">
-  </app-ui-pey-message-success>
-</div>
-<!--VISTA PARA INDICAR MONTO - ACCION OPCIONAL-->
-<div *ngIf="step == 3" class="white-container-wrapper col-lg-11">
-  <app-eu-pey-money-add-amount-form icon="icon-Iconos-06" title="QR: Cobrar con QR"
-    description="Elegí el monto que deseas recibir." [multipey]="true" [creditPoints]="true" (continue)="setTransaction($event)">
+  <app-eu-pey-money-add-amount-form [multipey]="true" [creditPoints]="true"
+    (continue)="setTransaction($event)" [validate]="false" [buttonLabel]="'Cobrar con QR'">
   </app-eu-pey-money-add-amount-form>
+
 </div>
+
 <!--VISTA  RESUMEN DE LA OPERACION -->
-<div *ngIf="step == 4 && transaction" class="white-container-wrapper col-lg-11">
+<div *ngIf="step == 3 && transaction" class="white-container-wrapper col-lg-11">
   <div class="top">
     <div class="row TopTitle">
       <div class="col-sm-8">
@@ -104,14 +106,16 @@
         </div>
         <div class="bodyCardMessage">
           <div *ngIf="!transaction.type.isMultiPey" class="p-3">
-            <h2 class="text-center">Recibirás {{transaction.type.coin}} &nbsp;{{transaction.amount | number:'1.0'}}</h2>
+            <h2 *ngIf="indicateAmount" class="text-center">Recibirás {{transaction.type.coin}} &nbsp;{{transaction.amount | number:'1.0'}}</h2>
+            <h2 *ngIf="!indicateAmount" class="text-center">Recibirás el monto que indiques</h2>
             <p class="text-center">Tu cliente debe escanear el código con la app de PeyGold</p>
           </div>
           <div *ngIf="transaction.type.isMultiPey" class="p-3">
             <div class="d-flex justify-content-center flex-column">
-              <p class="text-center">Recibirá</p>
+              <p *ngIf="indicateAmount" class="text-center">Recibirá</p>
+              <h2 *ngIf="!indicateAmount" class="text-center">Recibirás el monto que indiques</h2>
 
-              <div class="multipey-detail d-flex justify-content-center">
+              <div *ngIf="indicateAmount" class="multipey-detail d-flex justify-content-center">
                 <ul>
                   <li *ngFor="let trans of transaction.multiPey" class="text-center">
                     {{trans.type.coin}}{{ trans.amount | currency: " ":"symbol":"1.0" }}

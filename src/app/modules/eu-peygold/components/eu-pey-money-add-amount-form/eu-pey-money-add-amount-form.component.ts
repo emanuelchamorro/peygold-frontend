@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Transaction, TransactionType} from '../../../../models';
-import {InMemoryService} from '../../../../services';
-import {TransactionTypeEnum} from '../../../../enums';
-import {BaseComponent} from '../../../commons-peygold/components/base-component.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Transaction, TransactionType } from '../../../../models';
+import { InMemoryService } from '../../../../services';
+import { TransactionTypeEnum } from '../../../../enums';
+import { BaseComponent } from '../../../commons-peygold/components/base-component.component';
 
 @Component({
   selector: 'app-eu-pey-money-add-amount-form',
@@ -32,6 +32,12 @@ export class EuPeyMoneyAddAmountFormComponent extends BaseComponent implements O
   @Input()
   transaction: Transaction;
 
+  @Input()
+  validate: boolean;
+
+  @Input()
+  buttonLabel: string;
+
   private transactionTypes: Array<TransactionType>;
 
   constructor(
@@ -44,30 +50,41 @@ export class EuPeyMoneyAddAmountFormComponent extends BaseComponent implements O
     this.transaction = new Transaction();
     this.transaction.type = new TransactionType(TransactionTypeEnum.Fiat);
     this.transactionTypes = this.inMemoryService.transactionTypes(this.multipey, this.creditPoints);
+
     if (this.multipey) {
       this.transaction.multiPey = [
         Transaction.createFromType(TransactionTypeEnum.Fiat),
         Transaction.createFromType(TransactionTypeEnum.Points),
       ];
     }
+
+
   }
 
   /**
    * Emit the transaction to parent component
    */
   public onContinue() {
-    if (this.isValidTransaction(this.transaction)
-      || (this.multipey
-        && this.isValidTransaction(this.transaction.multiPey[0])
-        && this.isValidTransaction(this.transaction.multiPey[1])
-      )) {
+    if (this.validate) {
+      if (this.isValidTransaction(this.transaction)
+        || (this.multipey
+          && this.isValidTransaction(this.transaction.multiPey[0])
+          && this.isValidTransaction(this.transaction.multiPey[1])
+        )) {
 
+        if (!this.transaction.type.isMultiPey) {
+          this.transaction.multiPey = null;
+        }
+
+        this.continue.emit(this.transaction);
+      }
+    } else {
       if (!this.transaction.type.isMultiPey) {
         this.transaction.multiPey = null;
       }
-
       this.continue.emit(this.transaction);
     }
+
   }
 
   /**

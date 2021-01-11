@@ -1,10 +1,11 @@
 <ngx-spinner>
   <p style="font-size: 20px; color: white">Procesando...</p>
 </ngx-spinner>
-<ngb-alert *ngIf="error" type="danger" [innerHtml]="error" ></ngb-alert>
-<ngb-alert *ngIf="success" type="success" [innerHtml]="success" ></ngb-alert>
-<app-eu-pey-money-add-amount-form icon="icon-Iconos-03" title="Ingresar Dinero"
-  description="Elegí el monto que deseas ingresar" *ngIf="!transaction" (continue)="setTransaction($event)">
+<ngb-alert *ngIf="error" type="danger" [innerHtml]="error"></ngb-alert>
+<ngb-alert *ngIf="success" type="success" [innerHtml]="success"></ngb-alert>
+<app-eu-pey-money-add-amount-form icon="icon-Iconos-03" title="Ingresar Dinero" [validate]="true"
+  [buttonLabel]="'Continuar'" description="Elegí el monto que deseas ingresar" *ngIf="!transaction"
+  (continue)="setTransaction($event)">
 </app-eu-pey-money-add-amount-form>
 
 
@@ -163,7 +164,8 @@
                   </label>
                 </div>
                 <div class="form-check d-flex align-items-center">
-                  <input class="form-check-input d-flex mt-0" (click)="saveCard=!saveCard" type="checkbox" value="" id="defaultCheck1">
+                  <input class="form-check-input d-flex mt-0" (click)="saveCard=!saveCard" type="checkbox" value=""
+                    id="defaultCheck1">
                   <label class="form-check-label pl-0" for="defaultCheck1">
                     Guardar datos de esta tarjeta
                   </label>

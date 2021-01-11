@@ -6,6 +6,8 @@
 *ngIf="!transaction" 
 title="Ingresar Dinero > Depósito"
 description="Elegí el monto que deseas ingresar"
+[validate]="true"
+[buttonLabel]="'Continuar'"
 (continue)="sendTransaction($event)">
 </app-eu-pey-money-add-amount-form>
 <div *ngIf="transaction">

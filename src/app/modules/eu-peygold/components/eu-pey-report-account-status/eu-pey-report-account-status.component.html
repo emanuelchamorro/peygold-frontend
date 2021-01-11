@@ -170,7 +170,7 @@
                 No hay registros para mostrar.
             </p>
         </div>
-        <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+        <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
         (pageChange)="loadPage($event)">
     </ngb-pagination>
     </div>

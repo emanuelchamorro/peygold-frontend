@@ -7,6 +7,8 @@ import { AuthService } from '../../../auth-peygold/services/auth.service';
 import { TransactionsService } from '../../services/transactions.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from '../base.component';
+import { QrService } from '../../../eu-peygold/services/qr.service';
+import { TransactionFactory } from '../../../../factory/transaction-factory';
 
 @Component({
   selector: 'app-eu-pey-qr-scanner',
@@ -40,10 +42,12 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
   //TODO: PARA LA NUEVA IMPLEMENTACION DE PAGO POR QR
   payments: any;
   private transaction: Transaction;
+  public indicateAmount:boolean;
 
 
   constructor(private renderer: Renderer2,
     private authService: AuthService,
+    private qrService: QrService,
     private transactionsService: TransactionsService,
     private spinnerService: NgxSpinnerService) {
 
@@ -52,7 +56,6 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.user();
-
   }
 
   ngAfterViewInit() {
@@ -92,13 +95,27 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
         this.decode = JSON.parse(result);
         this.decode.fullName = atob(this.decode.fullName);
         //TODO: Consultar cobros pendientes mas recientes
-        const haveCobros = false;
-        if (haveCobros) {
-          this.payments = [{ idTransactionType: 1, ammount: 1000 }];
-          this.step = 3;
-        } else {
-          this.step = 2;
-        }
+        this.spinnerService.show();
+        this.qrService.getQrPaymentPendingToPay(this.decode.email).then(
+          (transPending:Transaction)=>{
+            console.log('transPending',transPending);
+            if(transPending){
+              this.transaction = transPending;
+              this.validateIfIndicateAmount();
+              if(this.indicateAmount){
+                this.payments = JSON.parse(this.transaction.paymentsToQR);
+                this.step = 3;
+              }else{
+                this.step = 2;
+              }
+            }else{
+              //TODO: NO HAY PAGOS PENDIENTES POR EJECUTAR
+            }
+            this.spinnerService.hide();
+    
+          }
+        );
+
       } else {
         this.setError("El código QR no es válido.");
       }
@@ -111,7 +128,8 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
  * @param transaction 
  */
   setTransaction(transaction: Transaction) {
-    transaction.receiver = this.user;
+    transaction.sender = this.user;
+    transaction.id = this.transaction.id;
     this.transaction = transaction;
     this.payments = JSON.parse(this.transaction.paymentsToQR);
     console.log(transaction)
@@ -227,22 +245,6 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
 
 
 
-  proccess(qrDecode: any) {
-    const optionSelected = qrDecode.payments.length > 1 ? 3 : 1;
-    this.spinnerService.show();
-    this.transactionsService.sendPayment(optionSelected, this._paymentMapper(qrDecode)).then(
-      (resp) => {
-        this.spinnerService.hide();
-        this.step++;
-      }
-    ).catch(
-      (error) => {
-        this.spinnerService.hide();
-        this.setError("Ha ocurrido un error. No fué posible efectuar el pago.");
-      }
-    )
-  }
-
   _paymentMapper(dataDecode: any) {
     const optionSelected = dataDecode.payments.length > 1 ? 3 : 1;
     let payment: any;
@@ -280,22 +282,47 @@ export class EuPeyQrScannerComponent extends BaseComponent implements OnInit {
   }
 
   back() {
-    // let firstDiv:HTMLElement = this.step1.nativeElement;
-    // firstDiv.style.removeProperty("display");
-    // firstDiv.style.setProperty('visibility','visible');
     this.step--;
   }
 
   send() {
-    //this.proccess(this.decode);
-    this.title = "¡El pago fue enviado!";
-    this.message = `Has pagado exitosamente a <b>${this.decode.fullName}.</b> El importe total fue descontado de tu billetera Peygold,<br />verás la operacion reflejada en "Movimientos"`;
-    this.showImageBottom = false;
-    this.routeTo = this.routes.home.href;
-    this.buttonLabel = "Volver a inicio";
+    this.spinnerService.show();
+    this.qrService.processQrPayment(this.transaction.id, this.user.email, TransactionFactory.makeTransactionToEntity(this.transaction,true)).then(
+      (resp)=>{
+        this.spinnerService.hide();
+        console.log(resp);
+        this.title = "¡El pago fue enviado!";
+        this.message = `Has pagado exitosamente a <b>${this.decode.fullName}.</b> El importe total fue descontado de tu billetera Peygold,<br />verás la operacion reflejada en "Movimientos"`;
+        this.showImageBottom = false;
+        this.routeTo = this.routes.home.href;
+        this.buttonLabel = "Volver a inicio";
+    
+        this.step++;
+      }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        console.log(error);
+      }
+    );
 
-    this.step++;
   }
+
+
+  /**
+ * validate if indicate amount
+ */
+validateIfIndicateAmount(){
+  if(!this.transaction.type.isMultiPey){
+    this.indicateAmount = this.transaction.amount > 0 ? true : false; 
+  }else{
+    let resultValidate = new Array<boolean>();
+    this.transaction.multiPey.forEach(trans => {
+      resultValidate.push(trans.amount > 0 ? true : false);
+    });
+    this.indicateAmount = resultValidate[0] && resultValidate[1];
+  }
+}
 
 
 

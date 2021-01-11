@@ -3,6 +3,9 @@ import { Transaction, User } from '../../../../models';
 import { BaseComponent } from '../base.component';
 import { AuthService } from '../../../auth-peygold/services/auth.service';
 import { PDFExportComponent } from '@progress/kendo-angular-pdf-export';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { QrService } from '../../../eu-peygold/services/qr.service';
+import { TransactionFactory } from '../../../../factory/transaction-factory';
 
 
 @Component({
@@ -23,20 +26,35 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
   private showImageBottom: boolean;
   private buttonLabel: string;
   public changeClass:boolean = true;
+  public indicateAmount:boolean;
+  
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private qrService: QrService,
+    private spinnerService:NgxSpinnerService
   ) {
     super();
   }
 
   ngOnInit() {
     this.user = this.authService.user();
-    this.title = "¡Generaste tu código QR!";
-    this.message = "Ya tienes tu código QR listo para usar. Ahora imprimilo y exponelo en tu comercio para comenzar a recibir pagos.";
-    this.showImageBottom = false;
-    this.buttonLabel = "Cobrar con QR";
-    this.step = this.user.qrImage!=null && this.user.qrImage!=undefined  ? 2 : 1;
+    this.user.qrImage = this.authService.isGenerateQr();
+    this.spinnerService.show();
+    this.qrService.getQrPaymentPending().then(
+      (transPending:Transaction)=>{
+        console.log(transPending);
+        if(!transPending){
+          this.step = this.user.qrImage!=null && this.user.qrImage!=undefined && this.user.qrImage  ? 2 : 1;
+        }else{
+          this.transaction = transPending;
+          this.validateIfIndicateAmount();
+          this.step = 3;
+        }
+        this.spinnerService.hide();
+
+      }
+    );
   }
   
 
@@ -45,7 +63,8 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
    */
   generateQRCode() {
 
-    this.user.qrImage="QR";
+    this.user.qrImage=true;
+    this.authService.setGenerateQR(this.user.qrImage);
     this.step++;
   }
 
@@ -95,14 +114,6 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
     popupWin.document.close();
   }
 
-  /**
-   * ready to payment init page
-   * @param result 
-   */
-  paymentRequestQR(result:any){
-    this.step++;
-  }
-
 /**
  * set transaction
  * @param transaction 
@@ -110,15 +121,84 @@ export class EuPeyQrGeneratorComponent extends BaseComponent implements OnInit {
   setTransaction(transaction: Transaction) {
     transaction.receiver = this.user;
     this.transaction = transaction;
-    console.log(transaction.toQR)
-    this.step++;
+    this.validateIfIndicateAmount();
+    this.spinnerService.show();
+    this.qrService.createQrPayment(TransactionFactory.makeTransactionToEntity(transaction,this.indicateAmount)).then(
+      (resp)=>{
+        this.spinnerService.hide();
+         this.step++;        
+      }
+    ).catch(
+      (error)=>{
+        this.spinnerService.hide();
+        this.setError('Ha ocurrido un error, no fué posible procesar el cobro qr.')
+        console.log(error);
+      }
+    );
+    
   }
 
   /**
    * cancel resquest payment with qr code
    */
   cancelRequestPayment(){
-    this.step = 2;
+
+    if(this.transaction && this.transaction.id){
+      this.spinnerService.show();
+      this.qrService.cancelQrPayment(this.transaction.id).then(
+        (resp)=>{
+          this.transaction = null;
+          console.log(resp);
+          this.spinnerService.hide();
+          this.step = 2;
+        }
+        ).catch(
+          (error)=>{
+            console.log(error)
+            this.spinnerService.hide();
+            this.setError('Ha ocurrido un error, no fué posible cancelar el cobro qr.');
+          }
+        );
+    }else{
+      this.spinnerService.show();
+      this.qrService.getQrPaymentPending().then(
+        (transPending:Transaction)=>{
+          console.log(transPending);
+          this.qrService.cancelQrPayment(transPending.id).then(
+            (resp)=>{
+              this.transaction = null;
+              console.log(resp)
+              this.spinnerService.hide();
+              this.step = 2;
+            }
+            ).catch(
+              (error)=>{
+                console.log(error)
+                this.spinnerService.hide();
+                this.setError('Ha ocurrido un error, no fué posible cancelar el cobro qr.');
+              }
+            );
+  
+        }
+      );
+    }
+
+
+
+  }
+/**
+ * validate if indicate amount
+ */
+  validateIfIndicateAmount(){
+    if(!this.transaction.type.isMultiPey){
+      this.indicateAmount = this.transaction.amount > 0 ? true : false; 
+    }else{
+      let resultValidate = new Array<boolean>();
+      this.transaction.multiPey.forEach(trans => {
+        resultValidate.push(trans.amount > 0 ? true : false);
+      });
+      this.indicateAmount = resultValidate[0] && resultValidate[1];
+    }
   }
 
 }

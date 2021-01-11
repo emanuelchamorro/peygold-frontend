@@ -39,6 +39,8 @@ export class Transaction extends Model {
 
   public amountToAuction: any;
   public amountRemated:any;
+
+  public endAt;
   
 
   /**
@@ -122,7 +124,6 @@ export class Transaction extends Model {
   public static createFromType(type: TransactionTypeEnum): Transaction {
     const transaction = new Transaction();
     transaction.type = new TransactionType(type);
-
     return transaction;
   }
 

@@ -228,6 +228,7 @@ export class InMemoryService extends BaseService {
     originTransactionTypes.push(new OriginTransactionType('12','Remates que finalizaste'));
     originTransactionTypes.push(new OriginTransactionType('13','Remates vencidos'));
     originTransactionTypes.push(new OriginTransactionType('14','P$C vencidos'));
+    originTransactionTypes.push(new OriginTransactionType('15','Cobros con QR'));
 
 
     return originTransactionTypes

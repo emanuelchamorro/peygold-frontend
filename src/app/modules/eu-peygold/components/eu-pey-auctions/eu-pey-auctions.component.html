@@ -101,7 +101,7 @@
             </div>
 
             <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
-            (pageChange)="loadPage($event)">
+            (pageChange)="loadPage($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
             </ngb-pagination>
 
             <div class="d-flex justify-content-end w-100">

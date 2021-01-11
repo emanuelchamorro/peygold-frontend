@@ -88,7 +88,7 @@ export class User extends Model {
   public identityVerified:VerifyStatus;
   public isLoadAlldocuemnts:boolean;
   public cards: Array<Card>;
-  public qrImage:string;
+  public qrImage:boolean;
   public prepaidCards: Array<Card>;
   public postpayCards: Array<Card>;
   public latitud:number;
@@ -299,43 +299,12 @@ export class User extends Model {
 
   }
 
-  //TODO:DUMMY GET TARJETAS
+  /**
+   * get all postpay cards
+   */
   get allCardsPostpay():Array<Card>{
 
     return this.postpayCards;
-  /*  this.cards = new Array<Card>();
-    let card =  new Card();
-    card.id = 1;
-    card.number = '4509 9535 6623 3704'
-    card.status = new Status('2','Activa');
-    card.dueDate = '10/2025'
-    card.pin = '123';
-    card.type = 1;
-    
-    this.cards.push(card);
-
-    card =  new Card();
-    card.id = 2;
-    card.number = '4509 9535 6623 3704'
-    card.status = new Status('2','Activa');
-    card.dueDate = '10/2025'
-    card.pin = '123';
-    card.type = 2;
-    card.icon = card.type == 2 ? '/assets/images/tarjetas/american.svg': '/assets/images/tarjetas/mastercard.svg';
-    this.cards.push(card);
-
-    card =  new Card();
-    card.id = 3;
-    card.number = '4509 9535 6623 3704'
-    card.status = new Status('2','Activa');
-    card.dueDate = '10/2025'
-    card.pin = '123';
-    card.type = 3;
-    card.icon = card.type == 3 ? '/assets/images/tarjetas/mastercard.svg': '/assets/images/tarjetas/american.svg';
-    this.cards.push(card);
-
-    return this.cards;*/
-
   }
 
     /**

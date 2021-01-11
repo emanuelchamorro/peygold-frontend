@@ -77,6 +77,9 @@ export class TransactionsService extends HttpService {
           transaction.createdAt = item.dateAndTime;
           transaction.amount = item.amount || item.ammount;
 
+          if(item.idTransactionHistory==5837){
+            debugger;
+          }
           //Sender
           transaction.sender = new User();
           transaction.sender.id = item.idSender;

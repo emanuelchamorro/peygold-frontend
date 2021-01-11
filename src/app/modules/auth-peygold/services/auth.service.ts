@@ -458,4 +458,25 @@ export class AuthService extends HttpService {
     return this.post('/users/VerifyPhoneNumber',{PhoneNumber,token}).toPromise();
   }
 
+  /**
+   * Set boolean if generate qr
+   * @param isGenarateQr The boolean value
+   */
+  public setGenerateQR(isGenarateQr: boolean) {
+    localStorage.setItem("isgqr", JSON.stringify(isGenarateQr) );
+  }
+
+    /**
+   * Return the boolean value
+   */
+  isGenerateQr(): boolean {
+    const localValue = localStorage.getItem("isgqr");
+
+    if (! localValue) {
+      return false;
+    }
+
+    return JSON.parse(localValue);
+  }
+
 }

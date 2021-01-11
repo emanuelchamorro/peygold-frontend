@@ -540,14 +540,14 @@
     </ul>
     <ul>
       <div class="d-flex justify-content-center">
-        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+        <input [(ngModel)]="detailedTransaction.reason" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
       </div>
     </ul>
     <div class="alert alert-dark text-center mt-5" role="alert">
       Reintegraremos el dinero a {{detailedTransaction.sender.completeName}}.<br> Lo verá nuevamente en su billetera
     </div>
     <div class="d-flex justify-content-center mt-3 mb-5">
-      <button (click)="detailedTransaction = null;" class="solid-blue-button">Reintegrar dinero</button>
+      <button (click)="refundAmount(detailedTransaction);detailedTransaction = null;" class="solid-blue-button">Reintegrar dinero</button>
     </div>
   </div>
 </app-ui-pey-sidebar>
@@ -698,7 +698,7 @@
 
 
     <div class="d-flex justify-content-center">
-      <input value="No hay notas" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+      <input value="No hay notas" [(ngModel)]="detailedTransaction.reason" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
     </div>
 
     <div class="alert alert-dark text-center  mb-4" role="alert">
@@ -707,7 +707,7 @@
     </div>
 
     <div class="d-flex justify-content-center mb-3">
-      <button (click)="detailedTransaction = null;" class="solid-blue-button">Solicitar reintegro</button>
+      <button (click)="requestForRefund(detailedTransaction); detailedTransaction = null;" class="solid-blue-button">Solicitar reintegro</button>
     </div>
   </div>
   <!-- Reintegrar dinero - Se recibe dinero -->
@@ -758,14 +758,14 @@
     </ul>
     <ul>
       <div class="d-flex justify-content-center">
-        <input [value]="detailedTransaction.messages" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
+        <input [(ngModel)]="detailedTransaction.reason" type="text" class="d-flex w-75 mt-2 mb-5" id="input-line" />
       </div>
     </ul>
     <div class="alert alert-dark text-center mt-5" role="alert">
       Reintegraremos el dinero a {{detailedTransaction.sender.completeName}}.<br> Lo verá nuevamente en su billetera
     </div>
     <div class="d-flex justify-content-center mt-3 mb-5">
-      <button (click)="detailedTransaction = null;" class="solid-blue-button">Reintegrar dinero</button>
+      <button (click)="refundAmount(detailedTransaction); detailedTransaction = null;" class="solid-blue-button">Reintegrar dinero</button>
     </div>
   </div>
 </app-ui-pey-sidebar>

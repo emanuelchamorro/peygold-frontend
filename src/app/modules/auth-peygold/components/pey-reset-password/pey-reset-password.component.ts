@@ -145,11 +145,7 @@ export class PeyResetPasswordComponent extends BaseComponent implements OnInit {
    * Change the user password
    */
   changePassword(validators: Array<NgModel>) {
-    const valid = this.validateModels(validators);
 
-    if (!valid) {
-      return;
-    }
     this.spinnerService.show();
     this.authService.resetUserPassword(this.user.email, this.user.token, this.user.password).then((response) => {
       this.user = null;

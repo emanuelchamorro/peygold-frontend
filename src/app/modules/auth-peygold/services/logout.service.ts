@@ -17,8 +17,10 @@ export class LogoutService implements CanActivate {
   canActivate(): boolean {
     if (this.auth.isAuthenticated()) {
       var auth = localStorage.getItem('auth');
+      var isgqr = this.auth.isGenerateQr();
       localStorage.clear();
       localStorage.setItem('auth',auth);
+      this.auth.setGenerateQR(isgqr);
     }
     return true;
   }

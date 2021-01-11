@@ -38,6 +38,8 @@ export class ReportsService extends HttpService {
       params.Hasta = endDate;
     }
 
+    params.Status = [];
+
     return this.post('/transactions/reportestadocuenta',params).toPromise().then(
       (resp)=>{
         paginator.count = resp.recordCount;

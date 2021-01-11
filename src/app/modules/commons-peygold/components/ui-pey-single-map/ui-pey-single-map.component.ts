@@ -6,6 +6,7 @@ import { MapSearchService } from '../../../../services/map-search.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ServiceCategoryService } from '../../../../services/service-category.service';
 import { BaseComponent } from '../base-component.component';
+import { Subject } from 'rxjs';
 
 declare var google: any;
 
@@ -14,16 +15,18 @@ declare var google: any;
   templateUrl: './ui-pey-single-map.component.html',
   styleUrls: ['./ui-pey-single-map.component.scss']
 })
+
 export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
 
   protected ecommerces: Array<any> = null;
   protected serviceCategories: Array<ServiceCategory>;
+  protected cords = new Subject<Array<number>>();
   protected latitud: number;
   protected longitud: number;
   protected filter: string = '';
   protected km: number = 5;
   protected selectdFilterServiceCategory: string = '0';
-  
+
   protected map: google.maps.Map;
   protected myMarker: any = null;
   protected marker: any = null;
@@ -34,9 +37,9 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
   constructor(private mapsAPILoader: MapsAPILoader,
     private mapSearchService: MapSearchService,
     private spinnerService: NgxSpinnerService,
-    private serviceCategoryService: ServiceCategoryService) { 
-      super();
-    }
+    private serviceCategoryService: ServiceCategoryService) {
+    super();
+  }
 
   ngOnInit() {
     this.markers = [];
@@ -47,80 +50,56 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
       //Obtener geolocalización actual
       this.markerBounds = new google.maps.LatLngBounds();
       this.getCurrentGeolocation();
+      this.serviceCategoryService.all().then((items: Array<ServiceCategory>) => {
+        this.serviceCategories = items;
+      });
 
     });
   }
 
-
+  /**
+   * try ready map
+   * @param map 
+   */
   public mapReady(map) {
     console.log(map)
     this.map = map;
     //this.map.addListener('click', this.placeMarkerAndPanTo);
-
-    console.log('ecommerces', this.ecommerces);
-    if(this.ecommerces && this.ecommerces.length>0){
+    if (this.ecommerces && this.ecommerces.length > 0) {
       this.loadAllMarkes();
       this.map.fitBounds(this.markerBounds);
     }
 
   }
 
-
+/**
+ * get current position
+ */
   getCurrentGeolocation() {
-    navigator.geolocation.getCurrentPosition(
-      this.onSuccessGeolocating,
-      this.onErrorGeolocating,
-      { enableHighAccuracy: true }
-    );
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        this.onSuccessGeolocating,
+        this.onErrorGeolocating,
+        { enableHighAccuracy: true, maximumAge: Infinity}
+      );
+    }else{
+      this.setError('Geolocation is not supported by this browser');
+    }
   }
 
   onSuccessGeolocating = (position) => {
     const { latitude, longitude } = position.coords;
-
-    //this.latitud = latitude;
-    //this.longitud = longitude;
-
-    this.latitud = -34.85736308219589;
-    this.longitud = -58.08378879257855;
-
+    this.cords.next([latitude, longitude]);
+    //this.latitud = -34.85736308219589;
+    //this.longitud = -58.08378879257855;
     console.log('latitude', latitude)
     console.log('longitude', longitude)
-
-    this.serviceCategoryService.all().then((items: Array<ServiceCategory>) => {
-      this.serviceCategories = items;
-    });
-    this.spinnerService.show();
-    this.mapSearchService.searchByFilters(this.getParams(this.latitud, this.longitud, parseInt(this.selectdFilterServiceCategory), this.km)).then(
-      (response: Array<User>) => {
-        
-        this.ecommerces = response;
-        if(this.ecommerces && this.ecommerces.length>0){
-          this.loadAllMarkes();
-          this.map.fitBounds(this.markerBounds);
-        }else{
-          this.deleteMarker();
-          this.addMyMarker();
-        }
-
-        this.spinnerService.hide();
-        if (!response || response.length == 0) {
-          this.setError("No se tienen comercios registrados en nuestra red Peygold.");
-        } 
-      }
-    ).catch(
-      (error) => {
-        this.spinnerService.hide();
-        this.setError("Ha ocurrido un error. No será posible visualizar los comercios de nuestra red Peygold.");
-      }
-    )
 
   }
 
   onErrorGeolocating = () => {
-
-    this.latitud = -34.85736308219589;
-    this.longitud = -58.08378879257855;
-    //this.onNewLatLng.emit([this.lat,this.lng]);
+    console.log('onErrorGeolocating')
 
   }
   /**
@@ -233,7 +212,10 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
     console.log('num', num);
     return parseFloat(num);
   }
-
+  /**
+   * generate info card
+   * @param ecommerce 
+   */
   generateInfoCard(ecommerce: User): string {
 
     return `<div class="p-2">
@@ -251,9 +233,9 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
 
   }
 
-/**
-   * search By filter (category and radio)
-   */
+  /**
+     * search By filter (category and radio)
+     */
 
   searchByFilters() {
 
@@ -261,17 +243,17 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
     this.mapSearchService.searchByFilters(this.getParams(this.latitud, this.longitud, parseInt(this.selectdFilterServiceCategory), this.km)).then(
       (response: Array<User>) => {
         this.ecommerces = response;
-        if(this.ecommerces && this.ecommerces.length>0){
+        if (this.ecommerces && this.ecommerces.length > 0) {
           this.loadAllMarkes();
           this.map.fitBounds(this.markerBounds);
-        }else{
+        } else {
           this.deleteMarker();
           this.addMyMarker();
         }
         this.spinnerService.hide();
         if (!response || response.length == 0) {
-          this.setError("No se tienen comercios registrados en nuestra red Peygold.");
-        } 
+          this.setError("No se tienen comercios registrados en nuestra red Peygold cercanos a su ubicación y de acuerdo a los parámetros de búsqueda.");
+        }
         this.spinnerService.hide();
       }
     ).catch(
@@ -282,27 +264,27 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
     )
   }
 
-    /**
-   * search By filter (category and radio)
-   */
+  /**
+ * search By filter (category and radio)
+ */
 
   searchByWord() {
 
     this.spinnerService.show();
-    this.mapSearchService.searchByWord(this.filter,5,this.latitud,this.longitud).then(
+    this.mapSearchService.searchByWord(this.filter, 5, this.latitud, this.longitud).then(
       (response: Array<User>) => {
         this.ecommerces = response;
-        if(this.ecommerces && this.ecommerces.length>0){
+        if (this.ecommerces && this.ecommerces.length > 0) {
           this.loadAllMarkes();
           this.map.fitBounds(this.markerBounds);
-        }else{
+        } else {
           this.deleteMarker();
           this.addMyMarker();
         }
         this.spinnerService.hide();
         if (!response || response.length == 0) {
-          this.setError("No se tienen comercios registrados en nuestra red Peygold.");
-        } 
+          this.setError("No se tienen comercios registrados en nuestra red Peygold cercanos a su ubicación y de acuerdo a los parámetros de búsqueda.");
+        }
         this.spinnerService.hide();
       }
     ).catch(
@@ -337,10 +319,9 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
 
   /**
  * search by word
- * @param filter 
+ * @param event 
  */
-
-  setFilterByWord(event?:any) {
+  setFilterByWord(event?: any) {
     this.selectdFilterServiceCategory = '0';
     this.km = 5;
     if (this.filter.length > 3) {
@@ -353,6 +334,13 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
     }
   }
 
+  /**
+   * get params structure
+   * @param latitud 
+   * @param longitud 
+   * @param categoryId 
+   * @param radio 
+   */
   getParams(latitud: number, longitud: number, categoryId: number, radio: number): any {
     return {
       latitud: latitud,
@@ -362,6 +350,47 @@ export class UiPeySingleMapComponent extends BaseComponent implements OnInit {
     }
   }
 
+  /**
+   * after view init
+   */
+  ngAfterViewInit() {
 
+    this.cords.subscribe(
+      (data: Array<number>) => {
+        if (data && data.length > 0) {
+          this.latitud = data[0];
+          this.longitud = data[1];
+          //this.map.setCenter({lat:this.latitud,lng:this.longitud})
+          console.log('this.latitud', this.latitud)
+          console.log('this.longitud', this.longitud)
+          this.spinnerService.show();
+          this.mapSearchService.searchByFilters(this.getParams(this.latitud, this.longitud, parseInt(this.selectdFilterServiceCategory), this.km)).then(
+            (response: Array<User>) => {
 
+              this.ecommerces = response;
+              if (this.ecommerces && this.ecommerces.length > 0) {
+                this.loadAllMarkes();
+                this.map.fitBounds(this.markerBounds);
+              } else {
+                this.deleteMarker();
+                this.addMyMarker();
+              }
+
+              this.spinnerService.hide();
+              if (!response || response.length == 0) {
+                this.setError("No se tienen comercios registrados en nuestra red Peygold cercanos a su ubicación.");
+              }
+            }
+          ).catch(
+            (error) => {
+              this.spinnerService.hide();
+              this.setError("Ha ocurrido un error. No será posible visualizar los comercios de nuestra red Peygold.");
+            }
+          )
+
+        }
+      }
+    );
+
+  }
 }
